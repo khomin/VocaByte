@@ -1,0 +1,3 @@
+#!/bin/bash
+rm /etc/ld.so.conf.d/tune.conf
+sudo ldconfig

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+# Idempotent post-install script to make sure everything is correctly installed and configured
+
+echo "TunVPN: This is a postinst message"
+
+chmod +x /opt/VocaByte/patchelf
+
+echo "call patchelf executable...";
+
+cd /opt/VocaByte
+./patchelf --set-rpath  `pwd`/lib/:'$ORIGIN'/lib  ./VocaByte
+
+if [ $? -ne 0 ]; then
+    echo $'Failed to patchelf'
+    exit 1
+else
+    echo "patchelf success";
+fi
+
+echo "set cap...";
+
+sudo /sbin/setcap "cap_net_admin=eip  cap_net_bind_service=eip cap_net_broadcast=eip cap_net_raw=eip cap_sys_admin=eip" ./VocaByte
+if [ $? -ne 0 ]; then
+    echo $'Failed to set network capabilities'
+    exit 1
+else
+    echo "set cap success"
+fi
+
+# add tune.conf in ldconfig
+echo "/opt/VocaByte/lib" > /etc/ld.so.conf.d/tune.conf
+sudo ldconfig
+
+echo "TunVPN: postinst: done"

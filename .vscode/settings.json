@@ -1,0 +1,20 @@
+{
+    "files.associations": {
+        "*.qml": "c",
+        "*.ipp": "cpp"
+    },
+    "git.ignoreLimitWarning": true,
+    "cmake.configureOnOpen": true,
+
+    "editor.defaultFormatter": "Dart-Code.dart-code",
+    "editor.formatOnSave": true,
+
+    "search.exclude": {
+        "cpp/CppNative/Third_party/**": true,
+        "cpp/CppNative/protobuf/proto.pb.cc": true,
+        "cpp/CppNative/protobuf/proto.pb.h": true,
+        "ios/proto.pb.swift": true,
+        "ios/protobuf/proto.pb.swift": true,
+        "cpp/ThirdParty/dictionary/**": true
+    }
+}

@@ -1,0 +1,119 @@
+syntax = "proto2";
+
+package api;
+
+message InitParams {
+    optional string local_dir = 1;
+}
+
+
+message ReqRecentWords {
+    optional string desc = 1;
+    optional string version = 2;
+}
+
+message RespRecentWords {
+    repeated string word = 1;
+}
+
+message ReqSearchWords {
+    optional string word = 1;
+    optional bool use_like = 2;
+}
+
+message RespSearchWords {
+    repeated Word item = 1;
+}
+
+message ReqRandWords {
+    optional uint32 count = 1;
+}
+
+message RespRandWords {
+    repeated Word words = 1;
+}
+
+message ReqWordInReview {
+    optional string word = 1;
+}
+
+message WordInReview {
+    optional string word = 1;
+    optional uint32 success_count = 2;
+    optional uint32 fail_count = 3;
+    optional uint64 last_tm_success = 4;
+    optional uint64 last_tm_fail = 5;
+    optional uint64 next_review_tm_ms = 6;
+}
+
+message ReqAddWordInReview {
+    optional string word = 1;
+    optional bool use_extra_fields = 2;
+    optional uint32 success_count = 3;
+    optional uint32 fail_count = 4;
+    optional uint64 last_tm_success = 5;
+    optional uint64 last_tm_fail = 6;
+    optional uint64 next_review_tm_ms = 7;
+}
+
+message RespAddWordInCurrent {}
+
+message ReqRemoveWordFromCurrent {
+    optional string word = 1;
+}
+
+message RespRemoveWordFromCurrent {}
+
+message ReqUpdateWordInCurrent {
+    optional string word = 1;
+    optional uint32 success_count = 2;
+    optional uint32 fail_count = 3;
+    optional uint64 last_tm_success = 4;
+    optional uint64 last_tm_fail = 5;
+    optional uint64 next_review_tm_ms = 6;
+}
+
+message RespUpdateWordInCurrent {}
+
+message Word {
+    optional string value = 1;
+    optional uint64 frequency = 2;
+    optional string json = 3;
+    optional string transcript = 4;
+}
+
+message ReqReviewForToday {
+    // empty
+}
+
+message RespReviewForToday {
+    repeated WordInReview first_n_word = 1;
+    optional uint32 count_all = 2;
+}
+
+message ReqSearchInReviewList {
+    optional uint32 limit = 1;
+    optional uint32 offset = 2;
+    optional uint32 use_success_count = 3;
+}
+
+message RespSearchInReviewList {
+    repeated WordInReview word = 1;
+}
+
+message ReqDeleteProfile {}
+message RespDeleteProfile {}
+
+message ReqSentences {
+    optional string word = 1;
+    optional uint32 limit = 2;
+    optional uint32 offset = 3;
+}
+
+message RespSentences {
+    repeated string data = 1;
+}
+
+message RespDefault {
+    optional bool value = 1;
+}

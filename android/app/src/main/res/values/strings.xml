@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">Tuna</string>
+
+    <string name="connect">Connect</string>
+    <string name="connecting">Connecting</string>
+    <string name="connected">Connected</string>
+
+    <string name="open_cert">Open Certificate</string>
+    <string name="settings">Settings</string>
+
+    <string name="status_connecting">Tuna is connecting…</string>
+    <string name="status_connected">Tuna is connected!</string>
+    <string name="status_disconnected">Tuna is disconnected!</string>
+
+    <string name="processing">Processing</string>
+
+    <string name="load_certificate_title">Load the certificate\nto get started</string>
+    <string name="load_certificate_description">Load certificate file\nfor automatic registration</string>
+    <string name="certificate_error">Certificate error</string>
+    <string name="open_certificate_file">Open Certificate File</string>
+
+    <string name="certificate_loaded">Certificate is loaded</string>
+    <string name="certificate_validation_password">Certificate validation password</string>
+    <string name="certificate_password_hint">Write password</string>
+
+    <string name="done">Done</string>
+
+    <string name="com_auth0_client_id">DiBrAl0CiUPIMIn1Cvw647ujIIuEgycR</string>
+    <string name="com_auth0_domain">https://dev-3134tsoo4os8qbvn.us.auth0.com</string>
+    <string name="com_auth0_scheme">tuna</string>
+
+    <string name="disconnect_vpn">Disconnect</string>
+</resources>

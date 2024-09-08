@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/base_dark</color>
+    <color name="colorOnPrimary">@color/white</color>
+
+    <color name="colorSecondary">@color/base_gray</color>
+    <color name="colorOnSecondary">@color/base_dark</color>
+
+    <color name="colorError">#FF4B40</color>
+
+    <color name="colorHint">#DBDBDB</color>
+
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="base_dark">#172339</color>
+
+    <color name="base_light">#E4EBF0</color>
+    <color name="base_light_darker">#162539</color>
+
+    <color name="base_gray">#B5C2D4</color>
+
+    <color name="connected_green">#37B161</color>
+</resources>

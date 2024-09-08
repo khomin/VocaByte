@@ -1,0 +1,15 @@
+[submodule "ThirdParty"]
+	path = ThirdParty
+	url = https://github.com/emilk/loguru.git
+[submodule "cpp/ThirdParty"]
+	path = cpp/ThirdParty
+	url = https://github.com/emilk/loguru.git
+[submodule "cpp/ThirdParty/loguru"]
+	path = cpp/ThirdParty/loguru
+	url = https://github.com/emilk/loguru.git
+[submodule "cpp/ThirdParty/thread-pool"]
+	path = cpp/ThirdParty/thread-pool
+	url = https://github.com/bshoshany/thread-pool.git
+[submodule "cpp/ThirdParty/dictionary"]
+	path = cpp/ThirdParty/dictionary
+	url = https://github.com/wordset/wordset-dictionary.git

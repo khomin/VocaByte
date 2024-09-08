@@ -1,0 +1,140 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+apply plugin: 'kotlin-kapt'
+
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('key.properties')
+if (keystorePropertiesFile.exists()) {
+       keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+android {   
+    compileSdkVersion 34
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+    defaultConfig {
+        minSdk 24
+        targetSdk 33
+        applicationId "com.vocabyte.app"
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+//                "-DANDROID_ARM_NEON=TRUE",
+                arguments "-DANDROID_TOOLCHAIN=clang",
+                        "-DCMAKE_BUILD_TYPE=DEBUG", "-DCMAKE_CXX_FLAGS=\"-llog\"",
+                        "-DGST_USE_UNSTABLE_API=TRUE", "-DANDROID_STL=c++_shared"
+                cFlags "-D__STDC_FORMAT_MACROS -D__ANDROID__ -Wl -Bsymbolic"
+                cppFlags "-std=c++17", "-frtti", "-fexceptions", "--build-id", "-g", "-Wl", "-Bsymbolic"
+                version = '3.18.0+'
+            }
+        }
+        ndk {
+            ldLibs "log"
+        }
+        ndk {
+            abiFilters  "arm64-v8a", "x86_64"//, "x86"
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path "../../cpp/CMakeLists.txt"
+        }
+    }
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    buildTypes {
+        applicationVariants.all { variant ->
+            variant.outputs.all {
+                outputFileName = "${versionName}.apk"
+            }
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+
+        }
+        release {
+            // minifyEnabled true
+            // minifyEnabled false
+            // shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            // TODO: Add your own signing config for the release build.
+            // Signing with the debug keys for now,
+            // so `flutter run --release` works.
+            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
+        }
+    }
+    ndkVersion '21.4.7075529'
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildFeatures {
+        dataBinding true
+        viewBinding true
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+flutter {
+    source '../..'
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    // RxJava2
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
+    implementation 'com.jakewharton.rx2:replaying-share:2.2.0'
+    implementation 'com.jakewharton.rx2:replaying-share-kotlin:2.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+

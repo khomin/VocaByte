@@ -1,0 +1,4 @@
+tqdm
+# wordfreq
+eng_to_ipa
+# nltk
