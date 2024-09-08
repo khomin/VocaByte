@@ -7,6 +7,8 @@ It's built on Flutter, uses protobuf and c++
 ### Previews
 ![1](/sceenshots/1.png)
 
+Download from [GooglePlay](https://play.google.com/store/apps/details?id=com.vocabyte.app)
+
 ### Installation
 - Download [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
 - Unzip in <code>./assets/</code>
