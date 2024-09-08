@@ -4,6 +4,9 @@ A flashcard app with a text to speech feature and number exercises
 
 It's built on Flutter, uses protobuf and c++
 
+### Previews
+![1](/sceenshots/1.png)
+
 ### Installation
 - Download [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
 - Unzip in <code>./assets/</code>
@@ -31,8 +34,3 @@ It's built on Flutter, uses protobuf and c++
  - Find a word in the search
  - Listen and see its meaning and examples
  - Add the word to the study list where the spaced repetition algorithm will keep track on it
-
-### Previews
-![1](/sceenshots/1.jpg)
-![1](/sceenshots/2.jpg)
-![1](/sceenshots/5.jpg)
