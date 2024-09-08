@@ -27,7 +27,7 @@ class CardsDone extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                   const Spacer(),
-                  Image.asset('assets/pig_pos_2.png'),
+                  Image.asset('assets/pig_pos_2.png', width: 150),
                   // 1
                   Padding(
                       padding:
