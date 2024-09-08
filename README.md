@@ -34,3 +34,8 @@ It's built on Flutter, uses protobuf and c++
  - Find a word in the search
  - Listen and see its meaning and examples
  - Add the word to the study list where the spaced repetition algorithm will keep track on it
+
+#### Third-party
+https://github.com/emilk/loguru.git<br>
+https://github.com/bshoshany/thread-pool.git<br>
+https://github.com/wordset/wordset-dictionary.git
