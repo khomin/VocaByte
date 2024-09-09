@@ -10,7 +10,14 @@ It's built on Flutter, uses protobuf and c++
 Download from [GooglePlay](https://play.google.com/store/apps/details?id=com.vocabyte.app)
 
 ### Installation
+- ``git clone https://github.com/khomin/VocaByte.git --recurse-submodules``
 - Download [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
+- Add flutter sdk directory in your PATH. There are 2 options:
+    1) Set FLUTTER_SDK_PATH explicitly to bin folder<br>
+    ``export FLUTTER_SDK_PATH=~/sdk/flutter/bin``<br>
+    So that the whole path would be like:
+    ``${FLUTTER_SDK_PATH}/cache/dart-sdk/include``
+    2) Let ``cpp/CMakeLists.txt`` find the directory from your $PATH, see ``CMakeLists.txt`` line 62 
 - Unzip in <code>./assets/</code>
 - Specific steps for Android
     1) You need NDK
