@@ -1,5 +1,5 @@
 import 'package:rxdart/rxdart.dart';
-import 'package:vocabyte/domains/card_review/card_review_nav.dart';
+import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 

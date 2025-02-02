@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 
 class ErrorDialog {
   void show(BuildContext context, String error, {Function? onClosed}) {
@@ -16,7 +16,7 @@ class ErrorDialog {
                 borderRadius: BorderRadius.all(Radius.circular(10.0))),
             title: DialogHeader(
                 text: 'Error',
-                height: ConstValues.dialogHeaderMiddle,
+                height: Constants.dialogHeaderMiddle,
                 close: () {
                   onClosed?.call();
                   Navigator.pop(context);

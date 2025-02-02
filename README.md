@@ -41,3 +41,17 @@ Download from [GooglePlay](https://play.google.com/store/apps/details?id=com.voc
 https://github.com/emilk/loguru.git<br>
 https://github.com/bshoshany/thread-pool.git<br>
 https://github.com/wordset/wordset-dictionary.git
+
+
+### TODO
+ - navigation, use bottom navigator
+ - no <- but (x) from pages (card, numerals, manage words, search etc)
+ - theme - https://pub.dev/packages/animated_theme_switcher
+ - redesign the controls in card, don't know - already know, dialog
+ - keep 5 last logs, remove everything else
+ - cache everything, make an instant start
+ - performace sqlite
+ - refactor progress in card
+ - add progress in numerals
+ - search words - show if already in list
+ - progress and metrics 

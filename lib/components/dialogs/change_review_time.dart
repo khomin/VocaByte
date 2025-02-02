@@ -4,7 +4,7 @@ import 'package:vocabyte/components/custom_checkbox.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
 import 'package:vocabyte/components/hover_click_component.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 enum ReviewTime { today, day1, week1, month1, month3 }
@@ -26,7 +26,7 @@ class ChangeReviewTime {
           title: UiHelper.isDesktop()
               ? DialogHeader(
                   text: '',
-                  height: ConstValues.dialogHeaderMiddle,
+                  height: Constants.dialogHeaderMiddle,
                   close: () {
                     Navigator.pop(context);
                   })
@@ -42,8 +42,8 @@ class ChangeReviewTime {
                         Text('Please select next review time',
                             textAlign: TextAlign.start,
                             style: TextStyle(
-                                fontSize: ConstValues.dialogFontSize,
-                                fontWeight: ConstValues.dialogHeaderFontWeight,
+                                fontSize: Constants.dialogFontSize,
+                                fontWeight: Constants.dialogHeaderFontWeight,
                                 color: Theme.of(context)
                                     .colorScheme
                                     .dialogHeaderText2))

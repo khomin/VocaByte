@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 
 class FileUtils {
   static String homeDir = '';
@@ -38,11 +38,11 @@ class FileUtils {
       case 'linux':
       case 'macos':
         path = Platform.environment['HOME'] ?? '/';
-        path = '$path/${ConstValues.localFolderName}';
+        path = '$path/${Constants.localFolderName}';
         break;
       case 'windows':
         path = Platform.environment['USERPROFILE'] ?? '/';
-        path = '$path/${ConstValues.localFolderName}';
+        path = '$path/${Constants.localFolderName}';
         break;
       case 'android':
         var dir = await getExternalStorageDirectory();
@@ -53,7 +53,7 @@ class FileUtils {
         var dirStr = dir.path;
         await Directory(dirStr).create(recursive: true);
         path = dirStr;
-        path = '$path/${ConstValues.localFolderName}';
+        path = '$path/${Constants.localFolderName}';
         break;
       default:
         path = '/';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
-import 'package:vocabyte/domains/drawer/drawer_menu.dart';
+import 'package:vocabyte/pages/drawer/drawer_menu.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:provider/provider.dart';
 

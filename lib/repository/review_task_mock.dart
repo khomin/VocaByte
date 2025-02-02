@@ -1,4 +1,4 @@
-import 'package:vocabyte/domains/card_review/card_review_nav.dart';
+import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/review_task_base.dart';
 import 'package:collection/collection.dart';

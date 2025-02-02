@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 class ButtonRoundCorner extends StatelessWidget {
@@ -55,7 +55,7 @@ class ButtonRoundCorner extends StatelessWidget {
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   // to preserve same height
-                  const SizedBox(height: ConstValues.buttonHeight),
+                  const SizedBox(height: Constants.buttonHeight),
                   if (iconData != null)
                     Icon(iconData, color: colorText, size: 14),
                   if (iconPath != null)

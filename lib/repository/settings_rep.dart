@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/domains/numerals/numerals_page.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/utils.dart';
+import 'package:vocabyte/pages/numerals/numerals_page.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsData {}
@@ -32,7 +33,7 @@ class SettingsRep {
       // theme
       SettingsRep().getTheme(),
       // version
-      ConstValues().getVersion(),
+      Utils().getVersion(),
       // first start
       SettingsRep().getOnboarding()
     ]);
@@ -73,8 +74,8 @@ class SettingsRep {
       //logDebug('$tag: screen size: $size (no stored)');
     } else if ((size.width.toInt() != oldW.toInt() ||
             size.height.toInt() != oldH.toInt()) &&
-        size.width.toInt() >= ConstValues.minWindowSize.width.toInt() &&
-        size.height.toInt() > ConstValues.minWindowSize.height.toInt()) {
+        size.width.toInt() >= Constants.minWindowSize.width.toInt() &&
+        size.height.toInt() > Constants.minWindowSize.height.toInt()) {
       // if size changed and > minWindowSize
       await prefs.setInt(_screenSizeWidthKey, size.width.toInt());
       await prefs.setInt(_screenSizeHeightKey, size.height.toInt());
@@ -108,7 +109,7 @@ class SettingsRep {
 
   Future<int> getDailyGoal() async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.getInt(_dayGoalKey) ?? ConstValues.goalDefault;
+    return prefs.getInt(_dayGoalKey) ?? Constants.goalDefault;
   }
 
   void setOnboarding(bool v) async {

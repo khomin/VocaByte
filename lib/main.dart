@@ -3,7 +3,7 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:window_manager/window_manager.dart';
 
@@ -13,7 +13,7 @@ void main() async {
     await windowManager.ensureInitialized();
 
     WindowOptions windowOptions = const WindowOptions(
-      minimumSize: ConstValues.minWindowSize,
+      minimumSize: Constants.minWindowSize,
       backgroundColor: Colors.transparent,
       skipTaskbar: false,
       titleBarStyle: TitleBarStyle.normal,
@@ -46,7 +46,7 @@ class MainApp extends StatelessWidget {
         initial: AdaptiveThemeMode.dark,
         builder: (theme, darkTheme) {
           return MaterialApp(
-              title: ConstValues.appName,
+              title: Constants.appName,
               theme: theme,
               darkTheme: darkTheme,
               home: const App());

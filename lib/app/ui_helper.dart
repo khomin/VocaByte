@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
-import 'package:vocabyte/domains/card_review/card_review_nav.dart';
-import 'package:vocabyte/domains/drawer/drawer_menu.dart';
-import 'package:vocabyte/domains/numerals/numerals_nav.dart';
+import 'package:vocabyte/pages/card_review/card_review_nav.dart';
+import 'package:vocabyte/pages/drawer/drawer_menu.dart';
+import 'package:vocabyte/pages/numerals/numerals_nav.dart';
 import 'package:vocabyte/app/app_theme.dart';
 
 enum ToastType { normal, error }

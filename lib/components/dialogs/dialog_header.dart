@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button2.dart';
 import 'package:vocabyte/components/circle_button.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 class DialogHeader extends StatelessWidget {
@@ -28,7 +28,7 @@ class DialogHeader extends StatelessWidget {
     return Container(
         height: height,
         decoration: useShadow
-            ? UiHelper().boxShadow(context, ConstValues.shadowDown,
+            ? UiHelper().boxShadow(context, Constants.shadowDown,
                 color: color ?? Theme.of(context).colorScheme.dialogHeaderColor)
             : null,
         color:

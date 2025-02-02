@@ -1,7 +1,8 @@
 import 'dart:io';
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/domains/drawer/drawer_menu.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:vocabyte/pages/drawer/drawer_menu.dart';
 import 'package:vocabyte/app/app_theme.dart';
 
 enum ScreenLayoutType { minimum, medium, large, full }
@@ -88,5 +89,10 @@ class Utils {
       case ThemeType.system:
         if (context.mounted) AdaptiveTheme.of(context).setSystem();
     }
+  }
+
+  Future<String> getVersion() async {
+    var packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo.version;
   }
 }

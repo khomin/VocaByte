@@ -6,11 +6,12 @@ import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/app/utils.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/domains/drawer/drawer_menu.dart';
-import 'package:vocabyte/domains/entry/page_entry.dart';
-import 'package:vocabyte/domains/app_route.dart';
-import 'package:vocabyte/domains/models/app_model.dart';
+import 'package:vocabyte/pages/drawer/drawer_menu.dart';
+import 'package:vocabyte/pages/entry/page_entry.dart';
+import 'package:vocabyte/pages/app_route.dart';
+import 'package:vocabyte/pages/models/app_model.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/file_utils.dart';
@@ -133,52 +134,111 @@ class _AppState extends State<App> with WindowListener, WidgetsBindingObserver {
           ChangeNotifierProvider<AppModel>.value(value: _appModel),
           Provider<AppRep>.value(value: _appRep)
         ],
-        child: Scaffold(body: Builder(builder: (context) {
-          var model = context.watch<AppModel>();
-          if (model.waitCopyResource) {
-            return Container(
-                color: Theme.of(context).colorScheme.baseColor1,
-                child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                      Text('Copying database...\nIt may take 3-5 seconds',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              fontWeight: FontWeight.w400,
-                              fontSize: 16,
-                              color: Theme.of(context).colorScheme.titel4)),
-                      Container(
-                          width: 100,
-                          height: 100,
-                          margin: const EdgeInsets.all(20),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)),
-                              color:
-                                  Theme.of(context).colorScheme.button2Hover),
-                          child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: CircularProgressIndicator(
-                                  color: Theme.of(context).colorScheme.titel4)))
-                    ])));
-          }
-          if (!model.serviceInited) {
-            return Container(color: Theme.of(context).colorScheme.baseColor1);
-          }
-          if (model.onboarding) {
-            return PageOnboard(onStart: () {
-              context.read<AppModel>().onboarding = false;
-            });
-          }
-          return Row(children: [
-            //
-            // left menu for desktop
-            if (!Platform.isIOS && !Platform.isAndroid) const DrawerMenu(),
-            //
-            // main
-            const Expanded(child: AppRoute())
-          ]);
-        })));
+        child: Scaffold(
+            body: Builder(builder: (context) {
+              var model = context.watch<AppModel>();
+              if (model.waitCopyResource) {
+                return Container(
+                    color: Theme.of(context).colorScheme.baseColor1,
+                    child: Center(
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Text('Copying database...\nIt may take 3-5 seconds',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 16,
+                                  color: Theme.of(context).colorScheme.titel4)),
+                          Container(
+                              width: 100,
+                              height: 100,
+                              margin: const EdgeInsets.all(20),
+                              decoration: BoxDecoration(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12)),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .button2Hover),
+                              child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: CircularProgressIndicator(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .titel4)))
+                        ])));
+              }
+              if (!model.serviceInited) {
+                return Container(
+                    color: Theme.of(context).colorScheme.baseColor1);
+              }
+              if (model.onboarding) {
+                return PageOnboard(onStart: () {
+                  context.read<AppModel>().onboarding = false;
+                });
+              }
+              return Row(children: [
+                //
+                // left menu for desktop
+                if (!Platform.isIOS && !Platform.isAndroid) const DrawerMenu(),
+                //
+                // main
+                const Expanded(child: AppRoute())
+              ]);
+            }),
+            bottomNavigationBar: Container(
+                height: 70,
+                decoration: BoxDecoration(
+                    // color: Constants.colorCard,
+                    // color: Colors.amber,
+                    // borderRadius: BorderRadius.only(
+                    //     topLeft: Radius.circular(20),
+                    //     topRight: Radius.circular(20)),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        blurRadius: 10,
+                        offset: const Offset(0, 0),
+                      )
+                    ]),
+                child: StreamBuilder(
+                    stream: NavigatorRep().routeBloc.onGoto,
+                    builder: (context, snapshot) {
+                      var page = snapshot.data?.type;
+                      return BottomNavigationBar(
+                          elevation: 0,
+                          selectedFontSize: 12,
+                          unselectedFontSize: 12,
+                          type: BottomNavigationBarType.fixed,
+                          backgroundColor: Colors.transparent,
+                          // backgroundColor: Constants.colorCard,
+                          // TODO: color
+                          unselectedItemColor:
+                              Theme.of(context).colorScheme.cardSuccess,
+                          items: const <BottomNavigationBarItem>[
+                            BottomNavigationBarItem(
+                                icon: Icon(Icons.home), label: 'Home'),
+                            BottomNavigationBarItem(
+                                icon: Icon(Icons.create_new_folder_rounded),
+                                label: 'Capture'),
+                            BottomNavigationBarItem(
+                                icon: Icon(Icons.notifications),
+                                label: 'Alert'),
+                            BottomNavigationBarItem(
+                                icon: Icon(Icons.settings), label: 'Settings'),
+                          ],
+                          currentIndex: page?.index ?? 0,
+                          // TODO: color
+                          selectedItemColor:
+                              Theme.of(context).colorScheme.iconColor,
+                          onTap: (value) async {
+                            // if (collapse) {
+                            //   context.read<AppModel>().setCollapse(false);
+                            // }
+                            // NavigatorRep()
+                            //     .routeBloc
+                            //     .goto(Panel(type: PageType.values[value]));
+                          });
+                    }))));
   }
 }

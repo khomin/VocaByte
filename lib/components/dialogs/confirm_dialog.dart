@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
 import 'package:vocabyte/components/two_buttons.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 class ConfirmDialog {
@@ -23,7 +23,7 @@ class ConfirmDialog {
           title: UiHelper.isDesktop()
               ? DialogHeader(
                   text: '',
-                  height: ConstValues.dialogHeaderMiddle,
+                  height: Constants.dialogHeaderMiddle,
                   close: () {
                     onCancel?.call();
                     Navigator.pop(context);
@@ -34,8 +34,8 @@ class ConfirmDialog {
               child: Text(header,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      fontSize: ConstValues.dialogHeadertFontSize,
-                      fontWeight: ConstValues.dialogHeaderFontWeight,
+                      fontSize: Constants.dialogHeadertFontSize,
+                      fontWeight: Constants.dialogHeaderFontWeight,
                       color: Theme.of(context).colorScheme.dialogHeaderText)),
             ),
             SimpleDialogOption(
@@ -45,8 +45,8 @@ class ConfirmDialog {
                   child: Text(label,
                       textAlign: TextAlign.left,
                       style: TextStyle(
-                          fontSize: ConstValues.dialogFontSize,
-                          fontWeight: ConstValues.dialogHeaderFontWeight,
+                          fontSize: Constants.dialogFontSize,
+                          fontWeight: Constants.dialogHeaderFontWeight,
                           color:
                               Theme.of(context).colorScheme.dialogHeaderText)),
                 ),

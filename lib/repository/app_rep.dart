@@ -5,10 +5,10 @@ import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/components/dialogs/change_review_time.dart';
-import 'package:vocabyte/domains/card_review/card_review_nav.dart';
-import 'package:vocabyte/domains/models/word_data.dart';
+import 'package:vocabyte/pages/card_review/card_review_nav.dart';
+import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/repository/review_task.dart';
 import 'package:vocabyte/repository/review_task_base.dart';
@@ -29,7 +29,7 @@ class AppRep {
   factory AppRep() {
     if (_instance == null) {
       var i = AppRep._internal();
-      if (ConstValues.isMock) {
+      if (Constants.isMock) {
         i.reviewTask = ReviewTaskMock();
       } else {
         i.reviewTask = ReviewTask();

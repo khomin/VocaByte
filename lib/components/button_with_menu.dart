@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/const_values.dart';
+import 'package:vocabyte/app/constants.dart';
 
 class ButtonWithMenu extends StatelessWidget {
   const ButtonWithMenu(
@@ -30,7 +30,7 @@ class ButtonWithMenu extends StatelessWidget {
               })),
       SizedBox(
           width: 40,
-          height: ConstValues.buttonHeight,
+          height: Constants.buttonHeight,
           child: ElevatedButton(
               onPressed: () {
                 onMenu();
