@@ -41,14 +41,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   flutter_svg: ^2.0.2
   rxdart: ^0.28.0
-  window_manager: ^0.3.1
   dio: ^5.4.0
   ffi: ^2.1.0
   fixnum: ^1.0.1
   protobuf: ^2.1.0
-  adaptive_theme: ^3.1.1
   collection: ^1.17.0
-  themed: ^4.0.0
   shared_preferences: ^2.0.15
   loggy: ^2.0.3
   package_info_plus: ^8.1.2
@@ -64,6 +61,7 @@ dependencies:
   simple_html_css: ^5.0.0
   url_launcher: ^6.1.11
   smooth_page_indicator: ^1.2.0+3
+  animated_theme_switcher: ^2.0.10
 
 dev_dependencies:
   flutter_test:

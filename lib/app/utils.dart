@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:vocabyte/pages/drawer/drawer_menu.dart';
 import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/repository/nav_rep.dart';
 
 enum ScreenLayoutType { minimum, medium, large, full }
 
@@ -52,43 +51,6 @@ class Utils {
       return 'windows';
     }
     return 'undefined';
-  }
-
-  String pageToHeader(MenuPageType? v) {
-    if (v == null) return '';
-    switch (v) {
-      case MenuPageType.account:
-        return 'Account';
-      case MenuPageType.home:
-        return 'Home';
-      case MenuPageType.wordDetails:
-        return 'Details';
-      case MenuPageType.settings:
-        return 'Settings';
-      case MenuPageType.about:
-        return 'About';
-      case MenuPageType.searchWord:
-        return 'Search';
-      case MenuPageType.reviewCard:
-        return 'Review';
-      case MenuPageType.manageWords:
-        return 'Manage words';
-      case MenuPageType.numerals:
-        return 'Numerals';
-      case MenuPageType.changeDailyGoal:
-        return 'Change goal';
-    }
-  }
-
-  static void setTheme(BuildContext context, ThemeType theme) {
-    switch (theme) {
-      case ThemeType.light:
-        if (context.mounted) AdaptiveTheme.of(context).setLight();
-      case ThemeType.dark:
-        if (context.mounted) AdaptiveTheme.of(context).setDark();
-      case ThemeType.system:
-        if (context.mounted) AdaptiveTheme.of(context).setSystem();
-    }
   }
 
   Future<String> getVersion() async {

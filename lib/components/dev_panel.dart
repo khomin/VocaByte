@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
-import 'package:vocabyte/pages/drawer/drawer_menu.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:provider/provider.dart';
+import 'package:vocabyte/repository/nav_rep.dart';
 
 class DevPanel extends StatefulWidget {
   const DevPanel({required this.onGoTo, super.key});
 
-  final Function(MenuPageType name) onGoTo;
+  final Function(PageType name) onGoTo;
   @override
   State<DevPanel> createState() => _State();
 }
@@ -46,13 +46,13 @@ class _State extends State<DevPanel> {
                 text: 'A1',
                 color: Colors.black26,
                 onPressed: () async {
-                  widget.onGoTo(MenuPageType.reviewCard);
+                  widget.onGoTo(PageType.reviewCard);
                 }),
             Button3(
                 text: 'A2',
                 color: Colors.black26,
                 onPressed: () async {
-                  widget.onGoTo(MenuPageType.reviewCard);
+                  widget.onGoTo(PageType.reviewCard);
                 })
           ]))
     ]);

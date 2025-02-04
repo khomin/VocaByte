@@ -62,6 +62,8 @@ else ()
         if (EXISTS "${PATH_ITEM}/flutter")
             message("flutter is found: ${PATH_ITEM}")
             set(FLUTTER_SDK_PATH ${PATH_ITEM})
+        else()
+            message("not flutter: ${PATH_ITEM}")
         endif ()
     endforeach ()
 endif ()
@@ -123,6 +125,7 @@ elseif (ANDROID OR __ANDROID__)
     message("BTEST CMAKE_SYSTEM_PROCESSOR: ${CMAKE_SYSTEM_PROCESSOR}")
     message("ANDROID_ABI: ${ANDROID_ABI}")
     message("CMAKE_ANDROID_ARCH_ABI: ${CMAKE_ANDROID_ARCH_ABI}")
+    message("CMAKE_ANDROID_FLUTTER_SDK_PATH: ${FLUTTER_SDK_PATH}")
     set(ARCH_NAME ${CMAKE_ANDROID_ARCH_ABI})
 
     message("ARCH_NAME: ${ARCH_NAME}")
@@ -228,7 +231,7 @@ target_include_directories(${PROJECT} PUBLIC
     ./api/
     ./misc/
     ./protobuf
-    $ENV{FLUTTER_SDK_PATH}/cache/dart-sdk/include
+    ${FLUTTER_SDK_PATH}/cache/dart-sdk/include
     ${INCLUDE_DIRS}
 )
 

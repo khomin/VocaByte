@@ -29,7 +29,8 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-android {   
+android {
+    namespace "com.vocabyte.app"
     compileSdkVersion 34
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -51,10 +52,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
-//                "-DANDROID_ARM_NEON=TRUE",
                 arguments "-DANDROID_TOOLCHAIN=clang",
-                        "-DCMAKE_BUILD_TYPE=DEBUG", "-DCMAKE_CXX_FLAGS=\"-llog\"",
-                        "-DGST_USE_UNSTABLE_API=TRUE", "-DANDROID_STL=c++_shared"
+                        "-DCMAKE_BUILD_TYPE=DEBUG",
+                        "-DCMAKE_CXX_FLAGS=\"-llog\"",
+                        "-DGST_USE_UNSTABLE_API=TRUE",
+                        "-DANDROID_STL=c++_shared",
+                        "-DPATH=${System.env.PATH}"
                 cFlags "-D__STDC_FORMAT_MACROS -D__ANDROID__ -Wl -Bsymbolic"
                 cppFlags "-std=c++17", "-frtti", "-fexceptions", "--build-id", "-g", "-Wl", "-Bsymbolic"
                 version = '3.18.0+'
@@ -104,7 +107,7 @@ android {
             signingConfig signingConfigs.release
         }
     }
-    ndkVersion '21.4.7075529'
+    ndkVersion '26.1.10909125'
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -123,7 +126,7 @@ flutter {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0"
     implementation 'androidx.core:core-ktx:1.10.1'
     implementation 'androidx.core:core-splashscreen:1.0.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'

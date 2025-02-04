@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
-import 'package:vocabyte/pages/drawer/drawer_menu.dart';
 import 'package:vocabyte/pages/numerals/numerals_nav.dart';
 import 'package:vocabyte/app/app_theme.dart';
 
@@ -78,15 +77,6 @@ class UiHelper {
       }
     }
     return false;
-  }
-
-  MenuPageType routeNameToType(String? name) {
-    for (var it in MenuPageType.values) {
-      if (it.name == name) {
-        return it;
-      }
-    }
-    return MenuPageType.home;
   }
 
   boxShadow(BuildContext context, Offset offset, {Color? color}) {
@@ -256,24 +246,24 @@ class UiHelper {
     }
   }
 
-  static isDrawerOn(MenuPageType page) {
-    var drawerOn = false;
-    switch (page) {
-      case MenuPageType.account:
-      case MenuPageType.wordDetails:
-      case MenuPageType.reviewCard:
-      case MenuPageType.manageWords:
-      case MenuPageType.changeDailyGoal:
-        drawerOn = false;
-        break;
-      case MenuPageType.searchWord:
-      case MenuPageType.home:
-      case MenuPageType.settings:
-      case MenuPageType.about:
-      case MenuPageType.numerals:
-        drawerOn = true;
-        break;
-    }
-    return drawerOn;
-  }
+  // static isDrawerOn(MenuPageType page) {
+  //   var drawerOn = false;
+  //   switch (page) {
+  //     case MenuPageType.account:
+  //     case MenuPageType.wordDetails:
+  //     case MenuPageType.reviewCard:
+  //     case MenuPageType.manageWords:
+  //     case MenuPageType.changeDailyGoal:
+  //       drawerOn = false;
+  //       break;
+  //     case MenuPageType.searchWord:
+  //     case MenuPageType.home:
+  //     case MenuPageType.settings:
+  //     case MenuPageType.about:
+  //     case MenuPageType.numerals:
+  //       drawerOn = true;
+  //       break;
+  //   }
+  //   return drawerOn;
+  // }
 }

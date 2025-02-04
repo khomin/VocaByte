@@ -2,46 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/components/navigation_observer.dart';
-import 'package:vocabyte/pages/drawer/drawer_menu.dart';
+import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
 class AppModel with ChangeNotifier {
-  final GlobalKey<NavigatorState> appNavKey;
-  late final NavigatorObserverCustom appNavObserver;
-  final Function(ThemeType theme) onThemeChanged;
-  final Function() onUpdateTasks;
-
-  bool _drawerOn = false;
+  // final GlobalKey<NavigatorState> appNavKey;
+  // late final NavigatorObserverCustom appNavObserver;
+  // final Function(ThemeType theme) onThemeChanged;
+  // final Function() onUpdateTasks;
   String _appVersion = '';
+  Brightness? _theme;
   bool _onboarding = false;
   bool _serviceInited = false;
   bool _waitCopyResource = false;
-  ThemeType _theme = ThemeType.system;
-  MenuPageType _page = MenuPageType.home;
-  bool get drawerOn => _drawerOn;
-
-  AppModel(
-      {required this.appNavKey,
-      required this.onUpdateTasks,
-      required this.onThemeChanged}) {
-    appNavObserver = NavigatorObserverCustom(
-        onDidPop: () {},
-        onChanged: (name, arg) async {
-          var page = UiHelper().routeNameToType(name);
-          var drawer = UiHelper.isDrawerOn(page);
-
-          if (page == MenuPageType.home) {
-            onUpdateTasks();
-          }
-
-          _drawerOn = drawer;
-          _page = page;
-
-          Future.microtask(() {
-            notifyListeners();
-          });
-        });
-  }
 
   String get appVersion => _appVersion;
   set appVersion(String v) {
@@ -76,33 +49,42 @@ class AppModel with ChangeNotifier {
     }
   }
 
-  ThemeType get theme => _theme;
-  set theme(ThemeType v) {
+  set theme(Brightness? v) {
     if (_theme != v) {
       _theme = v;
       notifyListeners();
     }
   }
 
-  MenuPageType get page => _page;
+  Brightness? get theme => _theme;
 
-  void goToPage({required MenuPageType page, required bool replace}) {
-    if (replace) {
-      appNavKey.currentState?.popUntil((route) => route.isFirst);
-      appNavKey.currentState?.pushNamed(page.name);
-    } else {
-      appNavKey.currentState?.pushNamed(page.name);
-    }
-    _page = page;
-    _drawerOn = UiHelper.isDrawerOn(page);
-    notifyListeners();
-  }
+  // ThemeType get theme => _theme;
+  // set theme(ThemeType v) {
+  //   if (_theme != v) {
+  //     _theme = v;
+  //     notifyListeners();
+  //   }
+  // }
 
-  void pageBack() {
-    if (appNavKey.currentState?.canPop() == true) {
-      appNavKey.currentState?.pop();
-    }
-  }
+  // PageType get page => _page;
+
+  // void goToPage({required PageType page, required bool replace}) {
+  //   if (replace) {
+  //     appNavKey.currentState?.popUntil((route) => route.isFirst);
+  //     appNavKey.currentState?.pushNamed(page.name);
+  //   } else {
+  //     appNavKey.currentState?.pushNamed(page.name);
+  //   }
+  //   _page = page;
+  //   // _drawerOn = UiHelper.isDrawerOn(page);
+  //   notifyListeners();
+  // }
+
+  // void pageBack() {
+  //   if (appNavKey.currentState?.canPop() == true) {
+  //     appNavKey.currentState?.pop();
+  //   }
+  // }
 
   void update() {
     notifyListeners();
