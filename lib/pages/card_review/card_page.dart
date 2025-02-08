@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/constants.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/services/tts.dart';
 
 enum SlideDirection { left, right }
@@ -114,6 +115,16 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
     });
   }
 
+  // void _close() {
+  //   setState(() {
+  //     _onAnimate = false;
+  //     // _animateTur
+  //   });
+  //   Timer(const Duration(milliseconds: 1000), () {
+  //     NavigatorRep().routeBloc.goto(Panel(type: PageType.home, fullPop: true));
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
@@ -122,6 +133,7 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
       return SizedBox(
           width: size.width,
           height: size.height,
+          // color: Colors.amber,
           child: Stack(alignment: Alignment.center, children: [
             AnimatedPositioned(
                 duration: Constants.animDurationMid,
@@ -136,14 +148,15 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                         margin: const EdgeInsets.only(top: 20),
                         width: size.width,
                         height: size.height,
-                        padding: const EdgeInsets.only(bottom: 70),
+                        padding: const EdgeInsets.only(bottom: 20),
                         child: SlideTransition(
                             position: _animateScale,
                             child: AnimatedRotation(
                                 turns: _animateTurns,
                                 duration: Constants.animDurationMid,
                                 child: Container(
-                                    color: Theme.of(context).colorScheme.card,
+                                    // color: Theme.of(context).colorScheme.card,
+                                    color: Colors.transparent,
                                     child: Column(children: [
                                       if (pageType == CardPageType.defToWords)
                                         Expanded(child: _defToWords()),
@@ -155,24 +168,52 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                           CardPageType.wordRemeberOrNot)
                                         Expanded(child: _rememberOrNot()),
                                       if (pageType == CardPageType.audioToDef)
-                                        Expanded(child: _audioToDef())
+                                        Expanded(child: _audioToDef()),
+                                      ButtonRoundCorner(
+                                          text: "Not sure",
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .buttonOption1,
+                                          colorText: Theme.of(context)
+                                              .colorScheme
+                                              .cardText,
+                                          direction: TextDirection.rtl,
+                                          radious: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          onPressed: () {
+                                            _onDone(false);
+                                            // NavigatorRep()
+                                            //     .routeBloc
+                                            //     .goto(Panel(type: PageType.home, fullPop: true));
+                                            // setState(() {
+                                            //   _onAnimate = false;
+                                            //   _animateTurns = 1.0;
+                                            // });
+                                          })
                                     ]))))))),
             //
             // don't know answer
-            Positioned(
-                bottom: 0,
-                left: 0,
-                right: 0,
-                child: FixedFooterBottom(
-                    child1: ButtonRoundCorner(
-                        text: "Don't know",
-                        color: Theme.of(context).colorScheme.buttonOption1,
-                        colorText: Theme.of(context).colorScheme.cardText,
-                        direction: TextDirection.rtl,
-                        radious: const BorderRadius.all(Radius.circular(10)),
-                        onPressed: () {
-                          _onDone(false);
-                        })))
+            // Positioned(
+            //     bottom: 0,
+            //     left: 0,
+            //     right: 0,
+            //     child: FixedFooterBottom(
+            //         child1: ButtonRoundCorner(
+            //             text: "Not sure",
+            //             color: Theme.of(context).colorScheme.buttonOption1,
+            //             colorText: Theme.of(context).colorScheme.cardText,
+            //             direction: TextDirection.rtl,
+            //             radious: const BorderRadius.all(Radius.circular(10)),
+            //             onPressed: () {
+            //               // _onDone(false);
+            //               // NavigatorRep()
+            //               //     .routeBloc
+            //               //     .goto(Panel(type: PageType.home, fullPop: true));
+            //               setState(() {
+            //                 _onAnimate = false;
+            //                 _animateTurns = 1.0;
+            //               });
+            //             })))
           ]));
     });
   }

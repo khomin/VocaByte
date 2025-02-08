@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:vocabyte/components/circle_button.dart';
 import 'package:vocabyte/components/container_click.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
@@ -42,9 +43,72 @@ class PageHomeState extends State<PageHome> {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       var size = MediaQuery.of(context).size;
-      return Container(
-          color: Theme.of(context).colorScheme.page,
-          child: Column(children: [
+      return Scaffold(
+          // backgroundColor: Colors.deepOrange,
+          backgroundColor: Theme.of(context).colorScheme.page,
+          appBar: AppBar(
+              // surfaceTintColor: Theme.of(context).colorScheme.baseColor1,
+              // backgroundColor: Theme.of(context).colorScheme.baseColor1,
+              backgroundColor: Colors.black,
+              centerTitle: true,
+              shadowColor: Theme.of(context).colorScheme.titel3,
+              foregroundColor: Theme.of(context).colorScheme.iconColor,
+              // automaticallyImplyLeading: context.watch<AppModel>().drawerOn,
+              // titleSpacing:
+              //     (Platform.isIOS || Platform.isAndroid) ? 0 : null,
+              title: SizedBox(
+                  height: kToolbarHeight,
+                  width: double.infinity,
+                  // color: Colors.amber,
+                  child: Stack(
+                      // alignment: Alignment.center,
+                      children: [
+                        // if (!context.watch<AppModel>().drawerOn)
+                        // Row(
+                        //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //     children: [
+                        //       //   CircleButton(
+                        //       //       iconData: Icons.arrow_back,
+                        //       //       color: Colors.transparent,
+                        //       //       onPressed: (_) {
+                        //       //         // var nav = context.read<AppModel>().appNavKey;
+                        //       //         // if (nav.currentState?.canPop() == true) {
+                        //       //         //   nav.currentState?.pop();
+                        //       //         // }
+                        //       //       })
+                        //       const Spacer(),
+                        Positioned(
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            top: 0,
+                            child: Center(
+                                child: Text(
+                                    'Home', //NavigatorRep().routeBloc.routeName(page),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w500,
+                                        fontSize: 14,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .titel1)))),
+                        //       const Spacer(),
+                        Positioned(
+                            right: 0,
+                            bottom: 10,
+                            top: 10,
+                            child: Container(
+                              width: 35,
+                              height: 35,
+                              decoration: const BoxDecoration(
+                                  color: Colors.greenAccent,
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(20))),
+                            ))
+                        // ])
+                      ]))),
+          body: Column(children: [
             //
             // start padding
             const SizedBox(height: 20),
@@ -52,7 +116,8 @@ class PageHomeState extends State<PageHome> {
             Expanded(
                 child: GridView(
                     shrinkWrap: true,
-                    padding: EdgeInsets.zero,
+                    // padding: EdgeInsets.zero,
+                    padding: const EdgeInsets.only(left: 5, right: 5),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
                         childAspectRatio:
@@ -61,13 +126,18 @@ class PageHomeState extends State<PageHome> {
                     children: [
                   StreamBuilder(
                       stream: context.read<AppRep>().reviewTask.wordToReviewCnt,
+                      initialData: context
+                          .read<AppRep>()
+                          .reviewTask
+                          .wordToReviewCnt
+                          .valueOrNull,
                       builder: (context, snapshot) {
                         var v = snapshot.data ?? 0;
                         return _item(
                             iconInt: v,
                             header: v > 0 ? 'Review' : 'No words to review',
                             description:
-                                'Keep your words memorized\nYou can add more words using search',
+                                'Keep your words memorized\nAdd words using search',
                             canClick: () => v != 0,
                             onClick: () {
                               widget.onGoToReview();
@@ -77,7 +147,7 @@ class PageHomeState extends State<PageHome> {
                       icon: Icons.search_outlined,
                       header: 'Search',
                       description:
-                          'Find a word and see its meaning with examples',
+                          'Find a word\nand see its meaning\nwith examples',
                       canClick: () => true,
                       onClick: () {
                         widget.onGoToSearch();
@@ -86,7 +156,7 @@ class PageHomeState extends State<PageHome> {
                       icon: Icons.confirmation_number,
                       header: 'Numerals',
                       description:
-                          'Listen to the number and enter it without mistakes',
+                          'Listen to the number\nEnter it without mistakes',
                       canClick: () => true,
                       onClick: () {
                         widget.onGoToNumerals();
@@ -94,8 +164,7 @@ class PageHomeState extends State<PageHome> {
                   _item(
                       icon: Icons.storage_rounded,
                       header: 'Manage words',
-                      description:
-                          'Look at the words in your study list\nChange the next review date or delete them',
+                      description: 'Manage your study list',
                       canClick: () => true,
                       onClick: () {
                         widget.onGoToManageWords();
@@ -114,7 +183,8 @@ class PageHomeState extends State<PageHome> {
       required Function() onClick}) {
     return ContainerClick(
         borderRadius: const BorderRadius.all(Radius.circular(12)),
-        boxColor: Theme.of(context).colorScheme.card,
+        // boxColor: Theme.of(context).colorScheme.card,
+        boxColor: const Color.fromARGB(255, 29, 29, 29),
         clickedColor: Theme.of(context).colorScheme.menuActive,
         onClicked: () {
           if (canClick()) {
@@ -142,12 +212,11 @@ class PageHomeState extends State<PageHome> {
                                         : Theme.of(context)
                                             .colorScheme
                                             .buttonOption1),
-                                padding: const EdgeInsets.all(4),
-                                margin: const EdgeInsets.only(right: 8),
-                                child: Text(
-                                  '$iconInt',
-                                  style: const TextStyle(fontSize: 20),
-                                ))
+                                padding:
+                                    const EdgeInsets.only(left: 10, right: 10),
+                                child: Center(
+                                    child: Text('$iconInt',
+                                        style: const TextStyle(fontSize: 20))))
                             : const SizedBox()))
               ]),
               const SizedBox(height: 10),

@@ -53,6 +53,7 @@ class NavigatorRep {
 
 class PanelRouterBlocSecondary {
   final onGoto = PublishSubject<Panel?>();
+  final onHideBottom = BehaviorSubject<bool>.seeded(false);
   final onCurrent = BehaviorSubject<Panel?>();
   final navKey = GlobalKey<NavigatorState>();
   // late NavigatorObserverCustom observer;
