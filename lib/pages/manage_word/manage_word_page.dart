@@ -1,3 +1,4 @@
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_button.dart';
 import 'package:vocabyte/components/hover_click.dart';
@@ -47,7 +48,6 @@ class ManageWordPageState extends State<ManageWordPage> {
   }
 
   void _clicked(String text) async {
-    _model.clearSearch();
     _model.loseFocus();
     var r = await ServiceApi().searchWords(word: text, useLike: false);
     var word = r.item.firstOrNull;
@@ -94,7 +94,9 @@ class ManageWordPageState extends State<ManageWordPage> {
                       physics: const ClampingScrollPhysics(),
                       slivers: [
                         SliverAppBar(
-                          flexibleSpace: _appBar(),
+                          flexibleSpace: AppBar2(
+                              type: Type.back,
+                              child: Flexible(child: _input())),
                         ),
                         //
                         // filtered
@@ -107,27 +109,11 @@ class ManageWordPageState extends State<ManageWordPage> {
                         // nothing found
                         if (model.query?.isNotEmpty == true &&
                             model.filtered.isEmpty)
-                          _searchNotFound()
+                          _searchNotFound(),
+                        //
+                        // TODO: busy
                       ]);
                 })));
-  }
-
-  Widget _appBar() {
-    return Container(
-        color: Theme.of(context).colorScheme.card,
-        child: Row(children: [
-          RoundButton(
-              padding: const EdgeInsets.only(left: 10),
-              color: Colors.transparent,
-              iconColor: Theme.of(context).colorScheme.white,
-              size: const Size(50, 50),
-              iconSize: 22,
-              iconData: Icons.arrow_back_ios,
-              onPressed: (p0) {
-                Navigator.of(context).pop();
-              }),
-          Flexible(child: _input())
-        ]));
   }
 
   Widget _input() {
@@ -180,7 +166,7 @@ class ManageWordPageState extends State<ManageWordPage> {
                     iconColor:
                         Theme.of(context).colorScheme.white.withOpacity(0.5),
                     onPressed: (_) {
-                      _model.controller.clear();
+                      _model.reset();
                     });
               })
             ])));

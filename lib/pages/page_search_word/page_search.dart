@@ -134,7 +134,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                     iconColor:
                         Theme.of(context).colorScheme.white.withOpacity(0.5),
                     onPressed: (_) {
-                      _model.controller.clear();
+                      _model.reset();
                     });
               })
             ])));
@@ -198,66 +198,4 @@ class SearchWordPageState extends State<SearchWordPage> {
               });
         });
   }
-
-  // Widget _searchInput() {
-  //   return Padding(
-  //       padding: const EdgeInsets.only(bottom: 10),
-  //       child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children: [
-  //             Stack(children: [
-  //               Row(children: [
-  //                 Expanded(
-  //                     child: TextField(
-  //                         controller: _model.controller,
-  //                         focusNode: _model.focus,
-  //                         onChanged: (value) {
-  //                           _model.search(value);
-  //                         },
-  //                         onEditingComplete: () {},
-  //                         style: TextStyle(
-  //                             color: Theme.of(context).colorScheme.inputText,
-  //                             fontSize: 15),
-  //                         decoration: InputDecoration(
-  //                             fillColor:
-  //                                 Theme.of(context).colorScheme.inputBackground,
-  //                             contentPadding:
-  //                                 const EdgeInsets.only(left: 10, right: 10),
-  //                             focusedBorder: OutlineInputBorder(
-  //                                 borderRadius: const BorderRadius.all(
-  //                                     Radius.circular(6)),
-  //                                 borderSide: BorderSide(
-  //                                     color: Theme.of(context)
-  //                                         .colorScheme
-  //                                         .listSplit)),
-  //                             hintText: 'Enter word',
-  //                             hintStyle: TextStyle(
-  //                                 color:
-  //                                     Theme.of(context).colorScheme.inputHint,
-  //                                 fontSize: 15),
-  //                             enabledBorder: OutlineInputBorder(
-  //                                 borderRadius:
-  //                                     const BorderRadius.all(Radius.zero),
-  //                                 borderSide: BorderSide(
-  //                                     color: Theme.of(context)
-  //                                         .colorScheme
-  //                                         .listSplit)))))
-  //               ]),
-  //               if (_model.query.isNotEmpty)
-  //                 Positioned(
-  //                     top: 0,
-  //                     bottom: 0,
-  //                     right: 10,
-  //                     child: HoverButton(
-  //                       icon: Icons.cancel,
-  //                       color: Theme.of(context).colorScheme.inputHint,
-  //                       hoverColor: Theme.of(context).colorScheme.inputHint,
-  //                       onClicked: (_) {
-  //                         _model.reset();
-  //                       },
-  //                     ))
-  //             ])
-  //           ]));
-  // }
 }

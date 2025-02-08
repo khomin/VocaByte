@@ -89,30 +89,7 @@ class CardReviewNavState extends State<CardReviewNav> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    // return PopScope(
-    //     canPop: false,
-    //     onPopInvokedWithResult: (didPop, result) async {
-    //       if (didPop) return;
-    //       // TODO: back
-    //       // var page = NavigatorRep().routeBloc.onCurrent.valueOrNull;
-    //       // if (await Navigator.of(context).maybePop()) {
-    //       //   return;
-    //       // }
-    //       // if (_curPage == PageType.reviewCard) {
-    //       //   NavigatorRep().routeBloc.fullPop();
-    //       // } else {
-    //       // var nav = NavigatorRep().routeBloc.navKey;
-    //       var nav = _navKey;
-    //       // var nav = context.read<AppModel>().appNavKey;
-    //       if (nav.currentState?.canPop() == true) {
-    //         nav.currentState?.pop();
-    //         return;
-    //       }
-    //       //   // SystemNavigator.pop();
-    //       // }
-    //     },
-    //     child:
+    // var size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
             shadowColor: Theme.of(context).colorScheme.titel3,
@@ -139,9 +116,6 @@ class CardReviewNavState extends State<CardReviewNav> {
                 ]))),
         body: Container(
             color: Colors.yellow.withOpacity(0.3),
-            // color: Theme.of(context).colorScheme.page,
-            // width: size.width,
-            // height: size.height,
             child: Column(children: [
               //
               // debug info

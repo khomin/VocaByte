@@ -1,4 +1,5 @@
 import 'package:expandable_page_view/expandable_page_view.dart';
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/button_with_menu.dart';
@@ -137,6 +138,7 @@ class PageWordDetailsState extends State<PageWordDetails>
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
+            appBar: AppBar(leading: const AppBar2(type: Type.close)),
             body: ChangeNotifierProvider(
                 create: (_) => SearchWordModel(),
                 builder: (context, child) {

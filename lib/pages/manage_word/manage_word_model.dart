@@ -19,7 +19,7 @@ class ManageWordModel with ChangeNotifier {
 
   void search(String v) async {
     if (v.isEmpty) {
-      clearSearch();
+      reset();
       return;
     }
     query = v;
@@ -36,7 +36,7 @@ class ManageWordModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearSearch() {
+  void reset() {
     query = null;
     controller.text = '';
     filtered.clear();

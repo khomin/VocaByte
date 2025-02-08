@@ -1,3 +1,4 @@
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -35,31 +36,17 @@ class NumeralsNavState extends State<NumeralsNav> {
     var size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
+            appBar: AppBar(leading: const AppBar2(type: Type.close)),
             body: Container(
                 color: Theme.of(context).colorScheme.page,
                 width: size.width,
                 height: size.height,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [_appBar(), _navigator()]))));
-  }
-
-  Widget _appBar() {
-    return Container(
-        color: Theme.of(context).colorScheme.card,
-        child: Row(children: [
-          const SizedBox(width: 5),
-          RoundButton(
-              color: Colors.white.withOpacity(0.05),
-              iconColor: Theme.of(context).colorScheme.white,
-              size: const Size(50, 50),
-              iconSize: 22,
-              radius: 20,
-              iconData: Icons.close,
-              onPressed: (p0) {
-                Navigator.of(context).pop();
-              })
-        ]));
+                    children: [
+                      // const AppBar2(type: Type.close),
+                      _navigator()
+                    ]))));
   }
 
   Widget _navigator() {
