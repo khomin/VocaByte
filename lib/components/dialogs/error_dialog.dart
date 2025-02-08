@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class ErrorDialog {
   void show(BuildContext context, String error, {Function? onClosed}) {

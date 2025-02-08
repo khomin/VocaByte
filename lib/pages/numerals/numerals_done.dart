@@ -110,7 +110,7 @@ class NumeralsDone extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 top: 50, left: 20, right: 20),
                             child: Button3(
-                                text: "Continue",
+                                text: 'Continue',
                                 color:
                                     Theme.of(context).colorScheme.buttonOption1,
                                 colorText:

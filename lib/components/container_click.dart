@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 
 class ContainerClick extends StatefulWidget {
   const ContainerClick(
@@ -61,8 +61,8 @@ class _State extends State<ContainerClick> with TickerProviderStateMixin {
             decoration: BoxDecoration(
                 color: widget.boxColor, borderRadius: widget.borderRadius),
             height: widget.height,
-            child: HoverClickComponent(
-                onClick: () {
+            child: HoverClick(
+                onPressedL: (_) {
                   _tm?.cancel();
                   _tm = Timer(const Duration(milliseconds: 200), () {
                     setState(() {

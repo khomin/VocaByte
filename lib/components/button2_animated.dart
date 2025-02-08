@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 
 class Button2Animated extends StatefulWidget {
   const Button2Animated(
@@ -26,8 +26,8 @@ class Button2AnimatedState extends State<Button2Animated> {
 
   @override
   Widget build(BuildContext context) {
-    return HoverClickComponent(
-        onClick: () async {
+    return HoverClick(
+        onPressedL: (_) async {
           setState(() {
             _active = true;
           });

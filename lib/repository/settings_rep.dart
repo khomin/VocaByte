@@ -3,7 +3,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/utils.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingsData {}

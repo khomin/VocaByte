@@ -2,16 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/container_click.dart';
+import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class SettingsDailiyGoal extends StatefulWidget {
-  const SettingsDailiyGoal(
-      {required this.onBack, required this.onChanged, super.key});
+  const SettingsDailiyGoal({required this.onChanged, super.key});
 
-  final Function onBack;
-  final Function onChanged;
+  final Function(int value) onChanged;
   @override
   State<SettingsDailiyGoal> createState() => _State();
 }
@@ -49,7 +48,8 @@ class _State extends State<SettingsDailiyGoal> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
+    return SafeArea(
+        child: Scaffold(body: Builder(builder: (BuildContext context) {
       return Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,37 +70,38 @@ class _State extends State<SettingsDailiyGoal> {
                                 return Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Expanded(
-                                          child: ContainerClick(
-                                              height: 100,
-                                              onClicked: () async {
-                                                SettingsRep()
-                                                    .setDailyGoal(value);
-                                                Timer(
-                                                    const Duration(
-                                                        milliseconds: 300),
-                                                    () async {
-                                                  widget.onChanged();
-                                                });
-                                              },
-                                              boxColor: value == _dailyGoal
+                                      Padding(
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                          child: RoundButton(
+                                              color: value == _dailyGoal
                                                   ? Theme.of(context)
                                                       .colorScheme
                                                       .cardSuccess
                                                   : Theme.of(context)
                                                       .colorScheme
                                                       .page,
-                                              clickedColor: Theme.of(context)
-                                                  .colorScheme
-                                                  .cardSuccess,
+                                              iconColor: Colors.pink,
+                                              size: const Size(200, 80),
+                                              radius: 15,
+                                              useScaleAnimation: true,
                                               child: Center(
                                                   child: Text(
-                                                      '$value words a day'))))
+                                                      '$value words a day')),
+                                              onPressed: (p0) async {
+                                                Timer(
+                                                    const Duration(
+                                                        milliseconds: 200),
+                                                    () async {
+                                                  widget.onChanged(value);
+                                                  Navigator.of(context).pop();
+                                                });
+                                              }))
                                     ]);
                               })))
                 ])))
           ]);
-    });
+    })));
   }
 
   Widget _card(Widget child) {

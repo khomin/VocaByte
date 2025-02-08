@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 
 class CustomCheckBox extends StatelessWidget {
   const CustomCheckBox({required this.value, this.onChanged, super.key});
@@ -8,8 +8,8 @@ class CustomCheckBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return HoverClickComponent(
-        onClick: (_) {
+    return HoverClick(
+        onPressedL: (_) {
           onChanged?.call();
         },
         child: Container(

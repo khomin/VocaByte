@@ -1,13 +1,13 @@
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/numerals/numerals_done.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 class NumeralsNav extends StatefulWidget {
-  const NumeralsNav({required this.onBack, super.key});
-  final Function onBack;
+  const NumeralsNav({super.key});
   @override
   NumeralsNavState createState() => NumeralsNavState();
 }
@@ -33,13 +33,33 @@ class NumeralsNavState extends State<NumeralsNav> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    return SafeArea(
+        child: Scaffold(
+            body: Container(
+                color: Theme.of(context).colorScheme.page,
+                width: size.width,
+                height: size.height,
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [_appBar(), _navigator()]))));
+  }
+
+  Widget _appBar() {
     return Container(
-        color: Theme.of(context).colorScheme.page,
-        width: size.width,
-        height: size.height,
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [_navigator()]));
+        color: Theme.of(context).colorScheme.card,
+        child: Row(children: [
+          const SizedBox(width: 5),
+          RoundButton(
+              color: Colors.white.withOpacity(0.05),
+              iconColor: Theme.of(context).colorScheme.white,
+              size: const Size(50, 50),
+              iconSize: 22,
+              radius: 20,
+              iconData: Icons.close,
+              onPressed: (p0) {
+                Navigator.of(context).pop();
+              })
+        ]));
   }
 
   Widget _navigator() {
@@ -91,7 +111,7 @@ class NumeralsNavState extends State<NumeralsNav> {
                           result: UiHelper.getRouteArg(
                               settings.arguments, 'result'),
                           onDone: () {
-                            widget.onBack();
+                            Navigator.of(context).pop();
                           }));
               }
             }));

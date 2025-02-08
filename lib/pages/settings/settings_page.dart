@@ -8,7 +8,7 @@ import 'package:loggy/loggy.dart';
 import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/dialogs/confirm_dialog.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
@@ -58,12 +58,13 @@ class _State extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (BuildContext context) {
+    return SafeArea(
+        child: Scaffold(body: Builder(builder: (BuildContext context) {
       return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         _profile(),
         _numComplexity(),
       ]);
-    });
+    })));
   }
 
   Widget _profile() {
@@ -91,8 +92,8 @@ class _State extends State<SettingsPage> {
                     color: Theme.of(context).colorScheme.iconColor,
                   )),
               const Spacer(),
-              HoverClickComponent(
-                  onClick: () {
+              HoverClick(
+                  onPressedL: (_) {
                     widget.onChangeGoal();
                   },
                   child: Row(children: [

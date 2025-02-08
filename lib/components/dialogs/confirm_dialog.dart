@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
 import 'package:vocabyte/components/two_buttons.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 class ConfirmDialog {

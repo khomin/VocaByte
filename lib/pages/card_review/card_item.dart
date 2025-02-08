@@ -1,7 +1,7 @@
 import 'package:vocabyte/components/container_click.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class CardItem extends StatefulWidget {
   const CardItem(

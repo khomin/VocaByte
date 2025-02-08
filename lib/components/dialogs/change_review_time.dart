@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/custom_checkbox.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 enum ReviewTime { today, day1, week1, month1, month3 }
@@ -104,8 +104,8 @@ class CheckBoxChooserState extends State<CheckBoxChooser> {
       //
       // today
       const SizedBox(height: 20),
-      HoverClickComponent(
-          onClick: () {
+      HoverClick(
+          onPressedL: (_) {
             value = ReviewTime.today;
             widget.onChanged.call(value);
             setState(() {});
@@ -126,8 +126,8 @@ class CheckBoxChooserState extends State<CheckBoxChooser> {
       //
       // 1 day
       const SizedBox(height: 20),
-      HoverClickComponent(
-          onClick: () {
+      HoverClick(
+          onPressedL: (_) {
             value = ReviewTime.day1;
             widget.onChanged.call(value);
             setState(() {});
@@ -148,8 +148,8 @@ class CheckBoxChooserState extends State<CheckBoxChooser> {
       //
       //
       const SizedBox(height: 20),
-      HoverClickComponent(
-          onClick: () {
+      HoverClick(
+          onPressedL: (_) {
             value = ReviewTime.week1;
             widget.onChanged.call(value);
             setState(() {});
@@ -170,8 +170,8 @@ class CheckBoxChooserState extends State<CheckBoxChooser> {
       //
       //
       const SizedBox(height: 20),
-      HoverClickComponent(
-          onClick: () {
+      HoverClick(
+          onPressedL: (_) {
             value = ReviewTime.month1;
             widget.onChanged.call(value);
             setState(() {});
@@ -192,8 +192,8 @@ class CheckBoxChooserState extends State<CheckBoxChooser> {
       //
       //
       const SizedBox(height: 20),
-      HoverClickComponent(
-          onClick: () {
+      HoverClick(
+          onPressedL: (_) {
             value = ReviewTime.month3;
             widget.onChanged.call(value);
             setState(() {});

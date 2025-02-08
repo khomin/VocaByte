@@ -9,16 +9,16 @@ import 'package:vocabyte/app/ui_helper.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome(
-      {required this.onGoToReview,
-      required this.onGoToSearch,
-      required this.onGoToManageWords,
-      required this.onGoToNumerals,
+      {required this.onReview,
+      required this.onSearch,
+      required this.onManageWords,
+      required this.onNumerals,
       super.key});
 
-  final Function onGoToReview;
-  final Function onGoToSearch;
-  final Function onGoToManageWords;
-  final Function onGoToNumerals;
+  final Function() onReview;
+  final Function() onSearch;
+  final Function() onManageWords;
+  final Function() onNumerals;
 
   @override
   PageHomeState createState() => PageHomeState();
@@ -113,6 +113,8 @@ class PageHomeState extends State<PageHome> {
             // start padding
             const SizedBox(height: 20),
 
+            // TODO: add a cool animation
+
             Expanded(
                 child: GridView(
                     shrinkWrap: true,
@@ -140,7 +142,7 @@ class PageHomeState extends State<PageHome> {
                                 'Keep your words memorized\nAdd words using search',
                             canClick: () => v != 0,
                             onClick: () {
-                              widget.onGoToReview();
+                              widget.onReview();
                             });
                       }),
                   _item(
@@ -150,7 +152,7 @@ class PageHomeState extends State<PageHome> {
                           'Find a word\nand see its meaning\nwith examples',
                       canClick: () => true,
                       onClick: () {
-                        widget.onGoToSearch();
+                        widget.onSearch();
                       }),
                   _item(
                       icon: Icons.confirmation_number,
@@ -159,7 +161,7 @@ class PageHomeState extends State<PageHome> {
                           'Listen to the number\nEnter it without mistakes',
                       canClick: () => true,
                       onClick: () {
-                        widget.onGoToNumerals();
+                        widget.onNumerals();
                       }),
                   _item(
                       icon: Icons.storage_rounded,
@@ -167,7 +169,7 @@ class PageHomeState extends State<PageHome> {
                       description: 'Manage your study list',
                       canClick: () => true,
                       onClick: () {
-                        widget.onGoToManageWords();
+                        widget.onManageWords();
                       })
                 ]))
           ]));

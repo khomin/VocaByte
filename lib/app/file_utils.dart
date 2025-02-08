@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class FileUtils {
   static String homeDir = '';

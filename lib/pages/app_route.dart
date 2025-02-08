@@ -1,15 +1,20 @@
-import 'dart:io';
-import 'package:vocabyte/components/circle_button.dart';
-import 'package:vocabyte/components/dev_panel.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:vocabyte/components/disposable_stream.dart';
+import 'package:vocabyte/components/navigation_observer.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/manage_word/manage_word_page.dart';
+import 'package:vocabyte/pages/numerals/numerals_nav.dart';
 import 'package:vocabyte/pages/page_home/page_home.dart';
 import 'package:vocabyte/pages/page_search_word/page_search.dart';
-import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
+import 'package:vocabyte/pages/settings/settings_daily_goal.dart';
 import 'package:vocabyte/pages/settings/settings_page.dart';
+import 'package:vocabyte/pages/word_details/page_word_details.dart';
+import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/nav_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/repository/settings_rep.dart';
+import 'package:vocabyte/services/service_api.dart';
 
 class AppRoute extends StatefulWidget {
   const AppRoute({super.key});
@@ -19,185 +24,248 @@ class AppRoute extends StatefulWidget {
 }
 
 class _AppRouteState extends State<AppRoute> {
+  late NavigatorObserverCustom _observer;
+  final _dispStream = DisposableStream();
   final tag = 'appRoute';
 
   @override
   void initState() {
     super.initState();
+
+    _observer = NavigatorObserverCustom(
+        onDidPop: () {},
+        onChanged: (name, arg) {
+          var page = PageType.values.firstWhereOrNull((v) => v.name == name);
+          switch (page) {
+            case null:
+            case PageType.home:
+              NavigatorRep().routeBloc.onHideBottom.add(false);
+              break;
+            case PageType.reviewCard:
+              NavigatorRep().routeBloc.onHideBottom.add(true);
+              break;
+            case PageType.searchWord:
+            case PageType.manageWords:
+            case PageType.settings:
+              break;
+          }
+          if (page != null) {
+            NavigatorRep().routeBloc.onCurrent.add(Panel(type: page));
+          }
+        });
+    _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((page) {
+      if (page == null) return;
+      var settings = RouteSettings(name: page.type.name);
+      var nav = NavigatorRep().routeBloc.navKey.currentState;
+      while (nav?.canPop() == true) {
+        nav?.pop();
+      }
+      switch (page.type) {
+        case PageType.searchWord:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return SearchWordPage(onShow: (data) async {
+                  AppRep().cachedWord = data;
+                  await ServiceApi().putRecentWord(data.word);
+                  await AppRep().updateRecent();
+                  nav.push(CupertinoPageRoute(
+                      settings: settings,
+                      builder: (context) {
+                        return PageWordDetails(
+                            onBack: () {
+                              // TODO: handle
+                            },
+                            playWordAtStart: true);
+                      }));
+                });
+              }));
+          break;
+        case PageType.reviewCard:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return CardReviewNav(onBack: () {});
+              }));
+          break;
+        case PageType.manageWords:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return ManageWordPage(onShowWord: (data) {
+                  nav.push(CupertinoPageRoute(
+                      settings: settings,
+                      builder: (context) {
+                        return PageWordDetails(
+                            onBack: () {}, playWordAtStart: true);
+                      }));
+                });
+              }));
+          break;
+        case PageType.settings:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return SettingsPage(onChangeGoal: () {
+                  nav.push(CupertinoPageRoute(
+                      settings: settings,
+                      builder: (context) {
+                        return SettingsDailiyGoal(onChanged: (v) {
+                          SettingsRep().setDailyGoal(v);
+                          SettingsRep().onChanged.add(null);
+                        });
+                      }));
+                });
+              }));
+          break;
+        default:
+          break;
+      }
+    }));
   }
 
   @override
   void dispose() {
     super.dispose();
+    _dispStream.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      // var page = context.watch<AppModel>().page;
-      return Scaffold(
-          appBar: AppBar(
-              surfaceTintColor: Theme.of(context).colorScheme.baseColor1,
-              backgroundColor: Theme.of(context).colorScheme.baseColor1,
-              centerTitle: true,
-              shadowColor: Theme.of(context).colorScheme.titel3,
-              foregroundColor: Theme.of(context).colorScheme.iconColor,
-              // automaticallyImplyLeading: context.watch<AppModel>().drawerOn,
-              titleSpacing: (Platform.isIOS || Platform.isAndroid) ? 0 : null,
-              title: Stack(alignment: Alignment.center, children: [
-                // if (!context.watch<AppModel>().drawerOn)
-                Row(children: [
-                  CircleButton(
-                      iconData: Icons.arrow_back,
-                      color: Colors.transparent,
-                      onPressed: (_) {
-                        // var nav = context.read<AppModel>().appNavKey;
-                        // if (nav.currentState?.canPop() == true) {
-                        //   nav.currentState?.pop();
-                        // }
-                      })
-                ]),
-                Text(
-                    'TODO ROUTE NAME', //NavigatorRep().routeBloc.routeName(page),
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
-                        fontWeight: FontWeight.w500,
-                        fontSize: 14,
-                        color: Theme.of(context).colorScheme.titel1)),
-                //
-                // TODO: move progress
-                // if (page == PageType.reviewCard ||
-                //     page == PageType.numerals)
-                //   StreamBuilder(
-                //       stream: AppRep().onProgressChanged,
-                //       builder: (context, snapshot) {
-                //         var v = snapshot.data ?? 0.0;
-                //         return Align(
-                //             alignment: Alignment.centerRight,
-                //             child: Padding(
-                //                 padding: const EdgeInsets.all(10),
-                //                 child: SizedBox(
-                //                     child: CircularProgressIndicator(
-                //                         value: v,
-                //                         backgroundColor: Theme.of(context)
-                //                             .colorScheme
-                //                             .page,
-                //                         color: Theme.of(context)
-                //                             .colorScheme
-                //                             .titel1))));
-                // })
-              ])),
-          body: Column(children: [
-            Expanded(
-                child: Navigator(
-                    key: NavigatorRep().routeBloc.navKey,
-                    initialRoute: PageType.home.name,
-                    // observers: [NavigatorRep().routeBloc.observer],
-                    onGenerateRoute: (RouteSettings settings) {
-                      var type = NavigatorRep()
-                          .routeBloc
-                          .routeNameToType(settings.name);
-                      switch (type) {
-                        //
-                        // (default)
-                        case PageType.home:
-                          return PageRouteBuilder(
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                              settings: RouteSettings(name: type.name),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                              pageBuilder: (_, __, ___) =>
-                                  PageHome(onGoToReview: () {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.reviewCard,
-                                    //     replace: true);
-                                  }, onGoToSearch: () {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.searchWord,
-                                    //     replace: true);
-                                  }, onGoToManageWords: () {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.manageWords,
-                                    //     replace: true);
-                                  }, onGoToNumerals: () {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.numerals,
-                                    //     replace: true);
+      var nav = NavigatorRep().routeBloc.navKey;
+      return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) return;
+            var nav = NavigatorRep().routeBloc.navKey;
+            if (nav.currentState?.canPop() == true) {
+              nav.currentState?.pop();
+              return;
+            } else {
+              SystemNavigator.pop();
+            }
+          },
+          child: Navigator(
+              key: nav,
+              initialRoute: PageType.home.name,
+              observers: [_observer],
+              onGenerateRoute: (RouteSettings settings) {
+                var type =
+                    NavigatorRep().routeBloc.routeNameToType(settings.name);
+                switch (type) {
+                  //
+                  // (default)
+                  case PageType.home:
+                    return PageRouteBuilder(
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                        settings: RouteSettings(name: type.name),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return child;
+                        },
+                        pageBuilder: (_, __, ___) => PageHome(onReview: () {
+                              // review
+                              NavigatorRep()
+                                  .routeBloc
+                                  .goto(Panel(type: PageType.reviewCard));
+                            }, onSearch: () {
+                              // search
+                              NavigatorRep()
+                                  .routeBloc
+                                  .goto(Panel(type: PageType.searchWord));
+                            }, onManageWords: () {
+                              // manage
+                              NavigatorRep()
+                                  .routeBloc
+                                  .goto(Panel(type: PageType.manageWords));
+                            }, onNumerals: () {
+                              // numerals
+                              nav.currentState?.push(CupertinoPageRoute(
+                                  settings: settings,
+                                  builder: (context) {
+                                    return const NumeralsNav();
                                   }));
+                            }));
+                  default:
+                    throw Exception('Invalid route: ${settings.name}');
+                }
+              }));
+    });
+  }
+}
 
-                        //
+
+//
                         // search word
-                        case PageType.searchWord:
-                          return PageRouteBuilder(
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                              settings: RouteSettings(name: type.name),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                              pageBuilder: (_, __, ___) =>
-                                  PageSearchWord(onShowWord: (data) async {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.wordDetails,
-                                    //     replace: false);
-                                    // await ServiceApi()
-                                    //     .putRecentWord(data.word);
-                                    // AppRep().updateRecent();
-                                  }));
-                        //
-                        // card review
-                        case PageType.reviewCard:
-                          return PageRouteBuilder(
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                              settings: RouteSettings(name: type.name),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                              pageBuilder: (_, __, ___) =>
-                                  CardReviewNav(onBack: () {
-                                    // context.read<AppModel>().pageBack();
-                                  }));
-                        //
-                        // manage
-                        case PageType.manageWords:
-                          return PageRouteBuilder(
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                              settings: RouteSettings(name: type.name),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                              pageBuilder: (_, __, ___) =>
-                                  ManageWordPage(onShowWord: (data) {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.wordDetails,
-                                    //     replace: false);
-                                  }));
-                        //
-                        // settings
-                        case PageType.settings:
-                          return PageRouteBuilder(
-                              transitionDuration: Duration.zero,
-                              reverseTransitionDuration: Duration.zero,
-                              settings: RouteSettings(name: type.name),
-                              transitionsBuilder: (context, animation,
-                                  secondaryAnimation, child) {
-                                return child;
-                              },
-                              pageBuilder: (_, __, ___) =>
-                                  SettingsPage(onChangeGoal: () {
-                                    // context.read<AppModel>().goToPage(
-                                    //     page: PageType.changeDailyGoal,
-                                    //     replace: false);
-                                  }));
+                        // case PageType.searchWord:
+                        //   return PageRouteBuilder(
+                        //       transitionDuration: Duration.zero,
+                        //       reverseTransitionDuration: Duration.zero,
+                        //       settings: RouteSettings(name: type.name),
+                        //       transitionsBuilder: (context, animation,
+                        //           secondaryAnimation, child) {
+                        //         return child;
+                        //       },
+                        //       pageBuilder: (_, __, ___) =>
+                        //           PageSearchWord(onShowWord: (data) async {
+                        //             // context.read<AppModel>().goToPage(
+                        //             //     page: PageType.wordDetails,
+                        //             //     replace: false);
+                        //             // await ServiceApi()
+                        //             //     .putRecentWord(data.word);
+                        //             // AppRep().updateRecent();
+                        //           }));
+                        // //
+                        // // card review
+                        // case PageType.reviewCard:
+                        //   return PageRouteBuilder(
+                        //       transitionDuration: Duration.zero,
+                        //       reverseTransitionDuration: Duration.zero,
+                        //       settings: RouteSettings(name: type.name),
+                        //       transitionsBuilder: (context, animation,
+                        //           secondaryAnimation, child) {
+                        //         return child;
+                        //       },
+                        //       pageBuilder: (_, __, ___) =>
+                        //           CardReviewNav(onBack: () {
+                        //             // context.read<AppModel>().pageBack();
+                        //           }));
+                        // //
+                        // // manage
+                        // case PageType.manageWords:
+                        //   return PageRouteBuilder(
+                        //       transitionDuration: Duration.zero,
+                        //       reverseTransitionDuration: Duration.zero,
+                        //       settings: RouteSettings(name: type.name),
+                        //       transitionsBuilder: (context, animation,
+                        //           secondaryAnimation, child) {
+                        //         return child;
+                        //       },
+                        //       pageBuilder: (_, __, ___) =>
+                        //           ManageWordPage(onShowWord: (data) {
+                        //             // context.read<AppModel>().goToPage(
+                        //             //     page: PageType.wordDetails,
+                        //             //     replace: false);
+                        //           }));
+                        // //
+                        // // settings
+                        // case PageType.settings:
+                        //   return PageRouteBuilder(
+                        //       transitionDuration: Duration.zero,
+                        //       reverseTransitionDuration: Duration.zero,
+                        //       settings: RouteSettings(name: type.name),
+                        //       transitionsBuilder: (context, animation,
+                        //           secondaryAnimation, child) {
+                        //         return child;
+                        //       },
+                        //       pageBuilder: (_, __, ___) =>
+                        //           SettingsPage(onChangeGoal: () {
+                        //             // context.read<AppModel>().goToPage(
+                        //             //     page: PageType.changeDailyGoal,
+                        //             //     replace: false);
+                        //           }));
                         //                                       //
                         // // word details
                         // case PageType.wordDetails:
@@ -275,19 +343,3 @@ class _AppRouteState extends State<AppRoute> {
                         //             SettingsRep().onChanged.add(null);
                         //             context.read<AppModel>().pageBack();
                         //           }));
-                        default:
-                          throw Exception('Invalid route: ${settings.name}');
-                      }
-                    })),
-            //
-            // dev panel
-            if (Constants.isDev)
-              DevPanel(onGoTo: (page) {
-                // context
-                //     .read<AppModel>()
-                //     .goToPage(page: page, replace: true);
-              })
-          ]));
-    });
-  }
-}

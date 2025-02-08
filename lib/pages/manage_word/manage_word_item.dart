@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 
@@ -40,13 +40,13 @@ class _State extends State<ManageWordItem> {
 
   @override
   Widget build(BuildContext context) {
-    return HoverClickComponent(
+    return HoverClick(
         onHover: (hover) {
           setState(() {
             isHover = hover;
           });
         },
-        onClick: () {
+        onPressedL: (_) {
           widget.onClicked?.call();
         },
         child: Container(

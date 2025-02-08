@@ -7,7 +7,7 @@ import 'package:vocabyte/pages/card_review/card_item.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/services/tts.dart';

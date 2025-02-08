@@ -4,13 +4,13 @@ import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/button_with_menu.dart';
 import 'package:vocabyte/components/dialogs/change_review_time.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:provider/provider.dart';
-import 'package:vocabyte/app/constants.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 import 'package:vocabyte/services/protobuf/proto.pbserver.dart';
@@ -135,146 +135,168 @@ class PageWordDetailsState extends State<PageWordDetails>
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => SearchWordModel(),
-        builder: (context, child) {
-          var size = MediaQuery.of(context).size;
-          var data = AppRep().cachedWord;
-          var sentences = _sentences?.data;
-          var status = _status;
-          if (data == null) return const SizedBox();
-          return Container(
-              color: Theme.of(context).colorScheme.page,
-              width: size.width,
-              height: size.height,
-              child: Stack(alignment: Alignment.center, children: [
-                Column(children: [
-                  Expanded(
-                      child: CustomScrollView(slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                          padding:
-                              EdgeInsets.only(top: size.height / 5, bottom: 50),
-                          child: Column(
-                            children: [
-                              _cardView(),
-                            ],
-                          )),
-                    ),
-                    SliverList(
-                        delegate: SliverChildListDelegate([
-                      SingleChildScrollView(
-                          child: Column(children: [
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: sentences?.length ?? 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              var i = sentences?[index];
-                              var textSpan = UiHelper.makeTextSpan(
-                                  _word.toLowerCase(), i ?? '');
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12)),
+    return SafeArea(
+        child: Scaffold(
+            body: ChangeNotifierProvider(
+                create: (_) => SearchWordModel(),
+                builder: (context, child) {
+                  var size = MediaQuery.of(context).size;
+                  var data = AppRep().cachedWord;
+                  var sentences = _sentences?.data;
+                  var status = _status;
+                  if (data == null) return const SizedBox();
+                  return Container(
+                      color: Theme.of(context).colorScheme.page,
+                      width: size.width,
+                      height: size.height,
+                      child: Stack(alignment: Alignment.center, children: [
+                        Column(children: [
+                          Expanded(
+                              child: CustomScrollView(slivers: [
+                            SliverToBoxAdapter(
+                              child: Padding(
+                                  padding: EdgeInsets.only(
+                                      top: size.height / 5, bottom: 50),
+                                  child: Column(
+                                    children: [
+                                      _cardView(),
+                                    ],
+                                  )),
+                            ),
+                            SliverList(
+                                delegate: SliverChildListDelegate([
+                              SingleChildScrollView(
+                                  child: Column(children: [
+                                ListView.builder(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    itemCount: sentences?.length ?? 0,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      var i = sentences?[index];
+                                      var textSpan = UiHelper.makeTextSpan(
+                                          _word.toLowerCase(), i ?? '');
+                                      return Container(
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  const BorderRadius.all(
+                                                      Radius.circular(12)),
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .baseColor1),
+                                          margin: const EdgeInsets.only(
+                                              top: 5,
+                                              bottom: 5,
+                                              left: 20,
+                                              right: 20),
+                                          padding: const EdgeInsets.only(
+                                              top: 5,
+                                              bottom: 5,
+                                              left: 20,
+                                              right: 20),
+                                          child: Text.rich(
+                                              TextSpan(children: textSpan),
+                                              maxLines: 15,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w400,
+                                                  fontSize: 15,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .textInCard)));
+                                    })
+                              ]))
+                            ]))
+                          ])),
+                          FixedFooterBottom(
+                              child1: status != null
+                                  ? ButtonRoundCorner(
+                                      text: status.successCount >= 10
+                                          ? 'Forget'
+                                          : 'Already know',
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .baseColor1),
-                                  margin: const EdgeInsets.only(
-                                      top: 5, bottom: 5, left: 20, right: 20),
-                                  padding: const EdgeInsets.only(
-                                      top: 5, bottom: 5, left: 20, right: 20),
-                                  child: Text.rich(TextSpan(children: textSpan),
-                                      maxLines: 15,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
+                                          .buttonOption2,
+                                      colorText: Theme.of(context)
+                                          .colorScheme
+                                          .cardText,
+                                      direction: TextDirection.rtl,
+                                      radious: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      onPressed: () async {
+                                        var data = AppRep().cachedWord;
+                                        var w = data?.word;
+                                        if (w == null) return;
+                                        await ServiceApi()
+                                            .removeWordFromCurrent(word: w);
+                                        await _refreshStatus();
+                                        AppRep().refreshManageList();
+                                      })
+                                  : ButtonRoundCorner(
+                                      text: 'Should learn',
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .buttonOption1,
+                                      colorText: Theme.of(context)
+                                          .colorScheme
+                                          .cardText,
+                                      direction: TextDirection.ltr,
+                                      radious: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      onPressed: () async {
+                                        var data = AppRep().cachedWord;
+                                        var w = data?.word;
+                                        if (w == null) return;
+                                        await ServiceApi().addWordInReview(
+                                            req: ReqAddWordInReview(
+                                                word: w,
+                                                useExtraFields: false));
+                                        _refreshStatus();
+                                      }),
+                              child2: status != null
+                                  ? status.successCount >= 10
+                                      ? ButtonRoundCorner(
+                                          text: 'Completed',
+                                          iconData: Icons.thumb_up,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .textInCard)));
-                            })
-                      ]))
-                    ]))
-                  ])),
-                  FixedFooterBottom(
-                      child1: status != null
-                          ? ButtonRoundCorner(
-                              text: status.successCount >= 10
-                                  ? 'Forget'
-                                  : 'Already know',
-                              color:
-                                  Theme.of(context).colorScheme.buttonOption2,
-                              colorText: Theme.of(context).colorScheme.cardText,
-                              direction: TextDirection.rtl,
-                              radious:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              onPressed: () async {
-                                var data = AppRep().cachedWord;
-                                var w = data?.word;
-                                if (w == null) return;
-                                await ServiceApi()
-                                    .removeWordFromCurrent(word: w);
-                                await _refreshStatus();
-                                AppRep().refreshManageList();
-                              })
-                          : ButtonRoundCorner(
-                              text: 'Should learn',
-                              color:
-                                  Theme.of(context).colorScheme.buttonOption1,
-                              colorText: Theme.of(context).colorScheme.cardText,
-                              direction: TextDirection.ltr,
-                              radious:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              onPressed: () async {
-                                var data = AppRep().cachedWord;
-                                var w = data?.word;
-                                if (w == null) return;
-                                await ServiceApi().addWordInReview(
-                                    req: ReqAddWordInReview(
-                                        word: w, useExtraFields: false));
-                                _refreshStatus();
-                              }),
-                      child2: status != null
-                          ? status.successCount >= 10
-                              ? ButtonRoundCorner(
-                                  text: 'Completed',
-                                  iconData: Icons.thumb_up,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOption3,
-                                  colorText:
-                                      Theme.of(context).colorScheme.cardText,
-                                  direction: TextDirection.ltr,
-                                  radious: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  onPressed: () {
-                                    widget.onBack.call();
-                                  })
-                              : ButtonWithMenu(
-                                  text: 'Review $_reviewIn',
-                                  onPressed: () {
-                                    widget.onBack.call();
-                                  },
-                                  onMenu: () {
-                                    ChangeReviewTime().show(
-                                        context: context,
-                                        review:
-                                            AppRep.reviewTimeToEnum(_status),
-                                        onSet: (review) async {
-                                          var time =
-                                              AppRep.reviewTimeToInt(review);
-                                          var data = AppRep().cachedWord;
-                                          await AppRep().updateReviewTime(
-                                              data?.word, time);
-                                          _refreshStatus();
-                                        });
-                                  },
-                                )
-                          : null)
-                ])
-              ]));
-        });
+                                              .buttonOption3,
+                                          colorText: Theme.of(context)
+                                              .colorScheme
+                                              .cardText,
+                                          direction: TextDirection.ltr,
+                                          radious: const BorderRadius.all(
+                                              Radius.circular(10)),
+                                          onPressed: () {
+                                            widget.onBack.call();
+                                          })
+                                      : ButtonWithMenu(
+                                          text: 'Review $_reviewIn',
+                                          onPressed: () {
+                                            widget.onBack.call();
+                                          },
+                                          onMenu: () {
+                                            ChangeReviewTime().show(
+                                                context: context,
+                                                review: AppRep.reviewTimeToEnum(
+                                                    _status),
+                                                onSet: (review) async {
+                                                  var time =
+                                                      AppRep.reviewTimeToInt(
+                                                          review);
+                                                  var data =
+                                                      AppRep().cachedWord;
+                                                  await AppRep()
+                                                      .updateReviewTime(
+                                                          data?.word, time);
+                                                  _refreshStatus();
+                                                });
+                                          })
+                                  : null)
+                        ])
+                      ]));
+                })));
   }
 
   Widget _cardView() {
@@ -291,8 +313,8 @@ class PageWordDetailsState extends State<PageWordDetails>
               borderRadius: const BorderRadius.all(Radius.circular(12)),
               color: Theme.of(context).colorScheme.card),
           child: Column(children: [
-            HoverClickComponent(
-                onClick: () {
+            HoverClick(
+                onPressedL: (_) {
                   _playWord();
                 },
                 child: Column(children: [
@@ -406,8 +428,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   if (meaning.example != null)
                                     const SizedBox(height: 20),
                                   if (meaning.example != null)
-                                    HoverClickComponent(
-                                        onClick: () {
+                                    HoverClick(
+                                        onPressedL: (_) {
                                           _playExample();
                                         },
                                         child: Row(children: [
@@ -445,8 +467,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   const SizedBox(height: 10),
                                   //
                                   // play
-                                  HoverClickComponent(
-                                      onClick: () {
+                                  HoverClick(
+                                      onPressedL: (_) {
                                         _playExample();
                                       },
                                       child: Row(

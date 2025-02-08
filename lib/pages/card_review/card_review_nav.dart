@@ -90,97 +90,83 @@ class CardReviewNavState extends State<CardReviewNav> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    return PopScope(
-        canPop: false,
-        onPopInvokedWithResult: (didPop, result) async {
-          if (didPop) return;
-          // TODO: back
-          // var page = NavigatorRep().routeBloc.onCurrent.valueOrNull;
-          // if (_curPage == PageType.reviewCard) {
-          //   NavigatorRep().routeBloc.fullPop();
-          // } else {
-          //   var nav = NavigatorRep().routeBloc.navKey;
-          //   // var nav = context.read<AppModel>().appNavKey;
-          //   if (nav.currentState?.canPop() == true) {
-          //     nav.currentState?.pop();
-          //     return;
-          //   }
-          //   // SystemNavigator.pop();
-          // }
-        },
-        child: Scaffold(
-            appBar: AppBar(
-                // surfaceTintColor: Theme.of(context).colorScheme.baseColor1,
-                // backgroundColor: Theme.of(context).colorScheme.baseColor1,
-                // backgroundColor: Colors.black,
-                // backgroundColor: Colors.amber,
-                centerTitle: true,
-                shadowColor: Theme.of(context).colorScheme.titel3,
-                foregroundColor: Theme.of(context).colorScheme.iconColor,
-                // automaticallyImplyLeading: context.watch<AppModel>().drawerOn,
-                // titleSpacing:
-                //     (Platform.isIOS || Platform.isAndroid) ? 0 : null,
-                title: SizedBox(
-                    height: kToolbarHeight,
-                    width: double.infinity,
-                    // color: Colors.amber,
-                    child: Row(children: [
-                      CircleButton(
-                          iconData: Icons.close,
-                          color: Colors.transparent,
-                          onPressed: (_) {
-                            NavigatorRep().routeBloc.onHideBottom.add(false);
-                            Timer(const Duration(milliseconds: 100), () {
-                              NavigatorRep().routeBloc.goto(
-                                  Panel(type: PageType.home, fullPop: true));
-                            });
-                            // if (nav.currentState?.canPop() == true) {
-                            //   nav.currentState?.pop();
-                            // }
-                          }),
-                      const Spacer(),
-                      Container(
-                        width: 35,
-                        height: 35,
-                        decoration: const BoxDecoration(
-                            color: Colors.greenAccent,
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                      )
-                    ]))),
-            body: //,)
-                Container(
-                    color: Colors.yellow.withOpacity(0.3),
-                    // color: Theme.of(context).colorScheme.page,
-                    // width: size.width,
-                    // height: size.height,
-                    child: Column(children: [
-                      //
-                      // debug info
-                      if (kDebugMode)
-                        Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              StreamBuilder(
-                                  stream: AppRep().reviewTask.wordToReviewCnt,
-                                  builder: (context, snapshot) {
-                                    return Text('reviewCnt=${snapshot.data}, ');
-                                  }),
-                              StreamBuilder(
-                                  stream: AppRep().reviewTask.wordDoneCount,
-                                  builder: (context, snapshot) {
-                                    return Text('doneCount=${snapshot.data}, ');
-                                  }),
-                              StreamBuilder(
-                                  stream: AppRep().onReviewTaskChanged,
-                                  builder: (context, snapshot) {
-                                    return Text(
-                                        'cur=${snapshot.data?.cardData.firstOrNull?.data.word}');
-                                  })
-                            ]),
+    // return PopScope(
+    //     canPop: false,
+    //     onPopInvokedWithResult: (didPop, result) async {
+    //       if (didPop) return;
+    //       // TODO: back
+    //       // var page = NavigatorRep().routeBloc.onCurrent.valueOrNull;
+    //       // if (await Navigator.of(context).maybePop()) {
+    //       //   return;
+    //       // }
+    //       // if (_curPage == PageType.reviewCard) {
+    //       //   NavigatorRep().routeBloc.fullPop();
+    //       // } else {
+    //       // var nav = NavigatorRep().routeBloc.navKey;
+    //       var nav = _navKey;
+    //       // var nav = context.read<AppModel>().appNavKey;
+    //       if (nav.currentState?.canPop() == true) {
+    //         nav.currentState?.pop();
+    //         return;
+    //       }
+    //       //   // SystemNavigator.pop();
+    //       // }
+    //     },
+    //     child:
+    return Scaffold(
+        appBar: AppBar(
+            shadowColor: Theme.of(context).colorScheme.titel3,
+            foregroundColor: Theme.of(context).colorScheme.iconColor,
+            automaticallyImplyLeading: false,
+            titleSpacing: 0,
+            title: Container(
+                color: Theme.of(context).colorScheme.card,
+                child: Row(children: [
+                  CircleButton(
+                      iconData: Icons.close,
+                      color: Colors.transparent,
+                      onPressed: (_) {
+                        Navigator.of(context).pop();
+                      }),
+                  const Spacer(),
+                  Container(
+                      width: 35,
+                      height: 35,
+                      decoration: const BoxDecoration(
+                          color: Colors.greenAccent,
+                          borderRadius: BorderRadius.all(Radius.circular(20)))),
+                  const SizedBox(width: 15)
+                ]))),
+        body: Container(
+            color: Colors.yellow.withOpacity(0.3),
+            // color: Theme.of(context).colorScheme.page,
+            // width: size.width,
+            // height: size.height,
+            child: Column(children: [
+              //
+              // debug info
+              if (kDebugMode)
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  StreamBuilder(
+                      stream: AppRep().reviewTask.wordToReviewCnt,
+                      builder: (context, snapshot) {
+                        return Text('reviewCnt=${snapshot.data}, ');
+                      }),
+                  StreamBuilder(
+                      stream: AppRep().reviewTask.wordDoneCount,
+                      builder: (context, snapshot) {
+                        return Text('doneCount=${snapshot.data}, ');
+                      }),
+                  StreamBuilder(
+                      stream: AppRep().onReviewTaskChanged,
+                      builder: (context, snapshot) {
+                        return Text(
+                            'cur=${snapshot.data?.cardData.firstOrNull?.data.word}');
+                      })
+                ]),
 
-                      _navigator(),
-                    ]))));
+              _navigator(),
+            ])));
   }
 
   Widget _navigator() {

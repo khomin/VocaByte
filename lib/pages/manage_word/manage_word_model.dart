@@ -5,9 +5,9 @@ import 'package:vocabyte/services/protobuf/proto.pb.dart';
 class ManageWordModel with ChangeNotifier {
   final TextEditingController controller = TextEditingController();
   final FocusNode focus = FocusNode();
-  String? search;
-  var listModel = <WordInReview>[];
-  var listModelFilter = <WordInReview>[];
+  String? query;
+  var found = <WordInReview>[];
+  var filtered = <WordInReview>[];
   var _inited = false;
 
   bool get inited => _inited;
@@ -17,29 +17,29 @@ class ManageWordModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void updateSearch(String v) async {
+  void search(String v) async {
     if (v.isEmpty) {
       clearSearch();
       return;
     }
-    search = v;
+    query = v;
     notifyListeners();
 
     if (v.isNotEmpty) {
-      listModelFilter.clear();
-      listModelFilter.addAll(listModel.where((it) {
+      filtered.clear();
+      filtered.addAll(found.where((it) {
         return it.word.toLowerCase().startsWith(v.toLowerCase());
       }));
     } else {
-      listModelFilter = [];
+      filtered = [];
     }
     notifyListeners();
   }
 
   void clearSearch() {
-    search = null;
+    query = null;
     controller.text = '';
-    listModelFilter.clear();
+    filtered.clear();
     notifyListeners();
   }
 
@@ -48,11 +48,11 @@ class ManageWordModel with ChangeNotifier {
   }
 
   void setModels({required List<WordInReview> data}) {
-    listModel.clear();
+    found.clear();
     for (var it in data) {
-      var it2 = listModel.firstWhereOrNull((p) => it == p);
+      var it2 = found.firstWhereOrNull((p) => it == p);
       if (it2 == null) {
-        listModel.add(it);
+        found.add(it);
       }
     }
     notifyListeners();

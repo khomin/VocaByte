@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/hover_click_component.dart';
+import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/app/app_theme.dart';
 
@@ -26,13 +26,13 @@ class _State extends State<WordItem> {
     if (widget.data.meaning.isNotEmpty) {
       meaning = widget.data.meaning[0];
     }
-    return HoverClickComponent(
+    return HoverClick(
         onHover: (hover) {
           setState(() {
             isHover = hover;
           });
         },
-        onClick: () {
+        onPressedL: (_) {
           widget.onClicked?.call();
         },
         child: Container(
