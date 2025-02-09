@@ -21,7 +21,7 @@ import 'package:vocabyte/services/tts.dart';
 class PageWordDetails extends StatefulWidget {
   const PageWordDetails(
       {required this.playWordAtStart, required this.onBack, super.key});
-  final Function onBack;
+  final Function() onBack;
   final bool playWordAtStart;
 
   @override
@@ -136,169 +136,148 @@ class PageWordDetailsState extends State<PageWordDetails>
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(leading: const AppBar2(type: Type.close)),
-            body: ChangeNotifierProvider(
-                create: (_) => SearchWordModel(),
-                builder: (context, child) {
-                  var size = MediaQuery.of(context).size;
-                  var data = AppRep().cachedWord;
-                  var sentences = _sentences?.data;
-                  var status = _status;
-                  if (data == null) return const SizedBox();
-                  return Container(
-                      color: Theme.of(context).colorScheme.page,
-                      width: size.width,
-                      height: size.height,
-                      child: Stack(alignment: Alignment.center, children: [
-                        Column(children: [
-                          Expanded(
-                              child: CustomScrollView(slivers: [
-                            SliverToBoxAdapter(
-                              child: Padding(
-                                  padding: EdgeInsets.only(
-                                      top: size.height / 5, bottom: 50),
-                                  child: Column(
-                                    children: [
-                                      _cardView(),
-                                    ],
-                                  )),
-                            ),
-                            SliverList(
-                                delegate: SliverChildListDelegate([
-                              SingleChildScrollView(
-                                  child: Column(children: [
-                                ListView.builder(
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    itemCount: sentences?.length ?? 0,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      var i = sentences?[index];
-                                      var textSpan = UiHelper.makeTextSpan(
-                                          _word.toLowerCase(), i ?? '');
-                                      return Container(
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(12)),
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .baseColor1),
-                                          margin: const EdgeInsets.only(
-                                              top: 5,
-                                              bottom: 5,
-                                              left: 20,
-                                              right: 20),
-                                          padding: const EdgeInsets.only(
-                                              top: 5,
-                                              bottom: 5,
-                                              left: 20,
-                                              right: 20),
-                                          child: Text.rich(
-                                              TextSpan(children: textSpan),
-                                              maxLines: 15,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                  fontWeight: FontWeight.w400,
-                                                  fontSize: 15,
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .textInCard)));
-                                    })
-                              ]))
-                            ]))
-                          ])),
-                          FixedFooterBottom(
-                              child1: status != null
-                                  ? ButtonRoundCorner(
-                                      text: status.successCount >= 10
-                                          ? 'Forget'
-                                          : 'Already know',
+    return ChangeNotifierProvider(
+        create: (_) => SearchWordModel(),
+        builder: (context, child) {
+          var size = MediaQuery.of(context).size;
+          var data = AppRep().cachedWord;
+          var sentences = _sentences?.data;
+          var status = _status;
+          if (data == null) return const SizedBox();
+          return Container(
+              color: Theme.of(context).colorScheme.page,
+              width: size.width,
+              height: size.height,
+              child: Stack(alignment: Alignment.center, children: [
+                Column(children: [
+                  Expanded(
+                      child: CustomScrollView(slivers: [
+                    SliverToBoxAdapter(
+                      child: Padding(
+                          padding:
+                              EdgeInsets.only(top: size.height / 5, bottom: 50),
+                          child: Column(
+                            children: [
+                              _cardView(),
+                            ],
+                          )),
+                    ),
+                    SliverList(
+                        delegate: SliverChildListDelegate([
+                      SingleChildScrollView(
+                          child: Column(children: [
+                        ListView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: sentences?.length ?? 0,
+                            itemBuilder: (BuildContext context, int index) {
+                              var i = sentences?[index];
+                              var textSpan = UiHelper.makeTextSpan(
+                                  _word.toLowerCase(), i ?? '');
+                              return Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12)),
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .buttonOption2,
-                                      colorText: Theme.of(context)
-                                          .colorScheme
-                                          .cardText,
-                                      direction: TextDirection.rtl,
-                                      radious: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                      onPressed: () async {
-                                        var data = AppRep().cachedWord;
-                                        var w = data?.word;
-                                        if (w == null) return;
-                                        await ServiceApi()
-                                            .removeWordFromCurrent(word: w);
-                                        await _refreshStatus();
-                                        AppRep().refreshManageList();
-                                      })
-                                  : ButtonRoundCorner(
-                                      text: 'Should learn',
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .buttonOption1,
-                                      colorText: Theme.of(context)
-                                          .colorScheme
-                                          .cardText,
-                                      direction: TextDirection.ltr,
-                                      radious: const BorderRadius.all(
-                                          Radius.circular(10)),
-                                      onPressed: () async {
-                                        var data = AppRep().cachedWord;
-                                        var w = data?.word;
-                                        if (w == null) return;
-                                        await ServiceApi().addWordInReview(
-                                            req: ReqAddWordInReview(
-                                                word: w,
-                                                useExtraFields: false));
-                                        _refreshStatus();
-                                      }),
-                              child2: status != null
-                                  ? status.successCount >= 10
-                                      ? ButtonRoundCorner(
-                                          text: 'Completed',
-                                          iconData: Icons.thumb_up,
+                                          .baseColor1),
+                                  margin: const EdgeInsets.only(
+                                      top: 5, bottom: 5, left: 20, right: 20),
+                                  padding: const EdgeInsets.only(
+                                      top: 5, bottom: 5, left: 20, right: 20),
+                                  child: Text.rich(TextSpan(children: textSpan),
+                                      maxLines: 15,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w400,
+                                          fontSize: 15,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .buttonOption3,
-                                          colorText: Theme.of(context)
-                                              .colorScheme
-                                              .cardText,
-                                          direction: TextDirection.ltr,
-                                          radious: const BorderRadius.all(
-                                              Radius.circular(10)),
-                                          onPressed: () {
-                                            widget.onBack.call();
-                                          })
-                                      : ButtonWithMenu(
-                                          text: 'Review $_reviewIn',
-                                          onPressed: () {
-                                            widget.onBack.call();
-                                          },
-                                          onMenu: () {
-                                            ChangeReviewTime().show(
-                                                context: context,
-                                                review: AppRep.reviewTimeToEnum(
-                                                    _status),
-                                                onSet: (review) async {
-                                                  var time =
-                                                      AppRep.reviewTimeToInt(
-                                                          review);
-                                                  var data =
-                                                      AppRep().cachedWord;
-                                                  await AppRep()
-                                                      .updateReviewTime(
-                                                          data?.word, time);
-                                                  _refreshStatus();
-                                                });
-                                          })
-                                  : null)
-                        ])
-                      ]));
-                })));
+                                              .textInCard)));
+                            })
+                      ]))
+                    ]))
+                  ])),
+                  FixedFooterBottom(
+                      child1: status != null
+                          ? ButtonRoundCorner(
+                              text: status.successCount >= 10
+                                  ? 'Forget'
+                                  : 'Already know',
+                              color:
+                                  Theme.of(context).colorScheme.buttonOption2,
+                              colorText: Theme.of(context).colorScheme.cardText,
+                              direction: TextDirection.rtl,
+                              radious:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              onPressed: () async {
+                                var data = AppRep().cachedWord;
+                                var w = data?.word;
+                                if (w == null) return;
+                                await ServiceApi()
+                                    .removeWordFromCurrent(word: w);
+                                await _refreshStatus();
+                                AppRep().refreshManageList();
+                              })
+                          : ButtonRoundCorner(
+                              text: 'Should learn',
+                              color:
+                                  Theme.of(context).colorScheme.buttonOption1,
+                              colorText: Theme.of(context).colorScheme.cardText,
+                              direction: TextDirection.ltr,
+                              radious:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              onPressed: () async {
+                                var data = AppRep().cachedWord;
+                                var w = data?.word;
+                                if (w == null) return;
+                                await ServiceApi().addWordInReview(
+                                    req: ReqAddWordInReview(
+                                        word: w, useExtraFields: false));
+                                _refreshStatus();
+                              }),
+                      child2: status != null
+                          ? status.successCount >= 10
+                              ? ButtonRoundCorner(
+                                  text: 'Completed',
+                                  iconData: Icons.thumb_up,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .buttonOption3,
+                                  colorText:
+                                      Theme.of(context).colorScheme.cardText,
+                                  direction: TextDirection.ltr,
+                                  radious: const BorderRadius.all(
+                                      Radius.circular(10)),
+                                  onPressed: () {
+                                    widget.onBack.call();
+                                    // TODO: check
+                                    // Navigator.of(context).pop();
+                                  })
+                              : ButtonWithMenu(
+                                  text: 'Review $_reviewIn',
+                                  onPressed: () {
+                                    widget.onBack.call();
+                                    // Navigator.of(context).pop();
+                                  },
+                                  onMenu: () {
+                                    ChangeReviewTime().show(
+                                        context: context,
+                                        review:
+                                            AppRep.reviewTimeToEnum(_status),
+                                        onSet: (review) async {
+                                          var time =
+                                              AppRep.reviewTimeToInt(review);
+                                          var data = AppRep().cachedWord;
+                                          await AppRep().updateReviewTime(
+                                              data?.word, time);
+                                          _refreshStatus();
+                                        });
+                                  })
+                          : null)
+                ])
+              ]));
+        });
   }
 
   Widget _cardView() {

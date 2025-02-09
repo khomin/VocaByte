@@ -19,7 +19,7 @@ import 'package:vocabyte/services/service_api.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({required this.onChangeGoal, super.key});
-  final Function onChangeGoal;
+  final Function() onChangeGoal;
   @override
   State<SettingsPage> createState() => _State();
 }
@@ -56,6 +56,7 @@ class _State extends State<SettingsPage> {
     setState(() {});
   }
 
+  // TODO: settings
   @override
   Widget build(BuildContext context) {
     return SafeArea(

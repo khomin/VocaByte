@@ -169,8 +169,15 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                         Expanded(child: _rememberOrNot()),
                                       if (pageType == CardPageType.audioToDef)
                                         Expanded(child: _audioToDef()),
+                                      //
+                                      // button
                                       ButtonRoundCorner(
-                                          text: "Not sure",
+                                          text: 'Not sure',
+                                          padding: const EdgeInsets.only(
+                                              top: 15,
+                                              bottom: 5,
+                                              left: 5,
+                                              right: 5),
                                           color: Theme.of(context)
                                               .colorScheme
                                               .buttonOption1,

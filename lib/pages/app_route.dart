@@ -73,10 +73,7 @@ class _AppRouteState extends State<AppRoute> {
                       settings: settings,
                       builder: (context) {
                         return PageWordDetails(
-                            onBack: () {
-                              // TODO: handle
-                            },
-                            playWordAtStart: true);
+                            playWordAtStart: true, onBack: () {});
                       }));
                 });
               }));
@@ -85,7 +82,7 @@ class _AppRouteState extends State<AppRoute> {
           nav?.push(CupertinoPageRoute(
               settings: settings,
               builder: (context) {
-                return CardReviewNav(onBack: () {});
+                return const CardReviewNav();
               }));
           break;
         case PageType.manageWords:

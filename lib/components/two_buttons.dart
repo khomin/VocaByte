@@ -16,8 +16,8 @@ class TwoButtons extends StatelessWidget {
   final String textRight;
   final String? iconLeft;
   final String? iconRight;
-  final Function onCancel;
-  final Function onOk;
+  final Function() onCancel;
+  final Function() onOk;
 
   @override
   Widget build(BuildContext context) {

@@ -58,30 +58,6 @@ class ManageWordPageState extends State<ManageWordPage> {
     widget.onShowWord.call(info);
   }
 
-  //
-  // busy
-  // if (!context.watch<ManageWordModel>().inited) {
-  //   return Column(
-  //       mainAxisAlignment: MainAxisAlignment.center,
-  //       children: [
-  //         Container(
-  //             width: 100,
-  //             height: 100,
-  //             decoration: BoxDecoration(
-  //                 borderRadius: const BorderRadius.all(
-  //                     Radius.circular(12)),
-  //                 color: Theme.of(context)
-  //                     .colorScheme
-  //                     .button2Hover),
-  //             child: Padding(
-  //                 padding: const EdgeInsets.all(20),
-  //                 child: CircularProgressIndicator(
-  //                     color: Theme.of(context)
-  //                         .colorScheme
-  //                         .titel4)))
-  //       ]);
-  // }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -90,13 +66,16 @@ class ManageWordPageState extends State<ManageWordPage> {
                 value: _model,
                 builder: (context, child) {
                   var model = context.watch<ManageWordModel>();
+                  if (!model.inited) {
+                    return _busy();
+                  }
                   return CustomScrollView(
                       physics: const ClampingScrollPhysics(),
                       slivers: [
                         SliverAppBar(
-                          flexibleSpace: AppBar2(
-                              type: Type.back,
-                              child: Flexible(child: _input())),
+                          automaticallyImplyLeading: false,
+                          flexibleSpace:
+                              AppBar2(type: Type.back, child: _input()),
                         ),
                         //
                         // filtered
@@ -109,9 +88,7 @@ class ManageWordPageState extends State<ManageWordPage> {
                         // nothing found
                         if (model.query?.isNotEmpty == true &&
                             model.filtered.isEmpty)
-                          _searchNotFound(),
-                        //
-                        // TODO: busy
+                          _searchNotFound()
                       ]);
                 })));
   }
@@ -213,65 +190,19 @@ class ManageWordPageState extends State<ManageWordPage> {
     });
   }
 
-  // Widget _input() {
-  //   return Padding(
-  //       padding: const EdgeInsets.only(bottom: 10),
-  //       child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           crossAxisAlignment: CrossAxisAlignment.stretch,
-  //           children: [
-  //             Stack(children: [
-  //               Row(children: [
-  //                 Expanded(
-  //                     child: TextField(
-  //                         controller: _model?.controller,
-  //                         focusNode: _model?.focus,
-  //                         onChanged: (value) {
-  //                           _model?.updateSearch(value);
-  //                         },
-  //                         onEditingComplete: () {},
-  //                         style: TextStyle(
-  //                             color: Theme.of(context).colorScheme.inputText,
-  //                             fontSize: 15),
-  //                         decoration: InputDecoration(
-  //                             fillColor:
-  //                                 Theme.of(context).colorScheme.inputBackground,
-  //                             contentPadding:
-  //                                 const EdgeInsets.only(left: 10, right: 10),
-  //                             focusedBorder: OutlineInputBorder(
-  //                                 borderRadius: const BorderRadius.all(
-  //                                     Radius.circular(6)),
-  //                                 borderSide: BorderSide(
-  //                                     color: Theme.of(context)
-  //                                         .colorScheme
-  //                                         .listSplit)),
-  //                             hintText: 'Enter word',
-  //                             hintStyle: TextStyle(
-  //                                 color:
-  //                                     Theme.of(context).colorScheme.inputHint,
-  //                                 fontSize: 15),
-  //                             enabledBorder: OutlineInputBorder(
-  //                                 borderRadius:
-  //                                     const BorderRadius.all(Radius.zero),
-  //                                 borderSide: BorderSide(
-  //                                     color: Theme.of(context)
-  //                                         .colorScheme
-  //                                         .listSplit)))))
-  //               ]),
-  //               if (_model?.search?.isNotEmpty == true)
-  //                 Positioned(
-  //                     top: 0,
-  //                     bottom: 0,
-  //                     right: 10,
-  //                     child: HoverButton(
-  //                       icon: Icons.cancel,
-  //                       color: Theme.of(context).colorScheme.inputHint,
-  //                       hoverColor: Theme.of(context).colorScheme.inputHint,
-  //                       onClicked: (_) {
-  //                         _model?.clearSearch();
-  //                       },
-  //                     ))
-  //             ])
-  //           ]));
-  // }
+  Widget _busy() {
+    return Center(
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
+              color: Theme.of(context).colorScheme.button2Hover),
+          child: Padding(
+              padding: const EdgeInsets.all(20),
+              child: CircularProgressIndicator(
+                  color: Theme.of(context).colorScheme.titel4)))
+    ]));
+  }
 }
