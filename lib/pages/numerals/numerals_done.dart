@@ -17,7 +17,7 @@ class NumeralsDone extends StatelessWidget {
       var duration =
           UiHelper().durationFormat(DateTime.now().difference(result.started));
       return Container(
-          color: Theme.of(context).colorScheme.card,
+          color: Theme.of(context).colorScheme.page,
           child: Column(children: [
             Expanded(
                 child: Column(

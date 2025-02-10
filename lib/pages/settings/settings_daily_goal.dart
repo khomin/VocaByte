@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/container_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';

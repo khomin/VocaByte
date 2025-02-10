@@ -234,7 +234,7 @@ class NumeralsPageState extends State<NumeralsPage> {
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
       return Container(
-          color: Theme.of(context).colorScheme.card,
+          color: Theme.of(context).colorScheme.page,
           child: Column(children: [
             Expanded(
                 child: Column(children: [

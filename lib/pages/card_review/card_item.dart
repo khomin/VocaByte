@@ -1,4 +1,5 @@
-import 'package:vocabyte/components/container_click.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -11,12 +12,14 @@ class CardItem extends StatefulWidget {
       required this.text,
       required this.isRight,
       required this.borderRadius,
-      required this.onClicked});
+      required this.onClicked,
+      required this.delayMs});
 
   final String letter;
   final String text;
   final bool isRight;
   final BorderRadius borderRadius;
+  final int delayMs;
   final Function() onClicked;
 
   @override
@@ -25,10 +28,16 @@ class CardItem extends StatefulWidget {
 
 class CardItemState extends State<CardItem> {
   var _finished = false;
+  var _visible = false;
 
   @override
   void initState() {
     super.initState();
+    Timer(Duration(milliseconds: widget.delayMs), () {
+      setState(() {
+        _visible = true;
+      });
+    });
   }
 
   @override
@@ -39,16 +48,10 @@ class CardItemState extends State<CardItem> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: //ContainerClick(
-            // onClicked: () {
-            //   widget.onClicked();
-            // },
-            // boxColor: Theme.of(context).colorScheme.card,
-            // borderRadius: widget.borderRadius,
-            // clickedColor: (widget.isRight
-            //     ? Theme.of(context).colorScheme.cardSuccess
-            //     : Theme.of(context).colorScheme.cardError),
-            Padding(
+        child: AnimatedOpacity(
+            duration: const Duration(milliseconds: 500),
+            opacity: _visible ? 1 : 0,
+            child: Padding(
                 padding: const EdgeInsets.all(4),
                 child: RoundButton(
                     color: _finished
@@ -65,7 +68,8 @@ class CardItemState extends State<CardItem> {
                       });
                       widget.onClicked();
                     },
-                    child: Column(children: [
+                    child: IgnorePointer(
+                        child: Column(children: [
                       Expanded(
                           child: Stack(children: [
                         Container(
@@ -104,6 +108,6 @@ class CardItemState extends State<CardItem> {
                                       ? Colors.green
                                       : Colors.transparent)),
                       ]))
-                    ]))));
+                    ]))))));
   }
 }

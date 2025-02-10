@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class RoundButton extends StatefulWidget {
   const RoundButton(
-      {this.iconData,
-      required this.color,
-      required this.iconColor,
+      {required this.color,
       required this.onPressed,
+      this.iconData,
+      this.iconColor,
       this.padding,
       this.margin,
       this.useScaleAnimation = false,
@@ -17,7 +17,7 @@ class RoundButton extends StatefulWidget {
       this.size,
       super.key});
   final IconData? iconData;
-  final Color iconColor;
+  final Color? iconColor;
   final Color color;
   final bool useScaleAnimation;
   final EdgeInsets? padding;

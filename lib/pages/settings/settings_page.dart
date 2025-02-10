@@ -9,6 +9,7 @@ import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/dialogs/confirm_dialog.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
+import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
@@ -398,17 +399,79 @@ class _State extends State<SettingsPage> {
               padding: const EdgeInsets.only(top: 10, bottom: 10),
               color: Theme.of(context).colorScheme.titelErr,
               onClicked: () async {
-                ConfirmDialog().show(
+                showModalBottomSheet(
                     context: context,
-                    header: 'Sure?',
-                    label: 'You will lose all progress',
-                    button: 'Yes',
-                    onDone: () async {
-                      await ServiceApi().deleteProfile();
-                      if (context.mounted) {
-                        UiHelper.showToast(context, 'Done');
-                      }
+                    barrierColor: Colors.black26,
+                    builder: (BuildContext context) {
+                      return Container(
+                          height: 200,
+                          // color: Constants.colorBgUnderCard,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text(
+                                    'Are you sure?\nYou will lose all progress',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        // color: Constants.menuFontColor1,
+                                        // fontSize: Constants.menuFontSize1,
+                                        fontWeight: FontWeight.w400)),
+                                const SizedBox(height: 30),
+                                Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      RoundButton(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .errorContainer
+                                              .withOpacity(0.8),
+                                          iconColor: Theme.of(context)
+                                              .colorScheme
+                                              .white
+                                              .withOpacity(0.4),
+                                          size: const Size(55, 55),
+                                          radius: 20,
+                                          useScaleAnimation: true,
+                                          iconData: Icons.delete,
+                                          onPressed: (v) async {
+                                            Navigator.of(context).pop();
+                                            await ServiceApi().deleteProfile();
+                                            if (context.mounted) {
+                                              UiHelper.showToast(
+                                                  context, 'Done');
+                                            }
+                                          }),
+                                      const SizedBox(width: 15),
+                                      RoundButton(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .button2
+                                              .withOpacity(0.8),
+                                          iconColor: Theme.of(context)
+                                              .colorScheme
+                                              .button2Text
+                                              .withOpacity(0.8),
+                                          size: const Size(55, 55),
+                                          radius: 20,
+                                          useScaleAnimation: true,
+                                          iconData: Icons.close,
+                                          onPressed: (v) async {
+                                            Navigator.of(context).pop();
+                                          })
+                                    ])
+                              ]));
                     });
+                // ConfirmDialog().show(
+                //     context: context,
+                //     header: 'Sure?',
+                //     label: 'You will lose all progress',
+                //     button: 'Yes',
+                //     onDone: () async {
+                //       // await ServiceApi().deleteProfile();
+                //       // if (context.mounted) {
+                //       //   UiHelper.showToast(context, 'Done');
+                //       // }
+                //     });
               })
         ])
       ]));

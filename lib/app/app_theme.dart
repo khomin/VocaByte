@@ -65,8 +65,7 @@ extension MenuColorScheme on ColorScheme {
   Color get textInCard => const Color.fromARGB(255, 255, 255, 255);
   Color get textInCard2 => const Color.fromARGB(255, 255, 255, 255);
 
-  // Color get card => const Color(0xFF111313);
-  Color get card => const Color.fromARGB(255, 32, 32, 32);
+  Color get card => const Color.fromARGB(255, 26, 26, 26);
   Color get cardSuccess => const Color.fromARGB(255, 36, 80, 68);
   Color get cardError => const Color.fromARGB(255, 114, 65, 65);
   Color get page => const Color.fromARGB(255, 0, 0, 0);

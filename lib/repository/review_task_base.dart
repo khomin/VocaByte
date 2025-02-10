@@ -5,7 +5,7 @@ import 'package:vocabyte/services/protobuf/proto.pb.dart';
 
 class ReviewTaskBase {
   final cardData = <CardData>[];
-  final wordToReviewCnt = BehaviorSubject<int>.seeded(0);
+  final wordToReviewCnt = BehaviorSubject<int?>();
   final wordDoneCount = BehaviorSubject<int>.seeded(0);
   final cacheSize = 5;
   bool lastAnswerRight = false;

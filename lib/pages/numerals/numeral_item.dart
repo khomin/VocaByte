@@ -1,6 +1,6 @@
-import 'package:vocabyte/components/container_click.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/components/round_button.dart';
 
 class NumeralItem extends StatefulWidget {
   const NumeralItem(
@@ -15,6 +15,8 @@ class NumeralItem extends StatefulWidget {
 }
 
 class NumeralItemState extends State<NumeralItem> {
+  var _finished = false;
+
   @override
   void initState() {
     super.initState();
@@ -28,16 +30,20 @@ class NumeralItemState extends State<NumeralItem> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: ContainerClick(
-            onClicked: () {
+        child: RoundButton(
+            onPressed: (_) {
+              setState(() {
+                _finished = true;
+              });
               widget.onClicked(widget.number);
             },
-            boxColor: widget.child == null
-                ? Theme.of(context).colorScheme.page
-                : Theme.of(context).colorScheme.transparent,
-            clickedColor: widget.child == null
-                ? Theme.of(context).colorScheme.cardSuccess
-                : Theme.of(context).colorScheme.transparent,
+            color: _finished
+                ? widget.child == null
+                    ? Theme.of(context).colorScheme.cardSuccess
+                    : Theme.of(context).colorScheme.transparent
+                : widget.child == null
+                    ? Theme.of(context).colorScheme.page
+                    : Theme.of(context).colorScheme.transparent,
             child: Column(children: [
               Expanded(
                   child: Row(children: [

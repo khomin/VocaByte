@@ -1,8 +1,7 @@
 import 'package:provider/provider.dart';
-import 'package:vocabyte/components/circle_button.dart';
-import 'package:vocabyte/components/container_click.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
@@ -44,12 +43,11 @@ class PageHomeState extends State<PageHome> {
     return Builder(builder: (context) {
       var size = MediaQuery.of(context).size;
       return Scaffold(
-          // backgroundColor: Colors.deepOrange,
           backgroundColor: Theme.of(context).colorScheme.page,
           appBar: AppBar(
               // surfaceTintColor: Theme.of(context).colorScheme.baseColor1,
               // backgroundColor: Theme.of(context).colorScheme.baseColor1,
-              backgroundColor: Colors.black,
+              // backgroundColor: Colors.black,
               centerTitle: true,
               shadowColor: Theme.of(context).colorScheme.titel3,
               foregroundColor: Theme.of(context).colorScheme.iconColor,
@@ -112,13 +110,9 @@ class PageHomeState extends State<PageHome> {
             //
             // start padding
             const SizedBox(height: 20),
-
-            // TODO: add a cool animation
-
             Expanded(
                 child: GridView(
                     shrinkWrap: true,
-                    // padding: EdgeInsets.zero,
                     padding: const EdgeInsets.only(left: 5, right: 5),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -134,10 +128,14 @@ class PageHomeState extends State<PageHome> {
                           .wordToReviewCnt
                           .valueOrNull,
                       builder: (context, snapshot) {
-                        var v = snapshot.data ?? 0;
+                        var v = snapshot.data;
                         return _item(
                             iconInt: v,
-                            header: v > 0 ? 'Review' : 'No words to review',
+                            header: v == null
+                                ? 'Refreshing..'
+                                : v > 0
+                                    ? 'Review'
+                                    : 'No words to review',
                             description:
                                 'Keep your words memorized\nAdd words using search',
                             canClick: () => v != 0,
@@ -183,60 +181,74 @@ class PageHomeState extends State<PageHome> {
       int? iconInt,
       required bool Function() canClick,
       required Function() onClick}) {
-    return ContainerClick(
-        borderRadius: const BorderRadius.all(Radius.circular(12)),
-        // boxColor: Theme.of(context).colorScheme.card,
-        boxColor: const Color.fromARGB(255, 29, 29, 29),
-        clickedColor: Theme.of(context).colorScheme.menuActive,
-        onClicked: () {
-          if (canClick()) {
-            onClick();
-          }
-        },
-        child: Padding(
-            padding:
-                const EdgeInsets.only(left: 14, right: 14, top: 20, bottom: 10),
-            child: Column(children: [
-              Row(children: [
-                SizedBox(
-                    height: 35,
-                    child: icon != null
-                        ? Icon(icon, size: 35)
-                        : (iconInt != null
-                            ? Container(
-                                decoration: BoxDecoration(
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(8)),
-                                    color: iconInt > 0
-                                        ? Theme.of(context)
-                                            .colorScheme
-                                            .buttonOption2
-                                        : Theme.of(context)
-                                            .colorScheme
-                                            .buttonOption1),
-                                padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
-                                child: Center(
-                                    child: Text('$iconInt',
-                                        style: const TextStyle(fontSize: 20))))
-                            : const SizedBox()))
-              ]),
-              const SizedBox(height: 10),
-              Row(children: [
-                Expanded(
-                    child: Text(header,
-                        style: const TextStyle(fontSize: 14),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis))
-              ]),
-              const SizedBox(height: 10),
-              Row(children: [
-                Expanded(
-                    child: Text(description,
-                        style: const TextStyle(fontSize: 10),
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis))
-              ])
-            ])));
+    return Padding(
+        padding: const EdgeInsets.all(4),
+        child: RoundButton(
+            color: Theme.of(context).colorScheme.card,
+            radius: 12,
+            useScaleAnimation: true,
+            onPressed: (_) {
+              if (canClick()) {
+                onClick();
+              }
+            },
+            child: IgnorePointer(
+                child: Padding(
+                    padding: const EdgeInsets.only(
+                        left: 14, right: 14, top: 20, bottom: 10),
+                    child: Column(children: [
+                      Row(children: [
+                        SizedBox(
+                            height: 35,
+                            child: icon != null
+                                ? Icon(icon, size: 35)
+                                : (iconInt != null
+                                    ? Container(
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(8)),
+                                            color: iconInt > 0
+                                                ? Theme.of(context)
+                                                    .colorScheme
+                                                    .buttonOption2
+                                                : Theme.of(context)
+                                                    .colorScheme
+                                                    .buttonOption1),
+                                        padding: const EdgeInsets.only(
+                                            left: 10, right: 10),
+                                        child: Center(
+                                            child: Text('$iconInt',
+                                                style: const TextStyle(
+                                                    fontSize: 20))))
+                                    : const Padding(
+                                        padding: EdgeInsets.only(left: 10),
+                                        child: Stack(children: [
+                                          SizedBox(
+                                              width: 20,
+                                              height: 20,
+                                              child: Center(
+                                                  child: RepaintBoundary(
+                                                      child:
+                                                          CircularProgressIndicator())))
+                                        ]))))
+                      ]),
+                      const SizedBox(height: 10),
+                      Row(children: [
+                        Expanded(
+                            child: Text(header,
+                                style: const TextStyle(fontSize: 14),
+                                maxLines: 5,
+                                overflow: TextOverflow.ellipsis))
+                      ]),
+                      const SizedBox(height: 10),
+                      Row(children: [
+                        Expanded(
+                            child: Text(description,
+                                style: const TextStyle(fontSize: 10),
+                                maxLines: 5,
+                                overflow: TextOverflow.ellipsis))
+                      ])
+                    ])))));
   }
 }

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/circle_button.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_button.dart';
@@ -50,8 +51,10 @@ class SearchWordPageState extends State<SearchWordPage> {
                       physics: const ClampingScrollPhysics(),
                       slivers: [
                         SliverAppBar(
-                            automaticallyImplyLeading: false,
-                            flexibleSpace: _appBar()),
+                          automaticallyImplyLeading: false,
+                          flexibleSpace:
+                              AppBar2(type: Type.back, child: _input()),
+                        ),
                         //
                         _searchResult(),
                         //
@@ -64,24 +67,6 @@ class SearchWordPageState extends State<SearchWordPage> {
                           _searchRecent()
                       ]);
                 })));
-  }
-
-  Widget _appBar() {
-    return Container(
-        color: Theme.of(context).colorScheme.card,
-        child: Row(children: [
-          RoundButton(
-              padding: const EdgeInsets.only(left: 10),
-              color: Colors.transparent,
-              iconColor: Theme.of(context).colorScheme.white,
-              size: const Size(50, 50),
-              iconSize: 22,
-              iconData: Icons.arrow_back_ios,
-              onPressed: (p0) {
-                Navigator.of(context).pop();
-              }),
-          Flexible(child: _input())
-        ]));
   }
 
   Widget _input() {

@@ -1,9 +1,9 @@
 import 'dart:async';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/circle_button.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/pages/card_review/card_no_words.dart';
 import 'package:vocabyte/pages/card_review/card_page.dart';
 import 'package:vocabyte/pages/card_review/cards_done.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +13,7 @@ import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class CardReviewNav extends StatefulWidget {
   const CardReviewNav({super.key});
@@ -43,6 +44,8 @@ class CardData {
 class CardReviewNavState extends State<CardReviewNav> {
   final _dispStream = DisposableStream();
   final _navKey = GlobalKey<NavigatorState>();
+  Widget? _widget1;
+  Widget? _widget2;
   final tag = 'cardReview';
 
   @override
@@ -87,13 +90,13 @@ class CardReviewNavState extends State<CardReviewNav> {
       // no more cards to learn
       return;
     }
-    while (nav?.canPop() == true) {
-      nav?.pop();
-    }
+    // while (nav?.canPop() == true) {
+    //   nav?.pop();
+    // }
     // nav?.pushNamed(current.pageType.name, arguments: {'word': current});
-    // _navKey.currentState?.pushReplacementNamed(current.pageType.name,
-    //     arguments: {'word': current});
-    //     var nav = _navKey.currentState;
+    _navKey.currentState?.pushReplacementNamed(current.pageType.name,
+        arguments: {'word': current});
+    // var nav = _navKey.currentState;
     // nav?.push(CupertinoPageRoute(
     //     settings: RouteSettings(name: type.name),
     //     builder: (context) {
@@ -101,32 +104,18 @@ class CardReviewNavState extends State<CardReviewNav> {
     //     }));
   }
 
+  // TODO: use progress linear
+  // TODO: redo already know - review in
+  // TODO: user icon
+  // TODO: review no words
+  // TODO: finish add scale animation
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-            shadowColor: Theme.of(context).colorScheme.titel3,
-            foregroundColor: Theme.of(context).colorScheme.iconColor,
-            automaticallyImplyLeading: false,
-            titleSpacing: 0,
-            title: SizedBox(
-                // color: Theme.of(context).colorScheme.page,
-                child: Row(children: [
-              CircleButton(
-                  iconData: Icons.close,
-                  color: Colors.transparent,
-                  onPressed: (_) {
-                    Navigator.of(context).pop();
-                  }),
-              const Spacer(),
-              Container(
-                  width: 35,
-                  height: 35,
-                  decoration: const BoxDecoration(
-                      color: Colors.greenAccent,
-                      borderRadius: BorderRadius.all(Radius.circular(20)))),
-              const SizedBox(width: 15)
-            ]))),
+            backgroundColor: Theme.of(context).colorScheme.page,
+            leading: const AppBar2(type: Type.close)),
         body: Stack(children: [
           Navigator(
               key: _navKey,
@@ -146,7 +135,7 @@ class CardReviewNavState extends State<CardReviewNav> {
                             (context, animation, secondaryAnimation, child) {
                           return child;
                         },
-                        pageBuilder: (_, __, ___) => const SizedBox());
+                        pageBuilder: (_, __, ___) => const CardNoWords());
                   //
                   // cards
                   case CardPageType.defToWords:
@@ -210,21 +199,20 @@ class CardReviewNavState extends State<CardReviewNav> {
                             }));
                 }
               }),
-          Positioned(
-              bottom: 100,
-              left: 10,
-              child: RoundButton(
-                  color: Colors.white.withOpacity(0.05),
-                  iconColor: Theme.of(context).colorScheme.white,
-                  size: const Size(50, 50),
-                  iconSize: 22,
-                  radius: 20,
-                  iconData: Icons.insert_photo_sharp,
-                  onPressed: (p0) async {
-                    // TODO: next
-                    await _handleAnswer(success: false);
-                    // _nextCard();
-                  }))
+          if (Constants.isDev)
+            Positioned(
+                bottom: 100,
+                left: 10,
+                child: RoundButton(
+                    color: Colors.white.withOpacity(0.05),
+                    iconColor: Theme.of(context).colorScheme.white,
+                    size: const Size(50, 50),
+                    iconSize: 22,
+                    radius: 20,
+                    iconData: Icons.insert_photo_sharp,
+                    onPressed: (p0) async {
+                      await _handleAnswer(success: false);
+                    }))
         ]));
   }
 }

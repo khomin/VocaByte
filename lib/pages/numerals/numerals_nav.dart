@@ -36,7 +36,10 @@ class NumeralsNavState extends State<NumeralsNav> {
     var size = MediaQuery.of(context).size;
     return SafeArea(
         child: Scaffold(
-            appBar: AppBar(leading: const AppBar2(type: Type.close)),
+            backgroundColor: Theme.of(context).colorScheme.page,
+            appBar: AppBar(
+                backgroundColor: Colors.transparent,
+                leading: const AppBar2(type: Type.close)),
             body: Container(
                 color: Theme.of(context).colorScheme.page,
                 width: size.width,

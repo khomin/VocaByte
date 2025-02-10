@@ -12,7 +12,7 @@ class AppBar2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        color: Theme.of(context).colorScheme.card,
+        color: Theme.of(context).colorScheme.page,
         child: Row(children: [
           const SizedBox(width: 5),
           RoundButton(

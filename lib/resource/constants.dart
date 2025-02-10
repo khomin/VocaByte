@@ -63,7 +63,7 @@ class Constants {
 
   static const animDurationFast = Duration(milliseconds: 50);
   static const animDurationMid = Duration(milliseconds: 200);
-  static const animDurationMedium = Duration(milliseconds: 300);
+  static const animDurationLong = Duration(milliseconds: 1000);
 
   factory Constants() {
     return _instance;
