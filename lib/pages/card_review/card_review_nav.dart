@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/circle_button.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
@@ -104,10 +105,7 @@ class CardReviewNavState extends State<CardReviewNav> {
     //     }));
   }
 
-  // TODO: use progress linear
   // TODO: redo already know - review in
-  // TODO: user icon
-  // TODO: review no words
   // TODO: finish add scale animation
 
   @override
@@ -115,7 +113,30 @@ class CardReviewNavState extends State<CardReviewNav> {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.page,
-            leading: const AppBar2(type: Type.close)),
+            // automaticallyImplyLeading: false,
+            // flexibleSpace: Container(
+            //     color: Colors.pink,
+            //     margin: EdgeInsets.only(left: 20),
+            //     height: 30,
+            //     width: 200),
+            // titleSpacing: 0,
+            // title: Container(
+            //     color: Colors.pink,
+            //     margin: EdgeInsets.only(left: 20),
+            //     height: 40,
+            //     width: double.infinity),
+            // // leading: null,
+            leadingWidth: double.infinity,
+            // centerTitle: true,
+            leading: AppBar2(
+                type: Type.close,
+                child: CircularStepProgressIndicator(
+                  totalSteps: 10,
+                  currentStep: 6,
+                  width: 30,
+                  height: 30,
+                  roundedCap: (_, isSelected) => isSelected,
+                ))),
         body: Stack(children: [
           Navigator(
               key: _navKey,

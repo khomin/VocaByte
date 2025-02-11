@@ -1,4 +1,5 @@
 import 'package:provider/provider.dart';
+import 'package:vocabyte/components/avatar.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -91,20 +92,11 @@ class PageHomeState extends State<PageHome> {
                                         color: Theme.of(context)
                                             .colorScheme
                                             .titel1)))),
-                        //       const Spacer(),
                         Positioned(
                             right: 0,
                             bottom: 10,
                             top: 10,
-                            child: Container(
-                              width: 35,
-                              height: 35,
-                              decoration: const BoxDecoration(
-                                  color: Colors.greenAccent,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                            ))
-                        // ])
+                            child: Avatar(onPressed: (p0) {}))
                       ]))),
           body: Column(children: [
             //

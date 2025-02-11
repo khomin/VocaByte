@@ -8,7 +8,6 @@ import 'package:loggy/loggy.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:ffi/ffi.dart';
 import 'package:vocabyte/app/file_utils.dart';
-import 'package:vocabyte/services/protobuf/app.pbserver.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 
 class LibPath {
@@ -436,23 +435,23 @@ class ServiceApi {
   static void _eventCb(Pointer<CallDataStruct> p) async {
     var taskId = p.ref.taskId;
     try {
-      if (taskId != ServiceTypes.ignoreTaskId.value) {
-        // a result from isolate -> find the map and call result
-        var task = _isolateMap[taskId];
-        if (task != null && task.allocatedData != null) {
-          malloc.free(task.allocatedData!);
-        }
-        task?.callback?.call(p);
-        _isolateMap.remove(taskId);
-      } else {
-        // common events
-        // var buf = p.ref.protoBuf.asTypedList(p.ref.protoLen);
-        // var ev = EventMsgWrapper.fromBuffer(buf);
-        // switch (ev.type) {
-        //   case ApiEvent.OnlineChanged:
-        //     break;
-        // }
+      // if (taskId != ServiceTypes.ignoreTaskId.value) {
+      // a result from isolate -> find the map and call result
+      var task = _isolateMap[taskId];
+      if (task != null && task.allocatedData != null) {
+        malloc.free(task.allocatedData!);
       }
+      task?.callback?.call(p);
+      _isolateMap.remove(taskId);
+      // } else {
+      // common events
+      // var buf = p.ref.protoBuf.asTypedList(p.ref.protoLen);
+      // var ev = EventMsgWrapper.fromBuffer(buf);
+      // switch (ev.type) {
+      //   case ApiEvent.OnlineChanged:
+      //     break;
+      // }
+      // }
     } catch (ex) {
       logError('$tag: eventCb exception: $ex');
     }
@@ -463,11 +462,11 @@ class ServiceApi {
       Function(Pointer<CallDataStruct> data)? cb,
       required String description,
       bool skipMap = false}) {
-    if (_isolateUniqueCnt == ServiceTypes.ignoreTaskId.value) {
-      _isolateUniqueCnt = 2;
-    } else {
-      _isolateUniqueCnt++;
-    }
+    // if (_isolateUniqueCnt == ServiceTypes.ignoreTaskId.value) {
+    //   _isolateUniqueCnt = 2;
+    // } else {
+    _isolateUniqueCnt++;
+    // }
     // with proto and task id
     if (proto != null) {
       // logDebug('$tag: registerCall=${proto.runtimeType.toString()}');

@@ -405,17 +405,15 @@ class _State extends State<SettingsPage> {
                     builder: (BuildContext context) {
                       return Container(
                           height: 200,
-                          // color: Constants.colorBgUnderCard,
+                          color: Theme.of(context).colorScheme.page,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
                                     'Are you sure?\nYou will lose all progress',
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
-                                        // color: Constants.menuFontColor1,
-                                        // fontSize: Constants.menuFontSize1,
-                                        fontWeight: FontWeight.w400)),
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w400)),
                                 const SizedBox(height: 30),
                                 Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
