@@ -74,8 +74,9 @@ class ManageWordPageState extends State<ManageWordPage> {
                       slivers: [
                         SliverAppBar(
                           automaticallyImplyLeading: false,
-                          flexibleSpace:
-                              AppBar2(type: Type.back, child: _input()),
+                          flexibleSpace: AppBar2(
+                              type: Type.back,
+                              child: Flexible(child: _input())),
                         ),
                         //
                         // filtered

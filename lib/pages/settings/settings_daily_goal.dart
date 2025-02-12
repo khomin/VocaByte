@@ -84,9 +84,11 @@ class _State extends State<SettingsDailiyGoal> {
                                               size: const Size(200, 80),
                                               radius: 15,
                                               useScaleAnimation: true,
-                                              child: Center(
-                                                  child: Text(
-                                                      '$value words a day')),
+                                              child: IgnorePointer(
+                                                  child: Center(
+                                                      child: Text(value == 1
+                                                          ? '$value word a day'
+                                                          : '$value words a day'))),
                                               onPressed: (p0) async {
                                                 Timer(
                                                     const Duration(

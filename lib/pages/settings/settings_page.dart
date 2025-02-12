@@ -5,6 +5,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/dialogs/confirm_dialog.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
@@ -60,13 +61,33 @@ class _State extends State<SettingsPage> {
   // TODO: settings
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(body: Builder(builder: (BuildContext context) {
-      return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        _profile(),
-        _numComplexity(),
-      ]);
-    })));
+    return Scaffold(
+        appBar: AppBar(
+            backgroundColor: Theme.of(context).colorScheme.page,
+            leadingWidth: double.infinity,
+            leading: AppBar2(
+                type: Type.back,
+                child: Flexible(
+                    child: Row(children: [
+                  Text('Settings',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 15,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .white
+                              .withOpacity(0.8))),
+                  const Spacer()
+                ])))),
+        body: Builder(builder: (BuildContext context) {
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _profile(),
+                _numComplexity(),
+              ]);
+        }));
   }
 
   Widget _profile() {

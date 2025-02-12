@@ -274,6 +274,7 @@ class _AppState extends State<App> {
                         var page = snapshot.data?.type;
                         return Stack(alignment: Alignment.center, children: [
                           _bottomHightlightActive(page),
+                          // TODO: hide botton when splash screen
                           Positioned(
                               top: 0,
                               left: 0,

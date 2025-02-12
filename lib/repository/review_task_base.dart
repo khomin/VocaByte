@@ -17,6 +17,7 @@ class ReviewTaskBase {
   ];
   final tag = 'reviewTask';
 
+  // TODO: don't reset progress when going back from card navigator
   void resetProgress() {
     wordDoneCount.add(0);
     AppRep().onProgressChanged.add(0);

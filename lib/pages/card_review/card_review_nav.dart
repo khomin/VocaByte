@@ -45,14 +45,13 @@ class CardData {
 class CardReviewNavState extends State<CardReviewNav> {
   final _dispStream = DisposableStream();
   final _navKey = GlobalKey<NavigatorState>();
-  Widget? _widget1;
-  Widget? _widget2;
   final tag = 'cardReview';
 
   @override
   void initState() {
     super.initState();
 
+    // TODO: redo already know - review in
     AppRep().reviewTask.resetProgress();
     Future.microtask(() {
       _nextCard();
@@ -105,38 +104,31 @@ class CardReviewNavState extends State<CardReviewNav> {
     //     }));
   }
 
-  // TODO: redo already know - review in
-  // TODO: finish add scale animation
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
             backgroundColor: Theme.of(context).colorScheme.page,
-            // automaticallyImplyLeading: false,
-            // flexibleSpace: Container(
-            //     color: Colors.pink,
-            //     margin: EdgeInsets.only(left: 20),
-            //     height: 30,
-            //     width: 200),
-            // titleSpacing: 0,
-            // title: Container(
-            //     color: Colors.pink,
-            //     margin: EdgeInsets.only(left: 20),
-            //     height: 40,
-            //     width: double.infinity),
-            // // leading: null,
             leadingWidth: double.infinity,
-            // centerTitle: true,
             leading: AppBar2(
                 type: Type.close,
-                child: CircularStepProgressIndicator(
-                  totalSteps: 10,
-                  currentStep: 6,
-                  width: 30,
-                  height: 30,
-                  roundedCap: (_, isSelected) => isSelected,
-                ))),
+                child: StreamBuilder(
+                    stream: AppRep().onProgressChanged,
+                    initialData: AppRep().onProgressChanged.valueOrNull,
+                    builder: (context, snapshot) {
+                      var percent = snapshot.data ?? 0.0;
+                      var step = (percent * 10).toInt();
+                      return Flexible(
+                          child: Row(children: [
+                        const Spacer(),
+                        CircularStepProgressIndicator(
+                            totalSteps: 10,
+                            currentStep: step,
+                            width: 30,
+                            height: 30,
+                            roundedCap: (_, isSelected) => isSelected)
+                      ]));
+                    }))),
         body: Stack(children: [
           Navigator(
               key: _navKey,
@@ -192,6 +184,7 @@ class CardReviewNavState extends State<CardReviewNav> {
                               Navigator.of(context).pop();
                             },
                             onContinue: () {
+                              // TODO: after contnue no more final screen why?
                               _nextCard();
                             }));
                   case CardPageType.wordDetails:

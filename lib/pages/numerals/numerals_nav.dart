@@ -46,10 +46,7 @@ class NumeralsNavState extends State<NumeralsNav> {
                 height: size.height,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // const AppBar2(type: Type.close),
-                      _navigator()
-                    ]))));
+                    children: [_navigator()]))));
   }
 
   Widget _navigator() {

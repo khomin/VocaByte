@@ -52,8 +52,9 @@ class SearchWordPageState extends State<SearchWordPage> {
                       slivers: [
                         SliverAppBar(
                           automaticallyImplyLeading: false,
-                          flexibleSpace:
-                              AppBar2(type: Type.back, child: _input()),
+                          flexibleSpace: AppBar2(
+                              type: Type.back,
+                              child: Flexible(child: _input())),
                         ),
                         //
                         _searchResult(),
@@ -131,7 +132,7 @@ class SearchWordPageState extends State<SearchWordPage> {
           itemCount: context.watch<SearchWordModel>().found.length,
           itemBuilder: (BuildContext context, int index) {
             var obj = context.read<SearchWordModel>().found[index];
-            return WordItem(
+            return SearchWordItem(
                 data: obj,
                 onClicked: () async {
                   _model.loseFocus();
@@ -160,7 +161,7 @@ class SearchWordPageState extends State<SearchWordPage> {
               itemCount: snapshot.data?.length ?? 0,
               itemBuilder: (BuildContext context, int index) {
                 var model = snapshot.data![index];
-                return WordItem(
+                return SearchWordItem(
                     data: model,
                     onClicked: () async {
                       // recent words have only part of data

@@ -134,10 +134,11 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    super.dispose();
     TextToSpeach().stop();
     _dispStream.dispose();
+    _animateController2.dispose();
     _animateController.dispose();
+    super.dispose();
   }
 
   void _onDone(bool success) {

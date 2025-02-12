@@ -63,6 +63,7 @@ dependencies:
   smooth_page_indicator: ^1.2.0+3
   animated_theme_switcher: ^2.0.10
   step_progress_indicator: ^1.0.2
+  flutter_animate: ^4.5.2
 
 dev_dependencies:
   flutter_test:

@@ -40,10 +40,10 @@ class CardNoWordsState extends State<CardNoWords>
 
   @override
   void dispose() {
-    super.dispose();
     TextToSpeach().stop();
     _dispStream.dispose();
     _animateController.dispose();
+    super.dispose();
   }
 
   @override

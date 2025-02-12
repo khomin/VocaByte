@@ -3,16 +3,16 @@ import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/app/app_theme.dart';
 
-class WordItem extends StatefulWidget {
-  const WordItem({required this.data, this.onClicked, super.key});
+class SearchWordItem extends StatefulWidget {
+  const SearchWordItem({required this.data, this.onClicked, super.key});
   final FullInfo data;
   final Function? onClicked;
 
   @override
-  State<WordItem> createState() => _State();
+  State<SearchWordItem> createState() => _State();
 }
 
-class _State extends State<WordItem> {
+class _State extends State<SearchWordItem> {
   bool isHover = false;
 
   @override
@@ -26,6 +26,7 @@ class _State extends State<WordItem> {
     if (widget.data.meaning.isNotEmpty) {
       meaning = widget.data.meaning[0];
     }
+    // TODO: show icon if in study list
     return HoverClick(
         onHover: (hover) {
           setState(() {
