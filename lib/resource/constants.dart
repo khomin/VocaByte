@@ -16,8 +16,8 @@ class Constants {
   static const colorTextAccent = Colors.black;
   static const colorTextSecond = Color(0xA0515155);
 
-  static const colorPrimary = Color.fromARGB(255, 139, 135, 219);
-  static const colorSecondary = Color.fromARGB(255, 170, 167, 225);
+  // static const colorPrimary = Color.fromARGB(255, 139, 135, 219);
+  // static const colorSecondary = Color.fromARGB(255, 170, 167, 225);
 
   static const colorButtonBg = Colors.black12;
   static const colorButton = Colors.black26;

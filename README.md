@@ -51,14 +51,17 @@ https://github.com/wordset/wordset-dictionary.git
 
 
 ### TODO
- - navigation, use bottom navigator
- - no <- but (x) from pages (card, numerals, manage words, search etc)
+ - pageView - make offcard if > 1 word
+ - add progress in numerals
  - theme - https://pub.dev/packages/animated_theme_switcher
+ 
+ - navigation, use bottom navigator
  - redesign the controls in card, don't know - already know, dialog
+ - no <- but (x) from pages (card, numerals, manage words, search etc)
  - keep 5 last logs, remove everything else
  - cache everything, make an instant start
  - performace sqlite
  - refactor progress in card
- - add progress in numerals
  - search words - show if already in list
  - progress and metrics 
+ 

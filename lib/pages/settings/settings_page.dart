@@ -58,7 +58,7 @@ class _State extends State<SettingsPage> {
     setState(() {});
   }
 
-  // TODO: settings
+  // TODO: settings. Import profile update review list
   @override
   Widget build(BuildContext context) {
     return Scaffold(

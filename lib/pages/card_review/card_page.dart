@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/card_review/card_item.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:flutter/material.dart';
@@ -31,9 +30,8 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
   late final Animation<double> _scaleAnimation2;
   late final Animation<double> _opacityAnimation;
   late final Animation<double> _turnAnimation;
+  var _finished = false;
   final _dispStream = DisposableStream();
-  // var _animateTurns = 0.0;
-  // var _onAnimate = false;
   final tag = 'cardPage';
 
   @override
@@ -142,6 +140,8 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
   }
 
   void _onDone(bool success) {
+    if (_finished) return;
+    _finished = true;
     AppRep().play(success ? SoundType.successShort : SoundType.failedShort);
     Timer(Constants.animDurationMid, () {
       widget.onDone(success);
@@ -162,8 +162,6 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
               builder: (context, child) {
                 return Stack(alignment: Alignment.center, children: [
                   Positioned(
-                      // duration: Constants.animDurationMid,
-                      // bottom: _onAnimate ? 0 : size.height / 2,
                       bottom: 0,
                       top: 0,
                       left: 0,
@@ -229,28 +227,28 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                                       _onDone(false);
                                                     })
                                               ])))))))),
-                  Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: RoundButton(
-                          color: Colors.white,
-                          iconData: Icons.abc,
-                          size: const Size(50, 50),
-                          onPressed: (p0) {
-                            // if (_onAnimate) {
-                            //   setState(() {
-                            //     _onAnimate = false;
-                            //     _animateTurns = 1.0;
-                            //   });
-                            // } else {
-                            //   setState(() {
-                            //     _onAnimate = true;
-                            //     _animateTurns = 0.0;
-                            //   });
-                            // }
-                            _animateController.forward(from: 0.0);
-                          }))
+                  // Positioned(
+                  //     bottom: 0,
+                  //     left: 0,
+                  //     right: 0,
+                  //     child: RoundButton(
+                  //         color: Colors.white,
+                  //         iconData: Icons.abc,
+                  //         size: const Size(50, 50),
+                  //         onPressed: (p0) {
+                  //           // if (_onAnimate) {
+                  //           //   setState(() {
+                  //           //     _onAnimate = false;
+                  //           //     _animateTurns = 1.0;
+                  //           //   });
+                  //           // } else {
+                  //           //   setState(() {
+                  //           //     _onAnimate = true;
+                  //           //     _animateTurns = 0.0;
+                  //           //   });
+                  //           // }
+                  //           _animateController.forward(from: 0.0);
+                  //         }))
                 ]);
               }));
     });

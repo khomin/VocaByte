@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/pages/word_details/page_word_details.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
@@ -50,8 +51,6 @@ class CardReviewNavState extends State<CardReviewNav> {
   @override
   void initState() {
     super.initState();
-
-    // TODO: redo already know - review in
     AppRep().reviewTask.resetProgress();
     Future.microtask(() {
       _nextCard();
@@ -104,6 +103,16 @@ class CardReviewNavState extends State<CardReviewNav> {
     //     }));
   }
 
+  void _pop() {
+    var nav = _navKey.currentState;
+    var pop = nav?.canPop();
+    if (pop == true) {
+      nav?.pop();
+    } else {
+      Navigator.of(context).pop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -148,7 +157,15 @@ class CardReviewNavState extends State<CardReviewNav> {
                             (context, animation, secondaryAnimation, child) {
                           return child;
                         },
-                        pageBuilder: (_, __, ___) => const CardNoWords());
+                        pageBuilder: (_, __, ___) => CardNoWords(onBack: () {
+                              _pop();
+                            }, onBackOpenSearch: () {
+                              _pop();
+                              Timer(const Duration(milliseconds: 50), () {
+                                NavigatorRep().routeBloc.goto(Panel(
+                                    type: PageType.searchWord, fullPop: true));
+                              });
+                            }));
                   //
                   // cards
                   case CardPageType.defToWords:

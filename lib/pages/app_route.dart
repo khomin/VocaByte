@@ -73,7 +73,10 @@ class _AppRouteState extends State<AppRoute> {
                       settings: settings,
                       builder: (context) {
                         return PageWordDetails(
-                            playWordAtStart: true, onBack: () {});
+                            playWordAtStart: true,
+                            onBack: () {
+                              Navigator.of(context).pop();
+                            });
                       }));
                 });
               }));
@@ -94,7 +97,10 @@ class _AppRouteState extends State<AppRoute> {
                       settings: settings,
                       builder: (context) {
                         return PageWordDetails(
-                            onBack: () {}, playWordAtStart: true);
+                            onBack: () {
+                              Navigator.of(context).pop();
+                            },
+                            playWordAtStart: true);
                       }));
                 });
               }));

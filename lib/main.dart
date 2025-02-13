@@ -170,8 +170,6 @@ class _AppState extends State<App> {
         }));
   }
 
-  PageType? _curPage;
-
   Widget _app() {
     return Scaffold(
         // backgroundColor: Colors.amber,
@@ -183,88 +181,26 @@ class _AppState extends State<App> {
             return const SplashInstall();
           }
           // first time show onboarding
-          if (model.onboarding) {
-            return PageOnboard(onStart: () {
-              context.read<AppModel>().onboarding = false;
-            });
-          }
+          // if (model.onboarding) {
+          //   return PageOnboard(onStart: () {
+          //     context.read<AppModel>().onboarding = false;
+          //   });
+          // }
           // cpp not ready
           if (!model.serviceInited) {
             return const Splash();
           }
           return const AppRoute();
-          // return Container();
-
-          // return StreamBuilder(
-          //     stream: NavigatorRep().routeBloc.onGoto,
-          //     builder: (context, snapshot) {
-          //       var page = snapshot.data?.type;
-          //       _curPage = page;
-          //       switch (page) {
-          //         case null:
-          //         case PageType.home:
-          //           return PageHome(onGoToReview: () {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.reviewCard,
-          //             //     replace: true);
-          //           }, onGoToSearch: () {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.searchWord,
-          //             //     replace: true);
-          //           }, onGoToManageWords: () {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.manageWords,
-          //             //     replace: true);
-          //           }, onGoToNumerals: () {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.numerals,
-          //             //     replace: true);
-          //           });
-          //         case PageType.searchWord:
-          //           return PageSearchWord(onShowWord: (data) async {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.wordDetails,
-          //             //     replace: false);
-          //             // await ServiceApi()
-          //             //     .putRecentWord(data.word);
-          //             // AppRep().updateRecent();
-          //           });
-          //         case PageType.reviewCard:
-          //           return CardReviewNav(onBack: () {
-          //             // context.read<AppModel>().pageBack();
-          //           });
-          //         case PageType.manageWords:
-          //           return ManageWordPage(onShowWord: (data) {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.wordDetails,
-          //             //     replace: false);
-          //           });
-          //         case PageType.settings:
-          //           return SettingsPage(onChangeGoal: () {
-          //             // context.read<AppModel>().goToPage(
-          //             //     page: PageType.changeDailyGoal,
-          //             //     replace: false);
-          //           });
-          //       }
-          //     });
         }),
         bottomNavigationBar: StreamBuilder(
             // stream: NavigatorRep().routeBloc.onGoto,
             stream: NavigatorRep().routeBloc.onHideBottom,
             initialData: NavigatorRep().routeBloc.onHideBottom.valueOrNull,
             builder: (context, snapshot) {
-              // var page = snapshot.data?.type;
-              // switch (page) {
-              //   case null:
-              //   case PageType.home:
               var hide = snapshot.data ?? false;
               return AnimatedContainer(
                   duration: const Duration(milliseconds: 250),
                   height: hide ? 0 : 75,
-                  // height: page == PageType.reviewCard ? 0 : 75,
-                  // curve: Curves.fastOutSlowIn,
-                  // curve: Curves.linear,
-                  // height: 35,
                   decoration: const BoxDecoration(
                       // color: Colors.black
                       ),
@@ -274,7 +210,6 @@ class _AppState extends State<App> {
                         var page = snapshot.data?.type;
                         return Stack(alignment: Alignment.center, children: [
                           _bottomHightlightActive(page),
-                          // TODO: hide botton when splash screen
                           Positioned(
                               top: 0,
                               left: 0,

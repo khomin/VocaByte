@@ -63,9 +63,9 @@ class CardItemState extends State<CardItem> {
                     useScaleAnimation: true,
                     radius: 15,
                     onPressed: (p0) {
-                      setState(() {
-                        _finished = true;
-                      });
+                      if (_finished) return;
+                      _finished = true;
+                      setState(() {});
                       widget.onClicked();
                     },
                     child: IgnorePointer(

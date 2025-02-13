@@ -198,6 +198,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                       ]))
                     ]))
                   ])),
+                  // TODO: redo already know - review in
                   FixedFooterBottom(
                       child1: status != null
                           ? ButtonRoundCorner(
@@ -251,14 +252,11 @@ class PageWordDetailsState extends State<PageWordDetails>
                                       Radius.circular(10)),
                                   onPressed: () {
                                     widget.onBack.call();
-                                    // TODO: check
-                                    // Navigator.of(context).pop();
                                   })
                               : ButtonWithMenu(
                                   text: 'Review $_reviewIn',
                                   onPressed: () {
                                     widget.onBack.call();
-                                    // Navigator.of(context).pop();
                                   },
                                   onMenu: () {
                                     ChangeReviewTime().show(
