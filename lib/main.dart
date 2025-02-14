@@ -95,47 +95,14 @@ class _AppState extends State<App> {
       _appRep.updateWordToLearn();
       //
       // init delayed
-      Future.delayed(const Duration(milliseconds: 500), () async {
+      Future.delayed(const Duration(milliseconds: 100), () async {
+        TextToSpeach().initTts();
+        // recent
         await _appRep.updateRecent();
-        await TextToSpeach().initTts();
+        // manage list
+        await _appRep.refreshManageList();
       });
-
-      // Navigator.of(context).push(CupertinoPageRoute(
-      //     settings: const RouteSettings(),
-      //     builder: (context) {
-      //       return PageHome(
-      //         onReview: () {
-      //           // context.read<AppModel>().goToPage(
-      //           //     page: PageType.reviewCard,
-      //           //     replace: true
-      //         },
-      //         onSearch: () {},
-      //         onManageWords: () {},
-      //         onNumerals: () {},
-      //       );
-      //     }));
     });
-
-    // _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((value) {
-    //   switch (value?.type) {
-    //     case null:
-    //     case PageType.home:
-    //     case PageType.settings:
-    //     case PageType.searchWord:
-    //     case PageType.manageWords:
-    //       // Timer(const Duration(milliseconds: 200), () {
-    //       setState(() {
-    //         _bottomHide = false;
-    //       });
-    //     // });
-    //     case PageType.reviewCard:
-    //     default:
-    //       setState(() {
-    //         _bottomHide = true;
-    //       });
-    //       break;
-    //   }
-    // }));
   }
 
   @override

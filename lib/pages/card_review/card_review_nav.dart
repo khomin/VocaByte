@@ -46,11 +46,14 @@ class CardData {
 class CardReviewNavState extends State<CardReviewNav> {
   final _dispStream = DisposableStream();
   final _navKey = GlobalKey<NavigatorState>();
+  var _leanedCountSinceBreak = 0;
+  var _leanedCountAll = 0;
   final tag = 'cardReview';
 
   @override
   void initState() {
     super.initState();
+    _leanedCountAll = AppRep().reviewTask.wordDoneCount.valueOrNull ?? 0;
     AppRep().reviewTask.resetProgress();
     Future.microtask(() {
       _nextCard();
@@ -70,7 +73,10 @@ class CardReviewNavState extends State<CardReviewNav> {
     if (last != null) {
       AppRep().cachedWord = last.data;
     }
-    _navKey.currentState?.pushReplacementNamed(CardPageType.wordDetails.name);
+    _leanedCountAll++;
+    _leanedCountSinceBreak++;
+    var nav = _navKey.currentState;
+    nav?.pushReplacementNamed(CardPageType.wordDetails.name);
   }
 
   Future<void> _nextCard() async {
@@ -78,29 +84,12 @@ class CardReviewNavState extends State<CardReviewNav> {
     var current = v.current();
     var nav = _navKey.currentState;
     if (current == null) {
-      // _navKey.currentState?.pushReplacementNamed(CardPageType.learnDone.name);
-      // _navKey.currentState?.pushNamed(CardPageType.learnDone.name);
-      AppRep().play(SoundType.successShort);
-      // nav?.push(CupertinoPageRoute(
-      //     settings: RouteSettings(name: type.name),
-      //     builder: (context) {
-      //       return const NumeralsNav();
-      //     }));
       // no more cards to learn
+      AppRep().play(SoundType.successShort);
       return;
     }
-    // while (nav?.canPop() == true) {
-    //   nav?.pop();
-    // }
-    // nav?.pushNamed(current.pageType.name, arguments: {'word': current});
-    _navKey.currentState?.pushReplacementNamed(current.pageType.name,
+    nav?.pushReplacementNamed(current.pageType.name,
         arguments: {'word': current});
-    // var nav = _navKey.currentState;
-    // nav?.push(CupertinoPageRoute(
-    //     settings: RouteSettings(name: type.name),
-    //     builder: (context) {
-    //       return const NumeralsNav();
-    //     }));
   }
 
   void _pop() {
@@ -193,15 +182,12 @@ class CardReviewNavState extends State<CardReviewNav> {
                           return child;
                         },
                         pageBuilder: (_, __, ___) => CardsDone(
-                            number:
-                                AppRep().reviewTask.wordDoneCount.valueOrNull ??
-                                    0,
+                            number: _leanedCountAll,
                             isEnd: review.current() == null,
                             onDone: () {
                               Navigator.of(context).pop();
                             },
                             onContinue: () {
-                              // TODO: after contnue no more final screen why?
                               _nextCard();
                             }));
                   case CardPageType.wordDetails:
@@ -216,12 +202,11 @@ class CardReviewNavState extends State<CardReviewNav> {
                         pageBuilder: (_, __, ___) => PageWordDetails(
                             playWordAtStart: !review.lastAnswerRight,
                             onBack: () async {
-                              if (AppRep()
-                                      .reviewTask
-                                      .wordDoneCount
-                                      .valueOrNull ==
-                                  await SettingsRep().getDailyGoal()) {
-                                _navKey.currentState?.pushReplacementNamed(
+                              var goal = await SettingsRep().getDailyGoal();
+                              if (_leanedCountSinceBreak == goal) {
+                                _leanedCountSinceBreak = 0;
+                                var nav = _navKey.currentState;
+                                nav?.pushReplacementNamed(
                                     CardPageType.learnDone.name);
                                 AppRep().play(SoundType.successShort);
                               } else {
@@ -234,16 +219,20 @@ class CardReviewNavState extends State<CardReviewNav> {
             Positioned(
                 bottom: 100,
                 left: 10,
-                child: RoundButton(
-                    color: Colors.white.withOpacity(0.05),
-                    iconColor: Theme.of(context).colorScheme.white,
-                    size: const Size(50, 50),
-                    iconSize: 22,
-                    radius: 20,
-                    iconData: Icons.insert_photo_sharp,
-                    onPressed: (p0) async {
-                      await _handleAnswer(success: false);
-                    }))
+                child: Row(children: [
+                  Text(
+                      'CountaAll=$_leanedCountAll,countBreak=$_leanedCountSinceBreak'),
+                  RoundButton(
+                      color: Colors.white.withOpacity(0.05),
+                      iconColor: Theme.of(context).colorScheme.white,
+                      size: const Size(50, 50),
+                      iconSize: 22,
+                      radius: 20,
+                      iconData: Icons.insert_photo_sharp,
+                      onPressed: (p0) async {
+                        await _handleAnswer(success: false);
+                      })
+                ]))
         ]));
   }
 }

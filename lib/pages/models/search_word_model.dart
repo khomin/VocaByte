@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
+import 'package:vocabyte/pages/page_search_word/page_search.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/review_task_mock.dart';
 import 'package:vocabyte/services/service_api.dart';
+import 'package:collection/collection.dart';
+
+class SearchInfo extends FullInfo {
+  SearchInfo(
+      {required super.word,
+      required super.transcript,
+      required super.meaning,
+      required super.freq,
+      required this.isInStudy});
+  bool isInStudy;
+}
 
 class SearchWordModel with ChangeNotifier {
   final TextEditingController controller = TextEditingController();
   final FocusNode focus = FocusNode();
   String query = '';
-  var found = <FullInfo>[];
-  var recent = <FullInfo>[];
+  var found = <SearchInfo>[];
+  var recent = <SearchInfo>[];
 
   @override
   void dispose() {
@@ -19,12 +32,22 @@ class SearchWordModel with ChangeNotifier {
   void search(String v) async {
     query = v;
     if (v.isNotEmpty) {
-      var list = <FullInfo>[];
+      var list = <SearchInfo>[];
+      var manageList = AppRep().onManageWordChanged.valueOrNull ?? [];
+
       var search = await ServiceApi().searchWords(word: v, useLike: true);
       for (var it in search.item) {
         var info = await AppRep().wordToInfo(it);
         if (info != null) {
-          list.add(info);
+          list.add(SearchInfo(
+              word: info.word,
+              transcript: info.transcript,
+              meaning: info.meaning,
+              freq: info.freq,
+              isInStudy: manageList.firstWhereOrNull((manage) {
+                    return manage.word.toLowerCase() == info.word.toLowerCase();
+                  }) !=
+                  null));
         }
       }
       list.sort((a, b) {
@@ -38,7 +61,7 @@ class SearchWordModel with ChangeNotifier {
       });
       updateList(list);
     } else {
-      updateList(<FullInfo>[]);
+      updateList([]);
     }
   }
 

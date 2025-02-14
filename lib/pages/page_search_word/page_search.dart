@@ -7,7 +7,7 @@ import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
-import 'package:vocabyte/pages/page_search_word/word_item.dart';
+import 'package:vocabyte/pages/page_search_word/search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';

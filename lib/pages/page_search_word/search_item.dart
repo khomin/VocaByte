@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/hover_click.dart';
+import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/app/app_theme.dart';
 
 class SearchWordItem extends StatefulWidget {
   const SearchWordItem({required this.data, this.onClicked, super.key});
-  final FullInfo data;
+  final SearchInfo data;
   final Function? onClicked;
 
   @override
@@ -26,7 +27,6 @@ class _State extends State<SearchWordItem> {
     if (widget.data.meaning.isNotEmpty) {
       meaning = widget.data.meaning[0];
     }
-    // TODO: show icon if in study list
     return HoverClick(
         onHover: (hover) {
           setState(() {
@@ -72,6 +72,14 @@ class _State extends State<SearchWordItem> {
                                         Theme.of(context).colorScheme.text5)),
                           const Spacer()
                         ])),
+                    //
+                    // in study
+                    if (widget.data.isInStudy)
+                      Padding(
+                          padding: const EdgeInsets.only(right: 10),
+                          child: Icon(Icons.school_outlined,
+                              size: 20,
+                              color: Theme.of(context).colorScheme.text5)),
                     //
                     // populariry
                     Text(widget.data.freq >= 0 ? '${widget.data.freq}' : '',

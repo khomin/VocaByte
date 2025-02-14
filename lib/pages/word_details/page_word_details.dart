@@ -236,6 +236,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                                     req: ReqAddWordInReview(
                                         word: w, useExtraFields: false));
                                 _refreshStatus();
+                                AppRep().refreshManageList();
                               }),
                       child2: status != null
                           ? status.successCount >= 10

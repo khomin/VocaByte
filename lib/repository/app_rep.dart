@@ -5,6 +5,7 @@ import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/components/dialogs/change_review_time.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
@@ -15,9 +16,10 @@ import 'package:vocabyte/repository/review_task_base.dart';
 import 'package:vocabyte/repository/review_task_mock.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
+import 'package:collection/collection.dart';
 
 class AppRep {
-  final onRecentWords = BehaviorSubject<List<FullInfo>>();
+  final onRecentWords = BehaviorSubject<List<SearchInfo>>();
   final onProgressChanged = BehaviorSubject<double>.seeded(0);
   final onManageWordChanged = BehaviorSubject<List<WordInReview>?>();
   late final ReviewTaskBase reviewTask;
@@ -44,13 +46,19 @@ class AppRep {
 
   Future<void> updateRecent() async {
     var v = await ServiceApi().getRecentWords();
-    var list = <FullInfo>[];
+    var list = <SearchInfo>[];
+    var manageList = AppRep().onManageWordChanged.valueOrNull ?? [];
     for (var it in v.word) {
-      list.add(FullInfo(
-          word: UiHelper.toFormatText(it),
+      var word = UiHelper.toFormatText(it);
+      list.add(SearchInfo(
+          word: word,
           transcript: '',
           meaning: [],
-          freq: -1));
+          freq: -1,
+          isInStudy: manageList.firstWhereOrNull((manage) {
+                return manage.word.toLowerCase() == word.toLowerCase();
+              }) !=
+              null));
     }
     onRecentWords.add(list);
   }
@@ -331,6 +339,7 @@ class AppRep {
       return a.successCount.compareTo(b.successCount);
     });
     onManageWordChanged.add(list);
+    updateRecent();
     return list;
   }
 }
