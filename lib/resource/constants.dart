@@ -30,12 +30,12 @@ class Constants {
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
 
-  static const menuFontColor1 = Constants.colorTextAccent;
-  static const menuFontColor2 = Constants.colorTextSecond;
+  static const menuFontColor1 = Color.fromARGB(255, 245, 245, 245);
+  static const menuFontColor2 = Color.fromARGB(159, 255, 255, 255);
+  static const menuBorderColor = Color.fromARGB(159, 211, 211, 212);
   static const menuFontSize1 = 15.0;
   static const menuFontSize2 = 14.0;
   static const menuFontSize3 = 13.0;
-  static const menuBorderColor = Color.fromARGB(159, 211, 211, 212);
 
   static const double learnCountForBreak = 20;
   static const int reapedToLeanDefault = 10;

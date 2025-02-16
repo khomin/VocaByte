@@ -70,6 +70,9 @@ extension MenuColorScheme on ColorScheme {
   Color get cardError => const Color.fromARGB(255, 114, 65, 65);
   Color get page => const Color.fromARGB(255, 0, 0, 0);
 
+  // Color get menuBorderColor => const Color.fromARGB(159, 211, 211, 212);
+  Color get menuBorderColor => const Color.fromARGB(159, 109, 109, 109);
+
   Color get buttonOption1 => const Color.fromARGB(255, 57, 99, 90);
   Color get buttonOption2 => const Color.fromARGB(255, 156, 96, 159);
 

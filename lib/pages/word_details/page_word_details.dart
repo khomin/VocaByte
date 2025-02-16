@@ -1,13 +1,12 @@
 import 'package:expandable_page_view/expandable_page_view.dart';
-import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/button_with_menu.dart';
-import 'package:vocabyte/components/dialogs/change_review_time.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:provider/provider.dart';
@@ -142,7 +141,6 @@ class PageWordDetailsState extends State<PageWordDetails>
           var size = MediaQuery.of(context).size;
           var data = AppRep().cachedWord;
           var sentences = _sentences?.data;
-          var status = _status;
           if (data == null) return const SizedBox();
           return Container(
               color: Theme.of(context).colorScheme.page,
@@ -198,82 +196,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                       ]))
                     ]))
                   ])),
-                  // TODO: redo already know - review in
-                  FixedFooterBottom(
-                      child1: status != null
-                          ? ButtonRoundCorner(
-                              text: status.successCount >= 10
-                                  ? 'Forget'
-                                  : 'Already know',
-                              color:
-                                  Theme.of(context).colorScheme.buttonOption2,
-                              colorText: Theme.of(context).colorScheme.cardText,
-                              direction: TextDirection.rtl,
-                              radious:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              onPressed: () async {
-                                var data = AppRep().cachedWord;
-                                var w = data?.word;
-                                if (w == null) return;
-                                await ServiceApi()
-                                    .removeWordFromCurrent(word: w);
-                                await _refreshStatus();
-                                AppRep().refreshManageList();
-                              })
-                          : ButtonRoundCorner(
-                              text: 'Should learn',
-                              color:
-                                  Theme.of(context).colorScheme.buttonOption1,
-                              colorText: Theme.of(context).colorScheme.cardText,
-                              direction: TextDirection.ltr,
-                              radious:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              onPressed: () async {
-                                var data = AppRep().cachedWord;
-                                var w = data?.word;
-                                if (w == null) return;
-                                await ServiceApi().addWordInReview(
-                                    req: ReqAddWordInReview(
-                                        word: w, useExtraFields: false));
-                                _refreshStatus();
-                                AppRep().refreshManageList();
-                              }),
-                      child2: status != null
-                          ? status.successCount >= 10
-                              ? ButtonRoundCorner(
-                                  text: 'Completed',
-                                  iconData: Icons.thumb_up,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOption3,
-                                  colorText:
-                                      Theme.of(context).colorScheme.cardText,
-                                  direction: TextDirection.ltr,
-                                  radious: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  onPressed: () {
-                                    widget.onBack.call();
-                                  })
-                              : ButtonWithMenu(
-                                  text: 'Review $_reviewIn',
-                                  onPressed: () {
-                                    widget.onBack.call();
-                                  },
-                                  onMenu: () {
-                                    ChangeReviewTime().show(
-                                        context: context,
-                                        review:
-                                            AppRep.reviewTimeToEnum(_status),
-                                        onSet: (review) async {
-                                          var time =
-                                              AppRep.reviewTimeToInt(review);
-                                          var data = AppRep().cachedWord;
-                                          await AppRep().updateReviewTime(
-                                              data?.word, time);
-                                          _refreshStatus();
-                                        });
-                                  })
-                          : null)
+                  _footerButton()
                 ])
               ]));
         });
@@ -471,5 +394,93 @@ class PageWordDetailsState extends State<PageWordDetails>
             ])
           ]));
     });
+  }
+
+  Widget _footerButton() {
+    var countKnow = _status?.successCount ?? 0;
+    var completed = countKnow >= 10;
+    var leftText = '';
+    if (countKnow == 0) {
+      leftText = 'new';
+    } else if (countKnow == 1) {
+      leftText = '$countKnow time know';
+    } else {
+      leftText = '$countKnow times know';
+    }
+    return FixedFooterBottom(
+        child1: _status != null
+            ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Flexible(
+                    child: Text(leftText,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Theme.of(context).colorScheme.text5)))
+              ])
+            : ButtonRoundCorner(
+                text: 'Should learn',
+                color: Theme.of(context).colorScheme.buttonOption1,
+                colorText: Theme.of(context).colorScheme.cardText,
+                padding: const EdgeInsets.only(left: 10, right: 10),
+                direction: TextDirection.ltr,
+                radious: const BorderRadius.all(Radius.circular(10)),
+                onPressed: () async {
+                  var data = AppRep().cachedWord;
+                  var w = data?.word;
+                  if (w == null) return;
+                  await ServiceApi().addWordInReview(
+                      req: ReqAddWordInReview(word: w, useExtraFields: false));
+                  _refreshStatus();
+                  AppRep().refreshManageList();
+                }),
+        childFlex2: 13,
+        child2: _status == null
+            ? null
+            : completed
+                ? ButtonRoundCorner(
+                    text: 'Completed',
+                    iconData: Icons.thumb_up,
+                    color: Theme.of(context).colorScheme.buttonOption3,
+                    colorText: Theme.of(context).colorScheme.cardText,
+                    padding: const EdgeInsets.only(left: 10, right: 10),
+                    direction: TextDirection.ltr,
+                    radious: const BorderRadius.all(Radius.circular(10)),
+                    onPressed: () {
+                      widget.onBack.call();
+                    })
+                : ButtonWithMenu(
+                    text: 'Review $_reviewIn',
+                    onPressed: () {
+                      widget.onBack.call();
+                    },
+                    onMenu: () {
+                      showModalBottomSheet(
+                          context: context,
+                          showDragHandle: true,
+                          useRootNavigator: true,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.baseColor1,
+                          builder: (context) {
+                            return NextReviewPanel(
+                                review: AppRep.reviewTimeToEnum(_status),
+                                onChanged: (review) async {
+                                  var time = AppRep.reviewTimeToInt(review);
+                                  var data = AppRep().cachedWord;
+                                  await AppRep()
+                                      .updateReviewTime(data?.word, time);
+                                  _refreshStatus();
+                                },
+                                onAlreadyKnow: () async {
+                                  var data = AppRep().cachedWord;
+                                  var w = data?.word;
+                                  if (w == null) return;
+                                  await ServiceApi()
+                                      .removeWordFromCurrent(word: w);
+                                  await _refreshStatus();
+                                  AppRep().refreshManageList();
+                                });
+                          });
+                    }));
   }
 }

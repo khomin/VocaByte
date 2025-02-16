@@ -29,7 +29,7 @@ class ButtonWithMenu extends StatelessWidget {
                 onPressed();
               })),
       SizedBox(
-          width: 40,
+          width: 50,
           height: Constants.buttonHeight,
           child: ElevatedButton(
               onPressed: () {

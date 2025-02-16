@@ -1,21 +1,86 @@
 import 'dart:ui' as ui;
-
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
-class NumeralsDone extends StatelessWidget {
-  const NumeralsDone({required this.result, required this.onDone, super.key});
-  final Function() onDone;
+class NumeralsCompleted extends StatefulWidget {
+  const NumeralsCompleted(
+      {required this.result, required this.onCompleted, super.key});
+  final Function() onCompleted;
   final NumeralsResult result;
+
+  @override
+  State<NumeralsCompleted> createState() => NumeralsCompletedState();
+}
+
+class TabInfo {
+  const TabInfo({required this.icon, required this.label});
+  final IconData icon;
+  final String label;
+}
+
+class NumeralsCompletedState extends State<NumeralsCompleted> {
+  String _line1 = '';
+  String _line2 = '';
+  var _items = <Widget>[];
+
+  @override
+  void initState() {
+    super.initState();
+
+    var duration = UiHelper()
+        .durationFormat(DateTime.now().difference(widget.result.started));
+
+    var result = widget.result;
+    var correctCnt = result.correctCnt;
+
+    if (result.failedValue.isNotEmpty) {
+      _line1 = 'Sorry!\nCorrect value is ${result.failedValue}';
+    } else if (correctCnt == result.allCnt) {
+      _line1 =
+          'Geat job!\nYou have completed!\n${result.correctCnt} corect answers';
+    } else {
+      _line1 = 'You have ${result.correctCnt} corect answers!';
+    }
+    _line2 = duration;
+
+    _items = [
+      Text(_line1,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              foreground: Paint()
+                ..shader = ui.Gradient.linear(
+                    const Offset(0, 20), const Offset(150, 20), <Color>[
+                  const ui.Color.fromARGB(255, 255, 102, 6),
+                  Colors.yellow,
+                ]))),
+      const SizedBox(height: 10),
+      Text(_line2,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20,
+              foreground: Paint()
+                ..shader = ui.Gradient.linear(
+                    const Offset(0, 20), const Offset(150, 20), <Color>[
+                  const ui.Color.fromARGB(255, 255, 102, 6),
+                  Colors.yellow,
+                ])))
+    ];
+
+    _items = _items
+        .animate(interval: 100.ms)
+        .fadeIn(duration: 300.ms, delay: 50.ms)
+        .shimmer(blendMode: BlendMode.srcOver, color: Colors.white12)
+        .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad);
+  }
 
   @override
   Widget build(BuildContext context) {
     return Builder(builder: (context) {
-      var duration =
-          UiHelper().durationFormat(DateTime.now().difference(result.started));
       return Container(
           color: Theme.of(context).colorScheme.page,
           child: Column(children: [
@@ -23,87 +88,9 @@ class NumeralsDone extends StatelessWidget {
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    if (result.failedValue.isNotEmpty)
-                      Text('Correct value is ${result.failedValue}',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                              fontSize: 20,
-                              foreground: Paint()
-                                ..shader = ui.Gradient.linear(
-                                  const Offset(0, 20),
-                                  const Offset(150, 20),
-                                  <Color>[
-                                    Colors.red,
-                                    Colors.yellow,
-                                  ],
-                                )))
-                  ]),
-                  //
-                  // legend correct all
-                  result.correctCnt == result.allCnt
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                              Text(
-                                  'You have completed!\n${result.correctCnt} corect answers',
-                                  maxLines: 3,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      foreground: Paint()
-                                        ..shader = ui.Gradient.linear(
-                                          const Offset(0, 50),
-                                          const Offset(150, 20),
-                                          <Color>[
-                                            const Color.fromARGB(
-                                                255, 89, 215, 131),
-                                            const Color.fromARGB(
-                                                255, 139, 215, 89)
-                                          ],
-                                        ))),
-                            ])
-                      :
-                      //
-                      // legend with fail
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                              Text(
-                                  'You have ${result.correctCnt} corect answers!',
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      foreground: Paint()
-                                        ..shader = ui.Gradient.linear(
-                                          const Offset(0, 20),
-                                          const Offset(150, 20),
-                                          <Color>[
-                                            Colors.red,
-                                            Colors.yellow,
-                                          ],
-                                        ))),
-                            ]),
-                  //
-                  // legend
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text(duration,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontSize: 20,
-                            foreground: Paint()
-                              ..shader = ui.Gradient.linear(
-                                const Offset(0, 20),
-                                const Offset(150, 20),
-                                <Color>[
-                                  Colors.red,
-                                  Colors.yellow,
-                                ],
-                              ))),
-                  ]),
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: _items),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                     Expanded(
                         child: Padding(
@@ -116,7 +103,7 @@ class NumeralsDone extends StatelessWidget {
                                 colorText:
                                     Theme.of(context).colorScheme.cardText,
                                 onPressed: () {
-                                  onDone();
+                                  widget.onCompleted();
                                 })))
                   ])
                 ])),

@@ -38,6 +38,10 @@ class _AppRouteState extends State<AppRoute> {
           var page = PageType.values.firstWhereOrNull((v) => v.name == name);
           switch (page) {
             case null:
+              if (name == 'numerals') {
+                NavigatorRep().routeBloc.onHideBottom.add(true);
+              }
+              break;
             case PageType.home:
               NavigatorRep().routeBloc.onHideBottom.add(false);
               break;
@@ -186,7 +190,8 @@ class _AppRouteState extends State<AppRoute> {
                             }, onNumerals: () {
                               // numerals
                               nav.currentState?.push(CupertinoPageRoute(
-                                  settings: settings,
+                                  settings:
+                                      const RouteSettings(name: 'numerals'),
                                   builder: (context) {
                                     return const NumeralsNav();
                                   }));

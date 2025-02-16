@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -15,7 +17,7 @@ class NumeralItem extends StatefulWidget {
 }
 
 class NumeralItemState extends State<NumeralItem> {
-  var _finished = false;
+  var _clicked = false;
 
   @override
   void initState() {
@@ -30,33 +32,45 @@ class NumeralItemState extends State<NumeralItem> {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        child: RoundButton(
-            onPressed: (_) {
-              setState(() {
-                _finished = true;
-              });
-              widget.onClicked(widget.number);
-            },
-            color: _finished
-                ? widget.child == null
-                    ? Theme.of(context).colorScheme.cardSuccess
-                    : Theme.of(context).colorScheme.transparent
-                : widget.child == null
-                    ? Theme.of(context).colorScheme.page
-                    : Theme.of(context).colorScheme.transparent,
-            child: Column(children: [
-              Expanded(
-                  child: Row(children: [
-                Expanded(
-                    child: Padding(
-                        padding: const EdgeInsets.all(5),
-                        child: widget.child != null
-                            ? Center(child: widget.child)
-                            : Text('${widget.number}',
-                                textAlign: TextAlign.center,
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 5)))
-              ])),
-            ])));
+        child: Padding(
+            padding: const EdgeInsets.all(2),
+            child: RoundButton(
+                radius: 12,
+                useScaleAnimation: true,
+                onPressed: (_) {
+                  setState(() {
+                    _clicked = true;
+                  });
+                  Timer(const Duration(milliseconds: 100), () {
+                    if (mounted) {
+                      setState(() {
+                        _clicked = false;
+                      });
+                    }
+                  });
+                  widget.onClicked(widget.number);
+                },
+                color: _clicked
+                    ? widget.child == null
+                        ? Theme.of(context).colorScheme.cardSuccess
+                        : Theme.of(context).colorScheme.transparent
+                    : widget.child == null
+                        ? Theme.of(context).colorScheme.card
+                        : Theme.of(context).colorScheme.transparent,
+                child: IgnorePointer(
+                    child: Column(children: [
+                  Expanded(
+                      child: Row(children: [
+                    Expanded(
+                        child: Padding(
+                            padding: const EdgeInsets.all(5),
+                            child: widget.child != null
+                                ? Center(child: widget.child)
+                                : Text('${widget.number}',
+                                    textAlign: TextAlign.center,
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 5)))
+                  ]))
+                ])))));
   }
 }

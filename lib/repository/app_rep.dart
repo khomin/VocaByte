@@ -5,9 +5,10 @@ import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
+import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/resource/constants.dart';
-import 'package:vocabyte/components/dialogs/change_review_time.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/app/ui_helper.dart';
@@ -18,10 +19,21 @@ import 'package:vocabyte/services/protobuf/proto.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
 import 'package:collection/collection.dart';
 
+class NumeralsStage {
+  NumeralsStage({this.stage = 0, this.all = 0});
+  int stage = 0;
+  int all = 0;
+}
+
 class AppRep {
   final onRecentWords = BehaviorSubject<List<SearchInfo>>();
-  final onProgressChanged = BehaviorSubject<double>.seeded(0);
+  final onReviewProgress = BehaviorSubject<double>.seeded(0);
   final onManageWordChanged = BehaviorSubject<List<WordInReview>?>();
+
+  final onNumeralsProgress = BehaviorSubject<double>.seeded(0);
+  final onNumeralsStage =
+      BehaviorSubject<NumeralsStage>.seeded(NumeralsStage());
+
   late final ReviewTaskBase reviewTask;
   late final BehaviorSubject<ReviewTaskBase> onReviewTaskChanged;
   FullInfo? cachedWord;
@@ -221,7 +233,7 @@ class AppRep {
       return 'Today';
     } else if (reviewIn.inDays >= 25) {
       // more or 1 month
-      var month = reviewIn.inDays / 25;
+      var month = reviewIn.inDays ~/ 25;
       if (month == 1) {
         return 'in ${month.round()} month';
       } else {
@@ -341,6 +353,10 @@ class AppRep {
     onManageWordChanged.add(list);
     updateRecent();
     return list;
+  }
+
+  void shareApp() {
+    Share.shareUri(Uri.parse(Constants.appLink));
   }
 }
 

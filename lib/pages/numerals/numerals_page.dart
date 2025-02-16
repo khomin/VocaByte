@@ -22,9 +22,8 @@ class NumeralsResult {
 enum NumeralsLevel { easy, medium, hard }
 
 class NumeralsPage extends StatefulWidget {
-  const NumeralsPage({required this.onDone, super.key});
-
-  final Function(NumeralsResult) onDone;
+  const NumeralsPage({required this.onCompleted, super.key});
+  final Function(NumeralsResult) onCompleted;
 
   @override
   NumeralsPageState createState() => NumeralsPageState();
@@ -174,7 +173,10 @@ class NumeralsPageState extends State<NumeralsPage> {
     TextToSpeach().onChange(_number.toString());
     TextToSpeach().speak();
     var pg = _result.correctCnt * 100 / _result.allCnt;
-    AppRep().onProgressChanged.add(pg / 100);
+    AppRep().onNumeralsProgress.add(pg / 100);
+    AppRep()
+        .onNumeralsStage
+        .add(NumeralsStage(stage: _stage, all: _getStageAll()));
   }
 
   int _getStageAll() {
@@ -199,9 +201,9 @@ class NumeralsPageState extends State<NumeralsPage> {
             } else {
               _result.success = true;
               AppRep().play(SoundType.successLong);
-              AppRep().onProgressChanged.add(1);
-              Timer(const Duration(seconds: 1), () {
-                widget.onDone(_result);
+              AppRep().onNumeralsProgress.add(1);
+              Timer(const Duration(milliseconds: 200), () {
+                widget.onCompleted(_result);
               });
             }
           });
@@ -209,8 +211,8 @@ class NumeralsPageState extends State<NumeralsPage> {
           _result.success = false;
           _result.failedValue = _number.toString();
           AppRep().play(SoundType.failedLong);
-          Timer(const Duration(seconds: 1), () {
-            widget.onDone(_result);
+          Timer(const Duration(milliseconds: 200), () {
+            widget.onCompleted(_result);
           });
         }
       }
@@ -335,14 +337,9 @@ class NumeralsPageState extends State<NumeralsPage> {
                       child: Row(children: [
                     NumeralItem(
                         number: 0,
-                        child: Button2Animated(
-                            size: 40,
-                            iconData: Icons.play_arrow,
-                            onClicked: () {
-                              _playNumber();
-                            }),
+                        child: const Icon(Icons.play_arrow, size: 40),
                         onClicked: (n) {
-                          _onNumber(n);
+                          _playNumber();
                         }),
                     NumeralItem(
                         number: 0,

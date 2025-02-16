@@ -53,11 +53,11 @@ class CardReviewNavState extends State<CardReviewNav> {
   @override
   void initState() {
     super.initState();
-    _leanedCountAll = AppRep().reviewTask.wordDoneCount.valueOrNull ?? 0;
     AppRep().reviewTask.resetProgress();
     Future.microtask(() {
       _nextCard();
     });
+    _leanedCountAll = AppRep().reviewTask.wordDoneCount.valueOrNull ?? 0;
   }
 
   @override
@@ -111,8 +111,8 @@ class CardReviewNavState extends State<CardReviewNav> {
             leading: AppBar2(
                 type: Type.close,
                 child: StreamBuilder(
-                    stream: AppRep().onProgressChanged,
-                    initialData: AppRep().onProgressChanged.valueOrNull,
+                    stream: AppRep().onReviewProgress,
+                    initialData: AppRep().onReviewProgress.valueOrNull,
                     builder: (context, snapshot) {
                       var percent = snapshot.data ?? 0.0;
                       var step = (percent * 10).toInt();

@@ -93,7 +93,7 @@ class ReviewTask extends ReviewTaskBase {
       percent = doneCnt * 100 / reviewCnt;
     }
     // TODO: check progress for errors
-    AppRep().onProgressChanged.add(percent / 100);
+    AppRep().onReviewProgress.add(percent / 100);
     AppRep().onReviewTaskChanged.add(this);
     wordDoneCount.add(doneCnt);
     if (cardData.length <= 3) {

@@ -83,13 +83,13 @@ class RoundButtonState extends State<RoundButton>
           Positioned.fill(
               child: ElevatedButton(
                   onPressed: () async {
-                    widget.onPressed?.call(Offset.zero);
                     if (widget.useScaleAnimation) {
                       _controller.forward();
                       await Future.delayed(const Duration(milliseconds: 50));
                       if (!mounted) return;
                       _controller.reverse();
                     }
+                    widget.onPressed?.call(Offset.zero);
                   },
                   key: widget.key,
                   style: ElevatedButton.styleFrom(

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/app/app_theme.dart';
-import 'package:vocabyte/components/round_button.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class CardsDone extends StatefulWidget {
@@ -27,19 +26,10 @@ class TabInfo {
   final String label;
 }
 
-final List<TabInfo> tabs = [
-  const TabInfo(
-    icon: Icons.info_outline,
-    label: 'Mode',
-  ),
-  const TabInfo(icon: Icons.palette_outlined, label: 'Take image'),
-  const TabInfo(icon: Icons.palette_outlined, label: 'Flip'),
-];
-
 class CardsDoneState extends State<CardsDone> {
   String _line1 = '';
   String _line2 = '';
-  var tabInfoItems = <Widget>[];
+  var _items = <Widget>[];
 
   @override
   void initState() {
@@ -53,7 +43,7 @@ class CardsDoneState extends State<CardsDone> {
     }
     _line2 = 'You have learned $num ${num > 1 ? 'words' : 'word'}';
 
-    tabInfoItems = [
+    _items = [
       Text(_line1,
           style: TextStyle(
               fontSize: 20,
@@ -75,7 +65,7 @@ class CardsDoneState extends State<CardsDone> {
                 ])))
     ];
 
-    tabInfoItems = tabInfoItems
+    _items = _items
         .animate(interval: 100.ms)
         .fadeIn(duration: 300.ms, delay: 50.ms)
         .shimmer(blendMode: BlendMode.srcOver, color: Colors.white12)
@@ -102,7 +92,7 @@ class CardsDoneState extends State<CardsDone> {
                           const SizedBox(height: 50),
                           Column(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: tabInfoItems),
+                              children: _items),
                           const SizedBox(height: 10),
                           const Spacer(flex: 2),
                           FixedFooterBottom(

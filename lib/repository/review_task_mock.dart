@@ -63,7 +63,7 @@ class ReviewTaskMock extends ReviewTaskBase {
     if (reviewCnt > 0) {
       percent = doneCnt * 100 / reviewCnt;
     }
-    AppRep().onProgressChanged.add(percent / 100);
+    AppRep().onReviewProgress.add(percent / 100);
     AppRep().onReviewTaskChanged.add(this);
     wordDoneCount.add(doneCnt);
 

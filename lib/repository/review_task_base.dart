@@ -17,10 +17,10 @@ class ReviewTaskBase {
   ];
   final tag = 'reviewTask';
 
-  // TODO: don't reset progress when going back from card navigator
   void resetProgress() {
+    // TODO: store daily progress in sql
     wordDoneCount.add(0);
-    AppRep().onProgressChanged.add(0);
+    AppRep().onReviewProgress.add(0);
   }
 
   Future refresh() {
