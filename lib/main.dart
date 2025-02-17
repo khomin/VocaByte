@@ -1,5 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/app/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/pages/app_route.dart';
 import 'package:vocabyte/pages/settings/theme/theme_config.dart';
@@ -68,7 +69,20 @@ class _AppState extends State<App> {
       //
       _appModel.appVersion = initial.version;
       _appModel.onboarding = initial.onboarding;
+      switch (initial.theme) {
+        case ThemeType.light:
+          _appModel.theme = Brightness.light;
+          break;
+        case ThemeType.dark:
+          _appModel.theme = Brightness.dark;
+          break;
+        case ThemeType.system:
+          _appModel.theme = null;
+          break;
+      }
+
       // _appModel.theme = initial.theme;
+      // ThemeSwitcher.of(context).
       // if (mounted) Utils.setTheme(context, initial.theme);
       // ThemeSwitcher.of(context).changeTheme(theme: theme)
       // ThemeSwitcher.of(context).changeTheme(
@@ -138,83 +152,96 @@ class _AppState extends State<App> {
   }
 
   Widget _app() {
-    return Scaffold(
-        // backgroundColor: Colors.amber,
-        body: Builder(builder: (context) {
-          var model = context.watch<AppModel>();
-          //
-          // initial copy of assets
-          if (model.waitCopyResource) {
-            return const SplashInstall();
-          }
-          // first time show onboarding
-          // if (model.onboarding) {
-          //   return PageOnboard(onStart: () {
-          //     context.read<AppModel>().onboarding = false;
-          //   });
-          // }
-          // cpp not ready
-          if (!model.serviceInited) {
-            return const Splash();
-          }
-          return const AppRoute();
-        }),
-        bottomNavigationBar: StreamBuilder(
-            // stream: NavigatorRep().routeBloc.onGoto,
-            stream: NavigatorRep().routeBloc.onHideBottom,
-            initialData: NavigatorRep().routeBloc.onHideBottom.valueOrNull,
-            builder: (context, snapshot) {
-              var hide = snapshot.data ?? false;
-              return AnimatedContainer(
-                  duration: const Duration(milliseconds: 250),
-                  height: hide ? 0 : 75,
-                  decoration: const BoxDecoration(
-                      // color: Colors.black
-                      ),
-                  child: StreamBuilder(
-                      stream: NavigatorRep().routeBloc.onCurrent,
-                      builder: (context, snapshot) {
-                        var page = snapshot.data?.type;
-                        return Stack(alignment: Alignment.center, children: [
-                          _bottomHightlightActive(page),
-                          Positioned(
-                              top: 0,
-                              left: 0,
-                              right: 0,
-                              bottom: page == PageType.reviewCard ? null : null,
-                              child: SizedBox(
-                                  height: 75,
-                                  child: BottomNavigationBar(
-                                      elevation: 2,
-                                      selectedFontSize: 12,
-                                      unselectedFontSize: 12,
-                                      backgroundColor: Colors.transparent,
-                                      items: const [
-                                        BottomNavigationBarItem(
-                                            backgroundColor: Colors.white10,
-                                            icon: Icon(Icons.home),
-                                            label: 'Home'),
-                                        BottomNavigationBarItem(
-                                            icon: Icon(Icons.text_fields),
-                                            label: 'Search'),
-                                        BottomNavigationBarItem(
-                                            icon: Icon(Icons.view_agenda),
-                                            label: 'Review'),
-                                        BottomNavigationBarItem(
-                                            icon: Icon(Icons.edit_document),
-                                            label: 'Manage'),
-                                        BottomNavigationBarItem(
-                                            icon: Icon(Icons.settings),
-                                            label: 'Settings'),
-                                      ],
-                                      currentIndex: page?.index ?? 0,
-                                      onTap: (value) async {
-                                        NavigatorRep().routeBloc.goto(Panel(
-                                            type: PageType.values[value]));
-                                      })))
-                        ]);
-                      }));
-            }));
+    return ThemeSwitchingArea(
+        child: Scaffold(
+            // backgroundColor: Colors.amber,
+            body: Builder(builder: (context) {
+              var model = context.watch<AppModel>();
+              //
+              // initial copy of assets
+              if (model.waitCopyResource) {
+                return const SplashInstall();
+              }
+              // first time show onboarding
+              // if (model.onboarding) {
+              //   return PageOnboard(onStart: () {
+              //     context.read<AppModel>().onboarding = false;
+              //   });
+              // }
+              // cpp not ready
+              if (!model.serviceInited) {
+                return const Splash();
+              }
+              return const AppRoute();
+            }),
+            bottomNavigationBar: StreamBuilder(
+                stream: NavigatorRep().routeBloc.onHideBottom,
+                initialData: NavigatorRep().routeBloc.onHideBottom.valueOrNull,
+                builder: (context, snapshot) {
+                  var hide = snapshot.data ?? false;
+                  return AnimatedContainer(
+                      duration: const Duration(milliseconds: 250),
+                      height: hide ? 0 : 75,
+                      decoration: const BoxDecoration(
+                          // color: Colors.black
+                          ),
+                      child: StreamBuilder(
+                          stream: NavigatorRep().routeBloc.onCurrent,
+                          initialData:
+                              NavigatorRep().routeBloc.onCurrent.valueOrNull,
+                          builder: (context, snapshot) {
+                            var page = snapshot.data?.type;
+                            return Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  _bottomHightlightActive(page),
+                                  Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      right: 0,
+                                      bottom: page == PageType.reviewCard
+                                          ? null
+                                          : null,
+                                      child: SizedBox(
+                                          height: 75,
+                                          child: BottomNavigationBar(
+                                              elevation: 2,
+                                              selectedFontSize: 12,
+                                              unselectedFontSize: 12,
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              items: const [
+                                                BottomNavigationBarItem(
+                                                    backgroundColor:
+                                                        Colors.white10,
+                                                    icon: Icon(Icons.home),
+                                                    label: 'Home'),
+                                                BottomNavigationBarItem(
+                                                    icon:
+                                                        Icon(Icons.text_fields),
+                                                    label: 'Search'),
+                                                BottomNavigationBarItem(
+                                                    icon:
+                                                        Icon(Icons.view_agenda),
+                                                    label: 'Review'),
+                                                BottomNavigationBarItem(
+                                                    icon: Icon(
+                                                        Icons.edit_document),
+                                                    label: 'Manage'),
+                                                BottomNavigationBarItem(
+                                                    icon: Icon(Icons.settings),
+                                                    label: 'Settings'),
+                                              ],
+                                              currentIndex: page?.index ?? 0,
+                                              onTap: (value) async {
+                                                NavigatorRep().routeBloc.goto(
+                                                    Panel(
+                                                        type: PageType
+                                                            .values[value]));
+                                              })))
+                                ]);
+                          }));
+                })));
   }
 
   Widget _bottomHightlightActive(PageType? page) {

@@ -6,6 +6,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:loggy/loggy.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/button2_animated.dart';
@@ -41,8 +42,15 @@ class _State extends State<SettingsPage> {
   var _exportProfileBusy = false;
   final _itemHeight = 70.0;
   ThemeType _theme = ThemeType.system;
-
   final _dispStream = DisposableStream();
+
+  int _counter = 0;
+
+  void _incrementCounter() {
+    setState(() {
+      _counter++;
+    });
+  }
 
   @override
   void initState() {
@@ -67,70 +75,67 @@ class _State extends State<SettingsPage> {
     setState(() {});
   }
 
-  // TODO: settings. Import profile update review list
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            backgroundColor: const Color.fromARGB(255, 22, 22, 22),
-            appBar: AppBar(
-                leadingWidth: double.infinity,
-                elevation: 0,
-                scrolledUnderElevation: 0,
-                backgroundColor: Colors.transparent,
-                leading: AppBar2(
-                    type: Type.back,
-                    child: Flexible(
-                        child: Text('Settings',
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Constants.menuFontColor1,
-                                fontSize: 15))))),
-            body: CustomScrollView(
-                physics: const ClampingScrollPhysics(),
-                slivers: [
-                  DecoratedSliver(
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.card),
-                      sliver: SliverList.list(
-                          children: [_profile(), _numComplexity(), _others()]))
-                ])));
+    return Container(
+        color: Colors.black,
+        child: SafeArea(
+            child: Scaffold(
+                appBar: AppBar(
+                    leadingWidth: double.infinity,
+                    elevation: 0,
+                    scrolledUnderElevation: 0,
+                    backgroundColor: Colors.transparent,
+                    leading: AppBar2(
+                        type: Type.back,
+                        child: Flexible(
+                            child: Text('Settings',
+                                textAlign: TextAlign.center,
+                                style:
+                                    Theme.of(context).textTheme.titleSmall)))),
+                body: CustomScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    slivers: [
+                      DecoratedSliver(
+                          decoration: BoxDecoration(
+                              // color: Theme.of(context).colorScheme.card
+                              ),
+                          sliver: SliverList.list(children: [
+                            _profile(),
+                            _numComplexity(),
+                            _others()
+                          ]))
+                    ]))));
   }
 
   Widget _profile() {
-    return ThemeSwitcher(
-        clipper: const ThemeSwitcherCircleClipper(),
-        builder: (context) {
-          return Column(children: [
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              const Row(children: [
-                Padding(
-                    padding: EdgeInsets.only(top: 25, left: 25),
-                    child: Text('Theme',
-                        style: TextStyle(
-                            color: Constants.menuFontColor2,
-                            fontSize: Constants.menuFontSize1,
-                            fontWeight: FontWeight.w400)))
-              ]),
-              Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 25),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        //
-                        // light
-                        ItemInMenuList(
+    return Column(children: [
+      Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Row(children: [
+          Padding(
+              padding: const EdgeInsets.only(top: 25, left: 25),
+              child:
+                  Text('Theme', style: Theme.of(context).textTheme.titleMedium))
+        ]),
+        Padding(
+            padding: const EdgeInsets.only(top: 10, bottom: 25),
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  //
+                  // light
+                  ThemeSwitcher(
+                      clipper: const ThemeSwitcherCircleClipper(),
+                      builder: (context) {
+                        return ItemInMenuList(
                             useBorderTop: false,
                             useBorderBot: false,
                             height: 45,
                             padding: const EdgeInsets.only(left: 25, right: 25),
                             margin: const EdgeInsets.only(top: 10),
-                            onClicked: () async {
-                              ThemeSwitcher.of(context).changeTheme(
-                                  theme: lightTheme,
-                                  isReversed: false // default: false
-                                  );
+                            onClicked: (_) async {
+                              ThemeSwitcher.of(context)
+                                  .changeTheme(theme: lightTheme);
                               await SettingsRep()
                                   .changeTheme(ThemeType.values[0]);
                               _update();
@@ -141,32 +146,30 @@ class _State extends State<SettingsPage> {
                                 children: [
                                   Text('Light',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .text3,
-                                          fontSize: Constants.menuFontSize2,
-                                          fontWeight: FontWeight.w400)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
                                   IgnorePointer(
                                       child: Radio(
                                           value: 0,
                                           groupValue: _theme.index,
                                           onChanged: (value) {}))
-                                ])),
-                        //
-                        // dark
-                        ItemInMenuList(
+                                ]));
+                      }),
+                  //
+                  // dark
+                  ThemeSwitcher(
+                      clipper: const ThemeSwitcherCircleClipper(),
+                      builder: (context) {
+                        return ItemInMenuList(
                             useBorderTop: false,
                             useBorderBot: false,
                             height: 45,
                             padding: const EdgeInsets.only(left: 25, right: 25),
                             margin: const EdgeInsets.only(top: 10),
-                            onClicked: () async {
-                              ThemeSwitcher.of(context).changeTheme(
-                                theme: darkTheme,
-                                // isReversed: false, // default: false
-                                // offset: Offset(10, 10)
-                              );
+                            onClicked: (_) async {
+                              ThemeSwitcher.of(context)
+                                  .changeTheme(theme: darkTheme);
                               await SettingsRep()
                                   .changeTheme(ThemeType.values[1]);
                               _update();
@@ -177,32 +180,35 @@ class _State extends State<SettingsPage> {
                                 children: [
                                   Text('Dark',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .text3,
-                                          fontSize: Constants.menuFontSize2,
-                                          fontWeight: FontWeight.w400)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
                                   IgnorePointer(
                                       child: Radio(
                                           value: 1,
                                           groupValue: _theme.index,
                                           onChanged: (value) {}))
-                                ])),
-                        //
-                        // system
-                        ItemInMenuList(
+                                ]));
+                      }),
+                  //
+                  // system
+                  ThemeSwitcher(
+                      clipper: const ThemeSwitcherCircleClipper(),
+                      builder: (context) {
+                        return ItemInMenuList(
                             useBorderTop: false,
                             useBorderBot: false,
                             height: 45,
                             padding: const EdgeInsets.only(left: 25, right: 25),
                             margin: const EdgeInsets.only(top: 10),
-                            onClicked: () async {
+                            onClicked: (pos) async {
                               ThemeSwitcher.of(context).changeTheme(
-                                theme: darkTheme,
-                                // isReversed: false, // default: false
-                                // offset: Offset(10, 10)
-                              );
+                                  theme: ThemeModelInheritedNotifier.of(context)
+                                              .theme
+                                              .brightness ==
+                                          Brightness.light
+                                      ? darkTheme
+                                      : lightTheme);
                               await SettingsRep()
                                   .changeTheme(ThemeType.values[2]);
                               _update();
@@ -214,417 +220,386 @@ class _State extends State<SettingsPage> {
                                 children: [
                                   Text('System',
                                       textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .text3,
-                                          fontSize: Constants.menuFontSize2,
-                                          fontWeight: FontWeight.w400)),
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
                                   IgnorePointer(
                                       child: Radio(
                                           value: 2,
                                           groupValue: _theme.index,
                                           onChanged: (value) {}))
-                                ]))
-                      ]))
-            ]),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                onClicked: () {
-                  AppRep().shareApp();
-                },
-                height: _itemHeight,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      //
-                      // dayly goal
-                      Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
+                                ]));
+                      })
+                ]))
+      ]),
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: false,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            AppRep().shareApp();
+          },
+          height: _itemHeight,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                //
+                // dayly goal
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Row(children: [
+                      Text('Daily goal',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).textTheme.titleSmall),
+                      const Spacer(),
+                      HoverClick(
+                          onPressedL: (_) {
+                            widget.onChangeGoal();
+                          },
                           child: Row(children: [
-                            Text('Daily goal',
+                            Text('${_dailyGoal ?? 0} words day',
                                 textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Theme.of(context).colorScheme.text3,
-                                    fontSize: Constants.menuFontSize2,
-                                    fontWeight: FontWeight.w400)),
-                            const Spacer(),
-                            HoverClick(
-                                onPressedL: (_) {
-                                  widget.onChangeGoal();
-                                },
-                                child: Row(children: [
-                                  Text('${_dailyGoal ?? 0} words day',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .text3,
-                                          fontSize: Constants.menuFontSize2,
-                                          fontWeight: FontWeight.w400)),
-                                  const Icon(Icons.keyboard_arrow_right,
-                                      color: Constants.menuFontColor2)
-                                ]))
+                                style: Theme.of(context).textTheme.titleSmall),
+                            Icon(Icons.keyboard_arrow_right,
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .titleSmall
+                                    ?.color)
                           ]))
-                    ])),
-            //
-            // export words
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                onClicked: () {
-                  AppRep().shareApp();
-                },
-                height: _itemHeight,
-                child: Row(children: [
-                  Text('Export words',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.text3,
-                          fontSize: Constants.menuFontSize2,
-                          fontWeight: FontWeight.w400)),
-                  const Spacer(),
-                  if (_exportBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.titel4)),
-                  Button2Animated(
-                      iconData: Icons.drive_folder_upload_sharp,
-                      size: 20,
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: Theme.of(context).colorScheme.text5,
-                      onClicked: () async {
-                        var offset = 0;
-                        const limit = 5;
-                        final list = <String>[];
-                        var hasData = true;
-                        busy(bool v) {
-                          setState(() {
-                            _exportBusy = v;
-                          });
-                        }
+                    ]))
+              ])),
+      //
+      // export words
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: false,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            AppRep().shareApp();
+          },
+          height: _itemHeight,
+          child: Row(children: [
+            Text('Export words',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall),
+            const Spacer(),
+            if (_exportBusy)
+              SizedBox(
+                  width: 15,
+                  height: 15,
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.titel4)),
+            Button2Animated(
+                iconData: Icons.drive_folder_upload_sharp,
+                size: 20,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                onClicked: () async {
+                  var offset = 0;
+                  const limit = 5;
+                  final list = <String>[];
+                  var hasData = true;
+                  busy(bool v) {
+                    setState(() {
+                      _exportBusy = v;
+                    });
+                  }
 
-                        busy(true);
-                        while (hasData) {
-                          var r = await ServiceApi().searchInReviewList(
-                              limit: limit,
-                              offset: offset,
-                              useSuccessCount: null);
-                          if (r.word.length >= limit) {
-                            offset += limit;
-                          } else {
-                            hasData = false;
-                          }
-                          for (var it in r.word) {
-                            list.add(it.word);
-                          }
-                        }
-                        if (list.isEmpty) {
-                          if (context.mounted) {
-                            UiHelper.showToast(context, 'Nothing to export');
-                          }
-                          busy(false);
-                          return;
-                        }
-                        try {
-                          final List<int> codeUnits = list.join('\n').codeUnits;
-                          var path = await FilePicker.platform.saveFile(
-                              fileName: 'export.txt',
-                              allowedExtensions: ['txt'],
-                              dialogTitle: 'Export',
-                              type: FileType.custom,
-                              bytes: Uint8List.fromList(codeUnits));
-                          if (UiHelper.isDesktop() && path != null) {
-                            await FileUtils.saveBufToFile(codeUnits, path);
-                          }
-                        } catch (ex) {
-                          logWarning('$ex: export words ex [$ex]');
-                        }
-                        busy(false);
-                      })
-                ])),
-            //
-            // import words
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                onClicked: () {
-                  AppRep().shareApp();
-                },
-                height: _itemHeight,
-                child: Row(children: [
-                  Text('Import words',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.text3,
-                          fontSize: Constants.menuFontSize2,
-                          fontWeight: FontWeight.w400)),
-                  const Spacer(),
-                  if (_importBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.titel4)),
-                  Button2Animated(
-                      iconData: Icons.folder_zip_sharp,
-                      size: 20,
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: Theme.of(context).colorScheme.text5,
-                      onClicked: () async {
-                        busy(bool v) {
-                          setState(() {
-                            _importBusy = v;
-                          });
-                        }
+                  busy(true);
+                  while (hasData) {
+                    var r = await ServiceApi().searchInReviewList(
+                        limit: limit, offset: offset, useSuccessCount: null);
+                    if (r.word.length >= limit) {
+                      offset += limit;
+                    } else {
+                      hasData = false;
+                    }
+                    for (var it in r.word) {
+                      list.add(it.word);
+                    }
+                  }
+                  if (list.isEmpty) {
+                    if (context.mounted) {
+                      UiHelper.showToast(context, 'Nothing to export');
+                    }
+                    busy(false);
+                    return;
+                  }
+                  try {
+                    final List<int> codeUnits = list.join('\n').codeUnits;
+                    var path = await FilePicker.platform.saveFile(
+                        fileName: 'export.txt',
+                        allowedExtensions: ['txt'],
+                        dialogTitle: 'Export',
+                        type: FileType.custom,
+                        bytes: Uint8List.fromList(codeUnits));
+                    if (UiHelper.isDesktop() && path != null) {
+                      await FileUtils.saveBufToFile(codeUnits, path);
+                    }
+                  } catch (ex) {
+                    logWarning('$ex: export words ex [$ex]');
+                  }
+                  busy(false);
+                })
+          ])),
+      //
+      // import words
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: false,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            AppRep().shareApp();
+          },
+          height: _itemHeight,
+          child: Row(children: [
+            Text('Import words',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall),
+            const Spacer(),
+            if (_importBusy)
+              SizedBox(
+                  width: 15,
+                  height: 15,
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.titel4)),
+            Button2Animated(
+                iconData: Icons.folder_zip_sharp,
+                size: 20,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                onClicked: () async {
+                  busy(bool v) {
+                    setState(() {
+                      _importBusy = v;
+                    });
+                  }
 
-                        try {
-                          var res = await FilePicker.platform
-                              .pickFiles(allowMultiple: true);
-                          if (res == null || res.files.isEmpty) {
-                            return;
-                          }
-                          busy(true);
-                          var addedCnt = 0;
-                          for (var it in res.files) {
-                            var path = it.path;
-                            if (path == null) continue;
-                            var data =
-                                await FileUtils.readFileToStringLine(path);
-                            for (var it2 in data) {
-                              if (await ServiceApi().addWordInReview(
-                                  req: ReqAddWordInReview(
-                                      word: it2, useExtraFields: false))) {
-                                addedCnt++;
-                              }
-                            }
-                          }
-                          if (context.mounted) {
-                            UiHelper.showToast(context, 'Done $addedCnt words');
-                          }
-                        } catch (ex) {
-                          logWarning('$ex');
+                  try {
+                    var res = await FilePicker.platform
+                        .pickFiles(allowMultiple: true);
+                    if (res == null || res.files.isEmpty) {
+                      return;
+                    }
+                    busy(true);
+                    var addedCnt = 0;
+                    for (var it in res.files) {
+                      var path = it.path;
+                      if (path == null) continue;
+                      var data = await FileUtils.readFileToStringLine(path);
+                      for (var it2 in data) {
+                        if (await ServiceApi().addWordInReview(
+                            req: ReqAddWordInReview(
+                                word: it2, useExtraFields: false))) {
+                          addedCnt++;
                         }
-                        busy(false);
-                      })
-                ])),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                onClicked: () {
-                  AppRep().shareApp();
-                },
-                height: _itemHeight,
-                child: Row(children: [
-                  Text('Export profile',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.text3,
-                          fontSize: Constants.menuFontSize2,
-                          fontWeight: FontWeight.w400)),
-                  const Spacer(),
-                  if (_exportProfileBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.titel4)),
-                  Button2Animated(
-                      iconData: Icons.upload_sharp,
-                      size: 20,
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: Theme.of(context).colorScheme.text5,
-                      onClicked: () async {
-                        var offset = 0;
-                        const limit = 5;
-                        final list = <dynamic>[];
-                        var hasData = true;
-                        busy(bool v) {
-                          setState(() {
-                            _exportProfileBusy = v;
-                          });
-                        }
+                      }
+                    }
+                    if (context.mounted) {
+                      UiHelper.showToast(context, 'Done $addedCnt words');
+                    }
+                  } catch (ex) {
+                    logWarning('$ex');
+                  }
+                  busy(false);
+                })
+          ])),
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: false,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            AppRep().shareApp();
+          },
+          height: _itemHeight,
+          child: Row(children: [
+            Text('Export profile',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall),
+            const Spacer(),
+            if (_exportProfileBusy)
+              SizedBox(
+                  width: 15,
+                  height: 15,
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.titel4)),
+            Button2Animated(
+                iconData: Icons.upload_sharp,
+                size: 20,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                onClicked: () async {
+                  var offset = 0;
+                  const limit = 5;
+                  final list = <dynamic>[];
+                  var hasData = true;
+                  busy(bool v) {
+                    setState(() {
+                      _exportProfileBusy = v;
+                    });
+                  }
 
-                        busy(true);
-                        while (hasData) {
-                          var r = await ServiceApi().searchInReviewList(
-                              limit: limit,
-                              offset: offset,
-                              useSuccessCount: null);
-                          if (r.word.length >= limit) {
-                            offset += limit;
-                          } else {
-                            hasData = false;
-                          }
-                          for (var it in r.word) {
-                            list.add({
-                              'word': it.word,
-                              'success_count': it.successCount.toInt(),
-                              'fail_count': it.failCount.toInt(),
-                              'last_tm_success': it.lastTmSuccess.toInt(),
-                              'last_tm_fail': it.lastTmFail.toInt(),
-                              'next_review_tm_ms': it.nextReviewTmMs.toInt()
-                            });
-                          }
+                  busy(true);
+                  while (hasData) {
+                    var r = await ServiceApi().searchInReviewList(
+                        limit: limit, offset: offset, useSuccessCount: null);
+                    if (r.word.length >= limit) {
+                      offset += limit;
+                    } else {
+                      hasData = false;
+                    }
+                    for (var it in r.word) {
+                      list.add({
+                        'word': it.word,
+                        'success_count': it.successCount.toInt(),
+                        'fail_count': it.failCount.toInt(),
+                        'last_tm_success': it.lastTmSuccess.toInt(),
+                        'last_tm_fail': it.lastTmFail.toInt(),
+                        'next_review_tm_ms': it.nextReviewTmMs.toInt()
+                      });
+                    }
+                  }
+                  if (list.isEmpty) {
+                    if (context.mounted) {
+                      UiHelper.showToast(context, 'No words to export');
+                    }
+                    busy(false);
+                    return;
+                  }
+                  try {
+                    var js = jsonEncode({'review': list});
+                    var js2 = js.codeUnits;
+                    var path = await FilePicker.platform.saveFile(
+                        fileName: 'profile.json',
+                        allowedExtensions: ['txt'],
+                        dialogTitle: 'Export',
+                        type: FileType.custom,
+                        bytes: Uint8List.fromList(js2));
+                    if (UiHelper.isDesktop() && path != null) {
+                      await FileUtils.saveBufToFile(js2, path);
+                      if (context.mounted) {
+                        UiHelper.showToast(context, 'Done');
+                      }
+                    }
+                  } catch (ex) {
+                    logWarning('$ex: export words ex [$ex]');
+                  }
+                  busy(false);
+                })
+          ])),
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: false,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            AppRep().shareApp();
+          },
+          height: _itemHeight,
+          child: Row(children: [
+            Text('Import profile',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall),
+            const Spacer(),
+            if (_importProfileBusy)
+              SizedBox(
+                  width: 15,
+                  height: 15,
+                  child: CircularProgressIndicator(
+                      color: Theme.of(context).colorScheme.titel4)),
+            Button2Animated(
+                iconData: Icons.download_sharp,
+                size: 20,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                color: Theme.of(context).textTheme.titleSmall?.color,
+                onClicked: () async {
+                  busy(bool v) {
+                    setState(() {
+                      _importProfileBusy = v;
+                    });
+                  }
+
+                  try {
+                    var res = await FilePicker.platform.pickFiles(
+                        allowMultiple: false,
+                        type: FileType.custom,
+                        allowedExtensions: ['json']);
+                    if (res == null || res.files.isEmpty) {
+                      return;
+                    }
+                    busy(true);
+                    for (var it in res.files) {
+                      var path = it.path;
+                      if (path == null) continue;
+                      var data = await FileUtils.readFileToStringLine(path);
+                      var json = jsonDecode(data.join());
+                      var review = json['review'];
+                      if (review != null) {
+                        for (var it in review) {
+                          await ServiceApi().addWordInReview(
+                              req: ReqAddWordInReview(
+                                  word: it['word'],
+                                  successCount: it['success_count'],
+                                  failCount: it['fail_count'],
+                                  lastTmSuccess: Int64(it['last_tm_success']),
+                                  lastTmFail: Int64(it['last_tm_fail']),
+                                  nextReviewTmMs:
+                                      Int64(it['next_review_tm_ms']),
+                                  useExtraFields: true));
                         }
-                        if (list.isEmpty) {
-                          if (context.mounted) {
-                            UiHelper.showToast(context, 'No words to export');
-                          }
-                          busy(false);
-                          return;
-                        }
-                        try {
-                          var js = jsonEncode({'review': list});
-                          var js2 = js.codeUnits;
-                          var path = await FilePicker.platform.saveFile(
-                              fileName: 'profile.json',
-                              allowedExtensions: ['txt'],
-                              dialogTitle: 'Export',
-                              type: FileType.custom,
-                              bytes: Uint8List.fromList(js2));
-                          if (UiHelper.isDesktop() && path != null) {
-                            await FileUtils.saveBufToFile(js2, path);
+                      }
+                    }
+                    if (context.mounted) {
+                      UiHelper.showToast(context, 'Done');
+                    }
+                  } catch (ex) {
+                    if (context.mounted) {
+                      UiHelper.showToast(context, 'Error');
+                    }
+                    logWarning('$ex');
+                  }
+                  busy(false);
+                })
+          ])),
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: true,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            AppRep().shareApp();
+          },
+          height: _itemHeight,
+          child: Row(children: [
+            Text('Delete data',
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.titleSmall),
+            const Spacer(),
+            Button2Animated(
+                iconData: Icons.delete_sharp,
+                size: 20,
+                padding: const EdgeInsets.only(top: 10, bottom: 10),
+                color: Theme.of(context).colorScheme.titelErr,
+                onClicked: () async {
+                  showModalBottomSheet(
+                      context: context,
+                      barrierColor: Colors.black26,
+                      builder: (BuildContext context) {
+                        return ConfirmPanel(
+                          title: 'Are you sure?\nYou will lose all progress',
+                          iconNo: Icons.delete,
+                          iconOk: Icons.close,
+                          onOk: () async {
+                            Navigator.of(context).pop();
+                            await ServiceApi().deleteProfile();
                             if (context.mounted) {
                               UiHelper.showToast(context, 'Done');
                             }
-                          }
-                        } catch (ex) {
-                          logWarning('$ex: export words ex [$ex]');
-                        }
-                        busy(false);
-                      })
-                ])),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                onClicked: () {
-                  AppRep().shareApp();
-                },
-                height: _itemHeight,
-                child: Row(children: [
-                  Text('Import profile',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.text3,
-                          fontSize: Constants.menuFontSize2,
-                          fontWeight: FontWeight.w400)),
-                  const Spacer(),
-                  if (_importProfileBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.titel4)),
-                  Button2Animated(
-                      iconData: Icons.download_sharp,
-                      size: 20,
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: Theme.of(context).colorScheme.text5,
-                      onClicked: () async {
-                        busy(bool v) {
-                          setState(() {
-                            _importProfileBusy = v;
-                          });
-                        }
-
-                        try {
-                          var res = await FilePicker.platform.pickFiles(
-                              allowMultiple: false,
-                              type: FileType.custom,
-                              allowedExtensions: ['json']);
-                          if (res == null || res.files.isEmpty) {
-                            return;
-                          }
-                          busy(true);
-                          for (var it in res.files) {
-                            var path = it.path;
-                            if (path == null) continue;
-                            var data =
-                                await FileUtils.readFileToStringLine(path);
-                            var json = jsonDecode(data.join());
-                            var review = json['review'];
-                            if (review != null) {
-                              for (var it in review) {
-                                await ServiceApi().addWordInReview(
-                                    req: ReqAddWordInReview(
-                                        word: it['word'],
-                                        successCount: it['success_count'],
-                                        failCount: it['fail_count'],
-                                        lastTmSuccess:
-                                            Int64(it['last_tm_success']),
-                                        lastTmFail: Int64(it['last_tm_fail']),
-                                        nextReviewTmMs:
-                                            Int64(it['next_review_tm_ms']),
-                                        useExtraFields: true));
-                              }
-                            }
-                          }
-                          if (context.mounted) {
-                            UiHelper.showToast(context, 'Done');
-                          }
-                        } catch (ex) {
-                          if (context.mounted) {
-                            UiHelper.showToast(context, 'Error');
-                          }
-                          logWarning('$ex');
-                        }
-                        busy(false);
-                      })
-                ])),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: true,
-                padding: const EdgeInsets.only(left: 25, right: 25),
-                onClicked: () {
-                  AppRep().shareApp();
-                },
-                height: _itemHeight,
-                child: Row(children: [
-                  Text('Delete data',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Theme.of(context).colorScheme.text3,
-                          fontSize: Constants.menuFontSize2,
-                          fontWeight: FontWeight.w400)),
-                  const Spacer(),
-                  Button2Animated(
-                      iconData: Icons.delete_sharp,
-                      size: 20,
-                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                      color: Theme.of(context).colorScheme.titelErr,
-                      onClicked: () async {
-                        showModalBottomSheet(
-                            context: context,
-                            barrierColor: Colors.black26,
-                            builder: (BuildContext context) {
-                              return ConfirmPanel(
-                                title:
-                                    'Are you sure?\nYou will lose all progress',
-                                iconNo: Icons.delete,
-                                iconOk: Icons.close,
-                                onOk: () async {
-                                  Navigator.of(context).pop();
-                                  await ServiceApi().deleteProfile();
-                                  if (context.mounted) {
-                                    UiHelper.showToast(context, 'Done');
-                                  }
-                                },
-                              );
-                            });
-                      })
-                ]))
-          ]);
-        });
+                          },
+                        );
+                      });
+                })
+          ]))
+    ]);
   }
 
   Widget _numComplexity() {
@@ -632,19 +607,15 @@ class _State extends State<SettingsPage> {
       return Column(children: [
         Container(
             height: 70,
-            margin: EdgeInsets.only(left: 25, right: 25),
+            margin: const EdgeInsets.only(left: 25, right: 25),
             child: Row(children: [
-              Text('Numerals',
-                  style: TextStyle(
-                      color: Constants.menuFontColor1,
-                      fontSize: Constants.menuFontSize1,
-                      fontWeight: FontWeight.w400))
+              Text('Numerals', style: Theme.of(context).textTheme.titleSmall)
             ])),
         ItemInMenuList(
             useBorderTop: false,
             useBorderBot: true,
             padding: const EdgeInsets.only(left: 25, right: 25),
-            onClicked: () {
+            onClicked: (_) {
               AppRep().shareApp();
             },
             height: _itemHeight,
@@ -655,10 +626,7 @@ class _State extends State<SettingsPage> {
                   children: [
                     Text('Complexity level',
                         textAlign: TextAlign.center,
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.text3,
-                            fontSize: Constants.menuFontSize2,
-                            fontWeight: FontWeight.w400)),
+                        style: Theme.of(context).textTheme.titleSmall),
                   ]),
               const Spacer(),
               DropdownButton<String>(
@@ -683,10 +651,7 @@ class _State extends State<SettingsPage> {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.text3,
-                              fontSize: Constants.menuFontSize2,
-                              fontWeight: FontWeight.w400)),
+                          style: Theme.of(context).textTheme.titleSmall),
                     );
                   }).toList())
             ]))
@@ -701,11 +666,7 @@ class _State extends State<SettingsPage> {
             height: 90,
             margin: EdgeInsets.only(left: 25, right: 25),
             child: Row(children: [
-              Text('Others',
-                  style: TextStyle(
-                      color: Constants.menuFontColor1,
-                      fontSize: Constants.menuFontSize1,
-                      fontWeight: FontWeight.w400))
+              Text('Others', style: Theme.of(context).textTheme.titleSmall)
             ])),
         //
         // share
@@ -713,7 +674,7 @@ class _State extends State<SettingsPage> {
             useBorderTop: true,
             useBorderBot: false,
             padding: const EdgeInsets.only(left: 25, right: 25),
-            onClicked: () {
+            onClicked: (_) {
               AppRep().shareApp();
             },
             height: _itemHeight,
@@ -722,14 +683,11 @@ class _State extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Share',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.text3,
-                            fontSize: Constants.menuFontSize2,
-                            fontWeight: FontWeight.w400))
+                    Text('Share', style: Theme.of(context).textTheme.titleSmall)
                   ]),
               const Spacer(),
-              Icon(Icons.link, color: Constants.menuFontColor2)
+              Icon(Icons.link,
+                  color: Theme.of(context).textTheme.titleSmall?.color)
             ])),
         //
         // about the app
@@ -737,7 +695,7 @@ class _State extends State<SettingsPage> {
             useBorderTop: true,
             useBorderBot: false,
             padding: const EdgeInsets.only(left: 25, right: 25),
-            onClicked: () {
+            onClicked: (_) {
               Navigator.push(
                   context,
                   CupertinoPageRoute(
@@ -753,13 +711,11 @@ class _State extends State<SettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('About',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.text3,
-                            fontSize: Constants.menuFontSize2,
-                            fontWeight: FontWeight.w400)),
+                        style: Theme.of(context).textTheme.titleSmall),
                   ]),
               const Spacer(),
-              Icon(Icons.info_rounded, color: Constants.menuFontColor2)
+              Icon(Icons.info_rounded,
+                  color: Theme.of(context).textTheme.titleSmall?.color)
             ])),
         //
         // licenses page
@@ -767,7 +723,7 @@ class _State extends State<SettingsPage> {
             useBorderTop: true,
             useBorderBot: true,
             padding: const EdgeInsets.only(left: 25, right: 25),
-            onClicked: () {
+            onClicked: (_) {
               showLicensePage(context: context);
             },
             height: _itemHeight,
@@ -777,13 +733,11 @@ class _State extends State<SettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Licenses',
-                        style: TextStyle(
-                            color: Theme.of(context).colorScheme.text3,
-                            fontSize: Constants.menuFontSize2,
-                            fontWeight: FontWeight.w400))
+                        style: Theme.of(context).textTheme.titleSmall)
                   ]),
               const Spacer(),
-              Icon(Icons.description, color: Constants.menuFontColor2)
+              Icon(Icons.description,
+                  color: Theme.of(context).textTheme.titleSmall?.color)
             ])),
         //
         // version
@@ -798,10 +752,7 @@ class _State extends State<SettingsPage> {
                   const SizedBox(height: 30),
                   Text('${Constants.appName} ${Constants.appVersion}',
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          color: Constants.menuFontColor2,
-                          fontSize: Constants.menuFontSize3,
-                          fontWeight: FontWeight.w400))
+                      style: Theme.of(context).textTheme.titleSmall)
                 ])
               ]),
               const SizedBox(height: 30),
@@ -822,5 +773,36 @@ class _State extends State<SettingsPage> {
             borderRadius: const BorderRadius.all(Radius.circular(6)),
             color: Theme.of(context).colorScheme.baseColor1),
         child: child);
+  }
+}
+
+class TapDownButton extends StatelessWidget {
+  const TapDownButton({
+    Key? key,
+    required this.onTap,
+    required this.child,
+  }) : super(key: key);
+
+  final void Function(TapDownDetails details) onTap;
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16.0,
+          horizontal: 24.0,
+        ),
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.all(
+            Radius.circular(24.0),
+          ),
+          border: Border.all(width: 1.0),
+        ),
+        child: child,
+      ),
+    );
   }
 }

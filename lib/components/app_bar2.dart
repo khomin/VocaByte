@@ -24,7 +24,7 @@ class AppBar2 extends StatelessWidget {
               color: type == Type.close
                   ? Colors.white.withOpacity(0.08)
                   : Colors.transparent,
-              iconColor: Theme.of(context).colorScheme.white,
+              iconColor: Theme.of(context).textTheme.titleSmall?.color,
               size: const Size(50, 50),
               iconSize: 22,
               radius: 20,

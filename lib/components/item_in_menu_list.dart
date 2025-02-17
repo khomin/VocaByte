@@ -18,7 +18,7 @@ class ItemInMenuList extends StatelessWidget {
   final Widget child;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
-  final Function()? onClicked;
+  final Function(Offset pos)? onClicked;
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,9 @@ class ItemInMenuList extends StatelessWidget {
         child: onClicked != null
             ? ElevatedButton(
                 onPressed: () {
-                  onClicked?.call();
+                  RenderBox box = context.findRenderObject() as RenderBox;
+                  Offset pos = box.localToGlobal(Offset.zero);
+                  onClicked?.call(pos);
                 },
                 autofocus: false,
                 style: ElevatedButton.styleFrom(
