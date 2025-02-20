@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';

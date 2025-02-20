@@ -8,7 +8,7 @@ import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
@@ -214,7 +214,13 @@ class PageWordDetailsState extends State<PageWordDetails>
           constraints: BoxConstraints(minHeight: size.height / 3),
           decoration: BoxDecoration(
               borderRadius: const BorderRadius.all(Radius.circular(12)),
-              color: Theme.of(context).colorScheme.card),
+              color: Theme.of(context).colorScheme.cardHome,
+              boxShadow: [
+                BoxShadow(
+                    color: Colors.black.withOpacity(0.1),
+                    blurRadius: 15,
+                    offset: const Offset(0, 1))
+              ]),
           child: Column(children: [
             HoverClick(
                 onPressedL: (_) {
@@ -235,7 +241,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                     fontSize: 20,
                                     color: Theme.of(context)
                                         .colorScheme
-                                        .textInCard))),
+                                        .appBarText
+                                        .color))),
                         //
                         // n of n meaning
                         if (data.meaning.length > 1)
@@ -245,7 +252,14 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   const EdgeInsets.only(left: 10, right: 10),
                               child: Center(
                                   child: Text(
-                                      '${_curMeaningIndex + 1}/${data.meaning.length}'))),
+                                      '${_curMeaningIndex + 1}/${data.meaning.length}',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 14,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .title1
+                                              .color)))),
                         //
                         // speech part
                         Container(
@@ -255,8 +269,10 @@ class PageWordDetailsState extends State<PageWordDetails>
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14,
-                                    color:
-                                        Theme.of(context).colorScheme.titel1)))
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .cardAccent
+                                        .color)))
                       ])),
                   Padding(
                       padding: const EdgeInsets.only(left: 10),
@@ -270,7 +286,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   fontSize: 14,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .textInCard2)),
+                                      .title1
+                                      .color)),
                         const SizedBox(width: 10),
                         //
                         // frequency
@@ -281,7 +298,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   fontSize: 14,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .textInCard2)),
+                                      .title1
+                                      .color)),
                         const Spacer(),
                         //
                         // play
@@ -324,7 +342,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                                 fontSize: 16,
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .textInCard2)))
+                                                    .title1
+                                                    .color)))
                                   ]),
                                   //
                                   // example
@@ -349,7 +368,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                                           FontStyle.italic,
                                                       color: Theme.of(context)
                                                           .colorScheme
-                                                          .textInCard2)))
+                                                          .title2
+                                                          .color)))
                                         ])),
                                   //
                                   // synonyms
@@ -365,7 +385,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                                   fontSize: 14,
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .cardText)))
+                                                      .title2
+                                                      .color)))
                                     ]),
                                   const SizedBox(height: 10),
                                   //
@@ -401,7 +422,7 @@ class PageWordDetailsState extends State<PageWordDetails>
     var completed = countKnow >= 10;
     var leftText = '';
     if (countKnow == 0) {
-      leftText = 'new';
+      leftText = 'New';
     } else if (countKnow == 1) {
       leftText = '$countKnow time know';
     } else {
@@ -410,18 +431,19 @@ class PageWordDetailsState extends State<PageWordDetails>
     return FixedFooterBottom(
         child1: _status != null
             ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                // TODO: progress how many step
                 Flexible(
                     child: Text(leftText,
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.text5)))
+                            color: Theme.of(context).colorScheme.title2.color)))
               ])
             : ButtonRoundCorner(
                 text: 'Should learn',
                 color: Theme.of(context).colorScheme.buttonOption1,
-                colorText: Theme.of(context).colorScheme.cardText,
+                colorText: Theme.of(context).colorScheme.buttonOptionText,
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 direction: TextDirection.ltr,
                 radious: const BorderRadius.all(Radius.circular(10)),
@@ -442,7 +464,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                     text: 'Completed',
                     iconData: Icons.thumb_up,
                     color: Theme.of(context).colorScheme.buttonOption3,
-                    colorText: Theme.of(context).colorScheme.cardText,
+                    colorText: Theme.of(context).colorScheme.buttonOptionText,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     direction: TextDirection.ltr,
                     radious: const BorderRadius.all(Radius.circular(10)),
@@ -457,10 +479,10 @@ class PageWordDetailsState extends State<PageWordDetails>
                     onMenu: () {
                       showModalBottomSheet(
                           context: context,
-                          showDragHandle: true,
+                          // showDragHandle: true,
                           useRootNavigator: true,
                           backgroundColor:
-                              Theme.of(context).colorScheme.baseColor1,
+                              Theme.of(context).colorScheme.pageHome,
                           builder: (context) {
                             return NextReviewPanel(
                                 review: AppRep.reviewTimeToEnum(_status),

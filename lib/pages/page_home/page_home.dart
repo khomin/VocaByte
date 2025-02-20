@@ -4,8 +4,9 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class PageHome extends StatefulWidget {
   const PageHome(
@@ -44,60 +45,31 @@ class PageHomeState extends State<PageHome> {
     return Builder(builder: (context) {
       var size = MediaQuery.of(context).size;
       return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.page,
+          backgroundColor: Theme.of(context).colorScheme.pageHome,
           appBar: AppBar(
-              // surfaceTintColor: Theme.of(context).colorScheme.baseColor1,
-              // backgroundColor: Theme.of(context).colorScheme.baseColor1,
-              // backgroundColor: Colors.black,
               centerTitle: true,
-              shadowColor: Theme.of(context).colorScheme.titel3,
-              foregroundColor: Theme.of(context).colorScheme.iconColor,
-              // automaticallyImplyLeading: context.watch<AppModel>().drawerOn,
-              // titleSpacing:
-              //     (Platform.isIOS || Platform.isAndroid) ? 0 : null,
+              elevation: 1,
+              shadowColor: Theme.of(context).colorScheme.titlel3,
               title: SizedBox(
                   height: kToolbarHeight,
                   width: double.infinity,
-                  // color: Colors.amber,
-                  child: Stack(
-                      // alignment: Alignment.center,
-                      children: [
-                        // if (!context.watch<AppModel>().drawerOn)
-                        // Row(
-                        //     // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //     children: [
-                        //       //   CircleButton(
-                        //       //       iconData: Icons.arrow_back,
-                        //       //       color: Colors.transparent,
-                        //       //       onPressed: (_) {
-                        //       //         // var nav = context.read<AppModel>().appNavKey;
-                        //       //         // if (nav.currentState?.canPop() == true) {
-                        //       //         //   nav.currentState?.pop();
-                        //       //         // }
-                        //       //       })
-                        //       const Spacer(),
-                        Positioned(
-                            left: 0,
-                            right: 0,
-                            bottom: 0,
-                            top: 0,
-                            child: Center(
-                                child: Text(
-                                    'Home', //NavigatorRep().routeBloc.routeName(page),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 14,
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .titel1)))),
-                        Positioned(
-                            right: 0,
-                            bottom: 10,
-                            top: 10,
-                            child: Avatar(onPressed: (p0) {}))
-                      ]))),
+                  child: Stack(children: [
+                    Positioned(
+                        left: 0,
+                        right: 0,
+                        bottom: 0,
+                        top: 0,
+                        child: Center(
+                            child: Text('Home',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).colorScheme.title1))),
+                    Positioned(
+                        right: 0,
+                        bottom: 10,
+                        top: 10,
+                        child: Avatar(onPressed: (p0) {}))
+                  ]))),
           body: Column(children: [
             //
             // start padding
@@ -136,7 +108,9 @@ class PageHomeState extends State<PageHome> {
                             });
                       }),
                   _item(
-                      icon: Icons.search_outlined,
+                      // icon: Icons.search_outlined,
+                      icon: Image.asset('assets/search2.png',
+                          width: Constants.iconHomeSize),
                       header: 'Search',
                       description:
                           'Find a word\nand see its meaning\nwith examples',
@@ -145,7 +119,11 @@ class PageHomeState extends State<PageHome> {
                         widget.onSearch();
                       }),
                   _item(
-                      icon: Icons.confirmation_number,
+                      // icon: Icons.confirmation_number,
+                      icon: Image.asset('assets/numeral.png',
+                          cacheWidth: 150,
+                          cacheHeight: 150,
+                          width: Constants.iconHomeSize),
                       header: 'Numerals',
                       description:
                           'Listen to the number\nEnter it without mistakes',
@@ -154,7 +132,9 @@ class PageHomeState extends State<PageHome> {
                         widget.onNumerals();
                       }),
                   _item(
-                      icon: Icons.storage_rounded,
+                      // icon: Icons.storage_rounded,
+                      icon: Image.asset('assets/manage.png',
+                          width: Constants.iconHomeSize),
                       header: 'Manage words',
                       description: 'Manage your study list',
                       canClick: () => true,
@@ -167,7 +147,7 @@ class PageHomeState extends State<PageHome> {
   }
 
   Widget _item(
-      {IconData? icon,
+      {Widget? icon,
       required String header,
       required String description,
       int? iconInt,
@@ -176,8 +156,9 @@ class PageHomeState extends State<PageHome> {
     return Padding(
         padding: const EdgeInsets.all(4),
         child: RoundButton(
-            color: Theme.of(context).colorScheme.card,
+            color: Theme.of(context).colorScheme.cardHome,
             radius: 12,
+            useShadow: true,
             useScaleAnimation: true,
             onPressed: (_) {
               if (canClick()) {
@@ -187,60 +168,81 @@ class PageHomeState extends State<PageHome> {
             child: IgnorePointer(
                 child: Padding(
                     padding: const EdgeInsets.only(
-                        left: 14, right: 14, top: 20, bottom: 10),
-                    child: Column(children: [
-                      Row(children: [
-                        SizedBox(
-                            height: 35,
-                            child: icon != null
-                                ? Icon(icon, size: 35)
-                                : (iconInt != null
-                                    ? Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(8)),
-                                            color: iconInt > 0
-                                                ? Theme.of(context)
-                                                    .colorScheme
-                                                    .buttonOption2
-                                                : Theme.of(context)
-                                                    .colorScheme
-                                                    .buttonOption1),
-                                        padding: const EdgeInsets.only(
-                                            left: 10, right: 10),
-                                        child: Center(
-                                            child: Text('$iconInt',
-                                                style: const TextStyle(
-                                                    fontSize: 20))))
-                                    : const Padding(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Stack(children: [
-                                          SizedBox(
-                                              width: 20,
-                                              height: 20,
-                                              child: Center(
-                                                  child: RepaintBoundary(
-                                                      child:
-                                                          CircularProgressIndicator())))
-                                        ]))))
-                      ]),
-                      const SizedBox(height: 10),
-                      Row(children: [
-                        Expanded(
-                            child: Text(header,
-                                style: const TextStyle(fontSize: 14),
-                                maxLines: 5,
-                                overflow: TextOverflow.ellipsis))
-                      ]),
-                      const SizedBox(height: 10),
-                      Row(children: [
-                        Expanded(
-                            child: Text(description,
-                                style: const TextStyle(fontSize: 10),
-                                maxLines: 5,
-                                overflow: TextOverflow.ellipsis))
-                      ])
-                    ])))));
+                      left: 14, right: 14, //top: 10,
+                      // bottom: 10
+                    ),
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          // Image.asset('assets/numeral.png', width: 80),
+                          Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                icon != null
+                                    // ? Image.asset('assets/numeral.png',
+                                    //     width: Constants.iconHomeSize)
+                                    ? icon
+                                    : SizedBox(
+                                        height: 40,
+                                        child: icon != null
+                                            ? icon
+                                            : (iconInt != null
+                                                ? Container(
+                                                    decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            const BorderRadius.all(
+                                                                Radius.circular(
+                                                                    8)),
+                                                        color: iconInt > 0
+                                                            ? Theme.of(context)
+                                                                .colorScheme
+                                                                .buttonOption2
+                                                            : Theme.of(context)
+                                                                .colorScheme
+                                                                .buttonOption1),
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            left: 10,
+                                                            right: 10),
+                                                    child: Center(
+                                                        child: Text('$iconInt',
+                                                            style: Theme.of(context)
+                                                                .colorScheme
+                                                                .titleInverse)))
+                                                : const Padding(
+                                                    padding: EdgeInsets.only(left: 10),
+                                                    child: Stack(children: [
+                                                      SizedBox(
+                                                          width: 20,
+                                                          height: 20,
+                                                          child: Center(
+                                                              child: RepaintBoundary(
+                                                                  child:
+                                                                      CircularProgressIndicator())))
+                                                    ])))),
+                              ]),
+                          Column(children: [
+                            Row(children: [
+                              Expanded(
+                                  child: Text(header,
+                                      style: const TextStyle(
+                                          fontSize: 14,
+                                          fontWeight: FontWeight.w500),
+                                      maxLines: 5,
+                                      overflow: TextOverflow.ellipsis))
+                            ]),
+                            // const SizedBox(height: 10),
+                            const SizedBox(height: 10),
+                            Row(children: [
+                              Expanded(
+                                  child: Text(description,
+                                      style: const TextStyle(
+                                          fontSize: 11,
+                                          fontWeight: FontWeight.w400),
+                                      maxLines: 5,
+                                      overflow: TextOverflow.ellipsis))
+                            ])
+                          ])
+                        ])))));
   }
 }

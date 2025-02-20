@@ -1,6 +1,6 @@
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 enum EntyryType { first, book, seacrh, study }

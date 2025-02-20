@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 
 enum Type { close, back }
 
@@ -12,7 +12,6 @@ class AppBar2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        // color: Theme.of(context).colorScheme.page,
         decoration: BoxDecoration(
             border: Border(
                 bottom: BorderSide(
@@ -24,7 +23,7 @@ class AppBar2 extends StatelessWidget {
               color: type == Type.close
                   ? Colors.white.withOpacity(0.08)
                   : Colors.transparent,
-              iconColor: Theme.of(context).textTheme.titleSmall?.color,
+              iconColor: Theme.of(context).colorScheme.appBarText.color,
               size: const Size(50, 50),
               iconSize: 22,
               radius: 20,

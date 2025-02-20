@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
@@ -82,6 +82,8 @@ class State2 extends State<ButtonRoundCorner>
                             : BorderSide.none),
                     padding: EdgeInsets.zero,
                     backgroundColor: widget.color,
+                    shadowColor: Colors.black,
+                    elevation: 8,
                     textStyle: TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 12,

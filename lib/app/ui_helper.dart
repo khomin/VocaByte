@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/numerals/numerals_nav.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 
 enum ToastType { normal, error }
 
@@ -53,7 +53,7 @@ class UiHelper {
               color: Theme.of(context).colorScheme.text1,
             )),
         duration: const Duration(seconds: 3),
-        backgroundColor: Theme.of(context).colorScheme.titel1));
+        backgroundColor: Theme.of(context).colorScheme.title1.color));
   }
 
   static Future<bool> hadleTextCtrV(

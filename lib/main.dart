@@ -1,6 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/pages/app_route.dart';
 import 'package:vocabyte/pages/settings/theme/theme_config.dart';
@@ -80,18 +80,6 @@ class _AppState extends State<App> {
           _appModel.theme = null;
           break;
       }
-
-      // _appModel.theme = initial.theme;
-      // ThemeSwitcher.of(context).
-      // if (mounted) Utils.setTheme(context, initial.theme);
-      // ThemeSwitcher.of(context).changeTheme(theme: theme)
-      // ThemeSwitcher.of(context).changeTheme(
-      //   theme: ThemeModelInheritedNotifier.of(context).theme.brightness ==
-      //           Brightness.light
-      //       ? darkTheme
-      //       : lightTheme,
-      //   offset: details.localPosition,
-      // );
       //
       // if should copy resources
       if (!await FileUtils.isResourcesReady()) {
@@ -144,6 +132,7 @@ class _AppState extends State<App> {
           }
           return ThemeProvider(
               initTheme: initTheme,
+              key: ValueKey(initTheme),
               builder: (_, myTheme) {
                 return MaterialApp(
                     title: Constants.appName, theme: myTheme, home: _app());
@@ -182,9 +171,14 @@ class _AppState extends State<App> {
                   return AnimatedContainer(
                       duration: const Duration(milliseconds: 250),
                       height: hide ? 0 : 75,
-                      decoration: const BoxDecoration(
-                          // color: Colors.black
-                          ),
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.bottomNavBg,
+                          boxShadow: [
+                            BoxShadow(
+                                color: Theme.of(context).colorScheme.shadowBox,
+                                blurRadius: 10,
+                                offset: const Offset(0, 0))
+                          ]),
                       child: StreamBuilder(
                           stream: NavigatorRep().routeBloc.onCurrent,
                           initialData:
@@ -205,15 +199,23 @@ class _AppState extends State<App> {
                                       child: SizedBox(
                                           height: 75,
                                           child: BottomNavigationBar(
-                                              elevation: 2,
+                                              elevation: 0,
                                               selectedFontSize: 12,
                                               unselectedFontSize: 12,
                                               backgroundColor:
                                                   Colors.transparent,
+                                              selectedItemColor:
+                                                  Theme.of(context)
+                                                      .colorScheme
+                                                      .bottomNavIconSelected,
+                                              unselectedItemColor: Theme.of(
+                                                      context)
+                                                  .colorScheme
+                                                  .bottomNavBgIconUnselected,
+                                              // selectedItemColor: Colors.purple,
+                                              // unselectedIconTheme: ,
                                               items: const [
                                                 BottomNavigationBarItem(
-                                                    backgroundColor:
-                                                        Colors.white10,
                                                     icon: Icon(Icons.home),
                                                     label: 'Home'),
                                                 BottomNavigationBarItem(
@@ -245,34 +247,37 @@ class _AppState extends State<App> {
   }
 
   Widget _bottomHightlightActive(PageType? page) {
-    var decoration = const BoxDecoration(
-        color: Colors.white24,
-        borderRadius: BorderRadius.all(Radius.circular(12)));
-    return Padding(
-        padding: const EdgeInsets.only(top: 4, bottom: 4),
-        child: Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-          Container(
-            width: 70,
-            height: 55,
-            decoration:
-                page == null || page == PageType.home ? decoration : null,
-          ),
-          Container(
+    return Builder(builder: (context) {
+      var decoration = BoxDecoration(
+          color: Theme.of(context).colorScheme.bottomNavSelectedBg,
+          borderRadius: const BorderRadius.all(Radius.circular(12)));
+      return Padding(
+          padding: const EdgeInsets.only(top: 4, bottom: 4),
+          child:
+              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+            Container(
               width: 70,
               height: 55,
-              decoration: page == PageType.searchWord ? decoration : null),
-          Container(
-              width: 70,
-              height: 55,
-              decoration: page == PageType.reviewCard ? decoration : null),
-          Container(
-              width: 70,
-              height: 55,
-              decoration: page == PageType.manageWords ? decoration : null),
-          Container(
-              width: 70,
-              height: 55,
-              decoration: page == PageType.settings ? decoration : null)
-        ]));
+              decoration:
+                  page == null || page == PageType.home ? decoration : null,
+            ),
+            Container(
+                width: 70,
+                height: 55,
+                decoration: page == PageType.searchWord ? decoration : null),
+            Container(
+                width: 70,
+                height: 55,
+                decoration: page == PageType.reviewCard ? decoration : null),
+            Container(
+                width: 70,
+                height: 55,
+                decoration: page == PageType.manageWords ? decoration : null),
+            Container(
+                width: 70,
+                height: 55,
+                decoration: page == PageType.settings ? decoration : null)
+          ]));
+    });
   }
 }

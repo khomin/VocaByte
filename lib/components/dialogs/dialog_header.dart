@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button2.dart';
 import 'package:vocabyte/components/circle_button.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 

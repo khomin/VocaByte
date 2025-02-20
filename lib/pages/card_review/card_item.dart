@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/resource/constants.dart';
 
@@ -58,8 +58,9 @@ class CardItemState extends State<CardItem> {
                         ? (widget.isRight
                             ? Theme.of(context).colorScheme.cardSuccess
                             : Theme.of(context).colorScheme.cardError)
-                        : Theme.of(context).colorScheme.card,
+                        : Theme.of(context).colorScheme.cardHome,
                     iconColor: Colors.transparent,
+                    useShadow: true,
                     useScaleAnimation: true,
                     radius: 15,
                     onPressed: (p0) {
@@ -72,16 +73,24 @@ class CardItemState extends State<CardItem> {
                         child: Column(children: [
                       Expanded(
                           child: Stack(children: [
-                        Container(
-                            width: 20,
-                            height: 20,
-                            color: Colors.black,
-                            child: Center(
-                                child: Text(
-                              widget.letter,
-                              style: TextStyle(
-                                  color: Theme.of(context).colorScheme.titel1),
-                            ))),
+                        Positioned(
+                            child: ClipRRect(
+                                borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(10),
+                                ),
+                                child: Container(
+                                    width: 20,
+                                    height: 20,
+                                    color: Colors.black12,
+                                    child: Center(
+                                        child: Text(
+                                      widget.letter,
+                                      style: TextStyle(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .title1
+                                              .color),
+                                    ))))),
                         Align(
                             alignment: Alignment.center,
                             child: Row(children: [

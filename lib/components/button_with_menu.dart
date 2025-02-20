@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 
 class ButtonWithMenu extends StatelessWidget {
@@ -20,7 +20,7 @@ class ButtonWithMenu extends StatelessWidget {
           child: ButtonRoundCorner(
               text: text,
               color: Theme.of(context).colorScheme.buttonOption1,
-              colorText: Theme.of(context).colorScheme.cardText,
+              colorText: Theme.of(context).colorScheme.buttonOptionText,
               direction: TextDirection.ltr,
               radious: const BorderRadius.only(
                   topLeft: Radius.circular(10),
@@ -49,7 +49,7 @@ class ButtonWithMenu extends StatelessWidget {
                     color: Theme.of(context).colorScheme.baseColor1,
                   )),
               child: Icon(Icons.arrow_drop_down_outlined,
-                  color: Theme.of(context).colorScheme.cardText)))
+                  color: Theme.of(context).colorScheme.buttonOptionText)))
     ]);
   }
 }

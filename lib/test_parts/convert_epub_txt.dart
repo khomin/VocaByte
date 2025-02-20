@@ -1,6 +1,6 @@
 import 'package:vocabyte/components/button2.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/app/file_utils.dart';
 
 class TestPart extends StatefulWidget {

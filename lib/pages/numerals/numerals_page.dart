@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/numerals/numeral_item.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/services/tts.dart';
 
 class NumeralsResult {

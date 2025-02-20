@@ -3,7 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 
 class NumeralsCompleted extends StatefulWidget {

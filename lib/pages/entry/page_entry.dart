@@ -1,6 +1,6 @@
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vocabyte/pages/entry/page_1.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class PageOnboard extends StatefulWidget {

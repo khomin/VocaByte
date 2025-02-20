@@ -5,7 +5,7 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/pages/card_review/card_item.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/tts.dart';
@@ -156,7 +156,7 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
       return Container(
           width: size.width,
           height: size.height,
-          color: Theme.of(context).colorScheme.page,
+          color: Theme.of(context).colorScheme.pageHome,
           child: AnimatedBuilder(
               animation: _animateController,
               builder: (context, child) {
@@ -217,7 +217,7 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                                         .buttonOption1,
                                                     colorText: Theme.of(context)
                                                         .colorScheme
-                                                        .cardText,
+                                                        .buttonOptionText,
                                                     direction:
                                                         TextDirection.rtl,
                                                     radious: const BorderRadius
@@ -280,7 +280,8 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                         fontSize: 20,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .textInCard))))
+                                            .appBarText
+                                            .color))))
                       ])))
             ])),
             _options()
@@ -313,7 +314,8 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                         fontSize: 20,
                                         color: Theme.of(context)
                                             .colorScheme
-                                            .textInCard)))
+                                            .appBarText
+                                            .color)))
                           ])))
             ])),
             _options()
@@ -352,8 +354,10 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                                     child: Button2Animated(
                                         iconData: Icons.play_arrow,
                                         size: 50,
-                                        color:
-                                            Theme.of(context).colorScheme.text5,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .title1
+                                            .color,
                                         onClicked: () async {
                                           var word = widget.data.data.word;
                                           TextToSpeach().onChange(word);

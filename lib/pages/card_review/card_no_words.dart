@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
@@ -122,6 +122,7 @@ class CardNoWordsState extends State<CardNoWords>
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
+                                        // TODO: color when no words
                                         Text(
                                             'No words to review\nAdd words using search',
                                             maxLines: 3,

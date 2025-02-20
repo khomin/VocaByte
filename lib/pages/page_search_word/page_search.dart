@@ -10,7 +10,7 @@ import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/pages/page_search_word/search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/services/service_api.dart';
 
@@ -149,7 +149,7 @@ class SearchWordPageState extends State<SearchWordPage> {
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 16,
-              color: Theme.of(context).colorScheme.titel4))
+              color: Theme.of(context).colorScheme.titlel4))
     ]));
   }
 

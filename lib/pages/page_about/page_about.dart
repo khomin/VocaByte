@@ -1,6 +1,6 @@
 import 'package:loggy/loggy.dart';
 import 'package:simple_html_css/simple_html_css.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart' as url_launcher;
 

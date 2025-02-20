@@ -19,7 +19,7 @@ import 'package:vocabyte/pages/settings/settings_about.dart';
 import 'package:vocabyte/pages/settings/theme/theme_config.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/resource/constants.dart';
@@ -43,14 +43,6 @@ class _State extends State<SettingsPage> {
   final _itemHeight = 70.0;
   ThemeType _theme = ThemeType.system;
   final _dispStream = DisposableStream();
-
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   void initState() {
@@ -90,9 +82,9 @@ class _State extends State<SettingsPage> {
                         type: Type.back,
                         child: Flexible(
                             child: Text('Settings',
-                                textAlign: TextAlign.center,
-                                style:
-                                    Theme.of(context).textTheme.titleSmall)))),
+                                style: Theme.of(context)
+                                    .colorScheme
+                                    .appBarText)))),
                 body: CustomScrollView(
                     physics: const ClampingScrollPhysics(),
                     slivers: [
@@ -114,8 +106,7 @@ class _State extends State<SettingsPage> {
         Row(children: [
           Padding(
               padding: const EdgeInsets.only(top: 25, left: 25),
-              child:
-                  Text('Theme', style: Theme.of(context).textTheme.titleMedium))
+              child: Text('Theme', style: Theme.of(context).colorScheme.title1))
         ]),
         Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 25),
@@ -146,9 +137,8 @@ class _State extends State<SettingsPage> {
                                 children: [
                                   Text('Light',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall),
+                                      style:
+                                          Theme.of(context).colorScheme.title2),
                                   IgnorePointer(
                                       child: Radio(
                                           value: 0,
@@ -180,9 +170,8 @@ class _State extends State<SettingsPage> {
                                 children: [
                                   Text('Dark',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall),
+                                      style:
+                                          Theme.of(context).colorScheme.title2),
                                   IgnorePointer(
                                       child: Radio(
                                           value: 1,
@@ -220,9 +209,8 @@ class _State extends State<SettingsPage> {
                                 children: [
                                   Text('System',
                                       textAlign: TextAlign.center,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleSmall),
+                                      style:
+                                          Theme.of(context).colorScheme.title2),
                                   IgnorePointer(
                                       child: Radio(
                                           value: 2,
@@ -251,7 +239,7 @@ class _State extends State<SettingsPage> {
                     child: Row(children: [
                       Text('Daily goal',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.titleSmall),
+                          style: Theme.of(context).colorScheme.title2),
                       const Spacer(),
                       HoverClick(
                           onPressedL: (_) {
@@ -260,7 +248,7 @@ class _State extends State<SettingsPage> {
                           child: Row(children: [
                             Text('${_dailyGoal ?? 0} words day',
                                 textAlign: TextAlign.center,
-                                style: Theme.of(context).textTheme.titleSmall),
+                                style: Theme.of(context).colorScheme.title2),
                             Icon(Icons.keyboard_arrow_right,
                                 color: Theme.of(context)
                                     .textTheme
@@ -282,19 +270,19 @@ class _State extends State<SettingsPage> {
           child: Row(children: [
             Text('Export words',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall),
+                style: Theme.of(context).colorScheme.title2),
             const Spacer(),
             if (_exportBusy)
               SizedBox(
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titel4)),
+                      color: Theme.of(context).colorScheme.titlel4)),
             Button2Animated(
                 iconData: Icons.drive_folder_upload_sharp,
                 size: 20,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).textTheme.titleSmall?.color,
+                color: Theme.of(context).colorScheme.title2.color,
                 onClicked: () async {
                   var offset = 0;
                   const limit = 5;
@@ -356,19 +344,19 @@ class _State extends State<SettingsPage> {
           child: Row(children: [
             Text('Import words',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall),
+                style: Theme.of(context).colorScheme.title2),
             const Spacer(),
             if (_importBusy)
               SizedBox(
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titel4)),
+                      color: Theme.of(context).colorScheme.titlel4)),
             Button2Animated(
                 iconData: Icons.folder_zip_sharp,
                 size: 20,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).textTheme.titleSmall?.color,
+                color: Theme.of(context).colorScheme.title2.color,
                 onClicked: () async {
                   busy(bool v) {
                     setState(() {
@@ -416,19 +404,19 @@ class _State extends State<SettingsPage> {
           child: Row(children: [
             Text('Export profile',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall),
+                style: Theme.of(context).colorScheme.title2),
             const Spacer(),
             if (_exportProfileBusy)
               SizedBox(
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titel4)),
+                      color: Theme.of(context).colorScheme.titlel4)),
             Button2Animated(
                 iconData: Icons.upload_sharp,
                 size: 20,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).textTheme.titleSmall?.color,
+                color: Theme.of(context).colorScheme.title2.color,
                 onClicked: () async {
                   var offset = 0;
                   const limit = 5;
@@ -499,19 +487,19 @@ class _State extends State<SettingsPage> {
           child: Row(children: [
             Text('Import profile',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall),
+                style: Theme.of(context).colorScheme.title2),
             const Spacer(),
             if (_importProfileBusy)
               SizedBox(
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titel4)),
+                      color: Theme.of(context).colorScheme.titlel4)),
             Button2Animated(
                 iconData: Icons.download_sharp,
                 size: 20,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).textTheme.titleSmall?.color,
+                color: Theme.of(context).colorScheme.title2.color,
                 onClicked: () async {
                   busy(bool v) {
                     setState(() {
@@ -572,13 +560,13 @@ class _State extends State<SettingsPage> {
           child: Row(children: [
             Text('Delete data',
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.titleSmall),
+                style: Theme.of(context).colorScheme.title2),
             const Spacer(),
             Button2Animated(
                 iconData: Icons.delete_sharp,
                 size: 20,
                 padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).colorScheme.titelErr,
+                color: Theme.of(context).colorScheme.titleErr,
                 onClicked: () async {
                   showModalBottomSheet(
                       context: context,
@@ -609,7 +597,7 @@ class _State extends State<SettingsPage> {
             height: 70,
             margin: const EdgeInsets.only(left: 25, right: 25),
             child: Row(children: [
-              Text('Numerals', style: Theme.of(context).textTheme.titleSmall)
+              Text('Numerals', style: Theme.of(context).colorScheme.title2)
             ])),
         ItemInMenuList(
             useBorderTop: false,
@@ -626,7 +614,7 @@ class _State extends State<SettingsPage> {
                   children: [
                     Text('Complexity level',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleSmall),
+                        style: Theme.of(context).colorScheme.title2),
                   ]),
               const Spacer(),
               DropdownButton<String>(
@@ -651,7 +639,7 @@ class _State extends State<SettingsPage> {
                     return DropdownMenuItem<String>(
                       value: value,
                       child: Text(value,
-                          style: Theme.of(context).textTheme.titleSmall),
+                          style: Theme.of(context).colorScheme.title2),
                     );
                   }).toList())
             ]))
@@ -666,7 +654,7 @@ class _State extends State<SettingsPage> {
             height: 90,
             margin: EdgeInsets.only(left: 25, right: 25),
             child: Row(children: [
-              Text('Others', style: Theme.of(context).textTheme.titleSmall)
+              Text('Others', style: Theme.of(context).colorScheme.title2)
             ])),
         //
         // share
@@ -683,11 +671,11 @@ class _State extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Share', style: Theme.of(context).textTheme.titleSmall)
+                    Text('Share', style: Theme.of(context).colorScheme.title2)
                   ]),
               const Spacer(),
               Icon(Icons.link,
-                  color: Theme.of(context).textTheme.titleSmall?.color)
+                  color: Theme.of(context).colorScheme.title2.color)
             ])),
         //
         // about the app
@@ -710,12 +698,11 @@ class _State extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('About',
-                        style: Theme.of(context).textTheme.titleSmall),
+                    Text('About', style: Theme.of(context).colorScheme.title2),
                   ]),
               const Spacer(),
               Icon(Icons.info_rounded,
-                  color: Theme.of(context).textTheme.titleSmall?.color)
+                  color: Theme.of(context).colorScheme.title2.color)
             ])),
         //
         // licenses page
@@ -733,11 +720,11 @@ class _State extends State<SettingsPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text('Licenses',
-                        style: Theme.of(context).textTheme.titleSmall)
+                        style: Theme.of(context).colorScheme.title2)
                   ]),
               const Spacer(),
               Icon(Icons.description,
-                  color: Theme.of(context).textTheme.titleSmall?.color)
+                  color: Theme.of(context).colorScheme.title2.color)
             ])),
         //
         // version
@@ -752,7 +739,7 @@ class _State extends State<SettingsPage> {
                   const SizedBox(height: 30),
                   Text('${Constants.appName} ${Constants.appVersion}',
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.titleSmall)
+                      style: Theme.of(context).colorScheme.title2)
                 ])
               ]),
               const SizedBox(height: 30),

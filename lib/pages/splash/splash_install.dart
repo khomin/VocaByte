@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/app/app_theme.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 
 class SplashInstall extends StatefulWidget {
   const SplashInstall({super.key});
@@ -26,13 +26,13 @@ class SplashInstallState extends State<SplashInstall> {
               child: Padding(
                   padding: const EdgeInsets.all(20),
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titel4))),
+                      color: Theme.of(context).colorScheme.titlel4))),
           Text('Copying database...',
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w400,
                   fontSize: 18,
-                  color: Theme.of(context).colorScheme.titel4)),
+                  color: Theme.of(context).colorScheme.titlel4)),
         ])));
   }
 }
