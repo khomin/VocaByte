@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
+import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
@@ -203,7 +204,7 @@ class AppRep {
     }
   }
 
-  void updateWordToLearn() async {
+  void refreshWordToLearn() async {
     var v = reviewTask;
     await v.refresh();
     AppRep().onReviewTaskChanged.add(v);
@@ -313,7 +314,10 @@ class AppRep {
     return null;
   }
 
-  void play(SoundType type) {
+  Future<void> play(SoundType type) async {
+    if (!await SettingsRep().getUseSound()) {
+      return;
+    }
     switch (type) {
       case SoundType.successShort:
         ServiceApi().playAsset('click-pop-02.wav');

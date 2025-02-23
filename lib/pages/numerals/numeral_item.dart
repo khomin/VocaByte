@@ -52,7 +52,7 @@ class NumeralItemState extends State<NumeralItem> {
                 },
                 color: _clicked
                     ? widget.child == null
-                        ? Theme.of(context).colorScheme.cardSuccess
+                        ? Theme.of(context).colorScheme.card
                         : Theme.of(context).colorScheme.transparent
                     : widget.child == null
                         ? Theme.of(context).colorScheme.card

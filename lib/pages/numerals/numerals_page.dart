@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/numerals/numeral_item.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
@@ -260,14 +261,19 @@ class NumeralsPageState extends State<NumeralsPage> {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w600,
                                     fontSize: 30,
-                                    color:
-                                        Theme.of(context).colorScheme.text5)))),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .appBarText
+                                        .color)))),
                     if (_backpressVisible)
-                      Button2Animated(
+                      RoundButton(
                           iconData: Icons.backspace,
-                          size: 30,
-                          color: Theme.of(context).colorScheme.text5,
-                          onClicked: () {
+                          size: const Size(30, 30),
+                          useScaleAnimation: true,
+                          iconColor: Theme.of(context).colorScheme.title5,
+                          margin: const EdgeInsets.only(right: 20),
+                          color: Colors.transparent,
+                          onPressed: (_) {
                             if (_inputCtr.text.isNotEmpty) {
                               _inputCtr.text = _inputCtr.text
                                   .substring(0, _inputCtr.text.length - 1);

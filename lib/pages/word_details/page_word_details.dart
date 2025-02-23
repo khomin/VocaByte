@@ -1,4 +1,6 @@
 import 'package:expandable_page_view/expandable_page_view.dart';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/button_with_menu.dart';
@@ -19,9 +21,13 @@ import 'package:vocabyte/services/tts.dart';
 
 class PageWordDetails extends StatefulWidget {
   const PageWordDetails(
-      {required this.playWordAtStart, required this.onBack, super.key});
+      {required this.playWordAtStart,
+      this.primary = false,
+      required this.onBack,
+      super.key});
   final Function() onBack;
   final bool playWordAtStart;
+  final bool primary;
 
   @override
   PageWordDetailsState createState() => PageWordDetailsState();
@@ -135,71 +141,108 @@ class PageWordDetailsState extends State<PageWordDetails>
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-        create: (_) => SearchWordModel(),
-        builder: (context, child) {
-          var size = MediaQuery.of(context).size;
-          var data = AppRep().cachedWord;
-          var sentences = _sentences?.data;
-          if (data == null) return const SizedBox();
-          return Container(
-              color: Theme.of(context).colorScheme.page,
-              width: size.width,
-              height: size.height,
-              child: Stack(alignment: Alignment.center, children: [
-                Column(children: [
-                  Expanded(
-                      child: CustomScrollView(slivers: [
-                    SliverToBoxAdapter(
-                      child: Padding(
-                          padding:
-                              EdgeInsets.only(top: size.height / 5, bottom: 50),
-                          child: Column(
-                            children: [
-                              _cardView(),
-                            ],
-                          )),
-                    ),
-                    SliverList(
-                        delegate: SliverChildListDelegate([
-                      SingleChildScrollView(
-                          child: Column(children: [
-                        ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: sentences?.length ?? 0,
-                            itemBuilder: (BuildContext context, int index) {
-                              var i = sentences?[index];
-                              var textSpan = UiHelper.makeTextSpan(
-                                  _word.toLowerCase(), i ?? '');
-                              return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12)),
-                                      color: Theme.of(context)
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.page,
+            appBar: widget.primary
+                ? AppBar(
+                    backgroundColor: Theme.of(context).colorScheme.page,
+                    leadingWidth: double.infinity,
+                    leading: AppBar2(
+                        type: Type.back,
+                        child: Flexible(
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                              Text('Manage',
+                                  style:
+                                      Theme.of(context).colorScheme.appBarText)
+                            ]))))
+                : null,
+            body: ChangeNotifierProvider(
+                create: (_) => SearchWordModel(),
+                builder: (context, child) {
+                  var size = MediaQuery.of(context).size;
+                  var data = AppRep().cachedWord;
+                  var sentences = _sentences?.data;
+                  if (data == null) return const SizedBox();
+                  return Stack(alignment: Alignment.center, children: [
+                    Column(children: [
+                      Expanded(
+                          child: CustomScrollView(slivers: [
+                        SliverToBoxAdapter(
+                          child: Padding(
+                              padding: EdgeInsets.only(
+                                  top: size.height / 5, bottom: 50),
+                              child: Column(
+                                children: [
+                                  _cardView(),
+                                ],
+                              )),
+                        ),
+                        SliverList(
+                            delegate: SliverChildListDelegate([
+                          SingleChildScrollView(
+                              child: Column(children: [
+                            ListView.builder(
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: sentences?.length ?? 0,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var i = sentences?[index];
+                                  var textSpan = UiHelper.makeTextSpan(
+                                      query: _word.toLowerCase(),
+                                      text: i ?? '',
+                                      colorBase: Theme.of(context)
                                           .colorScheme
-                                          .baseColor1),
-                                  margin: const EdgeInsets.only(
-                                      top: 5, bottom: 5, left: 20, right: 20),
-                                  padding: const EdgeInsets.only(
-                                      top: 5, bottom: 5, left: 20, right: 20),
-                                  child: Text.rich(TextSpan(children: textSpan),
-                                      maxLines: 15,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.w400,
-                                          fontSize: 15,
+                                          .appBarText
+                                          .color!,
+                                      colorHighlight: Theme.of(context)
+                                          .colorScheme
+                                          .buttonOption2);
+                                  return Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: const BorderRadius.all(
+                                              Radius.circular(8)),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: Colors.black
+                                                    .withOpacity(0.1),
+                                                blurRadius: 15,
+                                                offset: const Offset(0, 1))
+                                          ],
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .textInCard)));
-                            })
-                      ]))
-                    ]))
-                  ])),
-                  _footerButton()
-                ])
-              ]));
-        });
+                                              .cardHome),
+                                      margin: const EdgeInsets.only(
+                                          top: 5,
+                                          bottom: 5,
+                                          left: 20,
+                                          right: 20),
+                                      padding: const EdgeInsets.only(
+                                          top: 5,
+                                          bottom: 5,
+                                          left: 20,
+                                          right: 20),
+                                      child: Text.rich(
+                                          TextSpan(children: textSpan),
+                                          maxLines: 15,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w400,
+                                              fontSize: 15,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .appBarText
+                                                  .color)));
+                                })
+                          ]))
+                        ]))
+                      ])),
+                      _footerButton()
+                    ])
+                  ]);
+                })));
   }
 
   Widget _cardView() {
@@ -269,10 +312,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                 style: TextStyle(
                                     fontWeight: FontWeight.w500,
                                     fontSize: 14,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .cardAccent
-                                        .color)))
+                                    color:
+                                        Theme.of(context).colorScheme.title4)))
                       ])),
                   Padding(
                       padding: const EdgeInsets.only(left: 10),
@@ -286,8 +327,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   fontSize: 14,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .title1
-                                      .color)),
+                                      .cardDefinition)),
                         const SizedBox(width: 10),
                         //
                         // frequency
@@ -298,8 +338,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   fontSize: 14,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .title1
-                                      .color)),
+                                      .cardDefinition)),
                         const Spacer(),
                         //
                         // play
@@ -324,7 +363,6 @@ class PageWordDetailsState extends State<PageWordDetails>
                       itemBuilder: (context, index) {
                         var meaning = data.meaning[index];
                         return Container(
-                            // color: Colors.pink,
                             padding: const EdgeInsets.only(
                                 top: 20, left: 10, right: 10),
                             child: Column(
@@ -342,35 +380,35 @@ class PageWordDetailsState extends State<PageWordDetails>
                                                 fontSize: 16,
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .title1
-                                                    .color)))
+                                                    .cardDefinition)))
                                   ]),
                                   //
                                   // example
                                   if (meaning.example != null)
-                                    const SizedBox(height: 20),
-                                  if (meaning.example != null)
-                                    HoverClick(
-                                        onPressedL: (_) {
-                                          _playExample();
-                                        },
-                                        child: Row(children: [
-                                          Expanded(
-                                              child: Text(meaning.example ?? '',
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 10,
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      fontSize: 16,
-                                                      fontStyle:
-                                                          FontStyle.italic,
-                                                      color: Theme.of(context)
-                                                          .colorScheme
-                                                          .title2
-                                                          .color)))
-                                        ])),
+                                    Padding(
+                                        padding: const EdgeInsets.only(top: 20),
+                                        child: HoverClick(
+                                            onPressedL: (_) {
+                                              _playExample();
+                                            },
+                                            child: Row(children: [
+                                              Expanded(
+                                                  child: Text(
+                                                      meaning.example ?? '',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      maxLines: 10,
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          fontSize: 16,
+                                                          fontStyle:
+                                                              FontStyle.italic,
+                                                          color: Theme.of(
+                                                                  context)
+                                                              .colorScheme
+                                                              .cardExample)))
+                                            ]))),
                                   //
                                   // synonyms
                                   if (meaning.synonyms.isNotEmpty)
@@ -385,7 +423,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                                                   fontSize: 14,
                                                   color: Theme.of(context)
                                                       .colorScheme
-                                                      .title2
+                                                      .title3
                                                       .color)))
                                     ]),
                                   const SizedBox(height: 10),
@@ -428,61 +466,75 @@ class PageWordDetailsState extends State<PageWordDetails>
     } else {
       leftText = '$countKnow times know';
     }
-    return FixedFooterBottom(
-        child1: _status != null
-            ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                // TODO: progress how many step
-                Flexible(
-                    child: Text(leftText,
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Theme.of(context).colorScheme.title2.color)))
-              ])
-            : ButtonRoundCorner(
-                text: 'Should learn',
-                color: Theme.of(context).colorScheme.buttonOption1,
-                colorText: Theme.of(context).colorScheme.buttonOptionText,
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                direction: TextDirection.ltr,
-                radious: const BorderRadius.all(Radius.circular(10)),
-                onPressed: () async {
-                  var data = AppRep().cachedWord;
-                  var w = data?.word;
-                  if (w == null) return;
-                  await ServiceApi().addWordInReview(
-                      req: ReqAddWordInReview(word: w, useExtraFields: false));
-                  _refreshStatus();
-                  AppRep().refreshManageList();
-                }),
-        childFlex2: 13,
-        child2: _status == null
-            ? null
-            : completed
-                ? ButtonRoundCorner(
-                    text: 'Completed',
-                    iconData: Icons.thumb_up,
-                    color: Theme.of(context).colorScheme.buttonOption3,
+    return Container(
+        decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.page,
+            boxShadow: [
+              BoxShadow(
+                  color: Theme.of(context).colorScheme.shadowBox,
+                  blurRadius: 10,
+                  offset: const Offset(0, 0))
+            ]),
+        child: FixedFooterBottom(
+            child1: _status != null
+                ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    Flexible(
+                        child: Column(children: [
+                      Text(leftText,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color:
+                                  Theme.of(context).colorScheme.title2.color)),
+                      const SizedBox(height: 10),
+                      StepProgressIndicator(
+                        totalSteps: Constants.reapedToLeanDefault,
+                        currentStep: countKnow,
+                        size: 10,
+                        selectedColor:
+                            Theme.of(context).colorScheme.buttonOption1,
+                        unselectedColor:
+                            Theme.of(context).colorScheme.buttonOptionText,
+                      )
+                    ]))
+                  ])
+                : ButtonRoundCorner(
+                    text: 'Should learn',
+                    color: Theme.of(context).colorScheme.buttonOption1,
                     colorText: Theme.of(context).colorScheme.buttonOptionText,
                     padding: const EdgeInsets.only(left: 10, right: 10),
                     direction: TextDirection.ltr,
                     radious: const BorderRadius.all(Radius.circular(10)),
-                    onPressed: () {
-                      widget.onBack.call();
-                    })
+                    onPressed: () async {
+                      var data = AppRep().cachedWord;
+                      var w = data?.word;
+                      if (w == null) return;
+                      await ServiceApi().addWordInReview(
+                          req: ReqAddWordInReview(
+                              word: w, useExtraFields: false));
+                      _refreshStatus();
+                      AppRep().refreshManageList();
+                    }),
+            childFlex2: 13,
+            child2: _status == null
+                ? null
                 : ButtonWithMenu(
-                    text: 'Review $_reviewIn',
+                    text: completed ? 'Completed' : 'Review $_reviewIn',
+                    icon: completed ? Icons.thumb_up : null,
                     onPressed: () {
                       widget.onBack.call();
                     },
                     onMenu: () {
                       showModalBottomSheet(
                           context: context,
-                          // showDragHandle: true,
                           useRootNavigator: true,
                           backgroundColor:
                               Theme.of(context).colorScheme.pageHome,
+                          shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(12.0)),
+                          ),
                           builder: (context) {
                             return NextReviewPanel(
                                 review: AppRep.reviewTimeToEnum(_status),
@@ -503,6 +555,6 @@ class PageWordDetailsState extends State<PageWordDetails>
                                   AppRep().refreshManageList();
                                 });
                           });
-                    }));
+                    })));
   }
 }

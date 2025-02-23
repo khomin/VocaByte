@@ -31,51 +31,68 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
   void initState() {
     super.initState();
 
-    var duration = UiHelper()
-        .durationFormat(DateTime.now().difference(widget.result.started));
+    Future.microtask(() {
+      var duration = UiHelper()
+          .durationFormat(DateTime.now().difference(widget.result.started));
 
-    var result = widget.result;
-    var correctCnt = result.correctCnt;
+      var result = widget.result;
+      var correctCnt = result.correctCnt;
 
-    if (result.failedValue.isNotEmpty) {
-      _line1 = 'Sorry!\nCorrect value is ${result.failedValue}';
-    } else if (correctCnt == result.allCnt) {
-      _line1 =
-          'Geat job!\nYou have completed!\n${result.correctCnt} corect answers';
-    } else {
-      _line1 = 'You have ${result.correctCnt} corect answers!';
-    }
-    _line2 = duration;
+      if (result.failedValue.isNotEmpty) {
+        _line1 = 'Sorry!\nCorrect value is ${result.failedValue}';
+      } else if (correctCnt == result.allCnt) {
+        _line1 =
+            'Geat job!\nYou have completed!\n${result.correctCnt} corect answers';
+      } else {
+        _line1 = 'You have ${result.correctCnt} corect answers!';
+      }
+      _line2 = duration;
 
-    _items = [
-      Text(_line1,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20,
-              foreground: Paint()
-                ..shader = ui.Gradient.linear(
-                    const Offset(0, 20), const Offset(150, 20), <Color>[
-                  const ui.Color.fromARGB(255, 255, 102, 6),
-                  Colors.yellow,
-                ]))),
-      const SizedBox(height: 10),
-      Text(_line2,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              fontSize: 20,
-              foreground: Paint()
-                ..shader = ui.Gradient.linear(
-                    const Offset(0, 20), const Offset(150, 20), <Color>[
-                  const ui.Color.fromARGB(255, 255, 102, 6),
-                  Colors.yellow,
-                ])))
-    ];
+      _items = [
+        Text(_line1,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20,
+                shadows: [
+                  if (mounted)
+                    BoxShadow(
+                        color: Theme.of(context).colorScheme.shadow2,
+                        blurRadius: 25,
+                        offset: const Offset(0, 0))
+                ],
+                foreground: Paint()
+                  ..shader = ui.Gradient.linear(
+                      const Offset(0, 20), const Offset(150, 20), <Color>[
+                    if (mounted) Theme.of(context).colorScheme.textResultGrad1,
+                    if (mounted) Theme.of(context).colorScheme.textResultGrad2
+                  ]))),
+        const SizedBox(height: 10),
+        Text(_line2,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                fontSize: 20,
+                shadows: [
+                  if (mounted)
+                    BoxShadow(
+                        color: Theme.of(context).colorScheme.shadow2,
+                        blurRadius: 25,
+                        offset: const Offset(0, 0))
+                ],
+                foreground: Paint()
+                  ..shader = ui.Gradient.linear(
+                      const Offset(0, 20), const Offset(150, 20), <Color>[
+                    if (mounted) Theme.of(context).colorScheme.textResultGrad1,
+                    if (mounted) Theme.of(context).colorScheme.textResultGrad2
+                  ])))
+      ];
 
-    _items = _items
-        .animate(interval: 100.ms)
-        .fadeIn(duration: 300.ms, delay: 50.ms)
-        .shimmer(blendMode: BlendMode.srcOver, color: Colors.white12)
-        .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad);
+      _items = _items
+          .animate(interval: 100.ms)
+          .fadeIn(duration: 300.ms, delay: 50.ms)
+          .blurY(end: 0.0, duration: 300.ms)
+          .move(begin: const Offset(-16, 0), curve: Curves.easeOutQuad);
+      setState(() {});
+    });
   }
 
   @override
@@ -100,8 +117,9 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
                                 text: 'Continue',
                                 color:
                                     Theme.of(context).colorScheme.buttonOption1,
-                                colorText:
-                                    Theme.of(context).colorScheme.cardText,
+                                colorText: Theme.of(context)
+                                    .colorScheme
+                                    .buttonOptionText,
                                 onPressed: () {
                                   widget.onCompleted();
                                 })))

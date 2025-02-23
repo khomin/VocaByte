@@ -21,7 +21,7 @@ class AppBar2 extends StatelessWidget {
           const SizedBox(width: 5),
           RoundButton(
               color: type == Type.close
-                  ? Colors.white.withOpacity(0.08)
+                  ? Theme.of(context).colorScheme.roundButton
                   : Colors.transparent,
               iconColor: Theme.of(context).colorScheme.appBarText.color,
               size: const Size(50, 50),

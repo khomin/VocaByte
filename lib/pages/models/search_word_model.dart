@@ -65,7 +65,7 @@ class SearchWordModel with ChangeNotifier {
     }
   }
 
-  void updateList(dynamic v) {
+  void updateList(List<SearchInfo> v) {
     found = v;
     notifyListeners();
   }

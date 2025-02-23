@@ -33,7 +33,7 @@ class _State extends State<DevPanel> {
                 text: 'UPDATE',
                 color: Colors.black26,
                 onPressed: () async {
-                  context.read<AppRep>().updateWordToLearn();
+                  context.read<AppRep>().refreshWordToLearn();
                 }),
             Button3(
                 text: 'POP',

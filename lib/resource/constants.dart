@@ -6,35 +6,17 @@ class Constants {
 
   static const appName = "VocaByte";
   static const localFolderName = 'vocabyte';
-  static var appVersion = '0.0.1';
+  static var appVersion = '1.0.3';
   static const appLink =
       'https://play.google.com/store/apps/details?id=com.vocabyte.app';
-
-  static const colorBar = Color.fromARGB(255, 213, 212, 232);
-  static const colorCard = Colors.white;
-  static const colorBgUnderCard = Color(0xfff1f2f4);
-  static const colorTextAccent = Colors.black;
-  static const colorTextSecond = Color(0xA0515155);
+  static const appGroupLink = 'https://groups.google.com/g/vocabyte';
 
   static double iconHomeSize = 60.0;
-
-  // static const colorPrimary = Color.fromARGB(255, 139, 135, 219);
-  // static const colorSecondary = Color.fromARGB(255, 170, 167, 225);
-
-  static const colorButtonBg = Colors.black12;
-  static const colorButton = Colors.black26;
-
-  static const colorButtonRed = Color.fromARGB(255, 214, 24, 10);
-
-  static const defaultCamera = 'Back';
 
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
 
-  static const menuFontColor1 = Color.fromARGB(255, 245, 245, 245);
-  static const menuFontColor2 = Color.fromARGB(159, 255, 255, 255);
-  static const menuBorderColor = Color.fromARGB(159, 211, 211, 212);
   static const menuFontSize1 = 15.0;
   static const menuFontSize2 = 14.0;
   static const menuFontSize3 = 13.0;

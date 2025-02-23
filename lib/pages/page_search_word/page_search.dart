@@ -85,6 +85,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                       onChanged: (value) {
                         _model.search(value);
                       },
+                      keyboardType: TextInputType.text,
                       onEditingComplete: () {},
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.inputText,
@@ -113,12 +114,11 @@ class SearchWordPageState extends State<SearchWordPage> {
                 }
                 return RoundButton(
                     iconData: Icons.clear_sharp,
-                    color: Colors.transparent,
                     iconSize: 22,
                     margin: const EdgeInsets.only(right: 15),
                     size: const Size(40, 40),
-                    iconColor:
-                        Theme.of(context).colorScheme.white.withOpacity(0.5),
+                    color: Theme.of(context).colorScheme.roundButton,
+                    iconColor: Theme.of(context).colorScheme.appBarText.color,
                     onPressed: (_) {
                       _model.reset();
                     });
@@ -149,7 +149,7 @@ class SearchWordPageState extends State<SearchWordPage> {
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 16,
-              color: Theme.of(context).colorScheme.titlel4))
+              color: Theme.of(context).colorScheme.title5))
     ]));
   }
 

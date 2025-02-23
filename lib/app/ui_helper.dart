@@ -84,10 +84,9 @@ class UiHelper {
         color: color ?? Theme.of(context).colorScheme.baseColor2,
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.2),
-            blurRadius: 2,
-            offset: offset,
-          )
+              color: Colors.black.withOpacity(0.2),
+              blurRadius: 2,
+              offset: offset)
         ]);
   }
 
@@ -172,7 +171,11 @@ class UiHelper {
     return '';
   }
 
-  static List<TextSpan> makeTextSpan(String query, String text) {
+  static List<TextSpan> makeTextSpan(
+      {required String query,
+      required String text,
+      required Color colorHighlight,
+      required Color colorBase}) {
     List<TextSpan> spans = [];
     var queryLen = query.length;
 
@@ -181,27 +184,14 @@ class UiHelper {
         // make visible only matching text, rest is transparent
         return TextSpan(
           text: text,
-          style: const TextStyle(color: Color.fromARGB(255, 212, 184, 3)),
-          // style: TextStyle(
-          //     // fontSize: ConstValues.chatMsgTextFontSize,
-          //     // fontWeight: ConstValues.chatMsgFontWeight,
-          //     // fontFamily: ConstValues.chatMsgTextFont,
-          //     background: Paint()
-          //       ..strokeWidth = 20
-          //       ..color = const Color.fromARGB(100, 212, 184, 3)
-          //       ..strokeJoin = StrokeJoin.round
-          //       ..strokeCap = StrokeCap.round
-          //       ..style = PaintingStyle.stroke,
-          //     color: const Color(0xff000000)));
+          style: TextStyle(
+              color: colorHighlight,
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+              decorationColor: colorHighlight),
         );
       }
-      return TextSpan(
-          text: text,
-          style: const TextStyle(
-              // fontSize: ConstValues.chatMsgTextFontSize,
-              // fontWeight: ConstValues.chatMsgFontWeight,
-              // fontFamily: ConstValues.chatMsgTextFont,
-              color: Color(0xFFB5C2D4)));
+      return TextSpan(text: text, style: TextStyle(color: colorBase));
     }
 
     var againsLoop = 0;

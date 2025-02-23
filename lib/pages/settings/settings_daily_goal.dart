@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/pages/settings/theme/app_theme.dart';
@@ -48,16 +49,25 @@ class _State extends State<SettingsDailiyGoal> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Scaffold(body: Builder(builder: (BuildContext context) {
-      return Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-                child: _card(Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
+        child: Scaffold(
+            appBar: AppBar(
+                leadingWidth: double.infinity,
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                backgroundColor: Colors.transparent,
+                leading: AppBar2(
+                    type: Type.back,
+                    child: Flexible(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Text('Daily goal',
+                              style: Theme.of(context).colorScheme.appBarText)
+                        ])))),
+            body: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   Expanded(
                       child: Padding(
                           padding: const EdgeInsets.only(top: 40, bottom: 40),
@@ -80,9 +90,8 @@ class _State extends State<SettingsDailiyGoal> {
                                                   : Theme.of(context)
                                                       .colorScheme
                                                       .page,
-                                              iconColor: Colors.pink,
-                                              size: const Size(200, 80),
-                                              radius: 15,
+                                              size: const Size(200, 60),
+                                              radius: 10,
                                               useScaleAnimation: true,
                                               child: IgnorePointer(
                                                   child: Center(
@@ -100,17 +109,6 @@ class _State extends State<SettingsDailiyGoal> {
                                               }))
                                     ]);
                               })))
-                ])))
-          ]);
-    })));
-  }
-
-  Widget _card(Widget child) {
-    return Container(
-        margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        decoration: const BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(6))),
-        child: child);
+                ])));
   }
 }

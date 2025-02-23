@@ -1,5 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:vocabyte/components/app_bar2.dart';
+import 'package:vocabyte/components/item_in_menu_list.dart';
+import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/resource/constants.dart';
 
@@ -15,115 +19,107 @@ class SettingsAboutState extends State<SettingsAbout> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Constants.colorBar,
-        child: SafeArea(
-            child: Scaffold(
-                // backgroundColor: Constants.colorBar,
-                body: Stack(alignment: Alignment.center, children: [
-          Positioned(
-              top: (kToolbarHeight * 2) - 30,
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                  decoration: const BoxDecoration(
-                      // color: Constants.colorBgUnderCard,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20))))),
-          CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
-            SliverAppBar(
-                backgroundColor: Constants.colorBar,
-                automaticallyImplyLeading: false,
-                flexibleSpace: _sliverAppBar()),
-            DecoratedSliver(
-                decoration: const BoxDecoration(
-                  color: Constants.colorBgUnderCard,
-                ),
-                sliver: SliverToBoxAdapter(child: _view()))
-          ])
-        ]))));
-  }
-
-  Widget _sliverAppBar() {
-    return Stack(children: [
-      Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          child: Container(
-              color: Constants.colorBar,
-              height: kToolbarHeight,
-              child: Row(children: [
-                RoundButton(
-                    padding: const EdgeInsets.only(left: 10),
-                    color: Colors.transparent,
-                    iconColor: const Color.fromARGB(255, 37, 32, 32),
-                    size: const Size(50, 50),
-                    iconSize: 22,
-                    iconData: Icons.arrow_back_ios,
-                    onPressed: (p0) {
-                      Navigator.of(context).pop();
-                    }),
-                Container(
-                    width: 100,
-                    margin: const EdgeInsets.only(left: 25),
-                    child: const Text('About', style: TextStyle(fontSize: 25))),
-                const Spacer()
-              ])))
-    ]);
+    return SafeArea(
+        child: Scaffold(
+            backgroundColor: Theme.of(context).colorScheme.pageHome,
+            body: CustomScrollView(
+                physics: const ClampingScrollPhysics(),
+                slivers: [
+                  SliverAppBar(
+                      automaticallyImplyLeading: false,
+                      flexibleSpace: AppBar2(
+                          type: Type.back,
+                          child: Flexible(
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                Text('About',
+                                    style: Theme.of(context)
+                                        .colorScheme
+                                        .appBarText)
+                              ])))),
+                  DecoratedSliver(
+                      decoration: const BoxDecoration(),
+                      sliver: SliverToBoxAdapter(child: _view()))
+                ])));
   }
 
   Widget _view() {
     return Builder(builder: (context) {
-      var size = MediaQuery.of(context).size;
-      return SizedBox(
-          height: size.height / 1.5,
-          child: const Stack(alignment: Alignment.center, children: [
-            Positioned(
-                top: 40,
-                left: 20,
-                right: 20,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('You may be wondering what this app is for',
+      return Padding(
+          padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(Constants.appName,
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.appBarText.color,
+                        fontSize: Constants.menuFontSize1,
+                        fontWeight: FontWeight.w500)),
+                const SizedBox(height: 8),
+                Text('This app is lightweight and free, with no ads',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.appBarText.color,
+                        fontSize: Constants.menuFontSize1,
+                        fontWeight: FontWeight.w400)),
+                const SizedBox(height: 8),
+                Text(
+                    'It combines the power of word cards and numeral training to help you improve your language skills and number recognition',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.appBarText.color,
+                        fontSize: Constants.menuFontSize1,
+                        fontWeight: FontWeight.w400)),
+                const SizedBox(height: 8),
+                Text(
+                    'Simply type a word into the search bar to instantly access its card with detailed examples, making it easy to understand and remember',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.appBarText.color,
+                        fontSize: Constants.menuFontSize1,
+                        fontWeight: FontWeight.w400)),
+                const SizedBox(height: 8),
+                Text('We hope this app can help you find out the cause of that',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.appBarText.color,
+                        fontSize: Constants.menuFontSize1,
+                        fontWeight: FontWeight.w400)),
+                const SizedBox(height: 30),
+                Text('We also have a group for bugs & ideas:',
+                    style: TextStyle(
+                        color: Theme.of(context).colorScheme.appBarText.color,
+                        fontSize: Constants.menuFontSize1,
+                        fontWeight: FontWeight.w400)),
+                ItemInMenuList(
+                    useBorderTop: false,
+                    useBorderBot: false,
+                    height: 50,
+                    padding: EdgeInsets.zero,
+                    margin: EdgeInsets.zero,
+                    onClicked: (pos) {},
+                    child: Row(children: [
+                      Text(Constants.appGroupLink,
                           style: TextStyle(
-                              // color: Constants.menuFontColor1,
-                              // fontSize: Constants.menuFontSize1,
-                              fontWeight: FontWeight.w400)),
-                      SizedBox(height: 8),
-                      Text(
-                          'Perhaps you remember the day or days when you saw poop in your yard without any idea where it came from',
-                          style: TextStyle(
-                              // color: Constants.menuFontColor1,
-                              // fontSize: Constants.menuFontSize1,
-                              fontWeight: FontWeight.w400)),
-                      SizedBox(height: 8),
-                      Text(
-                          'Then you will agree that there is nothing more unpleasant then cleaning poop',
-                          style: TextStyle(
-                              // color: Constants.menuFontColor1,
-                              // fontSize: Constants.menuFontSize1,
-                              fontWeight: FontWeight.w400)),
-                      SizedBox(height: 8),
-                      Text(
-                          'Hope this app can help you find out the cause of that',
-                          style: TextStyle(
-                              // color: Constants.menuFontColor1,
-                              // fontSize: Constants.menuFontSize1,
-                              fontWeight: FontWeight.w400)),
-                      SizedBox(height: 8),
-                      Text(
-                          'Just stick your phone to the window, press capture and see what it will catch',
-                          style: TextStyle(
-                              // color: Constants.menuFontColor1,
-                              // fontSize: Constants.menuFontSize1,
-                              fontWeight: FontWeight.w400))
+                              color: Theme.of(context).colorScheme.title2.color,
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold)),
+                      RoundButton(
+                          color: Theme.of(context).colorScheme.roundButton,
+                          size: const Size(50, 50),
+                          iconSize: 20,
+                          margin: const EdgeInsets.only(left: 10),
+                          useScaleAnimation: true,
+                          iconData: Icons.copy,
+                          onPressed: (v) async {
+                            Clipboard.setData(const ClipboardData(
+                                text: Constants.appGroupLink));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  duration: Duration(milliseconds: 500),
+                                  content: Text('Copied')),
+                            );
+                          })
                     ]))
-          ]));
+              ]));
     });
   }
 

@@ -13,6 +13,7 @@ import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
+import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
@@ -40,9 +41,12 @@ class _State extends State<SettingsPage> {
   var _exportBusy = false;
   var _importBusy = false;
   var _exportProfileBusy = false;
+  var _useSound = false;
   final _itemHeight = 70.0;
   ThemeType _theme = ThemeType.system;
   final _dispStream = DisposableStream();
+  final _buttonSize = 45.0;
+  final _iconSize = 25.0;
 
   @override
   void initState() {
@@ -64,40 +68,38 @@ class _State extends State<SettingsPage> {
     _numLevel = await SettingsRep().getNumeralsLevel();
     _dailyGoal = await SettingsRep().getDailyGoal();
     _theme = await SettingsRep().getTheme();
+    _useSound = await SettingsRep().getUseSound();
     setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.black,
-        child: SafeArea(
-            child: Scaffold(
-                appBar: AppBar(
-                    leadingWidth: double.infinity,
-                    elevation: 0,
-                    scrolledUnderElevation: 0,
-                    backgroundColor: Colors.transparent,
-                    leading: AppBar2(
-                        type: Type.back,
-                        child: Flexible(
-                            child: Text('Settings',
-                                style: Theme.of(context)
-                                    .colorScheme
-                                    .appBarText)))),
-                body: CustomScrollView(
-                    physics: const ClampingScrollPhysics(),
-                    slivers: [
-                      DecoratedSliver(
-                          decoration: BoxDecoration(
-                              // color: Theme.of(context).colorScheme.card
-                              ),
-                          sliver: SliverList.list(children: [
-                            _profile(),
-                            _numComplexity(),
-                            _others()
-                          ]))
-                    ]))));
+    return SafeArea(
+        child: Scaffold(
+            appBar: AppBar(
+                leadingWidth: double.infinity,
+                elevation: 0,
+                scrolledUnderElevation: 0,
+                backgroundColor: Colors.transparent,
+                leading: AppBar2(
+                    type: Type.back,
+                    child: Flexible(
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                          Text('Settings',
+                              style: Theme.of(context).colorScheme.appBarText)
+                        ])))),
+            body: CustomScrollView(
+                physics: const ClampingScrollPhysics(),
+                slivers: [
+                  DecoratedSliver(
+                      decoration: const BoxDecoration(
+                          // color: Theme.of(context).colorScheme.card
+                          ),
+                      sliver: SliverList.list(
+                          children: [_profile(), _numComplexity(), _others()]))
+                ])));
   }
 
   Widget _profile() {
@@ -220,12 +222,14 @@ class _State extends State<SettingsPage> {
                       })
                 ]))
       ]),
+      //
+      // daily goal
       ItemInMenuList(
           useBorderTop: true,
           useBorderBot: false,
           padding: const EdgeInsets.only(left: 25, right: 25),
           onClicked: (_) {
-            AppRep().shareApp();
+            widget.onChangeGoal();
           },
           height: _itemHeight,
           child: Column(
@@ -233,7 +237,7 @@ class _State extends State<SettingsPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 //
-                // dayly goal
+                // daily goal
                 Padding(
                     padding: const EdgeInsets.only(top: 10, bottom: 10),
                     child: Row(children: [
@@ -241,20 +245,53 @@ class _State extends State<SettingsPage> {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).colorScheme.title2),
                       const Spacer(),
-                      HoverClick(
-                          onPressedL: (_) {
-                            widget.onChangeGoal();
-                          },
-                          child: Row(children: [
-                            Text('${_dailyGoal ?? 0} words day',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).colorScheme.title2),
-                            Icon(Icons.keyboard_arrow_right,
-                                color: Theme.of(context)
-                                    .textTheme
-                                    .titleSmall
-                                    ?.color)
-                          ]))
+                      Row(children: [
+                        Text('${_dailyGoal ?? 0} words day',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).colorScheme.title2),
+                        Icon(Icons.keyboard_arrow_right,
+                            color:
+                                Theme.of(context).textTheme.titleSmall?.color)
+                      ])
+                    ]))
+              ])),
+      //
+      // use sound
+      ItemInMenuList(
+          useBorderTop: true,
+          useBorderBot: false,
+          padding: const EdgeInsets.only(left: 25, right: 25),
+          onClicked: (_) {
+            widget.onChangeGoal();
+          },
+          height: _itemHeight,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(top: 10, bottom: 10),
+                    child: Row(children: [
+                      Text('Use sound',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).colorScheme.title2),
+                      const Spacer(),
+                      Switch(
+                          // inactiveTrackColor: Colors.amber,
+                          // // activeColor: Colors.pink,
+                          // inactiveTrackColor:
+                          //     Theme.of(context).colorScheme.iconColor,
+                          // activeColor:
+                          //     Theme.of(context).colorScheme.buttonOption2,
+                          // inactiveThumbColor: Colors.orange,
+                          // activeTrackColor: Colors.blue,
+                          value: _useSound,
+                          onChanged: (value) async {
+                            SettingsRep().setUseSound(value);
+                            setState(() {
+                              _useSound = value;
+                            });
+                          })
                     ]))
               ])),
       //
@@ -263,9 +300,6 @@ class _State extends State<SettingsPage> {
           useBorderTop: true,
           useBorderBot: false,
           padding: const EdgeInsets.only(left: 25, right: 25),
-          onClicked: (_) {
-            AppRep().shareApp();
-          },
           height: _itemHeight,
           child: Row(children: [
             Text('Export words',
@@ -277,13 +311,15 @@ class _State extends State<SettingsPage> {
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titlel4)),
-            Button2Animated(
+                      color: Theme.of(context).colorScheme.title5)),
+            RoundButton(
                 iconData: Icons.drive_folder_upload_sharp,
-                size: 20,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).colorScheme.title2.color,
-                onClicked: () async {
+                size: Size(_buttonSize, _buttonSize),
+                iconSize: _iconSize,
+                iconColor: Theme.of(context).colorScheme.title2.color,
+                useScaleAnimation: true,
+                color: Colors.transparent,
+                onPressed: (_) async {
                   var offset = 0;
                   const limit = 5;
                   final list = <String>[];
@@ -308,7 +344,7 @@ class _State extends State<SettingsPage> {
                     }
                   }
                   if (list.isEmpty) {
-                    if (context.mounted) {
+                    if (mounted) {
                       UiHelper.showToast(context, 'Nothing to export');
                     }
                     busy(false);
@@ -337,9 +373,6 @@ class _State extends State<SettingsPage> {
           useBorderTop: true,
           useBorderBot: false,
           padding: const EdgeInsets.only(left: 25, right: 25),
-          onClicked: (_) {
-            AppRep().shareApp();
-          },
           height: _itemHeight,
           child: Row(children: [
             Text('Import words',
@@ -351,13 +384,15 @@ class _State extends State<SettingsPage> {
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titlel4)),
-            Button2Animated(
+                      color: Theme.of(context).colorScheme.title5)),
+            RoundButton(
                 iconData: Icons.folder_zip_sharp,
-                size: 20,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).colorScheme.title2.color,
-                onClicked: () async {
+                size: Size(_buttonSize, _buttonSize),
+                iconSize: _iconSize,
+                iconColor: Theme.of(context).colorScheme.title2.color,
+                useScaleAnimation: true,
+                color: Colors.transparent,
+                onPressed: (_) async {
                   busy(bool v) {
                     setState(() {
                       _importBusy = v;
@@ -384,7 +419,7 @@ class _State extends State<SettingsPage> {
                         }
                       }
                     }
-                    if (context.mounted) {
+                    if (mounted) {
                       UiHelper.showToast(context, 'Done $addedCnt words');
                     }
                   } catch (ex) {
@@ -397,9 +432,6 @@ class _State extends State<SettingsPage> {
           useBorderTop: true,
           useBorderBot: false,
           padding: const EdgeInsets.only(left: 25, right: 25),
-          onClicked: (_) {
-            AppRep().shareApp();
-          },
           height: _itemHeight,
           child: Row(children: [
             Text('Export profile',
@@ -411,13 +443,15 @@ class _State extends State<SettingsPage> {
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titlel4)),
-            Button2Animated(
+                      color: Theme.of(context).colorScheme.title5)),
+            RoundButton(
                 iconData: Icons.upload_sharp,
-                size: 20,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).colorScheme.title2.color,
-                onClicked: () async {
+                size: Size(_buttonSize, _buttonSize),
+                iconSize: _iconSize,
+                iconColor: Theme.of(context).colorScheme.title2.color,
+                useScaleAnimation: true,
+                color: Colors.transparent,
+                onPressed: (_) async {
                   var offset = 0;
                   const limit = 5;
                   final list = <dynamic>[];
@@ -449,7 +483,7 @@ class _State extends State<SettingsPage> {
                     }
                   }
                   if (list.isEmpty) {
-                    if (context.mounted) {
+                    if (mounted) {
                       UiHelper.showToast(context, 'No words to export');
                     }
                     busy(false);
@@ -466,7 +500,7 @@ class _State extends State<SettingsPage> {
                         bytes: Uint8List.fromList(js2));
                     if (UiHelper.isDesktop() && path != null) {
                       await FileUtils.saveBufToFile(js2, path);
-                      if (context.mounted) {
+                      if (mounted) {
                         UiHelper.showToast(context, 'Done');
                       }
                     }
@@ -480,9 +514,6 @@ class _State extends State<SettingsPage> {
           useBorderTop: true,
           useBorderBot: false,
           padding: const EdgeInsets.only(left: 25, right: 25),
-          onClicked: (_) {
-            AppRep().shareApp();
-          },
           height: _itemHeight,
           child: Row(children: [
             Text('Import profile',
@@ -494,13 +525,15 @@ class _State extends State<SettingsPage> {
                   width: 15,
                   height: 15,
                   child: CircularProgressIndicator(
-                      color: Theme.of(context).colorScheme.titlel4)),
-            Button2Animated(
+                      color: Theme.of(context).colorScheme.title5)),
+            RoundButton(
                 iconData: Icons.download_sharp,
-                size: 20,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).colorScheme.title2.color,
-                onClicked: () async {
+                size: Size(_buttonSize, _buttonSize),
+                iconSize: _iconSize,
+                iconColor: Theme.of(context).colorScheme.title2.color,
+                useScaleAnimation: true,
+                color: Colors.transparent,
+                onPressed: (_) async {
                   busy(bool v) {
                     setState(() {
                       _importProfileBusy = v;
@@ -537,11 +570,11 @@ class _State extends State<SettingsPage> {
                         }
                       }
                     }
-                    if (context.mounted) {
+                    if (mounted) {
                       UiHelper.showToast(context, 'Done');
                     }
                   } catch (ex) {
-                    if (context.mounted) {
+                    if (mounted) {
                       UiHelper.showToast(context, 'Error');
                     }
                     logWarning('$ex');
@@ -553,27 +586,27 @@ class _State extends State<SettingsPage> {
           useBorderTop: true,
           useBorderBot: true,
           padding: const EdgeInsets.only(left: 25, right: 25),
-          onClicked: (_) {
-            AppRep().shareApp();
-          },
           height: _itemHeight,
           child: Row(children: [
             Text('Delete data',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).colorScheme.title2),
             const Spacer(),
-            Button2Animated(
+            RoundButton(
                 iconData: Icons.delete_sharp,
-                size: 20,
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                color: Theme.of(context).colorScheme.titleErr,
-                onClicked: () async {
+                size: Size(_buttonSize, _buttonSize),
+                iconSize: _iconSize,
+                iconColor: Theme.of(context).colorScheme.titleErr,
+                useScaleAnimation: true,
+                color: Colors.transparent,
+                onPressed: (_) async {
                   showModalBottomSheet(
                       context: context,
                       barrierColor: Colors.black26,
                       builder: (BuildContext context) {
                         return ConfirmPanel(
-                          title: 'Are you sure?\nYou will lose all progress',
+                          title: 'Are you sure?',
+                          text: 'You will lose all progress',
                           iconNo: Icons.delete,
                           iconOk: Icons.close,
                           onOk: () async {
@@ -603,9 +636,6 @@ class _State extends State<SettingsPage> {
             useBorderTop: false,
             useBorderBot: true,
             padding: const EdgeInsets.only(left: 25, right: 25),
-            onClicked: (_) {
-              AppRep().shareApp();
-            },
             height: _itemHeight,
             child: Row(children: [
               Column(
@@ -620,8 +650,8 @@ class _State extends State<SettingsPage> {
               DropdownButton<String>(
                   value: UiHelper.toFormatText(
                       _numLevel?.name ?? NumeralsLevel.easy.name),
-                  focusColor: Theme.of(context).colorScheme.iconColor,
-                  dropdownColor: Theme.of(context).colorScheme.baseColor1,
+                  focusColor: Theme.of(context).colorScheme.card,
+                  dropdownColor: Theme.of(context).colorScheme.card,
                   onChanged: (String? value) async {
                     if (value == null) return;
                     var newVal = NumeralsLevel.values.firstWhere(
@@ -652,7 +682,7 @@ class _State extends State<SettingsPage> {
       return Column(children: [
         Container(
             height: 90,
-            margin: EdgeInsets.only(left: 25, right: 25),
+            margin: const EdgeInsets.only(left: 25, right: 25),
             child: Row(children: [
               Text('Others', style: Theme.of(context).colorScheme.title2)
             ])),
@@ -671,11 +701,12 @@ class _State extends State<SettingsPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('Share', style: Theme.of(context).colorScheme.title2)
+                    Text('Share this app',
+                        style: Theme.of(context).colorScheme.title2)
                   ]),
               const Spacer(),
               Icon(Icons.link,
-                  color: Theme.of(context).colorScheme.title2.color)
+                  size: 25, color: Theme.of(context).colorScheme.title2.color)
             ])),
         //
         // about the app
@@ -702,7 +733,7 @@ class _State extends State<SettingsPage> {
                   ]),
               const Spacer(),
               Icon(Icons.info_rounded,
-                  color: Theme.of(context).colorScheme.title2.color)
+                  size: 25, color: Theme.of(context).colorScheme.title2.color)
             ])),
         //
         // licenses page
@@ -724,7 +755,7 @@ class _State extends State<SettingsPage> {
                   ]),
               const Spacer(),
               Icon(Icons.description,
-                  color: Theme.of(context).colorScheme.title2.color)
+                  size: 25, color: Theme.of(context).colorScheme.title2.color)
             ])),
         //
         // version
@@ -750,46 +781,5 @@ class _State extends State<SettingsPage> {
             ]))
       ]);
     });
-  }
-
-  Widget _card(Widget child) {
-    return Container(
-        margin: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-        decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(Radius.circular(6)),
-            color: Theme.of(context).colorScheme.baseColor1),
-        child: child);
-  }
-}
-
-class TapDownButton extends StatelessWidget {
-  const TapDownButton({
-    Key? key,
-    required this.onTap,
-    required this.child,
-  }) : super(key: key);
-
-  final void Function(TapDownDetails details) onTap;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTapDown: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 16.0,
-          horizontal: 24.0,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(24.0),
-          ),
-          border: Border.all(width: 1.0),
-        ),
-        child: child,
-      ),
-    );
   }
 }

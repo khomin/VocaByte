@@ -25,6 +25,7 @@ class ItemInMenuList extends StatelessWidget {
         width: double.infinity,
         height: height,
         margin: margin,
+        padding: onClicked == null ? (padding ?? EdgeInsets.zero) : null,
         decoration: BoxDecoration(
             border: Border(
                 top: useBorderTop
@@ -39,9 +40,10 @@ class ItemInMenuList extends StatelessWidget {
                     : BorderSide.none)),
         child: onClicked != null
             ? ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
                   RenderBox box = context.findRenderObject() as RenderBox;
                   Offset pos = box.localToGlobal(Offset.zero);
+                  await Future.delayed(const Duration(milliseconds: 100));
                   onClicked?.call(pos);
                 },
                 autofocus: false,

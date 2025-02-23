@@ -94,7 +94,7 @@ class _AppState extends State<App> {
       _appModel.serviceInited = true;
       //
       // how many words to lern
-      _appRep.updateWordToLearn();
+      _appRep.refreshWordToLearn();
       //
       // init delayed
       Future.delayed(const Duration(milliseconds: 100), () async {
@@ -135,7 +135,10 @@ class _AppState extends State<App> {
               key: ValueKey(initTheme),
               builder: (_, myTheme) {
                 return MaterialApp(
-                    title: Constants.appName, theme: myTheme, home: _app());
+                    // debugShowCheckedModeBanner: false,
+                    title: Constants.appName,
+                    theme: myTheme,
+                    home: _app());
               });
         }));
   }
@@ -212,8 +215,6 @@ class _AppState extends State<App> {
                                                       context)
                                                   .colorScheme
                                                   .bottomNavBgIconUnselected,
-                                              // selectedItemColor: Colors.purple,
-                                              // unselectedIconTheme: ,
                                               items: const [
                                                 BottomNavigationBarItem(
                                                     icon: Icon(Icons.home),
@@ -236,10 +237,16 @@ class _AppState extends State<App> {
                                               ],
                                               currentIndex: page?.index ?? 0,
                                               onTap: (value) async {
-                                                NavigatorRep().routeBloc.goto(
-                                                    Panel(
-                                                        type: PageType
-                                                            .values[value]));
+                                                var cur = NavigatorRep()
+                                                    .routeBloc
+                                                    .onCurrent
+                                                    .valueOrNull;
+                                                var type =
+                                                    PageType.values[value];
+                                                if (cur?.type == type) return;
+                                                NavigatorRep()
+                                                    .routeBloc
+                                                    .goto(Panel(type: type));
                                               })))
                                 ]);
                           }));

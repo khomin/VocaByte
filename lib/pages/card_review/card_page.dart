@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/button2_animated.dart';
+import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/pages/card_review/card_item.dart';
@@ -153,11 +155,9 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
     return Builder(builder: (context) {
       var size = MediaQuery.of(context).size;
       var pageType = widget.data.pageType;
-      return Container(
-          width: size.width,
-          height: size.height,
-          color: Theme.of(context).colorScheme.pageHome,
-          child: AnimatedBuilder(
+      return Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.pageHome,
+          body: AnimatedBuilder(
               animation: _animateController,
               builder: (context, child) {
                 return Stack(alignment: Alignment.center, children: [
@@ -172,86 +172,50 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
                               margin: const EdgeInsets.only(top: 20),
                               width: size.width,
                               height: size.height,
-                              padding: const EdgeInsets.only(bottom: 20),
                               child: SlideTransition(
                                   position: _slideAnimation,
                                   child: RotationTransition(
                                       turns: _turnAnimation,
                                       child: ScaleTransition(
                                           scale: _scaleAnimation1,
-                                          child: Container(
-                                              // color: Theme.of(context).colorScheme.card,
-                                              color: Colors.transparent,
+                                          child: SizedBox(
                                               child: Column(children: [
-                                                if (pageType ==
-                                                    CardPageType.defToWords)
-                                                  Expanded(
-                                                      child: _defToWords()),
-                                                if (pageType ==
-                                                    CardPageType.wordToDef)
-                                                  Expanded(child: _wordToDef()),
-                                                if (pageType ==
-                                                    CardPageType.learnNewWord)
-                                                  Expanded(child: _learnNew()),
-                                                if (pageType ==
-                                                    CardPageType
-                                                        .wordRemeberOrNot)
-                                                  Expanded(
-                                                      child: _rememberOrNot()),
-                                                if (pageType ==
-                                                    CardPageType.audioToDef)
-                                                  Expanded(
-                                                      child: _audioToDef()),
-                                                //
-                                                // button
-                                                ButtonRoundCorner(
-                                                    text: 'Not sure',
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 15,
-                                                            bottom: 5,
-                                                            left: 5,
-                                                            right: 5),
-                                                    color: Theme.of(context)
-                                                        .colorScheme
-                                                        .buttonOption1,
-                                                    colorText: Theme.of(context)
-                                                        .colorScheme
-                                                        .buttonOptionText,
-                                                    direction:
-                                                        TextDirection.rtl,
-                                                    radious: const BorderRadius
-                                                        .all(
-                                                        Radius.circular(10)),
-                                                    onPressed: () {
-                                                      _onDone(false);
-                                                    })
-                                              ])))))))),
-                  // Positioned(
-                  //     bottom: 0,
-                  //     left: 0,
-                  //     right: 0,
-                  //     child: RoundButton(
-                  //         color: Colors.white,
-                  //         iconData: Icons.abc,
-                  //         size: const Size(50, 50),
-                  //         onPressed: (p0) {
-                  //           // if (_onAnimate) {
-                  //           //   setState(() {
-                  //           //     _onAnimate = false;
-                  //           //     _animateTurns = 1.0;
-                  //           //   });
-                  //           // } else {
-                  //           //   setState(() {
-                  //           //     _onAnimate = true;
-                  //           //     _animateTurns = 0.0;
-                  //           //   });
-                  //           // }
-                  //           _animateController.forward(from: 0.0);
-                  //         }))
+                                            if (pageType ==
+                                                CardPageType.defToWords)
+                                              Expanded(child: _defToWords()),
+                                            if (pageType ==
+                                                CardPageType.wordToDef)
+                                              Expanded(child: _wordToDef()),
+                                            if (pageType ==
+                                                CardPageType.learnNewWord)
+                                              Expanded(child: _learnNew()),
+                                            if (pageType ==
+                                                CardPageType.wordRemeberOrNot)
+                                              Expanded(child: _rememberOrNot()),
+                                            if (pageType ==
+                                                CardPageType.audioToDef)
+                                              Expanded(child: _audioToDef()),
+                                            //
+                                            //
+                                            _footerButton()
+                                          ])))))))),
                 ]);
               }));
     });
+  }
+
+  Widget _footerButton() {
+    return FixedFooterBottom(
+        child2: ButtonRoundCorner(
+            text: 'Not sure',
+            color: Theme.of(context).colorScheme.buttonOption4,
+            colorText: Theme.of(context).colorScheme.buttonOptionText,
+            padding: const EdgeInsets.only(left: 10, right: 10),
+            direction: TextDirection.ltr,
+            radious: const BorderRadius.all(Radius.circular(10)),
+            onPressed: () {
+              _onDone(false);
+            }));
   }
 
   Widget _defToWords() {

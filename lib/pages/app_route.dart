@@ -78,6 +78,7 @@ class _AppRouteState extends State<AppRoute> {
                       builder: (context) {
                         return PageWordDetails(
                             playWordAtStart: true,
+                            primary: true,
                             onBack: () {
                               Navigator.of(context).pop();
                             });
@@ -101,6 +102,7 @@ class _AppRouteState extends State<AppRoute> {
                       settings: settings,
                       builder: (context) {
                         return PageWordDetails(
+                            primary: true,
                             onBack: () {
                               Navigator.of(context).pop();
                             },

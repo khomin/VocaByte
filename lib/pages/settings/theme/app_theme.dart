@@ -14,13 +14,25 @@ extension MenuColorScheme on ColorScheme {
   Color get menuActive => const Color(0xFF191b1c);
   Color get menuIdle => const Color(0xFF111313);
 
-  Color get inputText => const Color.fromARGB(255, 231, 231, 231);
-  Color get inputBackground => const Color.fromARGB(255, 34, 34, 34);
-  Color get inputHint => const Color.fromARGB(255, 128, 128, 128);
-  Color get inputFieldBorder => const Color(0xff6b87ab);
-  Color get inputHintError => const Color.fromARGB(255, 218, 87, 87);
+  Color get inputText => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 231, 231, 231)
+      : const Color.fromARGB(255, 028, 028, 028);
+  Color get inputBackground => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 34, 34, 34)
+      : const Color.fromARGB(255, 34, 34, 34);
+  Color get inputHint => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 128, 128, 128)
+      : const Color.fromARGB(255, 128, 128, 128);
+  Color get inputFieldBorder => brightness == Brightness.dark
+      ? const Color(0xff6b87ab)
+      : const Color(0xff6b87ab);
+  Color get inputHintError => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 218, 87, 87)
+      : const Color.fromARGB(255, 218, 87, 87);
 
-  Color get listSplit => const Color.fromARGB(255, 54, 54, 54);
+  Color get listSplit => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 54, 54, 54)
+      : const Color.fromARGB(255, 200, 200, 200);
 
   Color get text1 => const Color(0xFF233F67);
   Color get text2 => brightness == Brightness.dark
@@ -52,7 +64,7 @@ extension MenuColorScheme on ColorScheme {
       brightness == Brightness.dark ? Colors.white12 : Colors.black12;
 
   Color get bottomNavIconSelected =>
-      brightness == Brightness.dark ? buttonOption2 : buttonOption2;
+      brightness == Brightness.dark ? buttonOption1 : buttonOption1;
 
   Color get bottomNavBgIconUnselected =>
       brightness == Brightness.dark ? Colors.white38 : Colors.black54;
@@ -98,29 +110,15 @@ extension MenuColorScheme on ColorScheme {
       fontSize: 14,
       fontWeight: FontWeight.w400);
 
-  TextStyle get cardAccent => TextStyle(
-      color: brightness == Brightness.dark
-          ? const Color(0xFF1EB172)
-          : const Color(0xFF172339),
-      fontSize: 14,
-      fontWeight: FontWeight.w500);
-
-  //   Color get titel1 => brightness == Brightness.dark
-  // ? const Color(0xFF1EB172)
-  // : const Color(0xFF172339);
-
-  // Color get titel2 => brightness == Brightness.dark
-  //     ? const Color(0xFFB5C2D4)
-  //     : const Color(0xFF1EB172);
-  Color get titlel3 => brightness == Brightness.dark
-      ? const Color(0xFF1EB172)
-      : const Color(0xFF1EB172);
-  Color get titlel4 => brightness == Brightness.dark
+  Color get title4 => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 26, 151, 97)
+      : const Color.fromARGB(255, 26, 151, 97);
+  Color get title5 => brightness == Brightness.dark
       ? const Color(0xFFB5C2D4)
       : const Color(0xFF172339);
   Color get titleErr => brightness == Brightness.dark
       ? const Color.fromARGB(255, 182, 9, 0)
-      : const Color(0xFFFF4B40);
+      : const Color.fromARGB(255, 195, 42, 34);
 
   TextStyle get titleInverse => TextStyle(
       color: brightness == Brightness.dark
@@ -149,8 +147,14 @@ extension MenuColorScheme on ColorScheme {
   Color get cardError => brightness == Brightness.dark
       ? const Color.fromARGB(255, 114, 65, 65)
       : const Color.fromARGB(255, 207, 173, 173);
-  Color get textInCard => const Color.fromARGB(255, 255, 255, 255);
-  Color get textInCard2 => const Color.fromARGB(255, 255, 255, 255);
+
+  Color get cardDefinition => brightness == Brightness.dark
+      ? const Color(0xFFF0F0F0)
+      : const Color(0xFF202020);
+
+  Color get cardExample => brightness == Brightness.dark
+      ? const Color(0xFFCFCFCF)
+      : const Color(0xF06A6A6A);
 
   Color get page => brightness == Brightness.dark
       ? const Color.fromARGB(255, 0, 0, 0)
@@ -158,6 +162,10 @@ extension MenuColorScheme on ColorScheme {
   Color get shadowBox => brightness == Brightness.dark
       ? const Color(0x05FFFFFF)
       : const Color(0x3F000000);
+
+  Color get shadow2 => brightness == Brightness.dark
+      ? const Color(0xFFFFFFFF)
+      : const Color(0x50000000);
 
   // Color get  => const Color.fromARGB(159, 109, 109, 109);
 
@@ -168,6 +176,7 @@ extension MenuColorScheme on ColorScheme {
   Color get buttonOption1 => const Color.fromARGB(255, 70, 124, 113);
   Color get buttonOption2 => const Color.fromARGB(255, 162, 74, 167);
   Color get buttonOption3 => const Color.fromARGB(255, 49, 86, 77);
+  Color get buttonOption4 => const Color.fromARGB(255, 101, 103, 137);
   Color get buttonOptionText => brightness == Brightness.dark
       ? const Color(0xFF202020)
       : const Color(0xFFDFDFDF);
@@ -187,6 +196,18 @@ extension MenuColorScheme on ColorScheme {
   Color get iconColor => brightness == Brightness.dark
       ? const Color(0xFFB5C2D4)
       : const Color(0xFF323232);
+
+  Color get roundButton => brightness == Brightness.dark
+      ? const Color(0x10FFFFFF)
+      : const Color(0x0a000000);
+
+  Color get textResultGrad1 => brightness == Brightness.dark
+      ? const Color.fromARGB(255, 255, 102, 6)
+      : const Color.fromARGB(255, 255, 102, 6);
+
+  Color get textResultGrad2 => brightness == Brightness.dark
+      ? Colors.yellow
+      : const Color.fromARGB(255, 166, 153, 38);
 
   //
   // buttons

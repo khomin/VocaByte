@@ -49,7 +49,7 @@ class PageHomeState extends State<PageHome> {
           appBar: AppBar(
               centerTitle: true,
               elevation: 1,
-              shadowColor: Theme.of(context).colorScheme.titlel3,
+              shadowColor: Theme.of(context).colorScheme.title4,
               title: SizedBox(
                   height: kToolbarHeight,
                   width: double.infinity,
@@ -178,15 +178,11 @@ class PageHomeState extends State<PageHome> {
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                icon != null
-                                    // ? Image.asset('assets/numeral.png',
-                                    //     width: Constants.iconHomeSize)
-                                    ? icon
-                                    : SizedBox(
+                                icon ??
+                                    SizedBox(
                                         height: 40,
-                                        child: icon != null
-                                            ? icon
-                                            : (iconInt != null
+                                        child: icon ??
+                                            (iconInt != null
                                                 ? Container(
                                                     decoration: BoxDecoration(
                                                         borderRadius:

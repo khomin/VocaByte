@@ -5,6 +5,7 @@ import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 class ConfirmPanel extends StatelessWidget {
   const ConfirmPanel(
       {required this.title,
+      this.text,
       this.textNo,
       this.textOk,
       required this.onOk,
@@ -12,6 +13,7 @@ class ConfirmPanel extends StatelessWidget {
       this.iconOk,
       super.key});
   final String title;
+  final String? text;
   final String? textNo;
   final String? textOk;
   final IconData? iconNo;
@@ -20,21 +22,31 @@ class ConfirmPanel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var text2 = text;
     return Container(
         height: 200,
         color: Theme.of(context).colorScheme.page,
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text(title,
               textAlign: TextAlign.center,
-              style: const TextStyle(fontWeight: FontWeight.w400)),
+              style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
+                  color: Theme.of(context).colorScheme.title1.color)),
+          if (text2 != null)
+            Padding(
+                padding: const EdgeInsets.only(top: 5),
+                child: Text(text2,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.title1.color))),
           const SizedBox(height: 30),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             RoundButton(
-                color: Theme.of(context)
-                    .colorScheme
-                    .errorContainer
-                    .withOpacity(0.8),
-                iconColor: Theme.of(context).colorScheme.white.withOpacity(0.4),
+                color: Theme.of(context).colorScheme.titleErr.withOpacity(0.8),
+                iconColor: Theme.of(context).colorScheme.white.withOpacity(0.8),
                 size: const Size(55, 55),
                 radius: 20,
                 useScaleAnimation: true,
@@ -44,9 +56,7 @@ class ConfirmPanel extends StatelessWidget {
                 }),
             const SizedBox(width: 15),
             RoundButton(
-                color: Theme.of(context).colorScheme.button2.withOpacity(0.8),
-                iconColor:
-                    Theme.of(context).colorScheme.button2Text.withOpacity(0.8),
+                color: Theme.of(context).colorScheme.roundButton,
                 size: const Size(55, 55),
                 radius: 20,
                 useScaleAnimation: true,

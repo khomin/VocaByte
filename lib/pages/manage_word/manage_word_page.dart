@@ -42,9 +42,10 @@ class ManageWordPageState extends State<ManageWordPage> {
 
   @override
   void dispose() {
-    super.dispose();
     _model.dispose();
     _dispStream.dispose();
+    AppRep().refreshWordToLearn();
+    super.dispose();
   }
 
   void _clicked(String text) async {
@@ -109,6 +110,7 @@ class ManageWordPageState extends State<ManageWordPage> {
                       onChanged: (value) {
                         _model.search(value);
                       },
+                      keyboardType: TextInputType.text,
                       onEditingComplete: () {},
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.inputText,
@@ -141,8 +143,7 @@ class ManageWordPageState extends State<ManageWordPage> {
                     iconSize: 22,
                     margin: const EdgeInsets.only(right: 15),
                     size: const Size(40, 40),
-                    iconColor:
-                        Theme.of(context).colorScheme.white.withOpacity(0.5),
+                    iconColor: Theme.of(context).colorScheme.roundButton,
                     onPressed: (_) {
                       _model.reset();
                     });
@@ -157,7 +158,7 @@ class ManageWordPageState extends State<ManageWordPage> {
           style: TextStyle(
               fontWeight: FontWeight.w400,
               fontSize: 16,
-              color: Theme.of(context).colorScheme.titlel4))
+              color: Theme.of(context).colorScheme.title5))
     ]));
   }
 
@@ -203,7 +204,7 @@ class ManageWordPageState extends State<ManageWordPage> {
           child: Padding(
               padding: const EdgeInsets.all(20),
               child: CircularProgressIndicator(
-                  color: Theme.of(context).colorScheme.titlel4)))
+                  color: Theme.of(context).colorScheme.title5)))
     ]));
   }
 }

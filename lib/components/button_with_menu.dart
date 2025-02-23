@@ -8,10 +8,12 @@ class ButtonWithMenu extends StatelessWidget {
       {required this.text,
       required this.onPressed,
       required this.onMenu,
+      this.icon,
       super.key});
   final String text;
   final Function() onPressed;
   final Function() onMenu;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class ButtonWithMenu extends StatelessWidget {
               text: text,
               color: Theme.of(context).colorScheme.buttonOption1,
               colorText: Theme.of(context).colorScheme.buttonOptionText,
+              iconData: icon,
               direction: TextDirection.ltr,
               radious: const BorderRadius.only(
                   topLeft: Radius.circular(10),

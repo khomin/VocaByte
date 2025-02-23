@@ -12,7 +12,7 @@ class SplashState extends State<Splash> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.baseColor1,
+        backgroundColor: Theme.of(context).colorScheme.pageHome,
         body: Center(
             child: Row(children: [
           const Spacer(),

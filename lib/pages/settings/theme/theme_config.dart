@@ -4,7 +4,8 @@ final ThemeData lightTheme = ThemeData(
     useMaterial3: true, // Enable Material 3
     splashColor: Colors.transparent,
     colorScheme: ColorScheme.fromSeed(
-      seedColor: Colors.blue, // Primary color seed
+      seedColor: Colors.blue, // Choose a seed color
+      primary: const Color.fromARGB(255, 70, 124, 113),
       brightness: Brightness.light, // Light theme
     ),
     appBarTheme: const AppBarTheme(
@@ -43,7 +44,8 @@ final ThemeData darkTheme = ThemeData(
   useMaterial3: true, // Enable Material 3
   splashColor: Colors.transparent,
   colorScheme: ColorScheme.fromSeed(
-    seedColor: Colors.blue, // Primary color seed
+    seedColor: Colors.blue, // Choose a seed color
+    primary: const Color.fromARGB(255, 70, 124, 113),
     brightness: Brightness.dark, // Dark theme
   ),
   appBarTheme: const AppBarTheme(

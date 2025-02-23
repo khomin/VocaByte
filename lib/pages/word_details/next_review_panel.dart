@@ -81,89 +81,91 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                     }))
           ])),
       const SizedBox(height: 15),
-      ItemInMenuList(
-          useBorderTop: true,
-          useBorderBot: true,
-          height: 50,
-          onClicked: (pos) {
-            widget.onAlreadyKnow();
-            Navigator.of(context).pop();
-          },
-          child: Text('Already know',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.buttonOption2))),
-      ItemInMenuList(
-          useBorderTop: false,
-          useBorderBot: true,
-          height: 50,
-          onClicked: (pos) {
-            _reviewValue = ReviewTime.today;
-            widget.onChanged.call(_reviewValue);
-            Navigator.of(context).pop();
-          },
-          child: Text('Today',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.title2.color))),
-      ItemInMenuList(
-          useBorderTop: false,
-          useBorderBot: true,
-          height: 50,
-          onClicked: (pos) {
-            _reviewValue = ReviewTime.day1;
-            widget.onChanged.call(_reviewValue);
-            Navigator.of(context).pop();
-          },
-          child: Text('In 1 day',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.title2.color))),
-      ItemInMenuList(
-          useBorderTop: false,
-          useBorderBot: true,
-          height: 50,
-          onClicked: (pos) {
-            _reviewValue = ReviewTime.week1;
-            widget.onChanged.call(_reviewValue);
-            Navigator.of(context).pop();
-          },
-          child: Text('In 1 week',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.title2.color))),
-      ItemInMenuList(
-          useBorderTop: false,
-          useBorderBot: true,
-          height: 50,
-          onClicked: (pos) {
-            _reviewValue = ReviewTime.month1;
-            widget.onChanged.call(_reviewValue);
-            Navigator.of(context).pop();
-          },
-          child: Text('In 1 month',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.title2.color))),
-      ItemInMenuList(
-          useBorderTop: false,
-          useBorderBot: true,
-          height: 50,
-          onClicked: (pos) {
-            _reviewValue = ReviewTime.month3;
-            widget.onChanged.call(_reviewValue);
-            Navigator.of(context).pop();
-          },
-          child: Text('In 3 months',
-              style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
-                  color: Theme.of(context).colorScheme.title2.color)))
+      Column(children: [
+        ItemInMenuList(
+            useBorderTop: true,
+            useBorderBot: true,
+            height: 50,
+            onClicked: (pos) {
+              widget.onAlreadyKnow();
+              Navigator.of(context).pop();
+            },
+            child: Text('Already know',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.buttonOption2))),
+        ItemInMenuList(
+            useBorderTop: false,
+            useBorderBot: true,
+            height: 50,
+            onClicked: (pos) {
+              _reviewValue = ReviewTime.today;
+              widget.onChanged.call(_reviewValue);
+              Navigator.of(context).pop();
+            },
+            child: Text('Today',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.title1.color))),
+        ItemInMenuList(
+            useBorderTop: false,
+            useBorderBot: true,
+            height: 50,
+            onClicked: (pos) {
+              _reviewValue = ReviewTime.day1;
+              widget.onChanged.call(_reviewValue);
+              Navigator.of(context).pop();
+            },
+            child: Text('In 1 day',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.title1.color))),
+        ItemInMenuList(
+            useBorderTop: false,
+            useBorderBot: true,
+            height: 50,
+            onClicked: (pos) {
+              _reviewValue = ReviewTime.week1;
+              widget.onChanged.call(_reviewValue);
+              Navigator.of(context).pop();
+            },
+            child: Text('In 1 week',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.title1.color))),
+        ItemInMenuList(
+            useBorderTop: false,
+            useBorderBot: true,
+            height: 50,
+            onClicked: (pos) {
+              _reviewValue = ReviewTime.month1;
+              widget.onChanged.call(_reviewValue);
+              Navigator.of(context).pop();
+            },
+            child: Text('In 1 month',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.title1.color))),
+        ItemInMenuList(
+            useBorderTop: false,
+            useBorderBot: true,
+            height: 50,
+            onClicked: (pos) {
+              _reviewValue = ReviewTime.month3;
+              widget.onChanged.call(_reviewValue);
+              Navigator.of(context).pop();
+            },
+            child: Text('In 3 months',
+                style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                    color: Theme.of(context).colorScheme.title1.color)))
+      ])
     ]);
   }
 }

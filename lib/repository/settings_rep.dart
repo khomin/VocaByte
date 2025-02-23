@@ -24,6 +24,7 @@ class SettingsRep {
   static const _screenSizeHeightKey = 'screen_h_k';
   static const _numLevelKey = 'num_lev_k';
   static const _dayGoalKey = 'goal_k';
+  static const _useSoundKey = 'sound_k';
   static const _onboardingKey = 'onboard';
 
   final onChanged = BehaviorSubject();
@@ -108,6 +109,16 @@ class SettingsRep {
   Future<int> getDailyGoal() async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getInt(_dayGoalKey) ?? Constants.goalDefault;
+  }
+
+  Future<bool> getUseSound() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_useSoundKey) ?? true;
+  }
+
+  Future<void> setUseSound(bool v) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(_useSoundKey, v);
   }
 
   void setOnboarding(bool v) async {

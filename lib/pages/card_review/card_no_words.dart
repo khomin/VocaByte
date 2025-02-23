@@ -88,8 +88,6 @@ class CardNoWordsState extends State<CardNoWords>
                 return RotationTransition(
                     turns: _rotateAnimation,
                     child: SizedBox(
-                        // height: double.infinity, //((270 + 28) * history.length).toDouble(),
-                        // decoration: const BoxDecoration(color: Constants.colorBgUnderCard),
                         height: size.height / 1.5,
                         child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -99,8 +97,10 @@ class CardNoWordsState extends State<CardNoWords>
                                   iconData: Icons.search,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .secondaryContainer,
-                                  iconColor: Constants.colorBar,
+                                      .buttonOption1,
+                                  iconColor: Theme.of(context)
+                                      .colorScheme
+                                      .button3TextInversed,
                                   size: Size((size.width / 5) + 15,
                                       (size.width / 5) + 15),
                                   iconSize: size.width / 5,
@@ -122,7 +122,6 @@ class CardNoWordsState extends State<CardNoWords>
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       children: [
-                                        // TODO: color when no words
                                         Text(
                                             'No words to review\nAdd words using search',
                                             maxLines: 3,
@@ -133,7 +132,8 @@ class CardNoWordsState extends State<CardNoWords>
                                                 fontSize: 20,
                                                 color: Theme.of(context)
                                                     .colorScheme
-                                                    .textInCard))
+                                                    .title2
+                                                    .color))
                                       ]))
                             ])));
               }));
