@@ -7,7 +7,7 @@ import 'package:vocabyte/repository/settings_rep.dart';
 
 class AppModel with ChangeNotifier {
   String _appVersion = '';
-  Brightness? _theme;
+  ThemeType _theme = ThemeType.system;
   bool _onboarding = false;
   bool _serviceInited = false;
   bool _waitCopyResource = false;
@@ -45,14 +45,14 @@ class AppModel with ChangeNotifier {
     }
   }
 
-  set theme(Brightness? v) {
+  set theme(ThemeType v) {
     if (_theme != v) {
       _theme = v;
       notifyListeners();
     }
   }
 
-  Brightness? get theme => _theme;
+  ThemeType get theme => _theme;
 
   void update() {
     notifyListeners();

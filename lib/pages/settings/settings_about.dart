@@ -78,7 +78,7 @@ class SettingsAboutState extends State<SettingsAbout> {
                         fontSize: Constants.menuFontSize1,
                         fontWeight: FontWeight.w400)),
                 const SizedBox(height: 8),
-                Text('We hope this app can help you find out the cause of that',
+                Text('We hope this app can help you find a use for that',
                     style: TextStyle(
                         color: Theme.of(context).colorScheme.appBarText.color,
                         fontSize: Constants.menuFontSize1,

@@ -54,8 +54,12 @@ extension MenuColorScheme on ColorScheme {
       : const Color(0xFF232628);
 
   Color get dialogHeaderColor => const Color.fromARGB(255, 57, 99, 90);
-  //   // color: Colors.white24,
-  // color: Colors.black12,
+  Color get dialogHeaderBg => brightness == Brightness.dark
+      ? const Color(0xFF1F3149)
+      : const Color(0xFFFFFFFF);
+  Color get dialogText => brightness == Brightness.dark
+      ? const Color(0xFFB5C2D4)
+      : const Color(0xFF233F67);
 
   Color get bottomNavBg =>
       brightness == Brightness.dark ? Colors.black26 : const Color(0xFFF0F0F0);
@@ -267,13 +271,6 @@ extension MenuColorScheme on ColorScheme {
   Color get searchListBorderOff => brightness == Brightness.dark
       ? const Color(0xFFB5C2D4)
       : const Color(0xFFB5C2D4);
-
-  Color get dialogHeaderBg => brightness == Brightness.dark
-      ? const Color(0xFF1F3149)
-      : const Color(0xFFFFFFFF);
-  Color get dialogText => brightness == Brightness.dark
-      ? const Color(0xFFB5C2D4)
-      : const Color(0xFF233F67);
 
   //
   // html block colors

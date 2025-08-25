@@ -49,6 +49,7 @@ class PageHomeState extends State<PageHome> {
           appBar: AppBar(
               centerTitle: true,
               elevation: 1,
+              backgroundColor: Theme.of(context).colorScheme.pageHome,
               shadowColor: Theme.of(context).colorScheme.title4,
               title: SizedBox(
                   height: kToolbarHeight,
