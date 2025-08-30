@@ -46,12 +46,28 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   late AppModel _appModel;
   late AppRep _appRep;
+  final _bottomNavHeight = kBottomNavigationBarHeight + 10;
   final _dispStream = DisposableStream();
   final tag = 'app';
 
   @override
   void initState() {
     super.initState();
+
+    // AppLifecycleListener(onStateChange: (value) {
+    //   switch (value) {
+    //     case AppLifecycleState.resumed:
+    //       var br = View.of(context).platformDispatcher.platformBrightness;
+    //       var initTheme = br == Brightness.dark ? darkTheme : lightTheme;
+    //       print('BTEST_THEME-SYSTEM: ${initTheme.brightness}, br=$br');
+    //       break;
+    //     case AppLifecycleState.detached:
+    //     case AppLifecycleState.inactive:
+    //     case AppLifecycleState.hidden:
+    //     case AppLifecycleState.paused:
+    //       break;
+    //   }
+    // });
 
     _appModel = AppModel();
     // onUpdateTasks: () {
@@ -68,17 +84,7 @@ class _AppState extends State<App> {
       //
       _appModel.appVersion = initial.version;
       _appModel.onboarding = initial.onboarding;
-      switch (initial.theme) {
-        case ThemeType.light:
-          _appModel.theme = Brightness.light;
-          break;
-        case ThemeType.dark:
-          _appModel.theme = Brightness.dark;
-          break;
-        case ThemeType.system:
-          _appModel.theme = null;
-          break;
-      }
+      _appModel.theme = initial.theme;
       //
       // if should copy resources
       if (!await FileUtils.isResourcesReady()) {
@@ -120,170 +126,202 @@ class _AppState extends State<App> {
           ChangeNotifierProvider<AppModel>.value(value: _appModel),
           Provider<AppRep>.value(value: _appRep)
         ],
-        child: Builder(builder: (context) {
+        builder: (context, child) {
           late ThemeData initTheme;
-          var theme = context.select<AppModel, Brightness?>((m) => m.theme);
-          if (theme != null) {
-            initTheme = theme == Brightness.dark ? darkTheme : lightTheme;
-          } else {
-            var br = View.of(context).platformDispatcher.platformBrightness;
-            initTheme = br == Brightness.dark ? darkTheme : lightTheme;
+          var theme = context.select<AppModel, ThemeType?>((m) => m.theme);
+          switch (theme) {
+            case ThemeType.light:
+              initTheme = lightTheme;
+              // print('BTEST_THEME-LIGHT: ${initTheme.brightness}');
+              break;
+            case ThemeType.dark:
+              initTheme = darkTheme;
+              // print('BTEST_THEME-DARK: ${initTheme.brightness}');
+              break;
+            case ThemeType.system:
+              // var br = View.of(context).platformDispatcher.platformBrightness;
+              var br = MediaQuery.of(context).platformBrightness;
+              initTheme = br == Brightness.dark ? darkTheme : lightTheme;
+              // print('BTEST_THEME-SYSTEM: ${initTheme.brightness}, br=$br');
+              break;
+            default:
+              // print('BTEST_THEME-BOX');
+              return const SizedBox();
           }
           return ThemeProvider(
               initTheme: initTheme,
               key: ValueKey(initTheme),
               builder: (_, myTheme) {
                 return MaterialApp(
-                    // debugShowCheckedModeBanner: false,
-                    title: Constants.appName,
-                    theme: myTheme,
-                    home: _app());
+                    title: Constants.appName, theme: myTheme, home: _app());
               });
-        }));
+        });
   }
 
   Widget _app() {
-    return ThemeSwitchingArea(
-        child: Scaffold(
-            // backgroundColor: Colors.amber,
-            body: Builder(builder: (context) {
-              var model = context.watch<AppModel>();
-              //
-              // initial copy of assets
-              if (model.waitCopyResource) {
-                return const SplashInstall();
-              }
-              // first time show onboarding
-              // if (model.onboarding) {
-              //   return PageOnboard(onStart: () {
-              //     context.read<AppModel>().onboarding = false;
-              //   });
-              // }
-              // cpp not ready
-              if (!model.serviceInited) {
-                return const Splash();
-              }
-              return const AppRoute();
-            }),
-            bottomNavigationBar: StreamBuilder(
-                stream: NavigatorRep().routeBloc.onHideBottom,
-                initialData: NavigatorRep().routeBloc.onHideBottom.valueOrNull,
-                builder: (context, snapshot) {
-                  var hide = snapshot.data ?? false;
-                  return AnimatedContainer(
-                      duration: const Duration(milliseconds: 250),
-                      height: hide ? 0 : 75,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).colorScheme.bottomNavBg,
-                          boxShadow: [
-                            BoxShadow(
-                                color: Theme.of(context).colorScheme.shadowBox,
-                                blurRadius: 10,
-                                offset: const Offset(0, 0))
-                          ]),
-                      child: StreamBuilder(
-                          stream: NavigatorRep().routeBloc.onCurrent,
-                          initialData:
-                              NavigatorRep().routeBloc.onCurrent.valueOrNull,
-                          builder: (context, snapshot) {
-                            var page = snapshot.data?.type;
-                            return Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  _bottomHightlightActive(page),
-                                  Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      right: 0,
-                                      bottom: page == PageType.reviewCard
-                                          ? null
-                                          : null,
-                                      child: SizedBox(
-                                          height: 75,
-                                          child: BottomNavigationBar(
-                                              elevation: 0,
-                                              selectedFontSize: 12,
-                                              unselectedFontSize: 12,
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              selectedItemColor:
-                                                  Theme.of(context)
+    return SafeArea(
+        child: ThemeSwitchingArea(
+            child: Scaffold(
+                // backgroundColor: Colors.amber,
+                body: Builder(builder: (context) {
+                  var model = context.watch<AppModel>();
+                  //
+                  // initial copy of assets
+                  if (model.waitCopyResource) {
+                    return const SplashInstall();
+                  }
+                  // first time show onboarding
+                  // if (model.onboarding) {
+                  //   return PageOnboard(onStart: () {
+                  //     context.read<AppModel>().onboarding = false;
+                  //   });
+                  // }
+                  // cpp not ready
+                  if (!model.serviceInited) {
+                    return const Splash();
+                  }
+                  return const AppRoute();
+                }),
+                bottomNavigationBar: StreamBuilder(
+                    stream: NavigatorRep().routeBloc.onHideBottom,
+                    initialData:
+                        NavigatorRep().routeBloc.onHideBottom.valueOrNull,
+                    builder: (context, snapshot) {
+                      var hide = snapshot.data ?? false;
+                      return AnimatedContainer(
+                          duration: const Duration(milliseconds: 250),
+                          height: hide ? 0 : _bottomNavHeight,
+                          decoration: BoxDecoration(
+                              color: Theme.of(context).colorScheme.bottomNavBg,
+                              boxShadow: [
+                                BoxShadow(
+                                    color:
+                                        Theme.of(context).colorScheme.shadowBox,
+                                    blurRadius: 10,
+                                    offset: const Offset(0, 0))
+                              ]),
+                          child: StreamBuilder(
+                              stream: NavigatorRep().routeBloc.onCurrent,
+                              initialData: NavigatorRep()
+                                  .routeBloc
+                                  .onCurrent
+                                  .valueOrNull,
+                              builder: (context, snapshot) {
+                                var page = snapshot.data?.type;
+                                return Stack(
+                                    alignment: Alignment.center,
+                                    children: [
+                                      Positioned(
+                                        // top: _bottomNavHeight,
+                                        top: 0,
+                                        left: 0,
+                                        right: 0,
+                                        bottom: 0,
+                                        child:
+                                            //Column(children: [
+                                            _bottomHightlightActive(page),
+                                      ),
+                                      Positioned(
+                                          top: 0,
+                                          left: 0,
+                                          right: 0,
+                                          bottom: page == PageType.reviewCard
+                                              ? null
+                                              : null,
+                                          child: SizedBox(
+                                              height: _bottomNavHeight,
+                                              child: BottomNavigationBar(
+                                                  elevation: 0,
+                                                  selectedFontSize: 12,
+                                                  unselectedFontSize: 12,
+                                                  backgroundColor:
+                                                      Colors.transparent,
+                                                  selectedItemColor: Theme.of(
+                                                          context)
                                                       .colorScheme
                                                       .bottomNavIconSelected,
-                                              unselectedItemColor: Theme.of(
-                                                      context)
-                                                  .colorScheme
-                                                  .bottomNavBgIconUnselected,
-                                              items: const [
-                                                BottomNavigationBarItem(
-                                                    icon: Icon(Icons.home),
-                                                    label: 'Home'),
-                                                BottomNavigationBarItem(
-                                                    icon:
-                                                        Icon(Icons.text_fields),
-                                                    label: 'Search'),
-                                                BottomNavigationBarItem(
-                                                    icon:
-                                                        Icon(Icons.view_agenda),
-                                                    label: 'Review'),
-                                                BottomNavigationBarItem(
-                                                    icon: Icon(
-                                                        Icons.edit_document),
-                                                    label: 'Manage'),
-                                                BottomNavigationBarItem(
-                                                    icon: Icon(Icons.settings),
-                                                    label: 'Settings'),
-                                              ],
-                                              currentIndex: page?.index ?? 0,
-                                              onTap: (value) async {
-                                                var cur = NavigatorRep()
-                                                    .routeBloc
-                                                    .onCurrent
-                                                    .valueOrNull;
-                                                var type =
-                                                    PageType.values[value];
-                                                if (cur?.type == type) return;
-                                                NavigatorRep()
-                                                    .routeBloc
-                                                    .goto(Panel(type: type));
-                                              })))
-                                ]);
-                          }));
-                })));
+                                                  unselectedItemColor: Theme.of(
+                                                          context)
+                                                      .colorScheme
+                                                      .bottomNavBgIconUnselected,
+                                                  items: const [
+                                                    BottomNavigationBarItem(
+                                                        icon: Icon(Icons.home),
+                                                        label: 'Home'),
+                                                    BottomNavigationBarItem(
+                                                        icon: Icon(
+                                                            Icons.text_fields),
+                                                        label: 'Search'),
+                                                    BottomNavigationBarItem(
+                                                        icon: Icon(
+                                                            Icons.view_agenda),
+                                                        label: 'Review'),
+                                                    BottomNavigationBarItem(
+                                                        icon: Icon(Icons
+                                                            .edit_document),
+                                                        label: 'Manage'),
+                                                    BottomNavigationBarItem(
+                                                        icon: Icon(
+                                                            Icons.settings),
+                                                        label: 'Settings'),
+                                                  ],
+                                                  currentIndex:
+                                                      page?.index ?? 0,
+                                                  onTap: (value) async {
+                                                    var cur = NavigatorRep()
+                                                        .routeBloc
+                                                        .onCurrent
+                                                        .valueOrNull;
+                                                    var type =
+                                                        PageType.values[value];
+                                                    if (cur?.type == type)
+                                                      return;
+                                                    NavigatorRep()
+                                                        .routeBloc
+                                                        .goto(
+                                                            Panel(type: type));
+                                                  })))
+                                    ]);
+                              }));
+                    }))));
   }
 
   Widget _bottomHightlightActive(PageType? page) {
+    var size = MediaQuery.sizeOf(context);
     return Builder(builder: (context) {
       var decoration = BoxDecoration(
           color: Theme.of(context).colorScheme.bottomNavSelectedBg,
           borderRadius: const BorderRadius.all(Radius.circular(12)));
-      return Padding(
-          padding: const EdgeInsets.only(top: 4, bottom: 4),
-          child:
-              Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
+      var width = size.width / 5;
+      // var insets = View.of(context).viewInsets;
+      // logDebug('INSETS = $insets');
+      return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
             Container(
-              width: 70,
-              height: 55,
+              width: width,
+              height: double.infinity,
               decoration:
                   page == null || page == PageType.home ? decoration : null,
             ),
             Container(
-                width: 70,
-                height: 55,
+                width: width,
+                height: double.infinity,
                 decoration: page == PageType.searchWord ? decoration : null),
             Container(
-                width: 70,
-                height: 55,
+                width: width,
+                height: double.infinity,
                 decoration: page == PageType.reviewCard ? decoration : null),
             Container(
-                width: 70,
-                height: 55,
+                width: width,
+                height: double.infinity,
                 decoration: page == PageType.manageWords ? decoration : null),
             Container(
-                width: 70,
-                height: 55,
+                width: width,
+                height: double.infinity,
                 decoration: page == PageType.settings ? decoration : null)
-          ]));
+          ]);
     });
   }
 }
