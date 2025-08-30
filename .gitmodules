@@ -13,3 +13,6 @@
 [submodule "cpp/ThirdParty/dictionary"]
 	path = cpp/ThirdParty/dictionary
 	url = https://github.com/wordset/wordset-dictionary.git
+[submodule "cpp/submodule"]
+	path = cpp/submodule
+	url = https://github.com/leetal/ios-cmake.git
