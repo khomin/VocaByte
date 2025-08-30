@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 import 'package:flutter/services.dart';
-import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';

@@ -65,3 +65,12 @@ https://github.com/wordset/wordset-dictionary.git
  - search words - show if already in list
  - progress and metrics 
  
+ ### TODO dictionary
+
+ 1) remove all json containig ".", ",", two letter in upper case
+ 2) come with a logic how to port old profile to new database (in app)
+ 3) when moving a word into styding - store particular meaning to use
+ 4) remove all "(xxx)" in "def" and "example"
+
+
+ give one example in sentence for "anisotropically", maximum 15-25 symbols (small better)

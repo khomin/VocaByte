@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';

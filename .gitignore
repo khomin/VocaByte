@@ -56,6 +56,8 @@ log.txt
 build-cpp-Desktop_Qt_5_15_2_MinGW_64_bit_12-Debug/
 build-windows-Desktop_Qt_5_15_2_MinGW_64_bit_12-Debug/
 
+cpp/build_ios/**
+
 bootloader/
 bot/
 buildRelease/

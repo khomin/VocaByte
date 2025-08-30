@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/pages/settings/theme/app_theme.dart';
@@ -43,7 +42,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     // var paddingSide = size.width / 6;
     return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       const SizedBox(height: 10),

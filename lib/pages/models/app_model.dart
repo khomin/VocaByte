@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
-import 'package:vocabyte/app/ui_helper.dart';
-import 'package:vocabyte/components/navigation_observer.dart';
-import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
 class AppModel with ChangeNotifier {

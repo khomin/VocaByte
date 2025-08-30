@@ -2,22 +2,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vocabyte/app/utils.dart';
-import 'package:vocabyte/components/navigation_observer.dart';
 
-enum PageType {
-  home,
-  searchWord,
-  reviewCard,
-  manageWords,
-  settings,
-  // wordDetails,
-  // account,
-  // settings,
-  // search,
-  // about,
-  // numerals,
-  // changeDailyGoal;
-}
+enum PageType { home, searchWord, reviewCard, manageWords, settings }
 
 class Panel {
   Panel(
@@ -56,7 +42,6 @@ class PanelRouterBlocSecondary {
   final onHideBottom = BehaviorSubject<bool>.seeded(false);
   final onCurrent = BehaviorSubject<Panel?>();
   final navKey = GlobalKey<NavigatorState>();
-  // late NavigatorObserverCustom observer;
 
   void goto(Panel panel) {
     if (_checkPaneTheSameAsCurrent(panel, onCurrent.valueOrNull)) {
@@ -116,13 +101,4 @@ class PanelRouterBlocSecondary {
         return 'Settings';
     }
   }
-
-  // MenuPageType routeNameToType(String? name) {
-  //   for (var it in MenuPageType.values) {
-  //     if (it.name == name) {
-  //       return it;
-  //     }
-  //   }
-  //   return MenuPageType.home;
-  // }
 }

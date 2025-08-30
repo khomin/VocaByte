@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
-import 'package:vocabyte/pages/page_search_word/page_search.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/repository/review_task_mock.dart';
 import 'package:vocabyte/services/service_api.dart';
 import 'package:collection/collection.dart';
 

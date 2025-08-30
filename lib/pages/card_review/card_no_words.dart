@@ -3,7 +3,6 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/tts.dart';
 

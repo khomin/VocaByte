@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
