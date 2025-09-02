@@ -73,4 +73,11 @@ https://github.com/wordset/wordset-dictionary.git
  4) remove all "(xxx)" in "def" and "example"
 
 
- give one example in sentence for "anisotropically", maximum 15-25 symbols (small better)
+Give one example in sentence for "anisotropically", maximum 15-25 symbols (small better)
+
+give 3 examples in sentence for "mangy", maximum 15-25 symbols (small better).
+Resut in a json with fields:
+{
+"example": <your example>
+"freq": 12345 # << here is what number does word the have in the 100,000 most frequently-used English words list
+}

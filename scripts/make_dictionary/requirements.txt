@@ -1,4 +1,5 @@
 tqdm
-# wordfreq
 eng_to_ipa
+ollama
 # nltk
+# wordfreq

@@ -1,4 +1,5 @@
- import os
+import os
+import ollama
 from create_db import CreateDb
 from source_storage import SourceStorage
 
@@ -9,10 +10,10 @@ import eng_to_ipa as ipa
 
 project_dir = os.getcwd() + "/../../"
 
-dictFolder = project_dir + "/cpp/ThirdParty/dictionary/data/"
-frequencyFile = project_dir + "/cpp/ThirdParty/100k_words/wiki-100k.txt"
+dict_root = project_dir + "/cpp/ThirdParty/dictionary/data"
 dbPath = project_dir + "/scripts/make_dictionary/database.db"
-dictFiles = [
+refined_dict_path = "/Users/user/Documents/PROJECTS/VocaByte/cpp/ThirdParty/refined_dictionary"
+dict_files = [
     'a.json',
     'b.json',
     'c.json',
@@ -41,41 +42,124 @@ dictFiles = [
     'z.json'
 ]
 
-frequency = []
+for dict_file in dict_files:
+    file = open(os.path.join(dict_root, dict_file))
+    # print(file)
+    json_str = file.read()
+    # print(json_str)
+    json_dict = json.loads(json_str)
+    json_dict_ai= {}
+    # print(json_dict)
 
-# get 100k words
-f = open(frequencyFile, "r", errors='replace')
-raw_entire = f.read().splitlines()
+    keys_to_remove = []
 
-# filter comments
-for word in raw_entire:
-    if word[0] != '#':
-        frequency.append(word)
-    else:
-        print("skip word: " + word)
-
-# open db
-db = Db()
-db.open_connection(dbPath)
-        
-# copy dictionary in db and add frequency index
-for file in dictFiles:  
-    f = open(dictFolder + file, "r", errors='replace')
-    jsonStr = f.read()
-    jsonV = json.loads(jsonStr)
-    
-    # find this for in the frequency list
-    for word in jsonV:
-        freq = 0
-        transcript = ""
+    for json_key in json_dict:
+        json_obj = json_dict[json_key]
+        key = json_obj["word"]
         try:
-            transcript = ipa.convert(word)
-            freq = frequency.index(word)
+            del json_obj["wordset_id"]
         except:
-            freq = -1
-        db.insert_record(word, freq, json.dumps(jsonV[word]), transcript)
+            None
+        try:
+            del json_obj["editors"]
+        except:
+            None
+        try:
+            del json_obj["contributors"]
+        except:
+            None
 
-print("done")
+        # remove all words containig ".", ",", two letter in upper case
+        if " " in key or "." in key or "," in key or ";" in key or any(c.isupper() for c in key):
+            keys_to_remove.append(json_key)
+        else:
+            request = "here is an example of json, adjust it for word \"%s\"\n" \
+            "assign field \"freq\" to a number the word %s have in the 100,000 most frequently-used English words list.\n" \
+            "and assign all the other fields as def, speech_part, synonyms" \
+            "add meanings and 5 examples in sentence, maximum 15-25 symbols" \
+            "definition should be without comments in ()" \
+            "provide resut in a json" \
+            "{" \
+            "\"%s\": {" \
+            "\"word\": \"%s\"," \
+            "\"freq\": 0," \
+            "\"meanings\": [" \
+            "    {" \
+            "        \"\"def\": \"\"," \
+            "        \"\"speech_part\": \"\"," \
+            "        \"\"examples\": []" \
+            "        \"\"synonyms\": [" \
+            "        ]" \
+            "    }" \
+            "]}" % (key, key, key, key)
+
+            # Send a single request
+            response = ollama.chat(
+                model='llama3',
+                messages=[
+                    {
+                        'role': 'user',
+                        'content': request,
+                    },
+                ],
+            )
+            print(response['message']['content'])
+            None
+
+    for key in keys_to_remove:
+        del json_dict[key]
+
+    print(json_dict)
+
+    try:
+        os.mkdir(refined_dict_path)
+    except:
+        None
+    try:
+        out_file = open(os.path.join(refined_dict_path, dict_file), 'w')
+        json.dump(json_dict, out_file, indent=4)   
+    except:
+        None
+
+#     jsonStr = f.read()
+#     jsonV = json.loads(jsonStr)
+
+# frequency = []
+
+# # get 100k words
+# f = open(frequencyFile, "r", errors='replace')
+# raw_entire = f.read().splitlines()
+
+# # filter comments
+# for word in raw_entire:
+#     if word[0] != '#':
+#         frequency.append(word)
+#     else:
+#         print("skip word: " + word)
+
+
+# # open db
+# db = Db()
+# db.open_connection(dbPath)
+        
+# # copy dictionary in db and add frequency index
+# for file in dictFiles:  
+#     f = open(dictFolder + file, "r", errors='replace')
+#     jsonStr = f.read()
+#     jsonV = json.loads(jsonStr)
+    
+#     # find this for in the frequency list
+#     for word in jsonV:
+#         freq = 0
+#         transcript = ""
+#         try:
+#             transcript = ipa.convert(word)
+#             freq = frequency.index(word)
+#         except:
+#             freq = -1
+#         db.insert_record(word, freq, json.dumps(jsonV[word]), transcript)
+
+# print("done")
 
 
 
