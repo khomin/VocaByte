@@ -44,13 +44,9 @@ dict_files = [
 
 for dict_file in dict_files:
     file = open(os.path.join(dict_root, dict_file))
-    # print(file)
     json_str = file.read()
-    # print(json_str)
     json_dict = json.loads(json_str)
     json_dict_ai= {}
-    # print(json_dict)
-
     keys_to_remove = []
 
     for json_key in json_dict:
@@ -73,44 +69,75 @@ for dict_file in dict_files:
         if " " in key or "." in key or "," in key or ";" in key or any(c.isupper() for c in key):
             keys_to_remove.append(json_key)
         else:
-            request = "here is an example of json, adjust it for word \"%s\"\n" \
-            "assign field \"freq\" to a number the word %s have in the 100,000 most frequently-used English words list.\n" \
-            "and assign all the other fields as def, speech_part, synonyms" \
-            "add meanings and 5 examples in sentence, maximum 15-25 symbols" \
-            "definition should be without comments in ()" \
-            "provide resut in a json" \
-            "{" \
-            "\"%s\": {" \
-            "\"word\": \"%s\"," \
-            "\"freq\": 0," \
-            "\"meanings\": [" \
-            "    {" \
-            "        \"\"def\": \"\"," \
-            "        \"\"speech_part\": \"\"," \
-            "        \"\"examples\": []" \
-            "        \"\"synonyms\": [" \
-            "        ]" \
-            "    }" \
-            "]}" % (key, key, key, key)
-
-            # Send a single request
-            response = ollama.chat(
-                model='llama3',
-                messages=[
-                    {
-                        'role': 'user',
-                        'content': request,
-                    },
-                ],
-            )
-            print(response['message']['content'])
             None
 
     for key in keys_to_remove:
         del json_dict[key]
 
-    print(json_dict)
+    # print(json_dict)
 
+    BATCH_SIZE = 3
+
+    while len(json_dict) > 0:
+        keys = list(json_dict.keys())
+        min_len = 0
+        if len(json_dict) < BATCH_SIZE:
+            min_len = len(json_dict)
+        else:
+            min_len = BATCH_SIZE
+        batch_keys = keys[:min_len]
+        words_str = ", ".join(batch_keys)
+        
+        print("Processing batch:", batch_keys)
+
+        # Remove the processed items from the original dictionary
+        for key in batch_keys:
+            del json_dict[key]
+
+
+        words_str = "nail, bark, date"
+
+        # llamam input
+        request = "i have a list of words and i want you to give a json object for each word." \
+            "Return a single json array containing an object for each word." \
+            "Here are the rules for each JSON object:" \
+            "- The object key is the word itself." \
+            "- \"word\": the word itself." \
+            "- \"freq\": the rank of the given word in WikiText-100 corpus, if can't be found use -1" \
+            "- \"meanings\": provide a full list of meanings for the given word" \
+            "- Each meaning object has fields for \"def\", \"speech_part\", \"synonyms\", \"examples\"." \
+            "- Try to provide 5 examples for the given word inside a certain meaning)" \
+            "- \"definition\" should be concise with no dots and comma." \
+            "{" \
+            "    \"word\": \"example\"," \
+            "    \"freq\": a number, the word's rank," \
+            "    \"meanings\" : [" \
+            "        {" \
+            "            \"def\": \"the word's definition\"," \
+            "            \"speech_part\": the word's speech part (one of - noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection)\"," \
+            "            \"synonyms\": [" \
+            "                \"provide synonyms for the word\"" \
+            "            ]," \
+            "            \"examples\": [" \
+            "                \"provide (a list of 5 short sentences where the given word is used, up to 40 characters)\"" \
+            "            ]" \
+            "        }" \
+            "    ]" \
+            "}" \
+            "Here is the list of the words for the task: \"%s\"\n" % (words_str)
+
+        # Send a single request
+        response = ollama.chat(
+            model='llama3',
+            messages=[
+                {
+                    'role': 'user',
+                    'content': request,
+                },
+            ],
+        )
+        print(response['message']['content'])
+        None
     try:
         os.mkdir(refined_dict_path)
     except:
