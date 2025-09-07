@@ -10,9 +10,9 @@ import eng_to_ipa as ipa
 
 project_dir = os.getcwd() + "/../../"
 
-dict_root = project_dir + "/cpp/ThirdParty/dictionary/data"
-dbPath = project_dir + "/scripts/make_dictionary/database.db"
-refined_dict_path = "/Users/user/Documents/PROJECTS/VocaByte/cpp/ThirdParty/refined_dictionary"
+dict_root = project_dir + "cpp/ThirdParty/refined_dictionary"
+db_path = project_dir + "/scripts/make_dictionary/database.db"
+out_dict_path = project_dir + "cpp/ThirdParty/llama_dictionary"
 dict_files = [
     'a.json',
     'b.json',
@@ -42,111 +42,142 @@ dict_files = [
     'z.json'
 ]
 
+def handle_llama_batch(word_str):
+    # llamam input
+    request = "i have a list of words and i want you to give a json object for each word." \
+        "Return a single json array containing an object for each word, using single line for single object" \
+        "Here are the rules for each JSON object:" \
+        "- \"word\": - the word itself." \
+        "- \"freq\": - the rank of the given word in WikiText corpus, if can't be found use -1" \
+        "- \"examples\": - you have to generate 15 examples for the given word, in an array" \
+        "here's json object example:\n" \
+        "{\"word\": \"example\",\"freq\": \"a number, the word's rank\", \"examples\":[]}\n" \
+        "don't place comments inside json (like // Not found in WikiText corpus)\n" \
+        "Here is the list of the words for the task: \"%s\"\n" % (word_str)
+
+    # Send a single request
+    response = ollama.chat(
+        model='llama3',
+        messages=[
+            {
+                'role': 'user',
+                'content': request,
+            },
+        ],
+    )
+    message = response['message']['content']
+    print(message)
+    start_index = message.find('```')
+    end_index = message.find('```', start_index+3)
+    sub_message = message[start_index + 3:end_index]
+    # remove commens that llama may place
+    sub_message = sub_message.replace("\\", "'")
+    # parse every json object
+    sub_message = sub_message.replace("json", "", 1)
+    sub_message = sub_message.replace("...", "", 1)
+    sub_message = sub_message.replace(",\n  \n]\n", "]")
+    sub_message = sub_message.replace("},\n...\n", "}")
+    json_obj = json.loads(sub_message)
+    return json_obj
+
+def write_json(json_obj, path, file_name):
+    try:
+        os.mkdir(path)
+    except Exception as e:
+        print(f"Error mkdir: {e}")
+    try:
+        # out_file = open(os.path.join(path, file_name), 'w')
+        # json.dump(json_obj, out_file, indent=4)
+        data = {
+            "name": "Alice",
+            "age": 30,
+            "isStudent": False,
+            "courses": ["Math", "Science"]
+        }
+        # Dump the data to a JSON file with indentation for readability
+        with open(os.path.join(path, file_name), 'w') as f:
+            json.dump(json_obj, f, indent=4) 
+    except Exception as e:
+        print(f"Error saving json: {e}")
+
+def queue_format_to_string(queue):
+    str = ''
+    for i in queue:
+        str += i['word']
+        if queue.index(i) != len(queue)-1:
+            str += ", "
+    return str 
+
 for dict_file in dict_files:
     file = open(os.path.join(dict_root, dict_file))
     json_str = file.read()
     json_dict = json.loads(json_str)
-    json_dict_ai= {}
-    keys_to_remove = []
+    json_to_process = {}
+    json_out = []
+    
+    # search for words without 'examples' field
+    for obj_key in json_dict:
+        obj = json_dict[obj_key]
+        should_add_examples = False
+        try:
+            if len(obj["examples"] < 5):
+                should_add_examples = True
+            None
+        except:
+            should_add_examples = True
+            None
+        None
 
-    for json_key in json_dict:
-        json_obj = json_dict[json_key]
-        key = json_obj["word"]
-        try:
-            del json_obj["wordset_id"]
-        except:
-            None
-        try:
-            del json_obj["editors"]
-        except:
-            None
-        try:
-            del json_obj["contributors"]
-        except:
-            None
-
-        # remove all words containig ".", ",", two letter in upper case
-        if " " in key or "." in key or "," in key or ";" in key or any(c.isupper() for c in key):
-            keys_to_remove.append(json_key)
+        if should_add_examples:
+            json_to_process[obj["word"]] = obj
         else:
-            None
+            json_out.append(obj)
 
-    for key in keys_to_remove:
-        del json_dict[key]
-
-    # print(json_dict)
-
-    BATCH_SIZE = 3
-
-    while len(json_dict) > 0:
-        keys = list(json_dict.keys())
-        min_len = 0
-        if len(json_dict) < BATCH_SIZE:
-            min_len = len(json_dict)
-        else:
-            min_len = BATCH_SIZE
-        batch_keys = keys[:min_len]
-        words_str = ", ".join(batch_keys)
+    # process items with batch for efficiency
+    queue = []
+    force_end = False
+    for obj_key in json_to_process:
+        if force_end:
+            break
+        obj = json_to_process[obj_key]
+        queue.append(obj)
+        if len(queue) >= 50:
+            words_str = queue_format_to_string(queue)
+            queue = []
+            res_json = handle_llama_batch(words_str)
+            for res_obj in res_json:
+                key = res_obj["word"]
+                obj_modified = {}
+                obj_modified[key] = json_dict[key]
+                obj_modified[key]["examples"] = res_obj["examples"]
+                obj_modified[key]["freq"] = res_obj["freq"]
+                json_out.append(obj_modified)
+                # force_end = True
+            write_json(json_out, out_dict_path, dict_file)
+        None
         
-        print("Processing batch:", batch_keys)
+    print(json.dumps(json_out, indent=4))
+    
+    write_json(json_out, out_dict_path, dict_file)
 
-        # Remove the processed items from the original dictionary
-        for key in batch_keys:
-            del json_dict[key]
+    print('done, total len: {}', len(json_out))
 
+    # while len(json_dict) > 0:
+    #     keys = list(json_dict.keys())
+    #     min_len = 0
+    #     if len(json_dict) < BATCH_SIZE:
+    #         min_len = len(json_dict)
+    #     else:
+    #         min_len = BATCH_SIZE
+    #     batch_keys = keys[:min_len]
+    #     words_str = ", ".join(batch_keys)
+        
+    #     print("Processing batch:", batch_keys)
 
-        words_str = "nail, bark, date"
+    #     # Remove the processed items from the original dictionary
+    #     for key in batch_keys:
+    #         del json_dict[key]
 
-        # llamam input
-        request = "i have a list of words and i want you to give a json object for each word." \
-            "Return a single json array containing an object for each word." \
-            "Here are the rules for each JSON object:" \
-            "- The object key is the word itself." \
-            "- \"word\": the word itself." \
-            "- \"freq\": the rank of the given word in WikiText-100 corpus, if can't be found use -1" \
-            "- \"meanings\": provide a full list of meanings for the given word" \
-            "- Each meaning object has fields for \"def\", \"speech_part\", \"synonyms\", \"examples\"." \
-            "- Try to provide 5 examples for the given word inside a certain meaning)" \
-            "- \"definition\" should be concise with no dots and comma." \
-            "{" \
-            "    \"word\": \"example\"," \
-            "    \"freq\": a number, the word's rank," \
-            "    \"meanings\" : [" \
-            "        {" \
-            "            \"def\": \"the word's definition\"," \
-            "            \"speech_part\": the word's speech part (one of - noun, pronoun, verb, adjective, adverb, preposition, conjunction, interjection)\"," \
-            "            \"synonyms\": [" \
-            "                \"provide synonyms for the word\"" \
-            "            ]," \
-            "            \"examples\": [" \
-            "                \"provide (a list of 5 short sentences where the given word is used, up to 40 characters)\"" \
-            "            ]" \
-            "        }" \
-            "    ]" \
-            "}" \
-            "Here is the list of the words for the task: \"%s\"\n" % (words_str)
-
-        # Send a single request
-        response = ollama.chat(
-            model='llama3',
-            messages=[
-                {
-                    'role': 'user',
-                    'content': request,
-                },
-            ],
-        )
-        print(response['message']['content'])
-        None
-    try:
-        os.mkdir(refined_dict_path)
-    except:
-        None
-    try:
-        out_file = open(os.path.join(refined_dict_path, dict_file), 'w')
-        json.dump(json_dict, out_file, indent=4)   
-    except:
-        None
 
 #     jsonStr = f.read()
 #     jsonV = json.loads(jsonStr)
