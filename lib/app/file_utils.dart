@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:vocabyte/resource/constants.dart';
+import 'package:collection/collection.dart';
 
 class FileUtils {
   static String homeDir = '';
@@ -113,6 +114,15 @@ class FileUtils {
     }
   }
 
+  static String getFileName(String path) {
+    if (Platform.isWindows) {
+      path = path.replaceAll('/', '\\');
+    }
+    File file = File(path);
+    var name = file.path.split(Platform.isWindows ? '\\' : '/').last;
+    return name;
+  }
+
   static Future<String?> saveFileToDownloads(String path, String name) async {
     // copy the file to download
     if (Platform.isWindows || Platform.isLinux || Platform.isMacOS) {
@@ -195,6 +205,43 @@ class FileUtils {
       }
     }
     // mutool convert -o /home/khomin/Downloads/test.txt /home/khomin/Downloads/other/2155000/e81d94fc2036403d7a98fc2b4a99cdc7.epub
+  }
+
+  Future removeOldLogs() async {
+    var listFt = <FileSystemEntity>[];
+    var listLogcat = <FileSystemEntity>[];
+    var listNative = <FileSystemEntity>[];
+    try {
+      trim(List<FileSystemEntity> list) {
+        while (list.length > 3) {
+          var it = list.last;
+          it.delete();
+          list.remove(it);
+        }
+      }
+
+      var path = "${FileUtils.homeDir}/log/";
+      var files = Directory(path).listSync();
+      files = files.sorted((a, b) {
+        var aStat = FileStat.statSync(a.path);
+        var bStat = FileStat.statSync(b.path);
+        return bStat.changed.compareTo(aStat.changed);
+      });
+      for (var it in files) {
+        if (getFileName(it.path).contains('logcat')) {
+          listLogcat.add(it);
+        } else if (getFileName(it.path).contains('native')) {
+          listNative.add(it);
+        } else if (getFileName(it.path).contains('ft-')) {
+          listFt.add(it);
+        }
+      }
+      trim(listFt);
+      trim(listNative);
+      trim(listLogcat);
+    } catch (ex) {
+      logError('cannot handle: ${ex.toString()}');
+    }
   }
 
   static Future convertEpub(

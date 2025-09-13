@@ -242,7 +242,7 @@ class CardReviewNavState extends State<CardReviewNav> {
                             color: Theme.of(context)
                                 .colorScheme
                                 .buttonOption1
-                                .withOpacity(0.4),
+                                .withValues(alpha: 0.4),
                             iconColor:
                                 Theme.of(context).colorScheme.title1.color,
                             size: const Size(50, 50),

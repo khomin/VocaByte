@@ -13,6 +13,9 @@ class LogPrinter extends LoggyPrinter {
       var path = "${FileUtils.homeDir}/log/";
       String time = DateFormat('yyyy-MM-dd kk-mm--sss').format(DateTime.now());
       path = '${path}ft-$time.txt';
+      //
+      // remove
+      FileUtils().removeOldLogs();
       // create
       try {
         var file = await File(path).create(recursive: true, exclusive: true);

@@ -207,7 +207,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                                           boxShadow: [
                                             BoxShadow(
                                                 color: Colors.black
-                                                    .withOpacity(0.1),
+                                                    .withValues(alpha: 0.1),
                                                 blurRadius: 15,
                                                 offset: const Offset(0, 1))
                                           ],
@@ -260,7 +260,7 @@ class PageWordDetailsState extends State<PageWordDetails>
               color: Theme.of(context).colorScheme.cardHome,
               boxShadow: [
                 BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 15,
                     offset: const Offset(0, 1))
               ]),

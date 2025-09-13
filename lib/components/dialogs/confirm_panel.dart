@@ -45,8 +45,12 @@ class ConfirmPanel extends StatelessWidget {
           const SizedBox(height: 30),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             RoundButton(
-                color: Theme.of(context).colorScheme.titleErr.withOpacity(0.8),
-                iconColor: Theme.of(context).colorScheme.white.withOpacity(0.8),
+                color: Theme.of(context)
+                    .colorScheme
+                    .titleErr
+                    .withValues(alpha: 0.8),
+                iconColor:
+                    Theme.of(context).colorScheme.white.withValues(alpha: 0.8),
                 size: const Size(55, 55),
                 radius: 20,
                 useScaleAnimation: true,

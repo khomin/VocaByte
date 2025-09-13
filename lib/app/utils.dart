@@ -24,19 +24,6 @@ class Utils {
     ));
   }
 
-  static String replaceHtmlPlaceholders(String html, ColorScheme colors) {
-    html = html.replaceAll('%main-color', colorToStr(colors.mainColor));
-    html = html.replaceAll(
-        '%active-main-color', colorToStr(colors.activeMainColor));
-    html = html.replaceAll(
-        '%main-disabled-color-50', colorToStr(colors.mainDisabledColor50));
-    return html;
-  }
-
-  static String colorToStr(Color color) {
-    return 'rgb(${color.red},${color.green},${color.blue})';
-  }
-
   static String systemName() {
     if (Platform.isAndroid) {
       return 'android';

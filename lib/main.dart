@@ -274,8 +274,9 @@ class _AppState extends State<App> {
                                                         .valueOrNull;
                                                     var type =
                                                         PageType.values[value];
-                                                    if (cur?.type == type)
+                                                    if (cur?.type == type) {
                                                       return;
+                                                    }
                                                     NavigatorRep()
                                                         .routeBloc
                                                         .goto(

@@ -18,10 +18,8 @@ final ThemeData lightTheme = ThemeData(
       selectedItemColor: ThemeData.light()
           .colorScheme
           .primary, // Use primary color for selected item
-      unselectedItemColor: ThemeData.light()
-          .colorScheme
-          .onSurface
-          .withOpacity(0.6), // Use onSurface with opacity for unselected items
+      unselectedItemColor: ThemeData.light().colorScheme.onSurface.withValues(
+          alpha: 0.6), // Use onSurface with opacity for unselected items
       elevation: 2, // Add a slight elevation
       type: BottomNavigationBarType
           .fixed, // Fixed type for better Material 3 alignment
@@ -57,10 +55,8 @@ final ThemeData darkTheme = ThemeData(
     selectedItemColor: ThemeData.dark()
         .colorScheme
         .primary, // Use primary color for selected item
-    unselectedItemColor: ThemeData.dark()
-        .colorScheme
-        .onSurface
-        .withOpacity(0.6), // Use onSurface with opacity for unselected items
+    unselectedItemColor: ThemeData.dark().colorScheme.onSurface.withValues(
+        alpha: 0.6), // Use onSurface with opacity for unselected items
     elevation: 2, // Add a slight elevation
     type: BottomNavigationBarType
         .fixed, // Fixed type for better Material 3 alignment

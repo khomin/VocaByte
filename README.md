@@ -51,6 +51,8 @@ https://github.com/wordset/wordset-dictionary.git
 
 
 ### TODO
+ - keep 5 last logs, remove everything else
+
  - pageView - make offcard if > 1 word
  - add progress in numerals
  - theme - https://pub.dev/packages/animated_theme_switcher
@@ -58,7 +60,6 @@ https://github.com/wordset/wordset-dictionary.git
  - navigation, use bottom navigator
  - redesign the controls in card, don't know - already know, dialog
  - no <- but (x) from pages (card, numerals, manage words, search etc)
- - keep 5 last logs, remove everything else
  - cache everything, make an instant start
  - performace sqlite
  - refactor progress in card
@@ -71,7 +72,6 @@ https://github.com/wordset/wordset-dictionary.git
  2) come with a logic how to port old profile to new database (in app)
  3) when moving a word into styding - store particular meaning to use
  4) remove all "(xxx)" in "def" and "example"
-
 
 Give one example in sentence for "anisotropically", maximum 15-25 symbols (small better)
 

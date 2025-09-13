@@ -11,12 +11,14 @@ import eng_to_ipa as ipa
 
 project_dir = os.getcwd() + "/../../"
 
-dict_root = project_dir + "cpp/ThirdParty/refined_dictionary"
+# dict_root = project_dir + "cpp/ThirdParty/refined_dictionary"
 db_path = project_dir + "/scripts/make_dictionary/database.db"
+# out_dict_path = project_dir + "cpp/ThirdParty/llama_dictionary"
+dict_root = project_dir + "cpp/ThirdParty/llama_dictionary"
 out_dict_path = project_dir + "cpp/ThirdParty/llama_dictionary"
 dict_files = [
-    'a.json',
-    'b.json',
+    # 'a.json',
+    # 'b.json',
     'c.json',
     'd.json',
     'e.json',
@@ -45,7 +47,7 @@ dict_files = [
 
 def handle_llama(word):
     # llamam input
-    request = "give me the rank (a float number enclosed in **, like **value**) of the word \"%s\" and 15 sentences with this word\n" % (word)
+    request = "give me the rank (a float number enclosed in **, like **value**) of the word \"%s\" and 15 sentences with this word\nIf you can't provide any rank value use -1" % (word)
 
     # Send a single request
     response = ollama.chat(
@@ -65,7 +67,7 @@ def handle_llama(word):
         ],
     )
     message = response['message']['content']
-    print(message)
+    # print(message)
     sub_message = {}
     rank_pattern = re.compile(r"\*\*([+-]?([0-9]*[.])?[0-9]+)\*\*")
     sentence_pattern = re.compile(r"\n(\d+)\.\s*(.+)")
@@ -87,18 +89,12 @@ def handle_llama(word):
             examples.append(sentence)
         sub_message["examples"] = examples
         return sub_message
-    # try:
-    #     json_obj = json.loads(sub_message)
-    #     return json_obj
-    # except Exception as e:
-    #     print(f"Invalid json: {e}")
-    # return None
 
 def write_json(json_obj, path, file_name):
     try:
         os.mkdir(path)
     except Exception as e:
-        print(f"Error mkdir: {e}")
+        None
     try:
         with open(os.path.join(path, file_name), 'w') as f:
             json.dump(json_obj, f, indent=4) 
@@ -109,37 +105,33 @@ for dict_file in dict_files:
     file = open(os.path.join(dict_root, dict_file))
     json_str = file.read()
     json_dict = json.loads(json_str)
-    json_out = []
     
     # search for words without 'examples' field
     for obj_key in json_dict:
         obj = json_dict[obj_key]
         should_add_examples = False
         try:
-            if len(obj["examples"] < 5):
+            if len(obj["examples"]) < 5:
                 should_add_examples = True
-            None
         except:
             should_add_examples = True
-            None
-        None
 
         if should_add_examples:
+            print(f"Process word: {obj_key}")
             res_json = handle_llama(obj["word"])
-            if res_json is None:
-                break
-            key = res_json["word"]
-            obj_modified = {}
-            obj_modified[key] = json_dict[key]
-            obj_modified[key]["examples"] = res_json["examples"]
-            obj_modified[key]["freq"] = res_json["freq"]
-            json_out.append(obj_modified)
-            write_json(json_out, out_dict_path, dict_file)
+            if res_json is not None:
+                json_dict[obj_key]["freq"] = res_json["freq"]
+                json_dict[obj_key]["examples"] = res_json["examples"]
+                write_json(json_dict, out_dict_path, dict_file)
+                print(f"Process word: -success: {obj_key}")
+            else:
+                print(f"Process word: -failed: {obj_key}")
         else:
-            json_out.append(obj)
+            print(f"Skip word: {obj_key}")
+            json_dict[obj_key] = obj
         
-    print(json.dumps(json_out, indent=4))
+    print(json.dumps(json_dict, indent=4))
     
-    write_json(json_out, out_dict_path, dict_file)
+    write_json(json_dict, out_dict_path, dict_file)
 
-    print('done, total len: {}', len(json_out))
+    print('done, total len: {}', len(json_dict))

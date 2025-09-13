@@ -73,3 +73,5 @@ linux/flutter/generated_plugin_registrant.h
 
 android/app/.cxx/**
 *.db
+
+*.json

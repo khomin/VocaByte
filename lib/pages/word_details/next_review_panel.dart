@@ -68,7 +68,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 top: 0,
                 bottom: 0,
                 child: RoundButton(
-                    color: Colors.white.withOpacity(0.08),
+                    color: Colors.white.withValues(alpha: 0.08),
                     iconColor: Theme.of(context).colorScheme.appBarText.color,
                     size: const Size(50, 50),
                     iconSize: 22,
