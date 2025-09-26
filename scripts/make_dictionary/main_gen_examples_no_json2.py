@@ -11,10 +11,8 @@ import eng_to_ipa as ipa
 
 project_dir = os.getcwd() + "/../../"
 
-db_path = project_dir + "/scripts/make_dictionary/database.db"
-dict_root = project_dir + "cpp/ThirdParty/llama_dictionary"
-out_dict_path = project_dir + "cpp/ThirdParty/llama_dictionary"
-fails_path = project_dir + "cpp/ThirdParty/llama_dictionary/fails.json"
+dict_root = project_dir + "cpp/ThirdParty/llama_dictionary2"
+out_dict_path = project_dir + "cpp/ThirdParty/llama_dictionary2"
 dict_files = [
     'a.json',
     'b.json',
@@ -51,14 +49,7 @@ def handle_llama(word):
     # Send a single request
     response = ollama.chat(
         model='llama3',
-        # options={
-            # 'temperature': 0.0,  # A higher value for more creativity
-            # 'top_p': 0.9,        # A higher value for more diverse word choices
-            # 'mirostat_mode': 0,  # Or set a different mirostat mode
-            # 'max_tokens': 100,
-        # },
         messages=[
-            {'role': 'system', 'content': 'You are a helpful assistant.'},
             {
                 'role': 'user',
                 'content': request,
@@ -100,21 +91,6 @@ def write_json(json_obj, path, file_name):
     except Exception as e:
         print(f"Error saving json: {e}")
 
-def write_json_fails(json_obj, path, file_name):
-    try:
-        os.mkdir(path)
-    except Exception as e:
-        None
-    try:
-        with open(os.path.join(path, file_name), 'w') as f:
-            json.dump(json_obj, f, indent=4) 
-    except Exception as e:
-        print(f"Error saving json: {e}")
-
-
-file = open(fails_path)
-json_fails = json.loads(file.read())
-
 for dict_file in dict_files:
     file = open(os.path.join(dict_root, dict_file))
     json_str = file.read()
@@ -131,25 +107,20 @@ for dict_file in dict_files:
             should_add_examples = True
 
         if should_add_examples:
-            if obj_key not in json_fails:
-                print(f"Process word: {obj_key}")
-                res_json = handle_llama(obj["word"])
-                if res_json is not None:
-                    json_dict[obj_key]["freq"] = res_json["freq"]
-                    json_dict[obj_key]["examples"] = res_json["examples"]
-                    write_json(json_dict, out_dict_path, dict_file)
-                    print(f"Process word: -success: {obj_key}")
-                else:
-                    json_fails[obj_key] = {}
-                    write_json_fails(json_fails, out_dict_path, 'fails.json')
-                    print(f"Process word: -failed: {obj_key}")
+            print(f"Process word: {obj_key}")
+            res_json = handle_llama(obj["word"])
+            if res_json is not None:
+                json_dict[obj_key]["freq"] = res_json["freq"]
+                json_dict[obj_key]["examples"] = res_json["examples"]
+                write_json(json_dict, out_dict_path, dict_file)
+                print(f"Process word: -success: {obj_key}")
             else:
-                print(f"Word in fail list -skip: {obj_key}")
+                print(f"Process word: -failed: {obj_key}")
         else:
             print(f"Skip word: {obj_key}")
             json_dict[obj_key] = obj
         
-    # print(json.dumps(json_dict, indent=4))
+    print(json.dumps(json_dict, indent=4))
     
     write_json(json_dict, out_dict_path, dict_file)
 
