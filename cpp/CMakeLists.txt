@@ -126,20 +126,12 @@ elseif (ANDROID OR __ANDROID__)
     message("ANDROID_ABI: ${ANDROID_ABI}")
     message("CMAKE_ANDROID_ARCH_ABI: ${CMAKE_ANDROID_ARCH_ABI}")
     message("CMAKE_ANDROID_FLUTTER_SDK_PATH: ${FLUTTER_SDK_PATH}")
-    set(ARCH_NAME ${CMAKE_ANDROID_ARCH_ABI})
-
-    message("ARCH_NAME: ${ARCH_NAME}")
     message("ANDROID_ABI: ${ANDROID_ABI}")
-    if (${CMAKE_ANDROID_ARCH_ABI} STREQUAL "armeabi-v7a")
-        set(ARCH_NAME "armv7")
-    elseif (${CMAKE_ANDROID_ARCH_ABI} STREQUAL "arm64-v8a")
-        set(ARCH_NAME "arm64")
-    endif ()
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ARCH_NAME}/include/
+      ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ANDROID_ABI}/include/
     )
     set(LIBRARIES ${LIBRARIES}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ARCH_NAME}/lib/libprotobuf.a
+      ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ANDROID_ABI}/lib/libprotobuf.a
       -landroid
       c++_shared
       loguru::loguru
