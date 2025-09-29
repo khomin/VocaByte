@@ -48,7 +48,7 @@ endif()
 project(${PROJECT} VERSION 0.1.0)
 
 if (DEFINED ENV{FLUTTER_SDK_PATH})
-    message(STATUS "FLUTTER_SDK_PATH environment variable defined")
+    message(STATUS "FLUTTER_SDK_PATH environment variable defined: $ENV{FLUTTER_SDK_PATH}")
     file(TO_CMAKE_PATH $ENV{FLUTTER_SDK_PATH} FLUTTER_SDK_PATH)
 else ()
     # find flutter sdk location
@@ -138,10 +138,10 @@ elseif (ANDROID OR __ANDROID__)
     )
 elseif(UNIX AND NOT APPLE)
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/linux/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/include
     )
     set(LIBRARIES ${LIBRARIES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/linux/lib/libprotobuf.a
+        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/lib/libprotobuf.a
         -ldl -lpthread -lxcb -lz
         loguru::loguru
     )
