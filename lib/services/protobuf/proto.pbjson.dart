@@ -1,13 +1,14 @@
+// This is a generated file - do not edit.
 //
-//  Generated code. Do not modify.
-//  source: proto.proto
-//
-// @dart = 2.12
+// Generated from proto.proto.
+
+// @dart = 3.3
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_final_fields
-// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
+// ignore_for_file: constant_identifier_names
+// ignore_for_file: curly_braces_in_flow_control_structures
+// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
+// ignore_for_file: non_constant_identifier_names, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -22,8 +23,8 @@ const InitParams$json = {
 };
 
 /// Descriptor for `InitParams`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List initParamsDescriptor = $convert.base64Decode(
-    'CgpJbml0UGFyYW1zEhsKCWxvY2FsX2RpchgBIAEoCVIIbG9jYWxEaXI=');
+final $typed_data.Uint8List initParamsDescriptor = $convert
+    .base64Decode('CgpJbml0UGFyYW1zEhsKCWxvY2FsX2RpchgBIAEoCVIIbG9jYWxEaXI=');
 
 @$core.Deprecated('Use reqRecentWordsDescriptor instead')
 const ReqRecentWords$json = {
@@ -48,8 +49,8 @@ const RespRecentWords$json = {
 };
 
 /// Descriptor for `RespRecentWords`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respRecentWordsDescriptor = $convert.base64Decode(
-    'Cg9SZXNwUmVjZW50V29yZHMSEgoEd29yZBgBIAMoCVIEd29yZA==');
+final $typed_data.Uint8List respRecentWordsDescriptor = $convert
+    .base64Decode('Cg9SZXNwUmVjZW50V29yZHMSEgoEd29yZBgBIAMoCVIEd29yZA==');
 
 @$core.Deprecated('Use reqSearchWordsDescriptor instead')
 const ReqSearchWords$json = {
@@ -86,8 +87,8 @@ const ReqRandWords$json = {
 };
 
 /// Descriptor for `ReqRandWords`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List reqRandWordsDescriptor = $convert.base64Decode(
-    'CgxSZXFSYW5kV29yZHMSFAoFY291bnQYASABKA1SBWNvdW50');
+final $typed_data.Uint8List reqRandWordsDescriptor =
+    $convert.base64Decode('CgxSZXFSYW5kV29yZHMSFAoFY291bnQYASABKA1SBWNvdW50');
 
 @$core.Deprecated('Use respRandWordsDescriptor instead')
 const RespRandWords$json = {
@@ -110,8 +111,8 @@ const ReqWordInReview$json = {
 };
 
 /// Descriptor for `ReqWordInReview`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List reqWordInReviewDescriptor = $convert.base64Decode(
-    'Cg9SZXFXb3JkSW5SZXZpZXcSEgoEd29yZBgBIAEoCVIEd29yZA==');
+final $typed_data.Uint8List reqWordInReviewDescriptor = $convert
+    .base64Decode('Cg9SZXFXb3JkSW5SZXZpZXcSEgoEd29yZBgBIAEoCVIEd29yZA==');
 
 @$core.Deprecated('Use wordInReviewDescriptor instead')
 const WordInReview$json = {
@@ -161,8 +162,8 @@ const RespAddWordInCurrent$json = {
 };
 
 /// Descriptor for `RespAddWordInCurrent`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respAddWordInCurrentDescriptor = $convert.base64Decode(
-    'ChRSZXNwQWRkV29yZEluQ3VycmVudA==');
+final $typed_data.Uint8List respAddWordInCurrentDescriptor =
+    $convert.base64Decode('ChRSZXNwQWRkV29yZEluQ3VycmVudA==');
 
 @$core.Deprecated('Use reqRemoveWordFromCurrentDescriptor instead')
 const ReqRemoveWordFromCurrent$json = {
@@ -173,8 +174,9 @@ const ReqRemoveWordFromCurrent$json = {
 };
 
 /// Descriptor for `ReqRemoveWordFromCurrent`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List reqRemoveWordFromCurrentDescriptor = $convert.base64Decode(
-    'ChhSZXFSZW1vdmVXb3JkRnJvbUN1cnJlbnQSEgoEd29yZBgBIAEoCVIEd29yZA==');
+final $typed_data.Uint8List reqRemoveWordFromCurrentDescriptor =
+    $convert.base64Decode(
+        'ChhSZXFSZW1vdmVXb3JkRnJvbUN1cnJlbnQSEgoEd29yZBgBIAEoCVIEd29yZA==');
 
 @$core.Deprecated('Use respRemoveWordFromCurrentDescriptor instead')
 const RespRemoveWordFromCurrent$json = {
@@ -182,8 +184,8 @@ const RespRemoveWordFromCurrent$json = {
 };
 
 /// Descriptor for `RespRemoveWordFromCurrent`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respRemoveWordFromCurrentDescriptor = $convert.base64Decode(
-    'ChlSZXNwUmVtb3ZlV29yZEZyb21DdXJyZW50');
+final $typed_data.Uint8List respRemoveWordFromCurrentDescriptor =
+    $convert.base64Decode('ChlSZXNwUmVtb3ZlV29yZEZyb21DdXJyZW50');
 
 @$core.Deprecated('Use reqUpdateWordInCurrentDescriptor instead')
 const ReqUpdateWordInCurrent$json = {
@@ -212,8 +214,8 @@ const RespUpdateWordInCurrent$json = {
 };
 
 /// Descriptor for `RespUpdateWordInCurrent`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respUpdateWordInCurrentDescriptor = $convert.base64Decode(
-    'ChdSZXNwVXBkYXRlV29yZEluQ3VycmVudA==');
+final $typed_data.Uint8List respUpdateWordInCurrentDescriptor =
+    $convert.base64Decode('ChdSZXNwVXBkYXRlV29yZEluQ3VycmVudA==');
 
 @$core.Deprecated('Use wordDescriptor instead')
 const Word$json = {
@@ -237,14 +239,21 @@ const ReqReviewForToday$json = {
 };
 
 /// Descriptor for `ReqReviewForToday`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List reqReviewForTodayDescriptor = $convert.base64Decode(
-    'ChFSZXFSZXZpZXdGb3JUb2RheQ==');
+final $typed_data.Uint8List reqReviewForTodayDescriptor =
+    $convert.base64Decode('ChFSZXFSZXZpZXdGb3JUb2RheQ==');
 
 @$core.Deprecated('Use respReviewForTodayDescriptor instead')
 const RespReviewForToday$json = {
   '1': 'RespReviewForToday',
   '2': [
-    {'1': 'first_n_word', '3': 1, '4': 3, '5': 11, '6': '.api.WordInReview', '10': 'firstNWord'},
+    {
+      '1': 'first_n_word',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.api.WordInReview',
+      '10': 'firstNWord'
+    },
     {'1': 'count_all', '3': 2, '4': 1, '5': 13, '10': 'countAll'},
   ],
 };
@@ -260,7 +269,13 @@ const ReqSearchInReviewList$json = {
   '2': [
     {'1': 'limit', '3': 1, '4': 1, '5': 13, '10': 'limit'},
     {'1': 'offset', '3': 2, '4': 1, '5': 13, '10': 'offset'},
-    {'1': 'use_success_count', '3': 3, '4': 1, '5': 13, '10': 'useSuccessCount'},
+    {
+      '1': 'use_success_count',
+      '3': 3,
+      '4': 1,
+      '5': 13,
+      '10': 'useSuccessCount'
+    },
   ],
 };
 
@@ -274,14 +289,22 @@ final $typed_data.Uint8List reqSearchInReviewListDescriptor = $convert.base64Dec
 const RespSearchInReviewList$json = {
   '1': 'RespSearchInReviewList',
   '2': [
-    {'1': 'word', '3': 1, '4': 3, '5': 11, '6': '.api.WordInReview', '10': 'word'},
+    {
+      '1': 'word',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.api.WordInReview',
+      '10': 'word'
+    },
   ],
 };
 
 /// Descriptor for `RespSearchInReviewList`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respSearchInReviewListDescriptor = $convert.base64Decode(
-    'ChZSZXNwU2VhcmNoSW5SZXZpZXdMaXN0EiUKBHdvcmQYASADKAsyES5hcGkuV29yZEluUmV2aW'
-    'V3UgR3b3Jk');
+final $typed_data.Uint8List respSearchInReviewListDescriptor =
+    $convert.base64Decode(
+        'ChZSZXNwU2VhcmNoSW5SZXZpZXdMaXN0EiUKBHdvcmQYASADKAsyES5hcGkuV29yZEluUmV2aW'
+        'V3UgR3b3Jk');
 
 @$core.Deprecated('Use reqDeleteProfileDescriptor instead')
 const ReqDeleteProfile$json = {
@@ -289,8 +312,8 @@ const ReqDeleteProfile$json = {
 };
 
 /// Descriptor for `ReqDeleteProfile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List reqDeleteProfileDescriptor = $convert.base64Decode(
-    'ChBSZXFEZWxldGVQcm9maWxl');
+final $typed_data.Uint8List reqDeleteProfileDescriptor =
+    $convert.base64Decode('ChBSZXFEZWxldGVQcm9maWxl');
 
 @$core.Deprecated('Use respDeleteProfileDescriptor instead')
 const RespDeleteProfile$json = {
@@ -298,8 +321,8 @@ const RespDeleteProfile$json = {
 };
 
 /// Descriptor for `RespDeleteProfile`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respDeleteProfileDescriptor = $convert.base64Decode(
-    'ChFSZXNwRGVsZXRlUHJvZmlsZQ==');
+final $typed_data.Uint8List respDeleteProfileDescriptor =
+    $convert.base64Decode('ChFSZXNwRGVsZXRlUHJvZmlsZQ==');
 
 @$core.Deprecated('Use reqSentencesDescriptor instead')
 const ReqSentences$json = {
@@ -325,8 +348,8 @@ const RespSentences$json = {
 };
 
 /// Descriptor for `RespSentences`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respSentencesDescriptor = $convert.base64Decode(
-    'Cg1SZXNwU2VudGVuY2VzEhIKBGRhdGEYASADKAlSBGRhdGE=');
+final $typed_data.Uint8List respSentencesDescriptor =
+    $convert.base64Decode('Cg1SZXNwU2VudGVuY2VzEhIKBGRhdGEYASADKAlSBGRhdGE=');
 
 @$core.Deprecated('Use respDefaultDescriptor instead')
 const RespDefault$json = {
@@ -337,6 +360,26 @@ const RespDefault$json = {
 };
 
 /// Descriptor for `RespDefault`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respDefaultDescriptor = $convert.base64Decode(
-    'CgtSZXNwRGVmYXVsdBIUCgV2YWx1ZRgBIAEoCFIFdmFsdWU=');
+final $typed_data.Uint8List respDefaultDescriptor =
+    $convert.base64Decode('CgtSZXNwRGVmYXVsdBIUCgV2YWx1ZRgBIAEoCFIFdmFsdWU=');
 
+@$core.Deprecated('Use getMetaDataInDescriptor instead')
+const GetMetaDataIn$json = {
+  '1': 'GetMetaDataIn',
+};
+
+/// Descriptor for `GetMetaDataIn`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getMetaDataInDescriptor =
+    $convert.base64Decode('Cg1HZXRNZXRhRGF0YUlu');
+
+@$core.Deprecated('Use getMetaDataOutDescriptor instead')
+const GetMetaDataOut$json = {
+  '1': 'GetMetaDataOut',
+  '2': [
+    {'1': 'version', '3': 1, '4': 1, '5': 5, '10': 'version'},
+  ],
+};
+
+/// Descriptor for `GetMetaDataOut`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getMetaDataOutDescriptor = $convert
+    .base64Decode('Cg5HZXRNZXRhRGF0YU91dBIYCgd2ZXJzaW9uGAEgASgFUgd2ZXJzaW9u');

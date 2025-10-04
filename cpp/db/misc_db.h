@@ -28,6 +28,10 @@ public:
         uint64_t next_review_tm;
     };
 
+    struct MetaData {
+        int version {};
+    };
+
     enum DB_type { Primary, Sentences };
 
     bool init(std::string path);
@@ -49,6 +53,8 @@ public:
     std::vector<WordCurrent> getWordInReviewList(int limit, int offset, int useSuccessCount);
 
     std::vector<std::string> getSentences(std::string word, uint32_t limit, uint32_t offset);
+
+    MetaData getMetadata();
 
     void deleteAll();
 

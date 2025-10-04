@@ -1,14 +1,18 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 import 'dart:isolate';
 import 'package:audioplayers/audioplayers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:loggy/loggy.dart';
 import 'package:protobuf/protobuf.dart';
 import 'package:ffi/ffi.dart';
 import 'package:vocabyte/app/file_utils.dart';
+import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
+import 'package:fixnum/fixnum.dart' as fixnum;
 
 class LibPath {
   static String get path {
@@ -101,6 +105,7 @@ class ServiceApi {
   static late Function _removeWordInReview;
   static late Function _updateWordInReview;
   static late Function _getReviewForToday;
+  static late Function _getMetaData;
   static late Function _searchInReviewList;
   static late Function _getSentences;
   static late Function _executeCallback;
@@ -181,6 +186,10 @@ class ServiceApi {
       _getReviewForToday = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
           int Function(int, Pointer<Uint8>, int)>("getReviewForToday");
+
+      _getMetaData = _dylib.lookupFunction<
+          Int Function(Uint32, Pointer<Uint8>, Uint32),
+          int Function(int, Pointer<Uint8>, int)>("getMetadata");
 
       _searchInReviewList = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
@@ -385,6 +394,187 @@ class ServiceApi {
         description: 'getReviewForToday');
     _getReviewForToday(out.taskId, out.data, out.len);
     return completer.future;
+  }
+
+  Future<GetMetaDataOut> getMedataData() async {
+    Completer<GetMetaDataOut> completer = Completer();
+    var req = GetMetaDataIn();
+    var out = registerCall(
+        proto: req,
+        cb: (p) {
+          var buf = p.ref.protoBuf.asTypedList(p.ref.protoLen);
+          var res = GetMetaDataOut.fromBuffer(buf);
+          completer.complete(res);
+        },
+        description: 'getMedataData');
+    _getMetaData(out.taskId, out.data, out.len);
+    return completer.future;
+  }
+
+  Future<bool> shouldMigrateDatabase() async {
+    return true;
+  }
+
+  Future<bool> exportProfile({String? explicitDir}) async {
+    var list = <dynamic>[];
+    var hasData = true;
+    var offset = 0;
+    const limit = 5;
+    while (hasData) {
+      var r = await ServiceApi().searchInReviewList(
+          limit: limit, offset: offset, useSuccessCount: null);
+      if (r.word.length >= limit) {
+        offset += limit;
+      } else {
+        hasData = false;
+      }
+      for (var it in r.word) {
+        list.add({
+          'word': it.word,
+          'success_count': it.successCount.toInt(),
+          'fail_count': it.failCount.toInt(),
+          'last_tm_success': it.lastTmSuccess.toInt(),
+          'last_tm_fail': it.lastTmFail.toInt(),
+          'next_review_tm_ms': it.nextReviewTmMs.toInt()
+        });
+      }
+    }
+    try {
+      var encoder = const JsonEncoder.withIndent('  ');
+      var jsonStr = encoder.convert({'review': list});
+      var formatted = jsonStr.codeUnits;
+      if (explicitDir == null) {
+        var path = await FilePicker.platform.saveFile(
+            fileName: 'profile.json',
+            allowedExtensions: ['txt'],
+            dialogTitle: 'Export',
+            type: FileType.custom,
+            bytes: Uint8List.fromList(formatted));
+        if (UiHelper.isDesktop() && path != null) {
+          await FileUtils.saveBufToFile(formatted, path);
+        }
+        return true;
+      } else {
+        await FileUtils.saveBufToFile(formatted, explicitDir);
+        return true;
+      }
+    } catch (ex) {
+      logWarning('$ex: export words ex [$ex]');
+    }
+    return false;
+  }
+
+  Future<bool> importProfile({String? explicitDir}) async {
+    String? path;
+    if (explicitDir == null) {
+      var res = await FilePicker.platform.pickFiles(
+          allowMultiple: false,
+          type: FileType.custom,
+          allowedExtensions: ['json']);
+      if (res == null || res.files.isEmpty) {
+        return false;
+      }
+      path = res.files.first.path;
+      if (path == null) {
+        return false;
+      }
+    } else {
+      path = explicitDir;
+    }
+    try {
+      var data = await FileUtils.readFileToStringLine(path);
+      var json = jsonDecode(data.join());
+      var review = json['review'];
+      if (review != null) {
+        for (var it in review) {
+          await ServiceApi().addWordInReview(
+              req: ReqAddWordInReview(
+                  word: it['word'],
+                  successCount: it['success_count'],
+                  failCount: it['fail_count'],
+                  lastTmSuccess: fixnum.Int64(it['last_tm_success']),
+                  lastTmFail: fixnum.Int64(it['last_tm_fail']),
+                  nextReviewTmMs: fixnum.Int64(it['next_review_tm_ms']),
+                  useExtraFields: true));
+        }
+      }
+      return true;
+    } catch (ex) {
+      logError('$tag: ex=$ex');
+    }
+    return false;
+  }
+
+  Future<int> importWords({String? explicitDir}) async {
+    try {
+      String? path;
+      if (explicitDir == null) {
+        var res = await FilePicker.platform.pickFiles(allowMultiple: false);
+        if (res == null || res.files.isEmpty) {
+          return 0;
+        }
+        path = res.files.first.path;
+        if (path == null) {
+          return 0;
+        }
+      } else {
+        path = explicitDir;
+      }
+      var addedCnt = 0;
+      var data = await FileUtils.readFileToStringLine(path);
+      for (var it2 in data) {
+        if (await ServiceApi().addWordInReview(
+            req: ReqAddWordInReview(word: it2, useExtraFields: false))) {
+          addedCnt++;
+        }
+      }
+      return addedCnt;
+    } catch (ex) {
+      logWarning('$ex');
+    }
+    return 0;
+  }
+
+  Future<bool> exportWords({String? explicitDir}) async {
+    var offset = 0;
+    const limit = 5;
+    final list = <String>[];
+    var hasData = true;
+    while (hasData) {
+      var r = await ServiceApi().searchInReviewList(
+          limit: limit, offset: offset, useSuccessCount: null);
+      if (r.word.length >= limit) {
+        offset += limit;
+      } else {
+        hasData = false;
+      }
+      for (var it in r.word) {
+        list.add(it.word);
+      }
+    }
+    if (list.isEmpty) {
+      return false;
+    }
+    try {
+      final List<int> codeUnits = list.join('\n').codeUnits;
+      var path = await FilePicker.platform.saveFile(
+          fileName: 'export.txt',
+          allowedExtensions: ['txt'],
+          dialogTitle: 'Export',
+          type: FileType.custom,
+          bytes: Uint8List.fromList(codeUnits));
+      if (UiHelper.isDesktop() && path != null) {
+        await FileUtils.saveBufToFile(codeUnits, path);
+      }
+      return true;
+    } catch (ex) {
+      logWarning('$ex: export words ex [$ex]');
+    }
+    return false;
+  }
+
+  Future<bool> migrateDatabase() async {
+    return true;
   }
 
   Future<RespSearchInReviewList> searchInReviewList(

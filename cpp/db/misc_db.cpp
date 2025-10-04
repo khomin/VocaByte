@@ -450,6 +450,37 @@ std::vector<std::string> MiscDb::getSentences(std::string word, uint32_t limit, 
     return res;
 }
 
+MiscDb::MetaData MiscDb::getMetadata() {
+    sqlite3_stmt *stmt;
+    std::string query;
+    MetaData res {};
+    std::lock_guard<std::mutex> lock(m_lock);
+    if(open_db(DB_type::Primary) != SQLITE_OK) {
+        res.version = -1;
+        return res;
+    }
+    try {
+        auto query = std::string("SELECT name FROM sqlite_master WHERE type='table' AND name='metadata';");
+        if(sqlite3_prepare_v2(m_db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+            while ((sqlite3_step(stmt)) == SQLITE_ROW) {
+                if(sqlite3_column_count(stmt) > 0) {
+                    auto it = MiscDb::WordCurrent();
+                    if(sqlite3_column_text(stmt, 0) != nullptr) {
+                        res.version = sqlite3_column_int(stmt, 0);
+                    }
+                }
+            }
+        } else {
+            LOG_F(INFO, "%s: failed get version: [%s]", TAG, sqlite3_errmsg(m_db));
+        }
+    } catch(std::exception & ex) {
+        LOG_F(INFO, "%s: failed get version-ex: [%s]", TAG, ex.what());
+    }
+    sqlite3_finalize(stmt);
+    close_db(DB_type::Primary);
+    return res;
+}
+
 void MiscDb::deleteAll() {
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);

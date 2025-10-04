@@ -114,6 +114,12 @@ class FileUtils {
     }
   }
 
+  static Future deleteFile(String path) async {
+    try {
+      await File(path).delete();
+    } catch (_) {}
+  }
+
   static String getFileName(String path) {
     if (Platform.isWindows) {
       path = path.replaceAll('/', '\\');

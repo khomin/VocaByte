@@ -47,7 +47,7 @@ struct TableStruct_proto_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[25]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[27]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,6 +55,12 @@ struct TableStruct_proto_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_proto_2eproto;
 namespace api {
+class GetMetaDataIn;
+class GetMetaDataInDefaultTypeInternal;
+extern GetMetaDataInDefaultTypeInternal _GetMetaDataIn_default_instance_;
+class GetMetaDataOut;
+class GetMetaDataOutDefaultTypeInternal;
+extern GetMetaDataOutDefaultTypeInternal _GetMetaDataOut_default_instance_;
 class InitParams;
 class InitParamsDefaultTypeInternal;
 extern InitParamsDefaultTypeInternal _InitParams_default_instance_;
@@ -132,6 +138,8 @@ class WordInReviewDefaultTypeInternal;
 extern WordInReviewDefaultTypeInternal _WordInReview_default_instance_;
 }  // namespace api
 PROTOBUF_NAMESPACE_OPEN
+template<> ::api::GetMetaDataIn* Arena::CreateMaybeMessage<::api::GetMetaDataIn>(Arena*);
+template<> ::api::GetMetaDataOut* Arena::CreateMaybeMessage<::api::GetMetaDataOut>(Arena*);
 template<> ::api::InitParams* Arena::CreateMaybeMessage<::api::InitParams>(Arena*);
 template<> ::api::ReqAddWordInReview* Arena::CreateMaybeMessage<::api::ReqAddWordInReview>(Arena*);
 template<> ::api::ReqDeleteProfile* Arena::CreateMaybeMessage<::api::ReqDeleteProfile>(Arena*);
@@ -4295,6 +4303,286 @@ class RespDefault PROTOBUF_FINAL :
   bool value_;
   friend struct ::TableStruct_proto_2eproto;
 };
+// -------------------------------------------------------------------
+
+class GetMetaDataIn PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.GetMetaDataIn) */ {
+ public:
+  inline GetMetaDataIn() : GetMetaDataIn(nullptr) {}
+  virtual ~GetMetaDataIn();
+
+  GetMetaDataIn(const GetMetaDataIn& from);
+  GetMetaDataIn(GetMetaDataIn&& from) noexcept
+    : GetMetaDataIn() {
+    *this = ::std::move(from);
+  }
+
+  inline GetMetaDataIn& operator=(const GetMetaDataIn& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetMetaDataIn& operator=(GetMetaDataIn&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetMetaDataIn& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetMetaDataIn* internal_default_instance() {
+    return reinterpret_cast<const GetMetaDataIn*>(
+               &_GetMetaDataIn_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(GetMetaDataIn& a, GetMetaDataIn& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetMetaDataIn* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetMetaDataIn* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetMetaDataIn* New() const final {
+    return CreateMaybeMessage<GetMetaDataIn>(nullptr);
+  }
+
+  GetMetaDataIn* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetMetaDataIn>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetMetaDataIn& from);
+  void MergeFrom(const GetMetaDataIn& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetMetaDataIn* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "api.GetMetaDataIn";
+  }
+  protected:
+  explicit GetMetaDataIn(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_proto_2eproto);
+    return ::descriptor_table_proto_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:api.GetMetaDataIn)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_proto_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetMetaDataOut PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.GetMetaDataOut) */ {
+ public:
+  inline GetMetaDataOut() : GetMetaDataOut(nullptr) {}
+  virtual ~GetMetaDataOut();
+
+  GetMetaDataOut(const GetMetaDataOut& from);
+  GetMetaDataOut(GetMetaDataOut&& from) noexcept
+    : GetMetaDataOut() {
+    *this = ::std::move(from);
+  }
+
+  inline GetMetaDataOut& operator=(const GetMetaDataOut& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetMetaDataOut& operator=(GetMetaDataOut&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetMetaDataOut& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetMetaDataOut* internal_default_instance() {
+    return reinterpret_cast<const GetMetaDataOut*>(
+               &_GetMetaDataOut_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    26;
+
+  friend void swap(GetMetaDataOut& a, GetMetaDataOut& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetMetaDataOut* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetMetaDataOut* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetMetaDataOut* New() const final {
+    return CreateMaybeMessage<GetMetaDataOut>(nullptr);
+  }
+
+  GetMetaDataOut* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetMetaDataOut>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetMetaDataOut& from);
+  void MergeFrom(const GetMetaDataOut& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetMetaDataOut* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "api.GetMetaDataOut";
+  }
+  protected:
+  explicit GetMetaDataOut(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_proto_2eproto);
+    return ::descriptor_table_proto_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+  };
+  // optional int32 version = 1;
+  bool has_version() const;
+  private:
+  bool _internal_has_version() const;
+  public:
+  void clear_version();
+  ::PROTOBUF_NAMESPACE_ID::int32 version() const;
+  void set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_version() const;
+  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:api.GetMetaDataOut)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::int32 version_;
+  friend struct ::TableStruct_proto_2eproto;
+};
 // ===================================================================
 
 
@@ -6396,9 +6684,49 @@ inline void RespDefault::set_value(bool value) {
   // @@protoc_insertion_point(field_set:api.RespDefault.value)
 }
 
+// -------------------------------------------------------------------
+
+// GetMetaDataIn
+
+// -------------------------------------------------------------------
+
+// GetMetaDataOut
+
+// optional int32 version = 1;
+inline bool GetMetaDataOut::_internal_has_version() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool GetMetaDataOut::has_version() const {
+  return _internal_has_version();
+}
+inline void GetMetaDataOut::clear_version() {
+  version_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetMetaDataOut::_internal_version() const {
+  return version_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetMetaDataOut::version() const {
+  // @@protoc_insertion_point(field_get:api.GetMetaDataOut.version)
+  return _internal_version();
+}
+inline void GetMetaDataOut::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000001u;
+  version_ = value;
+}
+inline void GetMetaDataOut::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_version(value);
+  // @@protoc_insertion_point(field_set:api.GetMetaDataOut.version)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

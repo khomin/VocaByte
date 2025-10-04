@@ -8,6 +8,7 @@ class AppModel with ChangeNotifier {
   bool _onboarding = false;
   bool _serviceInited = false;
   bool _waitCopyResource = false;
+  bool _waitMigratingDb = false;
 
   String get appVersion => _appVersion;
   set appVersion(String v) {
@@ -38,6 +39,14 @@ class AppModel with ChangeNotifier {
   set waitCopyResource(bool v) {
     if (_waitCopyResource != v) {
       _waitCopyResource = v;
+      notifyListeners();
+    }
+  }
+
+  bool get waitMigratingDb => _waitCopyResource;
+  set waitMigratingDb(bool v) {
+    if (_waitMigratingDb != v) {
+      _waitMigratingDb = v;
       notifyListeners();
     }
   }

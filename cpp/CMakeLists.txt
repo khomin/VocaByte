@@ -77,8 +77,8 @@ set(SOURCES
     ./ThirdParty/Sqlite/sqlite3.c
     ./ThirdParty/Sqlite/sqlite3.h
     # protobuf
-    ./protobuf/proto.pb.cc
-    ./protobuf/proto.pb.h
+    ./protobuf/generated/proto.pb.cc
+    ./protobuf/generated/proto.pb.h
 )
 
 set(INCLUDE_DIRS ${INCLUDE_DIRS}
@@ -222,7 +222,7 @@ target_include_directories(${PROJECT} PUBLIC
     ./
     ./api/
     ./misc/
-    ./protobuf
+    ./protobuf/generated
     ${FLUTTER_SDK_PATH}/cache/dart-sdk/include
     ${INCLUDE_DIRS}
 )

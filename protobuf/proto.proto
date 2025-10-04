@@ -117,3 +117,11 @@ message RespSentences {
 message RespDefault {
     optional bool value = 1;
 }
+
+message GetMetaDataIn {
+
+}
+
+message GetMetaDataOut {
+    optional int32 version = 1;
+}
