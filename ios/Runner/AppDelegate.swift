@@ -10,6 +10,8 @@ import Foundation
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
                     
         let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
+    
+        API_OS().onTest_objc()
         
         GeneratedPluginRegistrant.register(with: self)
             return super.application(application, didFinishLaunchingWithOptions: launchOptions)

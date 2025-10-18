@@ -77,11 +77,11 @@
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		981350C3D7C8CC24C51B401B /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VocaByte.xcodeproj; path = ../cpp/build_ios/VocaByte.xcodeproj; sourceTree = SOURCE_ROOT; };
-		CE643B2F2DB3BEFE00DF98B6 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../../SheltorDesktopQml/lib_pack/ios/protobuf/ios_universal/libprotobuf.a; sourceTree = "<group>"; };
-		CE643B452DB410F100DF98B6 /* api_os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = api_os.h; path = /Users/user/Documents/PROJECTS/SheltorDesktopQml/ios/Runner/api_os.h; sourceTree = "<absolute>"; };
-		CE643B462DB410F100DF98B6 /* api_os.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = api_os.mm; path = /Users/user/Documents/PROJECTS/SheltorDesktopQml/ios/Runner/api_os.mm; sourceTree = "<absolute>"; };
-		CEC8EBD52DBA48210086EACF /* loguru.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = loguru.cpp; path = ../../SheltorDesktopQml/cpp/submodule/loguru/loguru.cpp; sourceTree = "<group>"; };
-		CEC8EBD62DBA48220086EACF /* loguru.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = loguru.hpp; path = ../../SheltorDesktopQml/cpp/submodule/loguru/loguru.hpp; sourceTree = "<group>"; };
+		CE643B2F2DB3BEFE00DF98B6 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../lib_pack/ios/protobuf/ios_universal/libprotobuf.a; sourceTree = "<group>"; };
+		CE643B452DB410F100DF98B6 /* api_os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = api_os.h; path = ../ios/Runner/api_os.h; sourceTree = "<absolute>"; };
+		CE643B462DB410F100DF98B6 /* api_os.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = api_os.mm; path = ../ios/Runner/api_os.mm; sourceTree = "<absolute>"; };
+		CEC8EBD52DBA48210086EACF /* loguru.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = loguru.cpp; path = ../cpp/ThirdParty/loguru/loguru.cpp; sourceTree = "<group>"; };
+		CEC8EBD62DBA48220086EACF /* loguru.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = loguru.hpp; path = ../cpp/ThirdParty/loguru/loguru.hpp; sourceTree = "<group>"; };
 		EBEA1BCA6E6C3860508EC399 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
