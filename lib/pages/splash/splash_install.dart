@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 
-class SplashInstall extends StatefulWidget {
-  const SplashInstall({super.key});
+class SplashWithText extends StatefulWidget {
+  const SplashWithText({required this.text, super.key});
+  final String text;
 
   @override
-  State<SplashInstall> createState() => SplashInstallState();
+  State<SplashWithText> createState() => SplashWithTextState();
 }
 
-class SplashInstallState extends State<SplashInstall> {
+class SplashWithTextState extends State<SplashWithText> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,7 +34,7 @@ class SplashInstallState extends State<SplashInstall> {
                   padding: const EdgeInsets.all(20),
                   child: CircularProgressIndicator(
                       color: Theme.of(context).colorScheme.title5))),
-          Text('Copying database...',
+          Text(widget.text,
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.w400,

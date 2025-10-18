@@ -58,7 +58,7 @@ class AppRep {
   AppRep._internal();
 
   Future<void> updateRecent() async {
-    var v = await ServiceApi().getRecentWords();
+    var v = await ServiceApi().getRecent();
     var list = <SearchInfo>[];
     var manageList = AppRep().onManageWordChanged.valueOrNull ?? [];
     for (var it in v.word) {
@@ -68,6 +68,7 @@ class AppRep {
           transcript: '',
           meaning: [],
           freq: -1,
+          examples: [],
           isInStudy: manageList.firstWhereOrNull((manage) {
                 return manage.word.toLowerCase() == word.toLowerCase();
               }) !=
@@ -81,26 +82,27 @@ class AppRep {
       Map? json;
       json = jsonDecode(word.json) as Map;
       var objWord = (json['word'] as String);
-      var info = FullInfo(
-          word: UiHelper.toFormatText(objWord),
-          transcript: UiHelper.toFormatText(word.transcript),
-          meaning: [],
-          freq: word.frequency.toInt());
+      var meanings = <Meaning>[];
+      var examples = <String>[];
+      var examplesJson = json['examples'] as List<dynamic>? ?? [];
+      for (var it in examplesJson) {
+        examples.add(it);
+      }
       if (json['meanings'] != null) {
-        var objMeaning = (json['meanings'] as List<dynamic>);
-        var meanings = <Meaning>[];
-        for (var m in objMeaning) {
-          var m2 = m as Map;
-          var definition = m2['def'] as String;
-          var speechPart = m2['speech_part'] as String;
-          var synonyms = m2['synonyms'] as List?;
-          var example = m2['example'] as String?;
+        var meaningJson = (json['meanings'] as List<dynamic>);
+        for (var it in meaningJson) {
+          var it2 = it as Map;
+          var definition = it2['def'] as String;
+          var speechPart = it2['speech_part'] as String;
+          var synonyms = it2['synonyms'] as List?;
+          var example = it2['example'] as String?;
+          var meaningId = it2['id'] as String?;
           var meaning = Meaning(
+              id: meaningId,
               definition: UiHelper.toFormatText(definition),
               example: UiHelper.toFormatText(example ?? ''),
               speechPart: speechPart,
               synonyms: []);
-
           if (synonyms != null) {
             for (var it in synonyms) {
               meaning.synonyms.add(UiHelper.toFormatText(it ?? ''));
@@ -126,9 +128,13 @@ class AppRep {
           }
           return vb.compareTo(va);
         });
-        info.meaning = meanings;
       }
-      return info;
+      return FullInfo(
+          word: UiHelper.toFormatText(objWord),
+          transcript: UiHelper.toFormatText(word.transcript),
+          meaning: meanings,
+          freq: word.frequency.toInt(),
+          examples: examples);
     } catch (ex) {
       logError('$tag: search ex: $ex');
     }
@@ -142,14 +148,35 @@ class AppRep {
     if (current != null) {
       current.nextReviewTmMs = time;
       current.lastTmSuccess = Int64(DateTime.now().millisecondsSinceEpoch);
-      await ServiceApi().updateWordInCurrent(
+      await ServiceApi().updateCurrent(
           req: ReqUpdateWordInCurrent(
               word: current.word,
               successCount: current.successCount,
               failCount: current.failCount,
               lastTmSuccess: current.lastTmSuccess,
               lastTmFail: current.lastTmFail,
-              nextReviewTmMs: current.nextReviewTmMs));
+              nextReviewTmMs: current.nextReviewTmMs,
+              meaningId: current.meaningId));
+    } else {
+      logWarning('$tag: update review time empty current');
+    }
+    return null;
+  }
+
+  Future updateMeaningId(
+      {required String word, required String meaningId}) async {
+    var current = await AppRep().reviewTask.getWordReviewStatus(word: word);
+    if (current != null) {
+      current.meaningId = meaningId;
+      await ServiceApi().updateCurrent(
+          req: ReqUpdateWordInCurrent(
+              word: current.word,
+              successCount: current.successCount,
+              failCount: current.failCount,
+              lastTmSuccess: current.lastTmSuccess,
+              lastTmFail: current.lastTmFail,
+              nextReviewTmMs: current.nextReviewTmMs,
+              meaningId: current.meaningId));
     } else {
       logWarning('$tag: update review time empty current');
     }
@@ -265,10 +292,13 @@ class AppRep {
     }
   }
 
-  Future<CardData?> buildReview(String v, CardPageType type) async {
-    var search = await ServiceApi().searchWords(word: v, useLike: false);
+  Future<CardData?> buildReview(
+      {required String v,
+      required String? meaningId,
+      required CardPageType type}) async {
+    var search = await ServiceApi().getDictionary(word: v, useLike: false);
     var info = await AppRep().wordToInfo(search.item.first);
-    var randList = await ServiceApi().randWords(3);
+    var randList = await ServiceApi().getDictionaryRand(3);
     if (randList.words.isEmpty) {
       logWarning('$tag: no rand words: [$v]');
       return null;
@@ -290,7 +320,13 @@ class AppRep {
             'correct': false
           });
         }
-        var meaning = info.meaning.first;
+        Meaning meaning;
+        var found = info.meaning.firstWhereOrNull((i) => i.id == meaningId);
+        if (found != null) {
+          meaning = found;
+        } else {
+          meaning = info.meaning.first;
+        }
         card.options?.add({'value': meaning.definition, 'correct': true});
         card.options?.shuffle();
         return card;

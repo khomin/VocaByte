@@ -5,9 +5,9 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "/Users/user/Documents/misc/flutter/bin/cache/dart-sdk/include/dart_api.h"
-#include "/Users/user/Documents/misc/flutter/bin/cache/dart-sdk/include/dart_native_api.h"
-#include "/Users/user/Documents/misc/flutter/bin/cache/dart-sdk/include/dart_api_dl.h"
+#include "dart_api.h"
+#include "dart_native_api.h"
+#include "dart_api_dl.h"
 
 //#include "dart_api.h"
 //#include "dart_native_api.h"
@@ -52,21 +52,22 @@ typedef std::function<void()> Work;
 void init(uint32_t taskId, uint8_t *data, uint32_t len);
 void stop(uint32_t taskId);
 
-void getRecentWords(uint32_t taskId, uint8_t* data, uint32_t len);
-void putRecentWord(uint32_t taskId, uint8_t* data, uint32_t len);
-void getSearchWords(uint32_t taskId, uint8_t* data, uint32_t len);
-void getRandomWords(uint32_t taskId, uint8_t* data, uint32_t len);
+void getRecent(uint32_t taskId, uint8_t* data, uint32_t len);
+void putRecent(uint32_t taskId, uint8_t* data, uint32_t len);
 
-void getWordInReview(uint32_t taskId, uint8_t* data, uint32_t len);
-void addWordInReview(uint32_t taskId, uint8_t* data, uint32_t len);
-void removeWordInReview(uint32_t taskId, uint8_t* data, uint32_t len);
-void updateWordInReview(uint32_t taskId, uint8_t* data, uint32_t len);
-void getReviewForToday(uint32_t taskId, uint8_t* data, uint32_t len);
-void searchInReviewList(uint32_t taskId, uint8_t* data, uint32_t len);
+void getDictionary(uint32_t taskId, uint8_t* data, uint32_t len);
+void getDictionaryRand(uint32_t taskId, uint8_t* data, uint32_t len);
+
+void getCurrentExact(uint32_t taskId, uint8_t* data, uint32_t len);
+void addCurrent(uint32_t taskId, uint8_t* data, uint32_t len);
+void deleteCurrentExact(uint32_t taskId, uint8_t* data, uint32_t len);
+void updateCurrent(uint32_t taskId, uint8_t* data, uint32_t len);
+void getCurrentToStudy(uint32_t taskId, uint8_t* data, uint32_t len);
+void getCurrentLimit(uint32_t taskId, uint8_t* data, uint32_t len);
+
 void deleteProfile(uint32_t taskId, uint8_t* data, uint32_t len);
 
-void getSentences(uint32_t taskId, uint8_t* data, uint32_t len);
-
+void getMetadata(uint32_t taskId, uint8_t* data, uint32_t len);
 void destroyAll();
 void testMethod(uint32_t taskId);
 

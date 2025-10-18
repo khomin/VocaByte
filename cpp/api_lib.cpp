@@ -2,7 +2,7 @@
 #include <queue>
 #include <thread>
 #include "dart_api.h"
-#include "protobuf/proto.pb.h"
+#include "proto.pb.h"
 #include "ThirdParty/loguru/loguru.hpp"
 #include "db/misc_db.h"
 #include "ThirdParty/thread-pool/include/BS_thread_pool.hpp"
@@ -67,7 +67,7 @@ void stop(uint32_t taskId) {
     db = nullptr;
 }
 
-void getRecentWords(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getRecent(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
@@ -75,7 +75,7 @@ void getRecentWords(uint32_t taskId, uint8_t* data, uint32_t len) {
         api::RespRecentWords out;
         in.ParseFromArray(data, len);
         // exec
-        auto r = db->getRecentWords();
+        auto r = db->getRecent();
         for(const auto &it: r) {
             out.add_word(it.word);
         }
@@ -88,7 +88,7 @@ void getRecentWords(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void putRecentWord(uint32_t taskId, uint8_t* data, uint32_t len) {
+void putRecent(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
@@ -96,7 +96,7 @@ void putRecentWord(uint32_t taskId, uint8_t* data, uint32_t len) {
         api::RespDefault out;
         in.ParseFromArray(data, len);
         // exec
-        db->putRecentWord(in.value(), in.json());
+        db->putRecent(in.value(), in.json());
         // result back
         auto res = new DartResult(taskId);
         res->protoBuf = new uint8_t[out.ByteSizeLong()];
@@ -106,7 +106,7 @@ void putRecentWord(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void getSearchWords(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getDictionary(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
@@ -114,7 +114,7 @@ void getSearchWords(uint32_t taskId, uint8_t* data, uint32_t len) {
         api::RespSearchWords out;
         in.ParseFromArray(data, len);
 
-        auto r = db->getWords(in.word(), in.use_like());
+        auto r = db->getDictionary(in.word(), in.use_like());
         for(const auto &it: r) {
             auto p = out.add_item();
             p->set_value(it.word);
@@ -131,7 +131,7 @@ void getSearchWords(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void getRandomWords(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getDictionaryRand(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
@@ -139,7 +139,7 @@ void getRandomWords(uint32_t taskId, uint8_t* data, uint32_t len) {
         api::RespRandWords out;
         in.ParseFromArray(data, len);
 
-        auto r = db->getRandWords(in.count());
+        auto r = db->getDictionaryRand(in.count());
         for(const auto &it: r) {
             auto p = out.add_words();
             p->set_value(it.word);
@@ -156,21 +156,22 @@ void getRandomWords(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void getWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getCurrentExact(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
         api::ReqWordInReview in;
         api::WordInReview out;
         in.ParseFromArray(data, len);
-        auto r = db->getWordInReview(in.word());
-        if(r != nullptr) {
+        auto r = db->getCurrentExact(in.word());
+        if(r.has_value()) {
             out.set_word(r->word);
             out.set_success_count(r->success_count);
             out.set_fail_count(r->fail_count);
             out.set_last_tm_success(r->last_tm_success);
             out.set_last_tm_fail(r->last_tm_fail);
             out.set_next_review_tm_ms(r->next_review_tm);
+            out.set_meaning_id(r->meaning_id);
         }
         // result back
         auto res = new DartResult(taskId);
@@ -181,7 +182,7 @@ void getWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void addWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
+void addCurrent(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
@@ -196,9 +197,10 @@ void addWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
             word.last_tm_success = in.last_tm_success();
             word.last_tm_fail = in.last_tm_fail();
             word.next_review_tm = in.next_review_tm_ms();
-            db->addWordInReview(word);
+            word.meaning_id = in.meaning_id();
+            db->addCurrentWithData(word);
         } else {
-            db->addWordInReview(in.word());
+            db->addCurrent(in.word());
         }
         // result back
         auto res = new DartResult(taskId);
@@ -209,14 +211,14 @@ void addWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void removeWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
+void deleteCurrentExact(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
         api::ReqRemoveWordFromCurrent in;
         api::RespRemoveWordFromCurrent out;
         in.ParseFromArray(data, len);
-        db->removeWordInReview(in.word());
+        db->deleteCurrentExact(in.word());
         // result back
         auto res = new DartResult(taskId);
         res->protoBuf = new uint8_t[out.ByteSizeLong()];
@@ -226,7 +228,7 @@ void removeWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void updateWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
+void updateCurrent(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([data, len, taskId] {
@@ -240,7 +242,8 @@ void updateWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
         word.last_tm_success = in.last_tm_success();
         word.last_tm_fail = in.last_tm_fail();
         word.next_review_tm = in.next_review_tm_ms();
-        db->updateWordInReview(word);
+        word.meaning_id = in.meaning_id();
+        db->updateCurrent(word);
         // result back
         auto res = new DartResult(taskId);
         res->protoBuf = new uint8_t[out.ByteSizeLong()];
@@ -250,13 +253,13 @@ void updateWordInReview(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void getReviewForToday(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getCurrentToStudy(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([taskId] {
         api::ReqReviewForToday in;
         api::RespReviewForToday out;
-        auto r = db->getReviewForToday();
+        auto r = db->getCurrentToStudy();
         auto count = 0;
         out.set_count_all(r.size());
         for(const auto & it : r) {
@@ -267,6 +270,7 @@ void getReviewForToday(uint32_t taskId, uint8_t* data, uint32_t len) {
             p->set_last_tm_success(it.last_tm_success);
             p->set_last_tm_fail(it.last_tm_fail);
             p->set_next_review_tm_ms(it.next_review_tm);
+            p->set_meaning_id(it.meaning_id);
             if(count++ > 5) {
                 break;
             }
@@ -280,14 +284,14 @@ void getReviewForToday(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void searchInReviewList(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getCurrentLimit(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([taskId, data, len] {
         api::ReqSearchInReviewList in;
         api::RespSearchInReviewList out;
         in.ParseFromArray(data, len);
-        auto r = db->getWordInReviewList(in.limit(), in.offset(), in.use_success_count());
+        auto r = db->getCurrentLimit(in.limit(), in.offset(), in.use_success_count());
         for(const auto & it : r) {
             auto p = out.add_word();
             p->set_word(it.word);
@@ -296,6 +300,7 @@ void searchInReviewList(uint32_t taskId, uint8_t* data, uint32_t len) {
             p->set_last_tm_success(it.last_tm_success);
             p->set_last_tm_fail(it.last_tm_fail);
             p->set_next_review_tm_ms(it.next_review_tm);
+            p->set_meaning_id(it.meaning_id);
         }
         // result back
         auto res = new DartResult(taskId);
@@ -323,18 +328,15 @@ void deleteProfile(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void getSentences(uint32_t taskId, uint8_t* data, uint32_t len) {
+void getMetadata(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
     thread_pool->push_task([taskId, data, len] {
-        api::ReqSentences in;
-        api::RespSentences out;
+        api::GetMetaDataIn in;
+        api::GetMetaDataOut out;
         in.ParseFromArray(data, len);
-        auto r = db->getSentences(in.word(), in.limit(), in.offset());
-        for(auto const & it: r) {
-            auto p = out.add_data();
-            *p = it;
-        }
+        auto data = db->getMetadata();
+        out.set_version(data.version);
         // result back
         auto res = new DartResult(taskId);
         res->protoBuf = new uint8_t[out.ByteSizeLong()];

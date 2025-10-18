@@ -70,9 +70,6 @@ class _AppState extends State<App> {
     // });
 
     _appModel = AppModel();
-    // onUpdateTasks: () {
-    // AppRep().reviewTask.refresh();
-    // });
     _appRep = AppRep();
 
     Future.microtask(() async {
@@ -96,6 +93,25 @@ class _AppState extends State<App> {
       // ffi-cpp
       Loggy.initLoggy(logPrinter: LogPrinter());
       await ServiceApi().initLib(libraryPath: LibPath.path);
+
+      //
+      // check if migrate database
+      if (await ServiceApi().migrateDatabase()) {
+        // (1) show status "migrating, please don't close the app"
+        _appModel.waitMigratingDb = true;
+        // (2) export all -> profile.json
+        var temp = '${FileUtils.homeDir}/backup.json';
+        await ServiceApi().exportProfile(explicitDir: temp);
+        // (3) replace database.db
+        await FileUtils.copyResourcesToDir();
+        // (4) import profile.json
+        await ServiceApi().importProfile(explicitDir: temp);
+        // (6) remove temp profile
+        FileUtils.deleteFile(temp);
+        // (7) close status
+        _appModel.waitMigratingDb = false;
+      }
+
       _appModel.serviceInited = true;
       //
       // how many words to lern
@@ -162,20 +178,17 @@ class _AppState extends State<App> {
     return SafeArea(
         child: ThemeSwitchingArea(
             child: Scaffold(
-                // backgroundColor: Colors.amber,
                 body: Builder(builder: (context) {
                   var model = context.watch<AppModel>();
                   //
                   // initial copy of assets
                   if (model.waitCopyResource) {
-                    return const SplashInstall();
+                    return const SplashWithText(text: 'Copying database...');
                   }
-                  // first time show onboarding
-                  // if (model.onboarding) {
-                  //   return PageOnboard(onStart: () {
-                  //     context.read<AppModel>().onboarding = false;
-                  //   });
-                  // }
+                  if (model.waitMigratingDb) {
+                    return const SplashWithText(
+                        text: "Installing update\nPlease don't close the app");
+                  }
                   // cpp not ready
                   if (!model.serviceInited) {
                     return const Splash();
@@ -188,6 +201,10 @@ class _AppState extends State<App> {
                         NavigatorRep().routeBloc.onHideBottom.valueOrNull,
                     builder: (context, snapshot) {
                       var hide = snapshot.data ?? false;
+                      var model = context.watch<AppModel>();
+                      if (model.waitCopyResource || model.waitMigratingDb) {
+                        hide = true;
+                      }
                       return AnimatedContainer(
                           duration: const Duration(milliseconds: 250),
                           height: hide ? 0 : _bottomNavHeight,

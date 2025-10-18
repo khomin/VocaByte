@@ -10,6 +10,7 @@ class SearchInfo extends FullInfo {
       required super.transcript,
       required super.meaning,
       required super.freq,
+      required super.examples,
       required this.isInStudy});
   bool isInStudy;
 }
@@ -33,7 +34,7 @@ class SearchWordModel with ChangeNotifier {
       var list = <SearchInfo>[];
       var manageList = AppRep().onManageWordChanged.valueOrNull ?? [];
 
-      var search = await ServiceApi().searchWords(word: v, useLike: true);
+      var search = await ServiceApi().getDictionary(word: v, useLike: true);
       for (var it in search.item) {
         var info = await AppRep().wordToInfo(it);
         if (info != null) {
@@ -42,6 +43,7 @@ class SearchWordModel with ChangeNotifier {
               transcript: info.transcript,
               meaning: info.meaning,
               freq: info.freq,
+              examples: info.examples,
               isInStudy: manageList.firstWhereOrNull((manage) {
                     return manage.word.toLowerCase() == info.word.toLowerCase();
                   }) !=

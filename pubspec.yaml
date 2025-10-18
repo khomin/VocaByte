@@ -44,7 +44,7 @@ dependencies:
   dio: ^5.4.0
   ffi: ^2.1.0
   fixnum: ^1.0.1
-  protobuf: ^2.1.0
+  protobuf: ^4.1.0
   collection: ^1.17.0
   shared_preferences: ^2.0.15
   loggy: ^2.0.3

@@ -1,6 +1,6 @@
 
 # Cmake min version
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 
 set(PROJECT                         VocaByte)
 set(CMAKE_CXX_STANDARD              20)
@@ -48,7 +48,7 @@ endif()
 project(${PROJECT} VERSION 0.1.0)
 
 if (DEFINED ENV{FLUTTER_SDK_PATH})
-    message(STATUS "FLUTTER_SDK_PATH environment variable defined")
+    message(STATUS "FLUTTER_SDK_PATH environment variable defined: $ENV{FLUTTER_SDK_PATH}")
     file(TO_CMAKE_PATH $ENV{FLUTTER_SDK_PATH} FLUTTER_SDK_PATH)
 else ()
     # find flutter sdk location
@@ -77,8 +77,8 @@ set(SOURCES
     ./ThirdParty/Sqlite/sqlite3.c
     ./ThirdParty/Sqlite/sqlite3.h
     # protobuf
-    ./protobuf/proto.pb.cc
-    ./protobuf/proto.pb.h
+    ./protobuf/generated/proto.pb.cc
+    ./protobuf/generated/proto.pb.h
 )
 
 set(INCLUDE_DIRS ${INCLUDE_DIRS}
@@ -132,16 +132,14 @@ elseif (ANDROID OR __ANDROID__)
     )
     set(LIBRARIES ${LIBRARIES}
       ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ANDROID_ABI}/lib/libprotobuf.a
-      -landroid
-      c++_shared
       loguru::loguru
     )
 elseif(UNIX AND NOT APPLE)
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/linux/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/include
     )
     set(LIBRARIES ${LIBRARIES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/linux/lib/libprotobuf.a
+        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/lib/libprotobuf.a
         -ldl -lpthread -lxcb -lz
         loguru::loguru
     )
@@ -222,7 +220,7 @@ target_include_directories(${PROJECT} PUBLIC
     ./
     ./api/
     ./misc/
-    ./protobuf
+    ./protobuf/generated
     ${FLUTTER_SDK_PATH}/cache/dart-sdk/include
     ${INCLUDE_DIRS}
 )

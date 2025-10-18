@@ -23,8 +23,7 @@ class FileUtils {
 
   static Future<bool> isResourcesReady() async {
     try {
-      if (await File('$homeDir/database.db').exists() &&
-          await File('$homeDir/sentences.db').exists()) {
+      if (await File('$homeDir/database.db').exists()) {
         return true;
       }
     } catch (ex) {
@@ -64,21 +63,13 @@ class FileUtils {
 
   static Future copyResourcesToDir() async {
     Uint8List? bytesMain;
-    Uint8List? bytesSen;
     {
       final data = await rootBundle.load('assets/database.db');
       bytesMain =
           data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
     }
-    {
-      final data = await rootBundle.load('assets/sentences.db');
-      bytesSen =
-          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    }
-
     await Future.wait([
       saveBufToFile(bytesMain, '$homeDir/database.db'),
-      saveBufToFile(bytesSen, '$homeDir/sentences.db')
     ]);
     return null;
   }
@@ -112,6 +103,12 @@ class FileUtils {
     if (await Directory(path).exists()) {
       await Directory(path).delete(recursive: true);
     }
+  }
+
+  static Future deleteFile(String path) async {
+    try {
+      await File(path).delete();
+    } catch (_) {}
   }
 
   static String getFileName(String path) {

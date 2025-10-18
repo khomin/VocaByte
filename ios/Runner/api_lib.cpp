@@ -323,27 +323,6 @@ void deleteProfile(uint32_t taskId, uint8_t* data, uint32_t len) {
     });
 }
 
-void getSentences(uint32_t taskId, uint8_t* data, uint32_t len) {
-    std::lock_guard<std::mutex> lk(threadLock);
-    if (thread_pool == nullptr) return;
-    thread_pool->push_task([taskId, data, len] {
-        api::ReqSentences in;
-        api::RespSentences out;
-        in.ParseFromArray(data, len);
-        auto r = db->getSentences(in.word(), in.limit(), in.offset());
-        for(auto const & it: r) {
-            auto p = out.add_data();
-            *p = it;
-        }
-        // result back
-        auto res = new DartResult(taskId);
-        res->protoBuf = new uint8_t[out.ByteSizeLong()];
-        out.SerializeToArray(res->protoBuf, (int) out.ByteSizeLong());
-        res->len = (int) out.ByteSizeLong();
-        DartCallResult(res, DartCallResultType::EventBus);
-    });
-}
-
 void destroyAll() {
     if(thread_pool != nullptr) {
         thread_pool->purge();

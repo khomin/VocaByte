@@ -1,9 +1,11 @@
 class Meaning {
   Meaning(
-      {required this.definition,
+      {required this.id,
+      required this.definition,
       required this.example,
       required this.speechPart,
       required this.synonyms});
+  String? id;
   String definition;
   String? example;
   String speechPart;
@@ -15,9 +17,11 @@ class FullInfo {
       {required this.word,
       required this.transcript,
       required this.meaning,
-      required this.freq});
+      required this.freq,
+      required this.examples});
   String word;
   String transcript;
   int freq;
   var meaning = <Meaning>[];
+  List<String> examples;
 }

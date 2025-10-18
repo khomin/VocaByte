@@ -138,11 +138,8 @@ class _State extends State<SettingsPage> {
                                       textAlign: TextAlign.center,
                                       style:
                                           Theme.of(context).colorScheme.title2),
-                                  IgnorePointer(
-                                      child: Radio(
-                                          value: 0,
-                                          groupValue: _theme.index,
-                                          onChanged: (value) {}))
+                                  const IgnorePointer(
+                                      child: Radio<int>(value: 0))
                                 ]));
                       }),
                   //
@@ -171,11 +168,7 @@ class _State extends State<SettingsPage> {
                                       textAlign: TextAlign.center,
                                       style:
                                           Theme.of(context).colorScheme.title2),
-                                  IgnorePointer(
-                                      child: Radio(
-                                          value: 1,
-                                          groupValue: _theme.index,
-                                          onChanged: (value) {}))
+                                  const IgnorePointer(child: Radio(value: 1))
                                 ]));
                       }),
                   //
@@ -210,11 +203,7 @@ class _State extends State<SettingsPage> {
                                       textAlign: TextAlign.center,
                                       style:
                                           Theme.of(context).colorScheme.title2),
-                                  IgnorePointer(
-                                      child: Radio(
-                                          value: 2,
-                                          groupValue: _theme.index,
-                                          onChanged: (value) {}))
+                                  const IgnorePointer(child: Radio(value: 2))
                                 ]));
                       })
                 ]))
@@ -274,14 +263,6 @@ class _State extends State<SettingsPage> {
                           style: Theme.of(context).colorScheme.title2),
                       const Spacer(),
                       Switch(
-                          // inactiveTrackColor: Colors.amber,
-                          // // activeColor: Colors.pink,
-                          // inactiveTrackColor:
-                          //     Theme.of(context).colorScheme.iconColor,
-                          // activeColor:
-                          //     Theme.of(context).colorScheme.buttonOption2,
-                          // inactiveThumbColor: Colors.orange,
-                          // activeTrackColor: Colors.blue,
                           value: _useSound,
                           onChanged: (value) async {
                             SettingsRep().setUseSound(value);
@@ -317,51 +298,14 @@ class _State extends State<SettingsPage> {
                 useScaleAnimation: true,
                 color: Colors.transparent,
                 onPressed: (_) async {
-                  var offset = 0;
-                  const limit = 5;
-                  final list = <String>[];
-                  var hasData = true;
-                  busy(bool v) {
-                    setState(() {
-                      _exportBusy = v;
-                    });
-                  }
-
-                  busy(true);
-                  while (hasData) {
-                    var r = await ServiceApi().searchInReviewList(
-                        limit: limit, offset: offset, useSuccessCount: null);
-                    if (r.word.length >= limit) {
-                      offset += limit;
-                    } else {
-                      hasData = false;
-                    }
-                    for (var it in r.word) {
-                      list.add(it.word);
+                  setState(() => _exportBusy = true);
+                  var res = await ServiceApi().exportWords();
+                  setState(() => _exportBusy = false);
+                  if (mounted) {
+                    if (res) {
+                      UiHelper.showToast(context, 'Exported');
                     }
                   }
-                  if (list.isEmpty) {
-                    if (mounted) {
-                      UiHelper.showToast(context, 'Nothing to export');
-                    }
-                    busy(false);
-                    return;
-                  }
-                  try {
-                    final List<int> codeUnits = list.join('\n').codeUnits;
-                    var path = await FilePicker.platform.saveFile(
-                        fileName: 'export.txt',
-                        allowedExtensions: ['txt'],
-                        dialogTitle: 'Export',
-                        type: FileType.custom,
-                        bytes: Uint8List.fromList(codeUnits));
-                    if (UiHelper.isDesktop() && path != null) {
-                      await FileUtils.saveBufToFile(codeUnits, path);
-                    }
-                  } catch (ex) {
-                    logWarning('$ex: export words ex [$ex]');
-                  }
-                  busy(false);
                 })
           ])),
       //
@@ -390,39 +334,13 @@ class _State extends State<SettingsPage> {
                 useScaleAnimation: true,
                 color: Colors.transparent,
                 onPressed: (_) async {
-                  busy(bool v) {
-                    setState(() {
-                      _importBusy = v;
-                    });
+                  setState(() => _importBusy = true);
+                  var count = await ServiceApi().importWords();
+                  setState(() => _importBusy = false);
+                  if (mounted) {
+                    UiHelper.showToast(context,
+                        'Imported $count ${count == 1 ? 'word' : 'word'}');
                   }
-
-                  try {
-                    var res = await FilePicker.platform
-                        .pickFiles(allowMultiple: true);
-                    if (res == null || res.files.isEmpty) {
-                      return;
-                    }
-                    busy(true);
-                    var addedCnt = 0;
-                    for (var it in res.files) {
-                      var path = it.path;
-                      if (path == null) continue;
-                      var data = await FileUtils.readFileToStringLine(path);
-                      for (var it2 in data) {
-                        if (await ServiceApi().addWordInReview(
-                            req: ReqAddWordInReview(
-                                word: it2, useExtraFields: false))) {
-                          addedCnt++;
-                        }
-                      }
-                    }
-                    if (mounted) {
-                      UiHelper.showToast(context, 'Done $addedCnt words');
-                    }
-                  } catch (ex) {
-                    logWarning('$ex');
-                  }
-                  busy(false);
                 })
           ])),
       ItemInMenuList(
@@ -449,62 +367,16 @@ class _State extends State<SettingsPage> {
                 useScaleAnimation: true,
                 color: Colors.transparent,
                 onPressed: (_) async {
-                  var offset = 0;
-                  const limit = 5;
-                  final list = <dynamic>[];
-                  var hasData = true;
-                  busy(bool v) {
-                    setState(() {
-                      _exportProfileBusy = v;
-                    });
-                  }
-
-                  busy(true);
-                  while (hasData) {
-                    var r = await ServiceApi().searchInReviewList(
-                        limit: limit, offset: offset, useSuccessCount: null);
-                    if (r.word.length >= limit) {
-                      offset += limit;
+                  setState(() => _exportProfileBusy = true);
+                  var success = await ServiceApi().exportProfile();
+                  setState(() => _exportProfileBusy = false);
+                  if (mounted) {
+                    if (success) {
+                      UiHelper.showToast(context, 'Exported');
                     } else {
-                      hasData = false;
-                    }
-                    for (var it in r.word) {
-                      list.add({
-                        'word': it.word,
-                        'success_count': it.successCount.toInt(),
-                        'fail_count': it.failCount.toInt(),
-                        'last_tm_success': it.lastTmSuccess.toInt(),
-                        'last_tm_fail': it.lastTmFail.toInt(),
-                        'next_review_tm_ms': it.nextReviewTmMs.toInt()
-                      });
-                    }
-                  }
-                  if (list.isEmpty) {
-                    if (mounted) {
                       UiHelper.showToast(context, 'No words to export');
                     }
-                    busy(false);
-                    return;
                   }
-                  try {
-                    var js = jsonEncode({'review': list});
-                    var js2 = js.codeUnits;
-                    var path = await FilePicker.platform.saveFile(
-                        fileName: 'profile.json',
-                        allowedExtensions: ['txt'],
-                        dialogTitle: 'Export',
-                        type: FileType.custom,
-                        bytes: Uint8List.fromList(js2));
-                    if (UiHelper.isDesktop() && path != null) {
-                      await FileUtils.saveBufToFile(js2, path);
-                      if (mounted) {
-                        UiHelper.showToast(context, 'Done');
-                      }
-                    }
-                  } catch (ex) {
-                    logWarning('$ex: export words ex [$ex]');
-                  }
-                  busy(false);
                 })
           ])),
       ItemInMenuList(
@@ -531,52 +403,16 @@ class _State extends State<SettingsPage> {
                 useScaleAnimation: true,
                 color: Colors.transparent,
                 onPressed: (_) async {
-                  busy(bool v) {
-                    setState(() {
-                      _importProfileBusy = v;
-                    });
-                  }
-
-                  try {
-                    var res = await FilePicker.platform.pickFiles(
-                        allowMultiple: false,
-                        type: FileType.custom,
-                        allowedExtensions: ['json']);
-                    if (res == null || res.files.isEmpty) {
-                      return;
-                    }
-                    busy(true);
-                    for (var it in res.files) {
-                      var path = it.path;
-                      if (path == null) continue;
-                      var data = await FileUtils.readFileToStringLine(path);
-                      var json = jsonDecode(data.join());
-                      var review = json['review'];
-                      if (review != null) {
-                        for (var it in review) {
-                          await ServiceApi().addWordInReview(
-                              req: ReqAddWordInReview(
-                                  word: it['word'],
-                                  successCount: it['success_count'],
-                                  failCount: it['fail_count'],
-                                  lastTmSuccess: Int64(it['last_tm_success']),
-                                  lastTmFail: Int64(it['last_tm_fail']),
-                                  nextReviewTmMs:
-                                      Int64(it['next_review_tm_ms']),
-                                  useExtraFields: true));
-                        }
-                      }
-                    }
-                    if (mounted) {
-                      UiHelper.showToast(context, 'Done');
-                    }
-                  } catch (ex) {
-                    if (mounted) {
+                  setState(() => _importProfileBusy = true);
+                  var res = await ServiceApi().importProfile();
+                  setState(() => _importProfileBusy = false);
+                  if (mounted) {
+                    if (res) {
+                      UiHelper.showToast(context, 'Imported');
+                    } else {
                       UiHelper.showToast(context, 'Error');
                     }
-                    logWarning('$ex');
                   }
-                  busy(false);
                 })
           ])),
       ItemInMenuList(

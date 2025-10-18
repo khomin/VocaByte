@@ -47,7 +47,7 @@ struct TableStruct_proto_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[25]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -55,6 +55,12 @@ struct TableStruct_proto_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_proto_2eproto;
 namespace api {
+class GetMetaDataIn;
+class GetMetaDataInDefaultTypeInternal;
+extern GetMetaDataInDefaultTypeInternal _GetMetaDataIn_default_instance_;
+class GetMetaDataOut;
+class GetMetaDataOutDefaultTypeInternal;
+extern GetMetaDataOutDefaultTypeInternal _GetMetaDataOut_default_instance_;
 class InitParams;
 class InitParamsDefaultTypeInternal;
 extern InitParamsDefaultTypeInternal _InitParams_default_instance_;
@@ -118,9 +124,6 @@ extern RespSearchInReviewListDefaultTypeInternal _RespSearchInReviewList_default
 class RespSearchWords;
 class RespSearchWordsDefaultTypeInternal;
 extern RespSearchWordsDefaultTypeInternal _RespSearchWords_default_instance_;
-class RespSentences;
-class RespSentencesDefaultTypeInternal;
-extern RespSentencesDefaultTypeInternal _RespSentences_default_instance_;
 class RespUpdateWordInCurrent;
 class RespUpdateWordInCurrentDefaultTypeInternal;
 extern RespUpdateWordInCurrentDefaultTypeInternal _RespUpdateWordInCurrent_default_instance_;
@@ -132,6 +135,8 @@ class WordInReviewDefaultTypeInternal;
 extern WordInReviewDefaultTypeInternal _WordInReview_default_instance_;
 }  // namespace api
 PROTOBUF_NAMESPACE_OPEN
+template<> ::api::GetMetaDataIn* Arena::CreateMaybeMessage<::api::GetMetaDataIn>(Arena*);
+template<> ::api::GetMetaDataOut* Arena::CreateMaybeMessage<::api::GetMetaDataOut>(Arena*);
 template<> ::api::InitParams* Arena::CreateMaybeMessage<::api::InitParams>(Arena*);
 template<> ::api::ReqAddWordInReview* Arena::CreateMaybeMessage<::api::ReqAddWordInReview>(Arena*);
 template<> ::api::ReqDeleteProfile* Arena::CreateMaybeMessage<::api::ReqDeleteProfile>(Arena*);
@@ -153,7 +158,6 @@ template<> ::api::RespRemoveWordFromCurrent* Arena::CreateMaybeMessage<::api::Re
 template<> ::api::RespReviewForToday* Arena::CreateMaybeMessage<::api::RespReviewForToday>(Arena*);
 template<> ::api::RespSearchInReviewList* Arena::CreateMaybeMessage<::api::RespSearchInReviewList>(Arena*);
 template<> ::api::RespSearchWords* Arena::CreateMaybeMessage<::api::RespSearchWords>(Arena*);
-template<> ::api::RespSentences* Arena::CreateMaybeMessage<::api::RespSentences>(Arena*);
 template<> ::api::RespUpdateWordInCurrent* Arena::CreateMaybeMessage<::api::RespUpdateWordInCurrent>(Arena*);
 template<> ::api::Word* Arena::CreateMaybeMessage<::api::Word>(Arena*);
 template<> ::api::WordInReview* Arena::CreateMaybeMessage<::api::WordInReview>(Arena*);
@@ -1558,6 +1562,7 @@ class WordInReview PROTOBUF_FINAL :
 
   enum : int {
     kWordFieldNumber = 1,
+    kMeaningIdFieldNumber = 7,
     kSuccessCountFieldNumber = 2,
     kFailCountFieldNumber = 3,
     kLastTmSuccessFieldNumber = 4,
@@ -1582,6 +1587,26 @@ class WordInReview PROTOBUF_FINAL :
   const std::string& _internal_word() const;
   void _internal_set_word(const std::string& value);
   std::string* _internal_mutable_word();
+  public:
+
+  // optional string meaning_id = 7;
+  bool has_meaning_id() const;
+  private:
+  bool _internal_has_meaning_id() const;
+  public:
+  void clear_meaning_id();
+  const std::string& meaning_id() const;
+  void set_meaning_id(const std::string& value);
+  void set_meaning_id(std::string&& value);
+  void set_meaning_id(const char* value);
+  void set_meaning_id(const char* value, size_t size);
+  std::string* mutable_meaning_id();
+  std::string* release_meaning_id();
+  void set_allocated_meaning_id(std::string* meaning_id);
+  private:
+  const std::string& _internal_meaning_id() const;
+  void _internal_set_meaning_id(const std::string& value);
+  std::string* _internal_mutable_meaning_id();
   public:
 
   // optional uint32 success_count = 2;
@@ -1659,6 +1684,7 @@ class WordInReview PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr word_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr meaning_id_;
   ::PROTOBUF_NAMESPACE_ID::uint32 success_count_;
   ::PROTOBUF_NAMESPACE_ID::uint32 fail_count_;
   ::PROTOBUF_NAMESPACE_ID::uint64 last_tm_success_;
@@ -1789,6 +1815,7 @@ class ReqAddWordInReview PROTOBUF_FINAL :
 
   enum : int {
     kWordFieldNumber = 1,
+    kMeaningIdFieldNumber = 8,
     kUseExtraFieldsFieldNumber = 2,
     kSuccessCountFieldNumber = 3,
     kLastTmSuccessFieldNumber = 5,
@@ -1814,6 +1841,26 @@ class ReqAddWordInReview PROTOBUF_FINAL :
   const std::string& _internal_word() const;
   void _internal_set_word(const std::string& value);
   std::string* _internal_mutable_word();
+  public:
+
+  // optional string meaning_id = 8;
+  bool has_meaning_id() const;
+  private:
+  bool _internal_has_meaning_id() const;
+  public:
+  void clear_meaning_id();
+  const std::string& meaning_id() const;
+  void set_meaning_id(const std::string& value);
+  void set_meaning_id(std::string&& value);
+  void set_meaning_id(const char* value);
+  void set_meaning_id(const char* value, size_t size);
+  std::string* mutable_meaning_id();
+  std::string* release_meaning_id();
+  void set_allocated_meaning_id(std::string* meaning_id);
+  private:
+  const std::string& _internal_meaning_id() const;
+  void _internal_set_meaning_id(const std::string& value);
+  std::string* _internal_mutable_meaning_id();
   public:
 
   // optional bool use_extra_fields = 2;
@@ -1904,6 +1951,7 @@ class ReqAddWordInReview PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr word_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr meaning_id_;
   bool use_extra_fields_;
   ::PROTOBUF_NAMESPACE_ID::uint32 success_count_;
   ::PROTOBUF_NAMESPACE_ID::uint64 last_tm_success_;
@@ -2453,6 +2501,7 @@ class ReqUpdateWordInCurrent PROTOBUF_FINAL :
 
   enum : int {
     kWordFieldNumber = 1,
+    kMeaningIdFieldNumber = 7,
     kSuccessCountFieldNumber = 2,
     kFailCountFieldNumber = 3,
     kLastTmSuccessFieldNumber = 4,
@@ -2477,6 +2526,26 @@ class ReqUpdateWordInCurrent PROTOBUF_FINAL :
   const std::string& _internal_word() const;
   void _internal_set_word(const std::string& value);
   std::string* _internal_mutable_word();
+  public:
+
+  // optional string meaning_id = 7;
+  bool has_meaning_id() const;
+  private:
+  bool _internal_has_meaning_id() const;
+  public:
+  void clear_meaning_id();
+  const std::string& meaning_id() const;
+  void set_meaning_id(const std::string& value);
+  void set_meaning_id(std::string&& value);
+  void set_meaning_id(const char* value);
+  void set_meaning_id(const char* value, size_t size);
+  std::string* mutable_meaning_id();
+  std::string* release_meaning_id();
+  void set_allocated_meaning_id(std::string* meaning_id);
+  private:
+  const std::string& _internal_meaning_id() const;
+  void _internal_set_meaning_id(const std::string& value);
+  std::string* _internal_mutable_meaning_id();
   public:
 
   // optional uint32 success_count = 2;
@@ -2554,6 +2623,7 @@ class ReqUpdateWordInCurrent PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr word_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr meaning_id_;
   ::PROTOBUF_NAMESPACE_ID::uint32 success_count_;
   ::PROTOBUF_NAMESPACE_ID::uint32 fail_count_;
   ::PROTOBUF_NAMESPACE_ID::uint64 last_tm_success_;
@@ -3989,165 +4059,6 @@ class ReqSentences PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
-class RespSentences PROTOBUF_FINAL :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.RespSentences) */ {
- public:
-  inline RespSentences() : RespSentences(nullptr) {}
-  virtual ~RespSentences();
-
-  RespSentences(const RespSentences& from);
-  RespSentences(RespSentences&& from) noexcept
-    : RespSentences() {
-    *this = ::std::move(from);
-  }
-
-  inline RespSentences& operator=(const RespSentences& from) {
-    CopyFrom(from);
-    return *this;
-  }
-  inline RespSentences& operator=(RespSentences&& from) noexcept {
-    if (GetArena() == from.GetArena()) {
-      if (this != &from) InternalSwap(&from);
-    } else {
-      CopyFrom(from);
-    }
-    return *this;
-  }
-
-  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
-    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
-  }
-  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
-    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-  }
-
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
-    return GetDescriptor();
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
-    return GetMetadataStatic().descriptor;
-  }
-  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
-    return GetMetadataStatic().reflection;
-  }
-  static const RespSentences& default_instance();
-
-  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
-  static inline const RespSentences* internal_default_instance() {
-    return reinterpret_cast<const RespSentences*>(
-               &_RespSentences_default_instance_);
-  }
-  static constexpr int kIndexInFileMessages =
-    23;
-
-  friend void swap(RespSentences& a, RespSentences& b) {
-    a.Swap(&b);
-  }
-  inline void Swap(RespSentences* other) {
-    if (other == this) return;
-    if (GetArena() == other->GetArena()) {
-      InternalSwap(other);
-    } else {
-      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
-    }
-  }
-  void UnsafeArenaSwap(RespSentences* other) {
-    if (other == this) return;
-    GOOGLE_DCHECK(GetArena() == other->GetArena());
-    InternalSwap(other);
-  }
-
-  // implements Message ----------------------------------------------
-
-  inline RespSentences* New() const final {
-    return CreateMaybeMessage<RespSentences>(nullptr);
-  }
-
-  RespSentences* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
-    return CreateMaybeMessage<RespSentences>(arena);
-  }
-  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
-  void CopyFrom(const RespSentences& from);
-  void MergeFrom(const RespSentences& from);
-  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
-  bool IsInitialized() const final;
-
-  size_t ByteSizeLong() const final;
-  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
-  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
-      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
-  int GetCachedSize() const final { return _cached_size_.Get(); }
-
-  private:
-  inline void SharedCtor();
-  inline void SharedDtor();
-  void SetCachedSize(int size) const final;
-  void InternalSwap(RespSentences* other);
-  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
-  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "api.RespSentences";
-  }
-  protected:
-  explicit RespSentences(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  private:
-  static void ArenaDtor(void* object);
-  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
-  public:
-
-  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
-  private:
-  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
-    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_proto_2eproto);
-    return ::descriptor_table_proto_2eproto.file_level_metadata[kIndexInFileMessages];
-  }
-
-  public:
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  enum : int {
-    kDataFieldNumber = 1,
-  };
-  // repeated string data = 1;
-  int data_size() const;
-  private:
-  int _internal_data_size() const;
-  public:
-  void clear_data();
-  const std::string& data(int index) const;
-  std::string* mutable_data(int index);
-  void set_data(int index, const std::string& value);
-  void set_data(int index, std::string&& value);
-  void set_data(int index, const char* value);
-  void set_data(int index, const char* value, size_t size);
-  std::string* add_data();
-  void add_data(const std::string& value);
-  void add_data(std::string&& value);
-  void add_data(const char* value);
-  void add_data(const char* value, size_t size);
-  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>& data() const;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>* mutable_data();
-  private:
-  const std::string& _internal_data(int index) const;
-  std::string* _internal_add_data();
-  public:
-
-  // @@protoc_insertion_point(class_scope:api.RespSentences)
- private:
-  class _Internal;
-
-  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
-  typedef void InternalArenaConstructable_;
-  typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string> data_;
-  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
-  friend struct ::TableStruct_proto_2eproto;
-};
-// -------------------------------------------------------------------
-
 class RespDefault PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.RespDefault) */ {
  public:
@@ -4197,7 +4108,7 @@ class RespDefault PROTOBUF_FINAL :
                &_RespDefault_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    23;
 
   friend void swap(RespDefault& a, RespDefault& b) {
     a.Swap(&b);
@@ -4293,6 +4204,286 @@ class RespDefault PROTOBUF_FINAL :
   ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   bool value_;
+  friend struct ::TableStruct_proto_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetMetaDataIn PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.GetMetaDataIn) */ {
+ public:
+  inline GetMetaDataIn() : GetMetaDataIn(nullptr) {}
+  virtual ~GetMetaDataIn();
+
+  GetMetaDataIn(const GetMetaDataIn& from);
+  GetMetaDataIn(GetMetaDataIn&& from) noexcept
+    : GetMetaDataIn() {
+    *this = ::std::move(from);
+  }
+
+  inline GetMetaDataIn& operator=(const GetMetaDataIn& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetMetaDataIn& operator=(GetMetaDataIn&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetMetaDataIn& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetMetaDataIn* internal_default_instance() {
+    return reinterpret_cast<const GetMetaDataIn*>(
+               &_GetMetaDataIn_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  friend void swap(GetMetaDataIn& a, GetMetaDataIn& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetMetaDataIn* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetMetaDataIn* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetMetaDataIn* New() const final {
+    return CreateMaybeMessage<GetMetaDataIn>(nullptr);
+  }
+
+  GetMetaDataIn* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetMetaDataIn>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetMetaDataIn& from);
+  void MergeFrom(const GetMetaDataIn& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetMetaDataIn* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "api.GetMetaDataIn";
+  }
+  protected:
+  explicit GetMetaDataIn(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_proto_2eproto);
+    return ::descriptor_table_proto_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  // @@protoc_insertion_point(class_scope:api.GetMetaDataIn)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_proto_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GetMetaDataOut PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.GetMetaDataOut) */ {
+ public:
+  inline GetMetaDataOut() : GetMetaDataOut(nullptr) {}
+  virtual ~GetMetaDataOut();
+
+  GetMetaDataOut(const GetMetaDataOut& from);
+  GetMetaDataOut(GetMetaDataOut&& from) noexcept
+    : GetMetaDataOut() {
+    *this = ::std::move(from);
+  }
+
+  inline GetMetaDataOut& operator=(const GetMetaDataOut& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetMetaDataOut& operator=(GetMetaDataOut&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetMetaDataOut& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetMetaDataOut* internal_default_instance() {
+    return reinterpret_cast<const GetMetaDataOut*>(
+               &_GetMetaDataOut_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(GetMetaDataOut& a, GetMetaDataOut& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetMetaDataOut* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetMetaDataOut* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetMetaDataOut* New() const final {
+    return CreateMaybeMessage<GetMetaDataOut>(nullptr);
+  }
+
+  GetMetaDataOut* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetMetaDataOut>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetMetaDataOut& from);
+  void MergeFrom(const GetMetaDataOut& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetMetaDataOut* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "api.GetMetaDataOut";
+  }
+  protected:
+  explicit GetMetaDataOut(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_proto_2eproto);
+    return ::descriptor_table_proto_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kVersionFieldNumber = 1,
+  };
+  // optional int32 version = 1;
+  bool has_version() const;
+  private:
+  bool _internal_has_version() const;
+  public:
+  void clear_version();
+  ::PROTOBUF_NAMESPACE_ID::int32 version() const;
+  void set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  private:
+  ::PROTOBUF_NAMESPACE_ID::int32 _internal_version() const;
+  void _internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:api.GetMetaDataOut)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  ::PROTOBUF_NAMESPACE_ID::int32 version_;
   friend struct ::TableStruct_proto_2eproto;
 };
 // ===================================================================
@@ -4992,7 +5183,7 @@ inline void WordInReview::set_allocated_word(std::string* word) {
 
 // optional uint32 success_count = 2;
 inline bool WordInReview::_internal_has_success_count() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool WordInReview::has_success_count() const {
@@ -5000,7 +5191,7 @@ inline bool WordInReview::has_success_count() const {
 }
 inline void WordInReview::clear_success_count() {
   success_count_ = 0u;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 WordInReview::_internal_success_count() const {
   return success_count_;
@@ -5010,7 +5201,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 WordInReview::success_count() const {
   return _internal_success_count();
 }
 inline void WordInReview::_internal_set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   success_count_ = value;
 }
 inline void WordInReview::set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -5020,7 +5211,7 @@ inline void WordInReview::set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 valu
 
 // optional uint32 fail_count = 3;
 inline bool WordInReview::_internal_has_fail_count() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool WordInReview::has_fail_count() const {
@@ -5028,7 +5219,7 @@ inline bool WordInReview::has_fail_count() const {
 }
 inline void WordInReview::clear_fail_count() {
   fail_count_ = 0u;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 WordInReview::_internal_fail_count() const {
   return fail_count_;
@@ -5038,7 +5229,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 WordInReview::fail_count() const {
   return _internal_fail_count();
 }
 inline void WordInReview::_internal_set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   fail_count_ = value;
 }
 inline void WordInReview::set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -5048,7 +5239,7 @@ inline void WordInReview::set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) 
 
 // optional uint64 last_tm_success = 4;
 inline bool WordInReview::_internal_has_last_tm_success() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool WordInReview::has_last_tm_success() const {
@@ -5056,7 +5247,7 @@ inline bool WordInReview::has_last_tm_success() const {
 }
 inline void WordInReview::clear_last_tm_success() {
   last_tm_success_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 WordInReview::_internal_last_tm_success() const {
   return last_tm_success_;
@@ -5066,7 +5257,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 WordInReview::last_tm_success() const {
   return _internal_last_tm_success();
 }
 inline void WordInReview::_internal_set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   last_tm_success_ = value;
 }
 inline void WordInReview::set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -5076,7 +5267,7 @@ inline void WordInReview::set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 va
 
 // optional uint64 last_tm_fail = 5;
 inline bool WordInReview::_internal_has_last_tm_fail() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool WordInReview::has_last_tm_fail() const {
@@ -5084,7 +5275,7 @@ inline bool WordInReview::has_last_tm_fail() const {
 }
 inline void WordInReview::clear_last_tm_fail() {
   last_tm_fail_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 WordInReview::_internal_last_tm_fail() const {
   return last_tm_fail_;
@@ -5094,7 +5285,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 WordInReview::last_tm_fail() const {
   return _internal_last_tm_fail();
 }
 inline void WordInReview::_internal_set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   last_tm_fail_ = value;
 }
 inline void WordInReview::set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -5104,7 +5295,7 @@ inline void WordInReview::set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value
 
 // optional uint64 next_review_tm_ms = 6;
 inline bool WordInReview::_internal_has_next_review_tm_ms() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool WordInReview::has_next_review_tm_ms() const {
@@ -5112,7 +5303,7 @@ inline bool WordInReview::has_next_review_tm_ms() const {
 }
 inline void WordInReview::clear_next_review_tm_ms() {
   next_review_tm_ms_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 WordInReview::_internal_next_review_tm_ms() const {
   return next_review_tm_ms_;
@@ -5122,12 +5313,86 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 WordInReview::next_review_tm_ms() const {
   return _internal_next_review_tm_ms();
 }
 inline void WordInReview::_internal_set_next_review_tm_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   next_review_tm_ms_ = value;
 }
 inline void WordInReview::set_next_review_tm_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_next_review_tm_ms(value);
   // @@protoc_insertion_point(field_set:api.WordInReview.next_review_tm_ms)
+}
+
+// optional string meaning_id = 7;
+inline bool WordInReview::_internal_has_meaning_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool WordInReview::has_meaning_id() const {
+  return _internal_has_meaning_id();
+}
+inline void WordInReview::clear_meaning_id() {
+  meaning_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& WordInReview::meaning_id() const {
+  // @@protoc_insertion_point(field_get:api.WordInReview.meaning_id)
+  return _internal_meaning_id();
+}
+inline void WordInReview::set_meaning_id(const std::string& value) {
+  _internal_set_meaning_id(value);
+  // @@protoc_insertion_point(field_set:api.WordInReview.meaning_id)
+}
+inline std::string* WordInReview::mutable_meaning_id() {
+  // @@protoc_insertion_point(field_mutable:api.WordInReview.meaning_id)
+  return _internal_mutable_meaning_id();
+}
+inline const std::string& WordInReview::_internal_meaning_id() const {
+  return meaning_id_.Get();
+}
+inline void WordInReview::_internal_set_meaning_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void WordInReview::set_meaning_id(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:api.WordInReview.meaning_id)
+}
+inline void WordInReview::set_meaning_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:api.WordInReview.meaning_id)
+}
+inline void WordInReview::set_meaning_id(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:api.WordInReview.meaning_id)
+}
+inline std::string* WordInReview::_internal_mutable_meaning_id() {
+  _has_bits_[0] |= 0x00000002u;
+  return meaning_id_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* WordInReview::release_meaning_id() {
+  // @@protoc_insertion_point(field_release:api.WordInReview.meaning_id)
+  if (!_internal_has_meaning_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return meaning_id_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void WordInReview::set_allocated_meaning_id(std::string* meaning_id) {
+  if (meaning_id != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  meaning_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), meaning_id,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:api.WordInReview.meaning_id)
 }
 
 // -------------------------------------------------------------------
@@ -5210,7 +5475,7 @@ inline void ReqAddWordInReview::set_allocated_word(std::string* word) {
 
 // optional bool use_extra_fields = 2;
 inline bool ReqAddWordInReview::_internal_has_use_extra_fields() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool ReqAddWordInReview::has_use_extra_fields() const {
@@ -5218,7 +5483,7 @@ inline bool ReqAddWordInReview::has_use_extra_fields() const {
 }
 inline void ReqAddWordInReview::clear_use_extra_fields() {
   use_extra_fields_ = false;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline bool ReqAddWordInReview::_internal_use_extra_fields() const {
   return use_extra_fields_;
@@ -5228,7 +5493,7 @@ inline bool ReqAddWordInReview::use_extra_fields() const {
   return _internal_use_extra_fields();
 }
 inline void ReqAddWordInReview::_internal_set_use_extra_fields(bool value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   use_extra_fields_ = value;
 }
 inline void ReqAddWordInReview::set_use_extra_fields(bool value) {
@@ -5238,7 +5503,7 @@ inline void ReqAddWordInReview::set_use_extra_fields(bool value) {
 
 // optional uint32 success_count = 3;
 inline bool ReqAddWordInReview::_internal_has_success_count() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool ReqAddWordInReview::has_success_count() const {
@@ -5246,7 +5511,7 @@ inline bool ReqAddWordInReview::has_success_count() const {
 }
 inline void ReqAddWordInReview::clear_success_count() {
   success_count_ = 0u;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqAddWordInReview::_internal_success_count() const {
   return success_count_;
@@ -5256,7 +5521,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqAddWordInReview::success_count() const
   return _internal_success_count();
 }
 inline void ReqAddWordInReview::_internal_set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   success_count_ = value;
 }
 inline void ReqAddWordInReview::set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -5266,7 +5531,7 @@ inline void ReqAddWordInReview::set_success_count(::PROTOBUF_NAMESPACE_ID::uint3
 
 // optional uint32 fail_count = 4;
 inline bool ReqAddWordInReview::_internal_has_fail_count() const {
-  bool value = (_has_bits_[0] & 0x00000040u) != 0;
+  bool value = (_has_bits_[0] & 0x00000080u) != 0;
   return value;
 }
 inline bool ReqAddWordInReview::has_fail_count() const {
@@ -5274,7 +5539,7 @@ inline bool ReqAddWordInReview::has_fail_count() const {
 }
 inline void ReqAddWordInReview::clear_fail_count() {
   fail_count_ = 0u;
-  _has_bits_[0] &= ~0x00000040u;
+  _has_bits_[0] &= ~0x00000080u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqAddWordInReview::_internal_fail_count() const {
   return fail_count_;
@@ -5284,7 +5549,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqAddWordInReview::fail_count() const {
   return _internal_fail_count();
 }
 inline void ReqAddWordInReview::_internal_set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[0] |= 0x00000040u;
+  _has_bits_[0] |= 0x00000080u;
   fail_count_ = value;
 }
 inline void ReqAddWordInReview::set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -5294,7 +5559,7 @@ inline void ReqAddWordInReview::set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 v
 
 // optional uint64 last_tm_success = 5;
 inline bool ReqAddWordInReview::_internal_has_last_tm_success() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool ReqAddWordInReview::has_last_tm_success() const {
@@ -5302,7 +5567,7 @@ inline bool ReqAddWordInReview::has_last_tm_success() const {
 }
 inline void ReqAddWordInReview::clear_last_tm_success() {
   last_tm_success_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqAddWordInReview::_internal_last_tm_success() const {
   return last_tm_success_;
@@ -5312,7 +5577,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqAddWordInReview::last_tm_success() con
   return _internal_last_tm_success();
 }
 inline void ReqAddWordInReview::_internal_set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   last_tm_success_ = value;
 }
 inline void ReqAddWordInReview::set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -5322,7 +5587,7 @@ inline void ReqAddWordInReview::set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uin
 
 // optional uint64 last_tm_fail = 6;
 inline bool ReqAddWordInReview::_internal_has_last_tm_fail() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool ReqAddWordInReview::has_last_tm_fail() const {
@@ -5330,7 +5595,7 @@ inline bool ReqAddWordInReview::has_last_tm_fail() const {
 }
 inline void ReqAddWordInReview::clear_last_tm_fail() {
   last_tm_fail_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqAddWordInReview::_internal_last_tm_fail() const {
   return last_tm_fail_;
@@ -5340,7 +5605,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqAddWordInReview::last_tm_fail() const 
   return _internal_last_tm_fail();
 }
 inline void ReqAddWordInReview::_internal_set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   last_tm_fail_ = value;
 }
 inline void ReqAddWordInReview::set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -5350,7 +5615,7 @@ inline void ReqAddWordInReview::set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64
 
 // optional uint64 next_review_tm_ms = 7;
 inline bool ReqAddWordInReview::_internal_has_next_review_tm_ms() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool ReqAddWordInReview::has_next_review_tm_ms() const {
@@ -5358,7 +5623,7 @@ inline bool ReqAddWordInReview::has_next_review_tm_ms() const {
 }
 inline void ReqAddWordInReview::clear_next_review_tm_ms() {
   next_review_tm_ms_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqAddWordInReview::_internal_next_review_tm_ms() const {
   return next_review_tm_ms_;
@@ -5368,12 +5633,86 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqAddWordInReview::next_review_tm_ms() c
   return _internal_next_review_tm_ms();
 }
 inline void ReqAddWordInReview::_internal_set_next_review_tm_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   next_review_tm_ms_ = value;
 }
 inline void ReqAddWordInReview::set_next_review_tm_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_next_review_tm_ms(value);
   // @@protoc_insertion_point(field_set:api.ReqAddWordInReview.next_review_tm_ms)
+}
+
+// optional string meaning_id = 8;
+inline bool ReqAddWordInReview::_internal_has_meaning_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool ReqAddWordInReview::has_meaning_id() const {
+  return _internal_has_meaning_id();
+}
+inline void ReqAddWordInReview::clear_meaning_id() {
+  meaning_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& ReqAddWordInReview::meaning_id() const {
+  // @@protoc_insertion_point(field_get:api.ReqAddWordInReview.meaning_id)
+  return _internal_meaning_id();
+}
+inline void ReqAddWordInReview::set_meaning_id(const std::string& value) {
+  _internal_set_meaning_id(value);
+  // @@protoc_insertion_point(field_set:api.ReqAddWordInReview.meaning_id)
+}
+inline std::string* ReqAddWordInReview::mutable_meaning_id() {
+  // @@protoc_insertion_point(field_mutable:api.ReqAddWordInReview.meaning_id)
+  return _internal_mutable_meaning_id();
+}
+inline const std::string& ReqAddWordInReview::_internal_meaning_id() const {
+  return meaning_id_.Get();
+}
+inline void ReqAddWordInReview::_internal_set_meaning_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void ReqAddWordInReview::set_meaning_id(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:api.ReqAddWordInReview.meaning_id)
+}
+inline void ReqAddWordInReview::set_meaning_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:api.ReqAddWordInReview.meaning_id)
+}
+inline void ReqAddWordInReview::set_meaning_id(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:api.ReqAddWordInReview.meaning_id)
+}
+inline std::string* ReqAddWordInReview::_internal_mutable_meaning_id() {
+  _has_bits_[0] |= 0x00000002u;
+  return meaning_id_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* ReqAddWordInReview::release_meaning_id() {
+  // @@protoc_insertion_point(field_release:api.ReqAddWordInReview.meaning_id)
+  if (!_internal_has_meaning_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return meaning_id_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void ReqAddWordInReview::set_allocated_meaning_id(std::string* meaning_id) {
+  if (meaning_id != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  meaning_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), meaning_id,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:api.ReqAddWordInReview.meaning_id)
 }
 
 // -------------------------------------------------------------------
@@ -5542,7 +5881,7 @@ inline void ReqUpdateWordInCurrent::set_allocated_word(std::string* word) {
 
 // optional uint32 success_count = 2;
 inline bool ReqUpdateWordInCurrent::_internal_has_success_count() const {
-  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  bool value = (_has_bits_[0] & 0x00000004u) != 0;
   return value;
 }
 inline bool ReqUpdateWordInCurrent::has_success_count() const {
@@ -5550,7 +5889,7 @@ inline bool ReqUpdateWordInCurrent::has_success_count() const {
 }
 inline void ReqUpdateWordInCurrent::clear_success_count() {
   success_count_ = 0u;
-  _has_bits_[0] &= ~0x00000002u;
+  _has_bits_[0] &= ~0x00000004u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqUpdateWordInCurrent::_internal_success_count() const {
   return success_count_;
@@ -5560,7 +5899,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqUpdateWordInCurrent::success_count() c
   return _internal_success_count();
 }
 inline void ReqUpdateWordInCurrent::_internal_set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[0] |= 0x00000002u;
+  _has_bits_[0] |= 0x00000004u;
   success_count_ = value;
 }
 inline void ReqUpdateWordInCurrent::set_success_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -5570,7 +5909,7 @@ inline void ReqUpdateWordInCurrent::set_success_count(::PROTOBUF_NAMESPACE_ID::u
 
 // optional uint32 fail_count = 3;
 inline bool ReqUpdateWordInCurrent::_internal_has_fail_count() const {
-  bool value = (_has_bits_[0] & 0x00000004u) != 0;
+  bool value = (_has_bits_[0] & 0x00000008u) != 0;
   return value;
 }
 inline bool ReqUpdateWordInCurrent::has_fail_count() const {
@@ -5578,7 +5917,7 @@ inline bool ReqUpdateWordInCurrent::has_fail_count() const {
 }
 inline void ReqUpdateWordInCurrent::clear_fail_count() {
   fail_count_ = 0u;
-  _has_bits_[0] &= ~0x00000004u;
+  _has_bits_[0] &= ~0x00000008u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqUpdateWordInCurrent::_internal_fail_count() const {
   return fail_count_;
@@ -5588,7 +5927,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint32 ReqUpdateWordInCurrent::fail_count() cons
   return _internal_fail_count();
 }
 inline void ReqUpdateWordInCurrent::_internal_set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
-  _has_bits_[0] |= 0x00000004u;
+  _has_bits_[0] |= 0x00000008u;
   fail_count_ = value;
 }
 inline void ReqUpdateWordInCurrent::set_fail_count(::PROTOBUF_NAMESPACE_ID::uint32 value) {
@@ -5598,7 +5937,7 @@ inline void ReqUpdateWordInCurrent::set_fail_count(::PROTOBUF_NAMESPACE_ID::uint
 
 // optional uint64 last_tm_success = 4;
 inline bool ReqUpdateWordInCurrent::_internal_has_last_tm_success() const {
-  bool value = (_has_bits_[0] & 0x00000008u) != 0;
+  bool value = (_has_bits_[0] & 0x00000010u) != 0;
   return value;
 }
 inline bool ReqUpdateWordInCurrent::has_last_tm_success() const {
@@ -5606,7 +5945,7 @@ inline bool ReqUpdateWordInCurrent::has_last_tm_success() const {
 }
 inline void ReqUpdateWordInCurrent::clear_last_tm_success() {
   last_tm_success_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000008u;
+  _has_bits_[0] &= ~0x00000010u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqUpdateWordInCurrent::_internal_last_tm_success() const {
   return last_tm_success_;
@@ -5616,7 +5955,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqUpdateWordInCurrent::last_tm_success()
   return _internal_last_tm_success();
 }
 inline void ReqUpdateWordInCurrent::_internal_set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000008u;
+  _has_bits_[0] |= 0x00000010u;
   last_tm_success_ = value;
 }
 inline void ReqUpdateWordInCurrent::set_last_tm_success(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -5626,7 +5965,7 @@ inline void ReqUpdateWordInCurrent::set_last_tm_success(::PROTOBUF_NAMESPACE_ID:
 
 // optional uint64 last_tm_fail = 5;
 inline bool ReqUpdateWordInCurrent::_internal_has_last_tm_fail() const {
-  bool value = (_has_bits_[0] & 0x00000010u) != 0;
+  bool value = (_has_bits_[0] & 0x00000020u) != 0;
   return value;
 }
 inline bool ReqUpdateWordInCurrent::has_last_tm_fail() const {
@@ -5634,7 +5973,7 @@ inline bool ReqUpdateWordInCurrent::has_last_tm_fail() const {
 }
 inline void ReqUpdateWordInCurrent::clear_last_tm_fail() {
   last_tm_fail_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000010u;
+  _has_bits_[0] &= ~0x00000020u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqUpdateWordInCurrent::_internal_last_tm_fail() const {
   return last_tm_fail_;
@@ -5644,7 +5983,7 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqUpdateWordInCurrent::last_tm_fail() co
   return _internal_last_tm_fail();
 }
 inline void ReqUpdateWordInCurrent::_internal_set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000010u;
+  _has_bits_[0] |= 0x00000020u;
   last_tm_fail_ = value;
 }
 inline void ReqUpdateWordInCurrent::set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::uint64 value) {
@@ -5654,7 +5993,7 @@ inline void ReqUpdateWordInCurrent::set_last_tm_fail(::PROTOBUF_NAMESPACE_ID::ui
 
 // optional uint64 next_review_tm_ms = 6;
 inline bool ReqUpdateWordInCurrent::_internal_has_next_review_tm_ms() const {
-  bool value = (_has_bits_[0] & 0x00000020u) != 0;
+  bool value = (_has_bits_[0] & 0x00000040u) != 0;
   return value;
 }
 inline bool ReqUpdateWordInCurrent::has_next_review_tm_ms() const {
@@ -5662,7 +6001,7 @@ inline bool ReqUpdateWordInCurrent::has_next_review_tm_ms() const {
 }
 inline void ReqUpdateWordInCurrent::clear_next_review_tm_ms() {
   next_review_tm_ms_ = PROTOBUF_ULONGLONG(0);
-  _has_bits_[0] &= ~0x00000020u;
+  _has_bits_[0] &= ~0x00000040u;
 }
 inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqUpdateWordInCurrent::_internal_next_review_tm_ms() const {
   return next_review_tm_ms_;
@@ -5672,12 +6011,86 @@ inline ::PROTOBUF_NAMESPACE_ID::uint64 ReqUpdateWordInCurrent::next_review_tm_ms
   return _internal_next_review_tm_ms();
 }
 inline void ReqUpdateWordInCurrent::_internal_set_next_review_tm_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
-  _has_bits_[0] |= 0x00000020u;
+  _has_bits_[0] |= 0x00000040u;
   next_review_tm_ms_ = value;
 }
 inline void ReqUpdateWordInCurrent::set_next_review_tm_ms(::PROTOBUF_NAMESPACE_ID::uint64 value) {
   _internal_set_next_review_tm_ms(value);
   // @@protoc_insertion_point(field_set:api.ReqUpdateWordInCurrent.next_review_tm_ms)
+}
+
+// optional string meaning_id = 7;
+inline bool ReqUpdateWordInCurrent::_internal_has_meaning_id() const {
+  bool value = (_has_bits_[0] & 0x00000002u) != 0;
+  return value;
+}
+inline bool ReqUpdateWordInCurrent::has_meaning_id() const {
+  return _internal_has_meaning_id();
+}
+inline void ReqUpdateWordInCurrent::clear_meaning_id() {
+  meaning_id_.ClearToEmpty(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  _has_bits_[0] &= ~0x00000002u;
+}
+inline const std::string& ReqUpdateWordInCurrent::meaning_id() const {
+  // @@protoc_insertion_point(field_get:api.ReqUpdateWordInCurrent.meaning_id)
+  return _internal_meaning_id();
+}
+inline void ReqUpdateWordInCurrent::set_meaning_id(const std::string& value) {
+  _internal_set_meaning_id(value);
+  // @@protoc_insertion_point(field_set:api.ReqUpdateWordInCurrent.meaning_id)
+}
+inline std::string* ReqUpdateWordInCurrent::mutable_meaning_id() {
+  // @@protoc_insertion_point(field_mutable:api.ReqUpdateWordInCurrent.meaning_id)
+  return _internal_mutable_meaning_id();
+}
+inline const std::string& ReqUpdateWordInCurrent::_internal_meaning_id() const {
+  return meaning_id_.Get();
+}
+inline void ReqUpdateWordInCurrent::_internal_set_meaning_id(const std::string& value) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), value, GetArena());
+}
+inline void ReqUpdateWordInCurrent::set_meaning_id(std::string&& value) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(
+    &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::move(value), GetArena());
+  // @@protoc_insertion_point(field_set_rvalue:api.ReqUpdateWordInCurrent.meaning_id)
+}
+inline void ReqUpdateWordInCurrent::set_meaning_id(const char* value) {
+  GOOGLE_DCHECK(value != nullptr);
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(value),
+              GetArena());
+  // @@protoc_insertion_point(field_set_char:api.ReqUpdateWordInCurrent.meaning_id)
+}
+inline void ReqUpdateWordInCurrent::set_meaning_id(const char* value,
+    size_t size) {
+  _has_bits_[0] |= 0x00000002u;
+  meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), ::std::string(
+      reinterpret_cast<const char*>(value), size), GetArena());
+  // @@protoc_insertion_point(field_set_pointer:api.ReqUpdateWordInCurrent.meaning_id)
+}
+inline std::string* ReqUpdateWordInCurrent::_internal_mutable_meaning_id() {
+  _has_bits_[0] |= 0x00000002u;
+  return meaning_id_.Mutable(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline std::string* ReqUpdateWordInCurrent::release_meaning_id() {
+  // @@protoc_insertion_point(field_release:api.ReqUpdateWordInCurrent.meaning_id)
+  if (!_internal_has_meaning_id()) {
+    return nullptr;
+  }
+  _has_bits_[0] &= ~0x00000002u;
+  return meaning_id_.ReleaseNonDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+}
+inline void ReqUpdateWordInCurrent::set_allocated_meaning_id(std::string* meaning_id) {
+  if (meaning_id != nullptr) {
+    _has_bits_[0] |= 0x00000002u;
+  } else {
+    _has_bits_[0] &= ~0x00000002u;
+  }
+  meaning_id_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), meaning_id,
+      GetArena());
+  // @@protoc_insertion_point(field_set_allocated:api.ReqUpdateWordInCurrent.meaning_id)
 }
 
 // -------------------------------------------------------------------
@@ -6288,84 +6701,6 @@ inline void ReqSentences::set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value) {
 
 // -------------------------------------------------------------------
 
-// RespSentences
-
-// repeated string data = 1;
-inline int RespSentences::_internal_data_size() const {
-  return data_.size();
-}
-inline int RespSentences::data_size() const {
-  return _internal_data_size();
-}
-inline void RespSentences::clear_data() {
-  data_.Clear();
-}
-inline std::string* RespSentences::add_data() {
-  // @@protoc_insertion_point(field_add_mutable:api.RespSentences.data)
-  return _internal_add_data();
-}
-inline const std::string& RespSentences::_internal_data(int index) const {
-  return data_.Get(index);
-}
-inline const std::string& RespSentences::data(int index) const {
-  // @@protoc_insertion_point(field_get:api.RespSentences.data)
-  return _internal_data(index);
-}
-inline std::string* RespSentences::mutable_data(int index) {
-  // @@protoc_insertion_point(field_mutable:api.RespSentences.data)
-  return data_.Mutable(index);
-}
-inline void RespSentences::set_data(int index, const std::string& value) {
-  // @@protoc_insertion_point(field_set:api.RespSentences.data)
-  data_.Mutable(index)->assign(value);
-}
-inline void RespSentences::set_data(int index, std::string&& value) {
-  // @@protoc_insertion_point(field_set:api.RespSentences.data)
-  data_.Mutable(index)->assign(std::move(value));
-}
-inline void RespSentences::set_data(int index, const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  data_.Mutable(index)->assign(value);
-  // @@protoc_insertion_point(field_set_char:api.RespSentences.data)
-}
-inline void RespSentences::set_data(int index, const char* value, size_t size) {
-  data_.Mutable(index)->assign(
-    reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_set_pointer:api.RespSentences.data)
-}
-inline std::string* RespSentences::_internal_add_data() {
-  return data_.Add();
-}
-inline void RespSentences::add_data(const std::string& value) {
-  data_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add:api.RespSentences.data)
-}
-inline void RespSentences::add_data(std::string&& value) {
-  data_.Add(std::move(value));
-  // @@protoc_insertion_point(field_add:api.RespSentences.data)
-}
-inline void RespSentences::add_data(const char* value) {
-  GOOGLE_DCHECK(value != nullptr);
-  data_.Add()->assign(value);
-  // @@protoc_insertion_point(field_add_char:api.RespSentences.data)
-}
-inline void RespSentences::add_data(const char* value, size_t size) {
-  data_.Add()->assign(reinterpret_cast<const char*>(value), size);
-  // @@protoc_insertion_point(field_add_pointer:api.RespSentences.data)
-}
-inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>&
-RespSentences::data() const {
-  // @@protoc_insertion_point(field_list:api.RespSentences.data)
-  return data_;
-}
-inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField<std::string>*
-RespSentences::mutable_data() {
-  // @@protoc_insertion_point(field_mutable_list:api.RespSentences.data)
-  return &data_;
-}
-
-// -------------------------------------------------------------------
-
 // RespDefault
 
 // optional bool value = 1;
@@ -6396,9 +6731,47 @@ inline void RespDefault::set_value(bool value) {
   // @@protoc_insertion_point(field_set:api.RespDefault.value)
 }
 
+// -------------------------------------------------------------------
+
+// GetMetaDataIn
+
+// -------------------------------------------------------------------
+
+// GetMetaDataOut
+
+// optional int32 version = 1;
+inline bool GetMetaDataOut::_internal_has_version() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool GetMetaDataOut::has_version() const {
+  return _internal_has_version();
+}
+inline void GetMetaDataOut::clear_version() {
+  version_ = 0;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetMetaDataOut::_internal_version() const {
+  return version_;
+}
+inline ::PROTOBUF_NAMESPACE_ID::int32 GetMetaDataOut::version() const {
+  // @@protoc_insertion_point(field_get:api.GetMetaDataOut.version)
+  return _internal_version();
+}
+inline void GetMetaDataOut::_internal_set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _has_bits_[0] |= 0x00000001u;
+  version_ = value;
+}
+inline void GetMetaDataOut::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
+  _internal_set_version(value);
+  // @@protoc_insertion_point(field_set:api.GetMetaDataOut.version)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -49,7 +49,7 @@ class ManageWordPageState extends State<ManageWordPage> {
 
   void _clicked(String text) async {
     _model.loseFocus();
-    var r = await ServiceApi().searchWords(word: text, useLike: false);
+    var r = await ServiceApi().getDictionary(word: text, useLike: false);
     var word = r.item.firstOrNull;
     if (word == null) return;
     var info = await AppRep().wordToInfo(word);

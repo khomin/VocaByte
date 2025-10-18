@@ -1,7 +1,7 @@
 import os
 import re
 
-from tqdm import tqdm
+# from tqdm import tqdm
 from db import Db
 
 class CreateDb:

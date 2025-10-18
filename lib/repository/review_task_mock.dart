@@ -12,7 +12,8 @@ class ReviewTaskMock extends ReviewTaskBase {
     randomPages.shuffle();
     var i = 0;
     for (var it in mockList) {
-      var r = await AppRep().buildReview(it, randomPages.first);
+      var r = await AppRep()
+          .buildReview(v: it, meaningId: null, type: randomPages.first);
       if (r != null) {
         cards.add(r);
       }
@@ -31,7 +32,8 @@ class ReviewTaskMock extends ReviewTaskBase {
   @override
   Future getMore() async {
     for (var it in mockList) {
-      var r = await AppRep().buildReview(it, CardPageType.defToWords);
+      var r = await AppRep()
+          .buildReview(v: it, meaningId: null, type: CardPageType.defToWords);
       if (r != null) {
         cardData.add(r);
       }
