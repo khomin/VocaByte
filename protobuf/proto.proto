@@ -44,6 +44,7 @@ message WordInReview {
     optional uint64 last_tm_success = 4;
     optional uint64 last_tm_fail = 5;
     optional uint64 next_review_tm_ms = 6;
+    optional string meaning_id = 7;
 }
 
 message ReqAddWordInReview {
@@ -54,6 +55,7 @@ message ReqAddWordInReview {
     optional uint64 last_tm_success = 5;
     optional uint64 last_tm_fail = 6;
     optional uint64 next_review_tm_ms = 7;
+    optional string meaning_id = 8;
 }
 
 message RespAddWordInCurrent {}
@@ -71,6 +73,7 @@ message ReqUpdateWordInCurrent {
     optional uint64 last_tm_success = 4;
     optional uint64 last_tm_fail = 5;
     optional uint64 next_review_tm_ms = 6;
+    optional string meaning_id = 7;
 }
 
 message RespUpdateWordInCurrent {}
@@ -108,10 +111,6 @@ message ReqSentences {
     optional string word = 1;
     optional uint32 limit = 2;
     optional uint32 offset = 3;
-}
-
-message RespSentences {
-    repeated string data = 1;
 }
 
 message RespDefault {

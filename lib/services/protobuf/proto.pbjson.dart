@@ -124,6 +124,7 @@ const WordInReview$json = {
     {'1': 'last_tm_success', '3': 4, '4': 1, '5': 4, '10': 'lastTmSuccess'},
     {'1': 'last_tm_fail', '3': 5, '4': 1, '5': 4, '10': 'lastTmFail'},
     {'1': 'next_review_tm_ms', '3': 6, '4': 1, '5': 4, '10': 'nextReviewTmMs'},
+    {'1': 'meaning_id', '3': 7, '4': 1, '5': 9, '10': 'meaningId'},
   ],
 };
 
@@ -132,7 +133,8 @@ final $typed_data.Uint8List wordInReviewDescriptor = $convert.base64Decode(
     'CgxXb3JkSW5SZXZpZXcSEgoEd29yZBgBIAEoCVIEd29yZBIjCg1zdWNjZXNzX2NvdW50GAIgAS'
     'gNUgxzdWNjZXNzQ291bnQSHQoKZmFpbF9jb3VudBgDIAEoDVIJZmFpbENvdW50EiYKD2xhc3Rf'
     'dG1fc3VjY2VzcxgEIAEoBFINbGFzdFRtU3VjY2VzcxIgCgxsYXN0X3RtX2ZhaWwYBSABKARSCm'
-    'xhc3RUbUZhaWwSKQoRbmV4dF9yZXZpZXdfdG1fbXMYBiABKARSDm5leHRSZXZpZXdUbU1z');
+    'xhc3RUbUZhaWwSKQoRbmV4dF9yZXZpZXdfdG1fbXMYBiABKARSDm5leHRSZXZpZXdUbU1zEh0K'
+    'Cm1lYW5pbmdfaWQYByABKAlSCW1lYW5pbmdJZA==');
 
 @$core.Deprecated('Use reqAddWordInReviewDescriptor instead')
 const ReqAddWordInReview$json = {
@@ -145,6 +147,7 @@ const ReqAddWordInReview$json = {
     {'1': 'last_tm_success', '3': 5, '4': 1, '5': 4, '10': 'lastTmSuccess'},
     {'1': 'last_tm_fail', '3': 6, '4': 1, '5': 4, '10': 'lastTmFail'},
     {'1': 'next_review_tm_ms', '3': 7, '4': 1, '5': 4, '10': 'nextReviewTmMs'},
+    {'1': 'meaning_id', '3': 8, '4': 1, '5': 9, '10': 'meaningId'},
   ],
 };
 
@@ -154,7 +157,8 @@ final $typed_data.Uint8List reqAddWordInReviewDescriptor = $convert.base64Decode
     'llbGRzGAIgASgIUg51c2VFeHRyYUZpZWxkcxIjCg1zdWNjZXNzX2NvdW50GAMgASgNUgxzdWNj'
     'ZXNzQ291bnQSHQoKZmFpbF9jb3VudBgEIAEoDVIJZmFpbENvdW50EiYKD2xhc3RfdG1fc3VjY2'
     'VzcxgFIAEoBFINbGFzdFRtU3VjY2VzcxIgCgxsYXN0X3RtX2ZhaWwYBiABKARSCmxhc3RUbUZh'
-    'aWwSKQoRbmV4dF9yZXZpZXdfdG1fbXMYByABKARSDm5leHRSZXZpZXdUbU1z');
+    'aWwSKQoRbmV4dF9yZXZpZXdfdG1fbXMYByABKARSDm5leHRSZXZpZXdUbU1zEh0KCm1lYW5pbm'
+    'dfaWQYCCABKAlSCW1lYW5pbmdJZA==');
 
 @$core.Deprecated('Use respAddWordInCurrentDescriptor instead')
 const RespAddWordInCurrent$json = {
@@ -197,6 +201,7 @@ const ReqUpdateWordInCurrent$json = {
     {'1': 'last_tm_success', '3': 4, '4': 1, '5': 4, '10': 'lastTmSuccess'},
     {'1': 'last_tm_fail', '3': 5, '4': 1, '5': 4, '10': 'lastTmFail'},
     {'1': 'next_review_tm_ms', '3': 6, '4': 1, '5': 4, '10': 'nextReviewTmMs'},
+    {'1': 'meaning_id', '3': 7, '4': 1, '5': 9, '10': 'meaningId'},
   ],
 };
 
@@ -206,7 +211,7 @@ final $typed_data.Uint8List reqUpdateWordInCurrentDescriptor = $convert.base64De
     '9jb3VudBgCIAEoDVIMc3VjY2Vzc0NvdW50Eh0KCmZhaWxfY291bnQYAyABKA1SCWZhaWxDb3Vu'
     'dBImCg9sYXN0X3RtX3N1Y2Nlc3MYBCABKARSDWxhc3RUbVN1Y2Nlc3MSIAoMbGFzdF90bV9mYW'
     'lsGAUgASgEUgpsYXN0VG1GYWlsEikKEW5leHRfcmV2aWV3X3RtX21zGAYgASgEUg5uZXh0UmV2'
-    'aWV3VG1Ncw==');
+    'aWV3VG1NcxIdCgptZWFuaW5nX2lkGAcgASgJUgltZWFuaW5nSWQ=');
 
 @$core.Deprecated('Use respUpdateWordInCurrentDescriptor instead')
 const RespUpdateWordInCurrent$json = {
@@ -338,18 +343,6 @@ const ReqSentences$json = {
 final $typed_data.Uint8List reqSentencesDescriptor = $convert.base64Decode(
     'CgxSZXFTZW50ZW5jZXMSEgoEd29yZBgBIAEoCVIEd29yZBIUCgVsaW1pdBgCIAEoDVIFbGltaX'
     'QSFgoGb2Zmc2V0GAMgASgNUgZvZmZzZXQ=');
-
-@$core.Deprecated('Use respSentencesDescriptor instead')
-const RespSentences$json = {
-  '1': 'RespSentences',
-  '2': [
-    {'1': 'data', '3': 1, '4': 3, '5': 9, '10': 'data'},
-  ],
-};
-
-/// Descriptor for `RespSentences`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List respSentencesDescriptor =
-    $convert.base64Decode('Cg1SZXNwU2VudGVuY2VzEhIKBGRhdGEYASADKAlSBGRhdGE=');
 
 @$core.Deprecated('Use respDefaultDescriptor instead')
 const RespDefault$json = {

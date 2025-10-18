@@ -479,6 +479,7 @@ class WordInReview extends $pb.GeneratedMessage {
     $fixnum.Int64? lastTmSuccess,
     $fixnum.Int64? lastTmFail,
     $fixnum.Int64? nextReviewTmMs,
+    $core.String? meaningId,
   }) {
     final result = create();
     if (word != null) result.word = word;
@@ -487,6 +488,7 @@ class WordInReview extends $pb.GeneratedMessage {
     if (lastTmSuccess != null) result.lastTmSuccess = lastTmSuccess;
     if (lastTmFail != null) result.lastTmFail = lastTmFail;
     if (nextReviewTmMs != null) result.nextReviewTmMs = nextReviewTmMs;
+    if (meaningId != null) result.meaningId = meaningId;
     return result;
   }
 
@@ -516,6 +518,7 @@ class WordInReview extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(
         6, _omitFieldNames ? '' : 'nextReviewTmMs', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(7, _omitFieldNames ? '' : 'meaningId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -592,6 +595,15 @@ class WordInReview extends $pb.GeneratedMessage {
   $core.bool hasNextReviewTmMs() => $_has(5);
   @$pb.TagNumber(6)
   void clearNextReviewTmMs() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get meaningId => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set meaningId($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasMeaningId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearMeaningId() => $_clearField(7);
 }
 
 class ReqAddWordInReview extends $pb.GeneratedMessage {
@@ -603,6 +615,7 @@ class ReqAddWordInReview extends $pb.GeneratedMessage {
     $fixnum.Int64? lastTmSuccess,
     $fixnum.Int64? lastTmFail,
     $fixnum.Int64? nextReviewTmMs,
+    $core.String? meaningId,
   }) {
     final result = create();
     if (word != null) result.word = word;
@@ -612,6 +625,7 @@ class ReqAddWordInReview extends $pb.GeneratedMessage {
     if (lastTmSuccess != null) result.lastTmSuccess = lastTmSuccess;
     if (lastTmFail != null) result.lastTmFail = lastTmFail;
     if (nextReviewTmMs != null) result.nextReviewTmMs = nextReviewTmMs;
+    if (meaningId != null) result.meaningId = meaningId;
     return result;
   }
 
@@ -642,6 +656,7 @@ class ReqAddWordInReview extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(
         7, _omitFieldNames ? '' : 'nextReviewTmMs', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(8, _omitFieldNames ? '' : 'meaningId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -727,6 +742,15 @@ class ReqAddWordInReview extends $pb.GeneratedMessage {
   $core.bool hasNextReviewTmMs() => $_has(6);
   @$pb.TagNumber(7)
   void clearNextReviewTmMs() => $_clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get meaningId => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set meaningId($core.String value) => $_setString(7, value);
+  @$pb.TagNumber(8)
+  $core.bool hasMeaningId() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearMeaningId() => $_clearField(8);
 }
 
 class RespAddWordInCurrent extends $pb.GeneratedMessage {
@@ -878,6 +902,7 @@ class ReqUpdateWordInCurrent extends $pb.GeneratedMessage {
     $fixnum.Int64? lastTmSuccess,
     $fixnum.Int64? lastTmFail,
     $fixnum.Int64? nextReviewTmMs,
+    $core.String? meaningId,
   }) {
     final result = create();
     if (word != null) result.word = word;
@@ -886,6 +911,7 @@ class ReqUpdateWordInCurrent extends $pb.GeneratedMessage {
     if (lastTmSuccess != null) result.lastTmSuccess = lastTmSuccess;
     if (lastTmFail != null) result.lastTmFail = lastTmFail;
     if (nextReviewTmMs != null) result.nextReviewTmMs = nextReviewTmMs;
+    if (meaningId != null) result.meaningId = meaningId;
     return result;
   }
 
@@ -915,6 +941,7 @@ class ReqUpdateWordInCurrent extends $pb.GeneratedMessage {
     ..a<$fixnum.Int64>(
         6, _omitFieldNames ? '' : 'nextReviewTmMs', $pb.PbFieldType.OU6,
         defaultOrMaker: $fixnum.Int64.ZERO)
+    ..aOS(7, _omitFieldNames ? '' : 'meaningId')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -993,6 +1020,15 @@ class ReqUpdateWordInCurrent extends $pb.GeneratedMessage {
   $core.bool hasNextReviewTmMs() => $_has(5);
   @$pb.TagNumber(6)
   void clearNextReviewTmMs() => $_clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get meaningId => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set meaningId($core.String value) => $_setString(6, value);
+  @$pb.TagNumber(7)
+  $core.bool hasMeaningId() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearMeaningId() => $_clearField(7);
 }
 
 class RespUpdateWordInCurrent extends $pb.GeneratedMessage {
@@ -1527,56 +1563,6 @@ class ReqSentences extends $pb.GeneratedMessage {
   $core.bool hasOffset() => $_has(2);
   @$pb.TagNumber(3)
   void clearOffset() => $_clearField(3);
-}
-
-class RespSentences extends $pb.GeneratedMessage {
-  factory RespSentences({
-    $core.Iterable<$core.String>? data,
-  }) {
-    final result = create();
-    if (data != null) result.data.addAll(data);
-    return result;
-  }
-
-  RespSentences._();
-
-  factory RespSentences.fromBuffer($core.List<$core.int> data,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromBuffer(data, registry);
-  factory RespSentences.fromJson($core.String json,
-          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
-      create()..mergeFromJson(json, registry);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
-      _omitMessageNames ? '' : 'RespSentences',
-      package: const $pb.PackageName(_omitMessageNames ? '' : 'api'),
-      createEmptyInstance: create)
-    ..pPS(1, _omitFieldNames ? '' : 'data')
-    ..hasRequiredFields = false;
-
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  RespSentences clone() => RespSentences()..mergeFromMessage(this);
-  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
-  RespSentences copyWith(void Function(RespSentences) updates) =>
-      super.copyWith((message) => updates(message as RespSentences))
-          as RespSentences;
-
-  @$core.override
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static RespSentences create() => RespSentences._();
-  @$core.override
-  RespSentences createEmptyInstance() => create();
-  static $pb.PbList<RespSentences> createRepeated() =>
-      $pb.PbList<RespSentences>();
-  @$core.pragma('dart2js:noInline')
-  static RespSentences getDefault() => _defaultInstance ??=
-      $pb.GeneratedMessage.$_defaultFor<RespSentences>(create);
-  static RespSentences? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $pb.PbList<$core.String> get data => $_getList(0);
 }
 
 class RespDefault extends $pb.GeneratedMessage {

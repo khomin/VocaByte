@@ -14,9 +14,10 @@ class ReviewTask extends ReviewTaskBase {
     var cards = <CardData>[];
     randomPages.shuffle();
 
-    var current = await ServiceApi().getReviewForToday();
+    var current = await ServiceApi().getCurrentToStudy();
     for (var it in current.firstNWord) {
-      var r = await AppRep().buildReview(it.word, randomPages.first);
+      var r = await AppRep().buildReview(
+          v: it.word, meaningId: it.meaningId, type: randomPages.first);
       if (r != null) {
         // remove double
         if (cards.firstWhereOrNull((it2) =>
@@ -33,9 +34,10 @@ class ReviewTask extends ReviewTaskBase {
 
   @override
   Future getMore() async {
-    var current = await ServiceApi().getReviewForToday();
+    var current = await ServiceApi().getCurrentToStudy();
     for (var it in current.firstNWord) {
-      var r = await AppRep().buildReview(it.word, CardPageType.defToWords);
+      var r = await AppRep().buildReview(
+          v: it.word, meaningId: it.meaningId, type: CardPageType.defToWords);
       if (r != null) {
         // remove double
         if (cardData.firstWhereOrNull((it2) =>
@@ -57,32 +59,33 @@ class ReviewTask extends ReviewTaskBase {
     }
     var item = cardData.removeAt(0);
     // get current
-    var cur = await ServiceApi().getWordReviewStatus(word: item.data.word);
+    var current = await ServiceApi().getCurrentExact(word: item.data.word);
     // update
-    if (cur != null) {
+    if (current != null) {
       if (success) {
-        cur.successCount++;
-        cur.lastTmSuccess = Int64(DateTime.now().millisecondsSinceEpoch);
-        if (cur.successCount >= 10) {
-          cur.nextReviewTmMs = Int64(0);
+        current.successCount++;
+        current.lastTmSuccess = Int64(DateTime.now().millisecondsSinceEpoch);
+        if (current.successCount >= 10) {
+          current.nextReviewTmMs = Int64(0);
         } else {
-          var intValDays = pow(cur.successCount, 2);
-          cur.nextReviewTmMs =
+          var intValDays = pow(current.successCount, 2);
+          current.nextReviewTmMs =
               Int64(Duration(days: intValDays.toInt()).inMilliseconds);
         }
       } else {
-        cur.failCount++;
-        cur.lastTmFail = Int64(DateTime.now().millisecondsSinceEpoch);
-        cur.nextReviewTmMs = Int64(const Duration(days: 1).inMilliseconds);
+        current.failCount++;
+        current.lastTmFail = Int64(DateTime.now().millisecondsSinceEpoch);
+        current.nextReviewTmMs = Int64(const Duration(days: 1).inMilliseconds);
       }
-      await ServiceApi().updateWordInCurrent(
+      await ServiceApi().updateCurrent(
           req: ReqUpdateWordInCurrent(
-              word: cur.word,
-              successCount: cur.successCount,
-              failCount: cur.failCount,
-              lastTmSuccess: cur.lastTmSuccess,
-              lastTmFail: cur.lastTmFail,
-              nextReviewTmMs: cur.nextReviewTmMs));
+              word: current.word,
+              successCount: current.successCount,
+              failCount: current.failCount,
+              lastTmSuccess: current.lastTmSuccess,
+              lastTmFail: current.lastTmFail,
+              nextReviewTmMs: current.nextReviewTmMs,
+              meaningId: current.meaningId));
     } else {
       logWarning('$tag: update card result empty current');
     }
@@ -104,6 +107,6 @@ class ReviewTask extends ReviewTaskBase {
 
   @override
   Future<WordInReview?> getWordReviewStatus({required String word}) {
-    return ServiceApi().getWordReviewStatus(word: word);
+    return ServiceApi().getCurrentExact(word: word);
   }
 }

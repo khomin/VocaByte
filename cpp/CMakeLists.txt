@@ -1,6 +1,6 @@
 
 # Cmake min version
-cmake_minimum_required(VERSION 3.0)
+cmake_minimum_required(VERSION 3.10)
 
 set(PROJECT                         VocaByte)
 set(CMAKE_CXX_STANDARD              20)
@@ -132,8 +132,6 @@ elseif (ANDROID OR __ANDROID__)
     )
     set(LIBRARIES ${LIBRARIES}
       ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ANDROID_ABI}/lib/libprotobuf.a
-      -landroid
-      c++_shared
       loguru::loguru
     )
 elseif(UNIX AND NOT APPLE)

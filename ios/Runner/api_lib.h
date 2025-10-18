@@ -62,8 +62,6 @@ void getReviewForToday(uint32_t taskId, uint8_t* data, uint32_t len);
 void searchInReviewList(uint32_t taskId, uint8_t* data, uint32_t len);
 void deleteProfile(uint32_t taskId, uint8_t* data, uint32_t len);
 
-void getSentences(uint32_t taskId, uint8_t* data, uint32_t len);
-
 void destroyAll();
 void testMethod(uint32_t taskId);
 

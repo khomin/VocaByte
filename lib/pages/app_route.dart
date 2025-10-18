@@ -71,7 +71,7 @@ class _AppRouteState extends State<AppRoute> {
               builder: (context) {
                 return SearchWordPage(onShow: (data) async {
                   AppRep().cachedWord = data;
-                  await ServiceApi().putRecentWord(data.word);
+                  await ServiceApi().putRecent(data.word);
                   await AppRep().updateRecent();
                   nav.push(CupertinoPageRoute(
                       settings: settings,

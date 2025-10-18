@@ -43,7 +43,7 @@ class AppModel with ChangeNotifier {
     }
   }
 
-  bool get waitMigratingDb => _waitCopyResource;
+  bool get waitMigratingDb => _waitMigratingDb;
   set waitMigratingDb(bool v) {
     if (_waitMigratingDb != v) {
       _waitMigratingDb = v;

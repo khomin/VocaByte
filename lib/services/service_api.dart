@@ -95,19 +95,18 @@ extension Uint8ListBlobConversion on Uint8List {
 class ServiceApi {
   static late Function _initializeApi;
   static late Function _init;
-  static late Function _getRecentWords;
-  static late Function _putRecentWord;
-  static late Function _searchWords;
-  static late Function _randWords;
-  static late Function _getWordInReview;
-  static late Function _addWordInReview;
+  static late Function _getRecent;
+  static late Function _putRecent;
+  static late Function _getDictionary;
+  static late Function _getDictionaryRand;
+  static late Function _getCurrentExact;
+  static late Function _addCurrent;
   static late Function _deleteProfile;
-  static late Function _removeWordInReview;
-  static late Function _updateWordInReview;
-  static late Function _getReviewForToday;
+  static late Function _deleteCurrentExact;
+  static late Function _updateCurrent;
+  static late Function _getCurrentToStudy;
   static late Function _getMetaData;
-  static late Function _searchInReviewList;
-  static late Function _getSentences;
+  static late Function _getCurrentLimit;
   static late Function _executeCallback;
   static late DynamicLibrary _dylib;
   //
@@ -147,58 +146,53 @@ class ServiceApi {
       _initializeApi = _dylib.lookupFunction<IntPtr Function(Pointer<Void>),
           int Function(Pointer<Void>)>("initDartApiDL");
 
-      _searchWords = _dylib.lookupFunction<
+      _getDictionary = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getSearchWords");
+          int Function(int, Pointer<Uint8>, int)>("getDictionary");
 
-      _randWords = _dylib.lookupFunction<
+      _getDictionaryRand = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getRandomWords");
+          int Function(int, Pointer<Uint8>, int)>("getDictionaryRand");
 
-      _getRecentWords = _dylib.lookupFunction<
+      _getRecent = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getRecentWords");
+          int Function(int, Pointer<Uint8>, int)>("getRecent");
 
-      _putRecentWord = _dylib.lookupFunction<
+      _putRecent = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("putRecentWord");
+          int Function(int, Pointer<Uint8>, int)>("putRecent");
 
-      _getWordInReview = _dylib.lookupFunction<
+      _getCurrentExact = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getWordInReview");
+          int Function(int, Pointer<Uint8>, int)>("getCurrentExact");
 
-      _addWordInReview = _dylib.lookupFunction<
+      _addCurrent = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("addWordInReview");
+          int Function(int, Pointer<Uint8>, int)>("addCurrent");
 
       _deleteProfile = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
           int Function(int, Pointer<Uint8>, int)>("deleteProfile");
 
-      _removeWordInReview = _dylib.lookupFunction<
+      _deleteCurrentExact = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("removeWordInReview");
+          int Function(int, Pointer<Uint8>, int)>("deleteCurrentExact");
 
-      _updateWordInReview = _dylib.lookupFunction<
+      _updateCurrent = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("updateWordInReview");
+          int Function(int, Pointer<Uint8>, int)>("updateCurrent");
 
-      _getReviewForToday = _dylib.lookupFunction<
+      _getCurrentToStudy = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getReviewForToday");
+          int Function(int, Pointer<Uint8>, int)>("getCurrentToStudy");
 
       _getMetaData = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
           int Function(int, Pointer<Uint8>, int)>("getMetadata");
 
-      _searchInReviewList = _dylib.lookupFunction<
+      _getCurrentLimit = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("searchInReviewList");
-
-      _getSentences = _dylib.lookupFunction<
-          Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getSentences");
-
+          int Function(int, Pointer<Uint8>, int)>("getCurrentLimit");
       //
       // service callback
       _executeCallback = _dylib.lookupFunction<Void Function(Pointer<Work>),
@@ -241,7 +235,7 @@ class ServiceApi {
     _init(out.taskId, out.data, out.len);
   }
 
-  Future<RespRecentWords> getRecentWords() async {
+  Future<RespRecentWords> getRecent() async {
     Completer<RespRecentWords> completer = Completer();
     var req = ReqRecentWords();
     var out = registerCall(
@@ -251,12 +245,12 @@ class ServiceApi {
           var res = RespRecentWords.fromBuffer(buf);
           completer.complete(res);
         },
-        description: 'getRecentWords');
-    _getRecentWords(out.taskId, out.data, out.len);
+        description: 'getRecent');
+    _getRecent(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future putRecentWord(String word) async {
+  Future putRecent(String word) async {
     Completer completer = Completer();
     var req = Word();
     req.value = word;
@@ -265,12 +259,12 @@ class ServiceApi {
         cb: (p) {
           completer.complete();
         },
-        description: 'putRecentWord');
-    _putRecentWord(out.taskId, out.data, out.len);
+        description: 'putRecent');
+    _putRecent(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future<RespSearchWords> searchWords(
+  Future<RespSearchWords> getDictionary(
       {required String word, bool useLike = true}) async {
     Completer<RespSearchWords> completer = Completer();
     var req = ReqSearchWords();
@@ -283,12 +277,12 @@ class ServiceApi {
           var res = RespSearchWords.fromBuffer(buf);
           completer.complete(res);
         },
-        description: 'searchWords');
-    _searchWords(out.taskId, out.data, out.len);
+        description: 'getDictionary');
+    _getDictionary(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future<RespRandWords> randWords(int count) async {
+  Future<RespRandWords> getDictionaryRand(int count) async {
     Completer<RespRandWords> completer = Completer();
     var req = ReqRandWords();
     req.count = count;
@@ -299,12 +293,12 @@ class ServiceApi {
           var res = RespRandWords.fromBuffer(buf);
           completer.complete(res);
         },
-        description: 'randWords');
-    _randWords(out.taskId, out.data, out.len);
+        description: 'getDictionaryRand');
+    _getDictionaryRand(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future<WordInReview?> getWordReviewStatus({required String word}) async {
+  Future<WordInReview?> getCurrentExact({required String word}) async {
     Completer<WordInReview?> completer = Completer();
     var req = ReqWordInReview();
     req.word = word;
@@ -319,20 +313,20 @@ class ServiceApi {
             completer.complete(res);
           }
         },
-        description: 'getWordReviewStatus');
-    _getWordInReview(out.taskId, out.data, out.len);
+        description: 'getCurrentExact');
+    _getCurrentExact(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future<bool> addWordInReview({required ReqAddWordInReview req}) async {
+  Future<bool> addCurrent({required ReqAddWordInReview req}) async {
     Completer<bool> completer = Completer();
     var out = registerCall(
         proto: req,
         cb: (p) {
           completer.complete(true);
         },
-        description: 'addWordInReview');
-    _addWordInReview(out.taskId, out.data, out.len);
+        description: 'addCurrent');
+    _addCurrent(out.taskId, out.data, out.len);
     return completer.future;
   }
 
@@ -351,7 +345,7 @@ class ServiceApi {
     return completer.future;
   }
 
-  Future<bool> removeWordFromCurrent({required String word}) async {
+  Future<bool> deleteCurrentExact({required String word}) async {
     Completer<bool> completer = Completer();
     var req = ReqRemoveWordFromCurrent();
     req.word = word;
@@ -360,13 +354,12 @@ class ServiceApi {
         cb: (p) {
           completer.complete(true);
         },
-        description: 'removeWordFromCurrent');
-    // TODO: uptimise, takes ocationaly ~1 sec
-    _removeWordInReview(out.taskId, out.data, out.len);
+        description: 'deleteCurrentExact');
+    _deleteCurrentExact(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future<RespUpdateWordInCurrent> updateWordInCurrent(
+  Future<RespUpdateWordInCurrent> updateCurrent(
       {required ReqUpdateWordInCurrent req}) async {
     Completer<RespUpdateWordInCurrent> completer = Completer();
     var out = registerCall(
@@ -376,12 +369,12 @@ class ServiceApi {
           var res = RespUpdateWordInCurrent.fromBuffer(buf);
           completer.complete(res);
         },
-        description: 'updateWordInCurrent');
-    _updateWordInReview(out.taskId, out.data, out.len);
+        description: 'updateCurrent');
+    _updateCurrent(out.taskId, out.data, out.len);
     return completer.future;
   }
 
-  Future<RespReviewForToday> getReviewForToday() async {
+  Future<RespReviewForToday> getCurrentToStudy() async {
     Completer<RespReviewForToday> completer = Completer();
     var req = ReqUpdateWordInCurrent();
     var out = registerCall(
@@ -391,8 +384,8 @@ class ServiceApi {
           var res = RespReviewForToday.fromBuffer(buf);
           completer.complete(res);
         },
-        description: 'getReviewForToday');
-    _getReviewForToday(out.taskId, out.data, out.len);
+        description: 'getCurrentToStudy');
+    _getCurrentToStudy(out.taskId, out.data, out.len);
     return completer.future;
   }
 
@@ -487,7 +480,7 @@ class ServiceApi {
       var review = json['review'];
       if (review != null) {
         for (var it in review) {
-          await ServiceApi().addWordInReview(
+          await ServiceApi().addCurrent(
               req: ReqAddWordInReview(
                   word: it['word'],
                   successCount: it['success_count'],
@@ -523,7 +516,7 @@ class ServiceApi {
       var addedCnt = 0;
       var data = await FileUtils.readFileToStringLine(path);
       for (var it2 in data) {
-        if (await ServiceApi().addWordInReview(
+        if (await ServiceApi().addCurrent(
             req: ReqAddWordInReview(word: it2, useExtraFields: false))) {
           addedCnt++;
         }
@@ -574,7 +567,11 @@ class ServiceApi {
   }
 
   Future<bool> migrateDatabase() async {
-    return true;
+    var res = await ServiceApi().getMedataData();
+    if (res.version == 0) {
+      return true;
+    }
+    return false;
   }
 
   Future<RespSearchInReviewList> searchInReviewList(
@@ -594,26 +591,7 @@ class ServiceApi {
           completer.complete(res);
         },
         description: 'searchInReviewList');
-    _searchInReviewList(out.taskId, out.data, out.len);
-    return completer.future;
-  }
-
-  Future<RespSentences> getSentences(
-      {required String word, required int limit, required int offset}) async {
-    Completer<RespSentences> completer = Completer();
-    var req = ReqSentences();
-    req.word = word;
-    req.limit = limit;
-    req.offset = offset;
-    var out = registerCall(
-        proto: req,
-        cb: (p) {
-          var buf = p.ref.protoBuf.asTypedList(p.ref.protoLen);
-          var res = RespSentences.fromBuffer(buf);
-          completer.complete(res);
-        },
-        description: 'getSentences');
-    _getSentences(out.taskId, out.data, out.len);
+    _getCurrentLimit(out.taskId, out.data, out.len);
     return completer.future;
   }
 

@@ -166,7 +166,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                       // have to use request to get full
                       // before navigation
                       var r = await ServiceApi()
-                          .searchWords(word: model.word, useLike: false);
+                          .getDictionary(word: model.word, useLike: false);
 
                       var word = r.item.firstWhereOrNull((it) =>
                           it.value.toLowerCase() == model.word.toLowerCase());

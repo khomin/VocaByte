@@ -109,10 +109,6 @@ class ReqSentencesDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ReqSentences> _instance;
 } _ReqSentences_default_instance_;
-class RespSentencesDefaultTypeInternal {
- public:
-  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RespSentences> _instance;
-} _RespSentences_default_instance_;
 class RespDefaultDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RespDefault> _instance;
@@ -452,20 +448,6 @@ static void InitDefaultsscc_info_RespSearchWords_proto_2eproto() {
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 1, 0, InitDefaultsscc_info_RespSearchWords_proto_2eproto}, {
       &scc_info_Word_proto_2eproto.base,}};
 
-static void InitDefaultsscc_info_RespSentences_proto_2eproto() {
-  GOOGLE_PROTOBUF_VERIFY_VERSION;
-
-  {
-    void* ptr = &::api::_RespSentences_default_instance_;
-    new (ptr) ::api::RespSentences();
-    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
-  }
-  ::api::RespSentences::InitAsDefaultInstance();
-}
-
-::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_RespSentences_proto_2eproto =
-    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_RespSentences_proto_2eproto}, {}};
-
 static void InitDefaultsscc_info_RespUpdateWordInCurrent_proto_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
@@ -508,7 +490,7 @@ static void InitDefaultsscc_info_WordInReview_proto_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_WordInReview_proto_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_WordInReview_proto_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_proto_2eproto[27];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_proto_2eproto[26];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_proto_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_proto_2eproto = nullptr;
 
@@ -581,12 +563,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_proto_2eproto::offsets[] PROTO
   PROTOBUF_FIELD_OFFSET(::api::WordInReview, last_tm_success_),
   PROTOBUF_FIELD_OFFSET(::api::WordInReview, last_tm_fail_),
   PROTOBUF_FIELD_OFFSET(::api::WordInReview, next_review_tm_ms_),
+  PROTOBUF_FIELD_OFFSET(::api::WordInReview, meaning_id_),
   0,
-  1,
   2,
   3,
   4,
   5,
+  6,
+  1,
   PROTOBUF_FIELD_OFFSET(::api::ReqAddWordInReview, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::api::ReqAddWordInReview, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -599,13 +583,15 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_proto_2eproto::offsets[] PROTO
   PROTOBUF_FIELD_OFFSET(::api::ReqAddWordInReview, last_tm_success_),
   PROTOBUF_FIELD_OFFSET(::api::ReqAddWordInReview, last_tm_fail_),
   PROTOBUF_FIELD_OFFSET(::api::ReqAddWordInReview, next_review_tm_ms_),
+  PROTOBUF_FIELD_OFFSET(::api::ReqAddWordInReview, meaning_id_),
   0,
-  1,
   2,
-  6,
   3,
+  7,
   4,
   5,
+  6,
+  1,
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::api::RespAddWordInCurrent, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -634,12 +620,14 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_proto_2eproto::offsets[] PROTO
   PROTOBUF_FIELD_OFFSET(::api::ReqUpdateWordInCurrent, last_tm_success_),
   PROTOBUF_FIELD_OFFSET(::api::ReqUpdateWordInCurrent, last_tm_fail_),
   PROTOBUF_FIELD_OFFSET(::api::ReqUpdateWordInCurrent, next_review_tm_ms_),
+  PROTOBUF_FIELD_OFFSET(::api::ReqUpdateWordInCurrent, meaning_id_),
   0,
-  1,
   2,
   3,
   4,
   5,
+  6,
+  1,
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::api::RespUpdateWordInCurrent, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -710,12 +698,6 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_proto_2eproto::offsets[] PROTO
   0,
   1,
   2,
-  ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::api::RespSentences, _internal_metadata_),
-  ~0u,  // no _extensions_
-  ~0u,  // no _oneof_case_
-  ~0u,  // no _weak_field_map_
-  PROTOBUF_FIELD_OFFSET(::api::RespSentences, data_),
   PROTOBUF_FIELD_OFFSET(::api::RespDefault, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::api::RespDefault, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -745,22 +727,21 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 37, 43, sizeof(::api::ReqRandWords)},
   { 44, -1, sizeof(::api::RespRandWords)},
   { 50, 56, sizeof(::api::ReqWordInReview)},
-  { 57, 68, sizeof(::api::WordInReview)},
-  { 74, 86, sizeof(::api::ReqAddWordInReview)},
-  { 93, -1, sizeof(::api::RespAddWordInCurrent)},
-  { 98, 104, sizeof(::api::ReqRemoveWordFromCurrent)},
-  { 105, -1, sizeof(::api::RespRemoveWordFromCurrent)},
-  { 110, 121, sizeof(::api::ReqUpdateWordInCurrent)},
-  { 127, -1, sizeof(::api::RespUpdateWordInCurrent)},
-  { 132, 141, sizeof(::api::Word)},
-  { 145, -1, sizeof(::api::ReqReviewForToday)},
-  { 150, 157, sizeof(::api::RespReviewForToday)},
-  { 159, 167, sizeof(::api::ReqSearchInReviewList)},
-  { 170, -1, sizeof(::api::RespSearchInReviewList)},
-  { 176, -1, sizeof(::api::ReqDeleteProfile)},
-  { 181, -1, sizeof(::api::RespDeleteProfile)},
-  { 186, 194, sizeof(::api::ReqSentences)},
-  { 197, -1, sizeof(::api::RespSentences)},
+  { 57, 69, sizeof(::api::WordInReview)},
+  { 76, 89, sizeof(::api::ReqAddWordInReview)},
+  { 97, -1, sizeof(::api::RespAddWordInCurrent)},
+  { 102, 108, sizeof(::api::ReqRemoveWordFromCurrent)},
+  { 109, -1, sizeof(::api::RespRemoveWordFromCurrent)},
+  { 114, 126, sizeof(::api::ReqUpdateWordInCurrent)},
+  { 133, -1, sizeof(::api::RespUpdateWordInCurrent)},
+  { 138, 147, sizeof(::api::Word)},
+  { 151, -1, sizeof(::api::ReqReviewForToday)},
+  { 156, 163, sizeof(::api::RespReviewForToday)},
+  { 165, 173, sizeof(::api::ReqSearchInReviewList)},
+  { 176, -1, sizeof(::api::RespSearchInReviewList)},
+  { 182, -1, sizeof(::api::ReqDeleteProfile)},
+  { 187, -1, sizeof(::api::RespDeleteProfile)},
+  { 192, 200, sizeof(::api::ReqSentences)},
   { 203, 209, sizeof(::api::RespDefault)},
   { 210, -1, sizeof(::api::GetMetaDataIn)},
   { 215, 221, sizeof(::api::GetMetaDataOut)},
@@ -790,7 +771,6 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_ReqDeleteProfile_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_RespDeleteProfile_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_ReqSentences_default_instance_),
-  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_RespSentences_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_RespDefault_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_GetMetaDataIn_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_GetMetaDataOut_default_instance_),
@@ -805,39 +785,40 @@ const char descriptor_table_protodef_proto_2eproto[] PROTOBUF_SECTION_VARIABLE(p
   "ds\022\027\n\004item\030\001 \003(\0132\t.api.Word\"\035\n\014ReqRandWo"
   "rds\022\r\n\005count\030\001 \001(\r\")\n\rRespRandWords\022\030\n\005w"
   "ords\030\001 \003(\0132\t.api.Word\"\037\n\017ReqWordInReview"
-  "\022\014\n\004word\030\001 \001(\t\"\221\001\n\014WordInReview\022\014\n\004word\030"
+  "\022\014\n\004word\030\001 \001(\t\"\245\001\n\014WordInReview\022\014\n\004word\030"
   "\001 \001(\t\022\025\n\rsuccess_count\030\002 \001(\r\022\022\n\nfail_cou"
   "nt\030\003 \001(\r\022\027\n\017last_tm_success\030\004 \001(\004\022\024\n\014las"
   "t_tm_fail\030\005 \001(\004\022\031\n\021next_review_tm_ms\030\006 \001"
-  "(\004\"\261\001\n\022ReqAddWordInReview\022\014\n\004word\030\001 \001(\t\022"
-  "\030\n\020use_extra_fields\030\002 \001(\010\022\025\n\rsuccess_cou"
-  "nt\030\003 \001(\r\022\022\n\nfail_count\030\004 \001(\r\022\027\n\017last_tm_"
-  "success\030\005 \001(\004\022\024\n\014last_tm_fail\030\006 \001(\004\022\031\n\021n"
-  "ext_review_tm_ms\030\007 \001(\004\"\026\n\024RespAddWordInC"
+  "(\004\022\022\n\nmeaning_id\030\007 \001(\t\"\305\001\n\022ReqAddWordInR"
+  "eview\022\014\n\004word\030\001 \001(\t\022\030\n\020use_extra_fields\030"
+  "\002 \001(\010\022\025\n\rsuccess_count\030\003 \001(\r\022\022\n\nfail_cou"
+  "nt\030\004 \001(\r\022\027\n\017last_tm_success\030\005 \001(\004\022\024\n\014las"
+  "t_tm_fail\030\006 \001(\004\022\031\n\021next_review_tm_ms\030\007 \001"
+  "(\004\022\022\n\nmeaning_id\030\010 \001(\t\"\026\n\024RespAddWordInC"
   "urrent\"(\n\030ReqRemoveWordFromCurrent\022\014\n\004wo"
-  "rd\030\001 \001(\t\"\033\n\031RespRemoveWordFromCurrent\"\233\001"
+  "rd\030\001 \001(\t\"\033\n\031RespRemoveWordFromCurrent\"\257\001"
   "\n\026ReqUpdateWordInCurrent\022\014\n\004word\030\001 \001(\t\022\025"
   "\n\rsuccess_count\030\002 \001(\r\022\022\n\nfail_count\030\003 \001("
   "\r\022\027\n\017last_tm_success\030\004 \001(\004\022\024\n\014last_tm_fa"
-  "il\030\005 \001(\004\022\031\n\021next_review_tm_ms\030\006 \001(\004\"\031\n\027R"
-  "espUpdateWordInCurrent\"J\n\004Word\022\r\n\005value\030"
-  "\001 \001(\t\022\021\n\tfrequency\030\002 \001(\004\022\014\n\004json\030\003 \001(\t\022\022"
-  "\n\ntranscript\030\004 \001(\t\"\023\n\021ReqReviewForToday\""
-  "P\n\022RespReviewForToday\022\'\n\014first_n_word\030\001 "
-  "\003(\0132\021.api.WordInReview\022\021\n\tcount_all\030\002 \001("
-  "\r\"Q\n\025ReqSearchInReviewList\022\r\n\005limit\030\001 \001("
-  "\r\022\016\n\006offset\030\002 \001(\r\022\031\n\021use_success_count\030\003"
-  " \001(\r\"9\n\026RespSearchInReviewList\022\037\n\004word\030\001"
-  " \003(\0132\021.api.WordInReview\"\022\n\020ReqDeleteProf"
-  "ile\"\023\n\021RespDeleteProfile\";\n\014ReqSentences"
-  "\022\014\n\004word\030\001 \001(\t\022\r\n\005limit\030\002 \001(\r\022\016\n\006offset\030"
-  "\003 \001(\r\"\035\n\rRespSentences\022\014\n\004data\030\001 \003(\t\"\034\n\013"
-  "RespDefault\022\r\n\005value\030\001 \001(\010\"\017\n\rGetMetaDat"
-  "aIn\"!\n\016GetMetaDataOut\022\017\n\007version\030\001 \001(\005"
+  "il\030\005 \001(\004\022\031\n\021next_review_tm_ms\030\006 \001(\004\022\022\n\nm"
+  "eaning_id\030\007 \001(\t\"\031\n\027RespUpdateWordInCurre"
+  "nt\"J\n\004Word\022\r\n\005value\030\001 \001(\t\022\021\n\tfrequency\030\002"
+  " \001(\004\022\014\n\004json\030\003 \001(\t\022\022\n\ntranscript\030\004 \001(\t\"\023"
+  "\n\021ReqReviewForToday\"P\n\022RespReviewForToda"
+  "y\022\'\n\014first_n_word\030\001 \003(\0132\021.api.WordInRevi"
+  "ew\022\021\n\tcount_all\030\002 \001(\r\"Q\n\025ReqSearchInRevi"
+  "ewList\022\r\n\005limit\030\001 \001(\r\022\016\n\006offset\030\002 \001(\r\022\031\n"
+  "\021use_success_count\030\003 \001(\r\"9\n\026RespSearchIn"
+  "ReviewList\022\037\n\004word\030\001 \003(\0132\021.api.WordInRev"
+  "iew\"\022\n\020ReqDeleteProfile\"\023\n\021RespDeletePro"
+  "file\";\n\014ReqSentences\022\014\n\004word\030\001 \001(\t\022\r\n\005li"
+  "mit\030\002 \001(\r\022\016\n\006offset\030\003 \001(\r\"\034\n\013RespDefault"
+  "\022\r\n\005value\030\001 \001(\010\"\017\n\rGetMetaDataIn\"!\n\016GetM"
+  "etaDataOut\022\017\n\007version\030\001 \001(\005"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_proto_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_proto_2eproto_sccs[27] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_proto_2eproto_sccs[26] = {
   &scc_info_GetMetaDataIn_proto_2eproto.base,
   &scc_info_GetMetaDataOut_proto_2eproto.base,
   &scc_info_InitParams_proto_2eproto.base,
@@ -861,17 +842,16 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_pro
   &scc_info_RespReviewForToday_proto_2eproto.base,
   &scc_info_RespSearchInReviewList_proto_2eproto.base,
   &scc_info_RespSearchWords_proto_2eproto.base,
-  &scc_info_RespSentences_proto_2eproto.base,
   &scc_info_RespUpdateWordInCurrent_proto_2eproto.base,
   &scc_info_Word_proto_2eproto.base,
   &scc_info_WordInReview_proto_2eproto.base,
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_proto_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_proto_2eproto = {
-  false, false, descriptor_table_protodef_proto_2eproto, "proto.proto", 1478,
-  &descriptor_table_proto_2eproto_once, descriptor_table_proto_2eproto_sccs, descriptor_table_proto_2eproto_deps, 27, 0,
+  false, false, descriptor_table_protodef_proto_2eproto, "proto.proto", 1507,
+  &descriptor_table_proto_2eproto_once, descriptor_table_proto_2eproto_sccs, descriptor_table_proto_2eproto_deps, 26, 0,
   schemas, file_default_instances, TableStruct_proto_2eproto::offsets,
-  file_level_metadata_proto_2eproto, 27, file_level_enum_descriptors_proto_2eproto, file_level_service_descriptors_proto_2eproto,
+  file_level_metadata_proto_2eproto, 26, file_level_enum_descriptors_proto_2eproto, file_level_service_descriptors_proto_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -2701,19 +2681,22 @@ class WordInReview::_Internal {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_success_count(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
-  }
-  static void set_has_fail_count(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
-  static void set_has_last_tm_success(HasBits* has_bits) {
+  static void set_has_fail_count(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
-  static void set_has_last_tm_fail(HasBits* has_bits) {
+  static void set_has_last_tm_success(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
   }
-  static void set_has_next_review_tm_ms(HasBits* has_bits) {
+  static void set_has_last_tm_fail(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
+  }
+  static void set_has_next_review_tm_ms(HasBits* has_bits) {
+    (*has_bits)[0] |= 64u;
+  }
+  static void set_has_meaning_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
@@ -2732,6 +2715,11 @@ WordInReview::WordInReview(const WordInReview& from)
     word_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_word(),
       GetArena());
   }
+  meaning_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_meaning_id()) {
+    meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_meaning_id(),
+      GetArena());
+  }
   ::memcpy(&success_count_, &from.success_count_,
     static_cast<size_t>(reinterpret_cast<char*>(&next_review_tm_ms_) -
     reinterpret_cast<char*>(&success_count_)) + sizeof(next_review_tm_ms_));
@@ -2741,6 +2729,7 @@ WordInReview::WordInReview(const WordInReview& from)
 void WordInReview::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_WordInReview_proto_2eproto.base);
   word_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  meaning_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&success_count_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&next_review_tm_ms_) -
       reinterpret_cast<char*>(&success_count_)) + sizeof(next_review_tm_ms_));
@@ -2755,6 +2744,7 @@ WordInReview::~WordInReview() {
 void WordInReview::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   word_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  meaning_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void WordInReview::ArenaDtor(void* object) {
@@ -2779,10 +2769,15 @@ void WordInReview::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    word_.ClearNonDefaultToEmpty();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      word_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      meaning_id_.ClearNonDefaultToEmpty();
+    }
   }
-  if (cached_has_bits & 0x0000003eu) {
+  if (cached_has_bits & 0x0000007cu) {
     ::memset(&success_count_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&next_review_tm_ms_) -
         reinterpret_cast<char*>(&success_count_)) + sizeof(next_review_tm_ms_));
@@ -2851,6 +2846,17 @@ const char* WordInReview::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_I
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional string meaning_id = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          auto str = _internal_mutable_meaning_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "api.WordInReview.meaning_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -2892,33 +2898,43 @@ failure:
   }
 
   // optional uint32 success_count = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_success_count(), target);
   }
 
   // optional uint32 fail_count = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_fail_count(), target);
   }
 
   // optional uint64 last_tm_success = 4;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_last_tm_success(), target);
   }
 
   // optional uint64 last_tm_fail = 5;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(5, this->_internal_last_tm_fail(), target);
   }
 
   // optional uint64 next_review_tm_ms = 6;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(6, this->_internal_next_review_tm_ms(), target);
+  }
+
+  // optional string meaning_id = 7;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_meaning_id().data(), static_cast<int>(this->_internal_meaning_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "api.WordInReview.meaning_id");
+    target = stream->WriteStringMaybeAliased(
+        7, this->_internal_meaning_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2938,7 +2954,7 @@ size_t WordInReview::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000003fu) {
+  if (cached_has_bits & 0x0000007fu) {
     // optional string word = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -2946,36 +2962,43 @@ size_t WordInReview::ByteSizeLong() const {
           this->_internal_word());
     }
 
-    // optional uint32 success_count = 2;
+    // optional string meaning_id = 7;
     if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_meaning_id());
+    }
+
+    // optional uint32 success_count = 2;
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
           this->_internal_success_count());
     }
 
     // optional uint32 fail_count = 3;
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
           this->_internal_fail_count());
     }
 
     // optional uint64 last_tm_success = 4;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_last_tm_success());
     }
 
     // optional uint64 last_tm_fail = 5;
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_last_tm_fail());
     }
 
     // optional uint64 next_review_tm_ms = 6;
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_next_review_tm_ms());
@@ -3014,23 +3037,26 @@ void WordInReview::MergeFrom(const WordInReview& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000003fu) {
+  if (cached_has_bits & 0x0000007fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_word(from._internal_word());
     }
     if (cached_has_bits & 0x00000002u) {
-      success_count_ = from.success_count_;
+      _internal_set_meaning_id(from._internal_meaning_id());
     }
     if (cached_has_bits & 0x00000004u) {
-      fail_count_ = from.fail_count_;
+      success_count_ = from.success_count_;
     }
     if (cached_has_bits & 0x00000008u) {
-      last_tm_success_ = from.last_tm_success_;
+      fail_count_ = from.fail_count_;
     }
     if (cached_has_bits & 0x00000010u) {
-      last_tm_fail_ = from.last_tm_fail_;
+      last_tm_success_ = from.last_tm_success_;
     }
     if (cached_has_bits & 0x00000020u) {
+      last_tm_fail_ = from.last_tm_fail_;
+    }
+    if (cached_has_bits & 0x00000040u) {
       next_review_tm_ms_ = from.next_review_tm_ms_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3060,6 +3086,7 @@ void WordInReview::InternalSwap(WordInReview* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   word_.Swap(&other->word_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  meaning_id_.Swap(&other->meaning_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(WordInReview, next_review_tm_ms_)
       + sizeof(WordInReview::next_review_tm_ms_)
@@ -3084,22 +3111,25 @@ class ReqAddWordInReview::_Internal {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_use_extra_fields(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
-  }
-  static void set_has_success_count(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
-  static void set_has_fail_count(HasBits* has_bits) {
-    (*has_bits)[0] |= 64u;
-  }
-  static void set_has_last_tm_success(HasBits* has_bits) {
+  static void set_has_success_count(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
-  static void set_has_last_tm_fail(HasBits* has_bits) {
+  static void set_has_fail_count(HasBits* has_bits) {
+    (*has_bits)[0] |= 128u;
+  }
+  static void set_has_last_tm_success(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
   }
-  static void set_has_next_review_tm_ms(HasBits* has_bits) {
+  static void set_has_last_tm_fail(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
+  }
+  static void set_has_next_review_tm_ms(HasBits* has_bits) {
+    (*has_bits)[0] |= 64u;
+  }
+  static void set_has_meaning_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
@@ -3118,6 +3148,11 @@ ReqAddWordInReview::ReqAddWordInReview(const ReqAddWordInReview& from)
     word_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_word(),
       GetArena());
   }
+  meaning_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_meaning_id()) {
+    meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_meaning_id(),
+      GetArena());
+  }
   ::memcpy(&use_extra_fields_, &from.use_extra_fields_,
     static_cast<size_t>(reinterpret_cast<char*>(&fail_count_) -
     reinterpret_cast<char*>(&use_extra_fields_)) + sizeof(fail_count_));
@@ -3127,6 +3162,7 @@ ReqAddWordInReview::ReqAddWordInReview(const ReqAddWordInReview& from)
 void ReqAddWordInReview::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ReqAddWordInReview_proto_2eproto.base);
   word_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  meaning_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&use_extra_fields_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&fail_count_) -
       reinterpret_cast<char*>(&use_extra_fields_)) + sizeof(fail_count_));
@@ -3141,6 +3177,7 @@ ReqAddWordInReview::~ReqAddWordInReview() {
 void ReqAddWordInReview::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   word_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  meaning_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void ReqAddWordInReview::ArenaDtor(void* object) {
@@ -3165,10 +3202,15 @@ void ReqAddWordInReview::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    word_.ClearNonDefaultToEmpty();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      word_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      meaning_id_.ClearNonDefaultToEmpty();
+    }
   }
-  if (cached_has_bits & 0x0000007eu) {
+  if (cached_has_bits & 0x000000fcu) {
     ::memset(&use_extra_fields_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&fail_count_) -
         reinterpret_cast<char*>(&use_extra_fields_)) + sizeof(fail_count_));
@@ -3245,6 +3287,17 @@ const char* ReqAddWordInReview::_InternalParse(const char* ptr, ::PROTOBUF_NAMES
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional string meaning_id = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 66)) {
+          auto str = _internal_mutable_meaning_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "api.ReqAddWordInReview.meaning_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -3286,39 +3339,49 @@ failure:
   }
 
   // optional bool use_extra_fields = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(2, this->_internal_use_extra_fields(), target);
   }
 
   // optional uint32 success_count = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_success_count(), target);
   }
 
   // optional uint32 fail_count = 4;
-  if (cached_has_bits & 0x00000040u) {
+  if (cached_has_bits & 0x00000080u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(4, this->_internal_fail_count(), target);
   }
 
   // optional uint64 last_tm_success = 5;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(5, this->_internal_last_tm_success(), target);
   }
 
   // optional uint64 last_tm_fail = 6;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(6, this->_internal_last_tm_fail(), target);
   }
 
   // optional uint64 next_review_tm_ms = 7;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(7, this->_internal_next_review_tm_ms(), target);
+  }
+
+  // optional string meaning_id = 8;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_meaning_id().data(), static_cast<int>(this->_internal_meaning_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "api.ReqAddWordInReview.meaning_id");
+    target = stream->WriteStringMaybeAliased(
+        8, this->_internal_meaning_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -3338,7 +3401,7 @@ size_t ReqAddWordInReview::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000007fu) {
+  if (cached_has_bits & 0x000000ffu) {
     // optional string word = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -3346,41 +3409,48 @@ size_t ReqAddWordInReview::ByteSizeLong() const {
           this->_internal_word());
     }
 
-    // optional bool use_extra_fields = 2;
+    // optional string meaning_id = 8;
     if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_meaning_id());
+    }
+
+    // optional bool use_extra_fields = 2;
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 + 1;
     }
 
     // optional uint32 success_count = 3;
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
           this->_internal_success_count());
     }
 
     // optional uint64 last_tm_success = 5;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_last_tm_success());
     }
 
     // optional uint64 last_tm_fail = 6;
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_last_tm_fail());
     }
 
     // optional uint64 next_review_tm_ms = 7;
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_next_review_tm_ms());
     }
 
     // optional uint32 fail_count = 4;
-    if (cached_has_bits & 0x00000040u) {
+    if (cached_has_bits & 0x00000080u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
           this->_internal_fail_count());
@@ -3419,26 +3489,29 @@ void ReqAddWordInReview::MergeFrom(const ReqAddWordInReview& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000007fu) {
+  if (cached_has_bits & 0x000000ffu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_word(from._internal_word());
     }
     if (cached_has_bits & 0x00000002u) {
-      use_extra_fields_ = from.use_extra_fields_;
+      _internal_set_meaning_id(from._internal_meaning_id());
     }
     if (cached_has_bits & 0x00000004u) {
-      success_count_ = from.success_count_;
+      use_extra_fields_ = from.use_extra_fields_;
     }
     if (cached_has_bits & 0x00000008u) {
-      last_tm_success_ = from.last_tm_success_;
+      success_count_ = from.success_count_;
     }
     if (cached_has_bits & 0x00000010u) {
-      last_tm_fail_ = from.last_tm_fail_;
+      last_tm_success_ = from.last_tm_success_;
     }
     if (cached_has_bits & 0x00000020u) {
-      next_review_tm_ms_ = from.next_review_tm_ms_;
+      last_tm_fail_ = from.last_tm_fail_;
     }
     if (cached_has_bits & 0x00000040u) {
+      next_review_tm_ms_ = from.next_review_tm_ms_;
+    }
+    if (cached_has_bits & 0x00000080u) {
       fail_count_ = from.fail_count_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -3468,6 +3541,7 @@ void ReqAddWordInReview::InternalSwap(ReqAddWordInReview* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   word_.Swap(&other->word_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  meaning_id_.Swap(&other->meaning_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(ReqAddWordInReview, fail_count_)
       + sizeof(ReqAddWordInReview::fail_count_)
@@ -4047,19 +4121,22 @@ class ReqUpdateWordInCurrent::_Internal {
     (*has_bits)[0] |= 1u;
   }
   static void set_has_success_count(HasBits* has_bits) {
-    (*has_bits)[0] |= 2u;
-  }
-  static void set_has_fail_count(HasBits* has_bits) {
     (*has_bits)[0] |= 4u;
   }
-  static void set_has_last_tm_success(HasBits* has_bits) {
+  static void set_has_fail_count(HasBits* has_bits) {
     (*has_bits)[0] |= 8u;
   }
-  static void set_has_last_tm_fail(HasBits* has_bits) {
+  static void set_has_last_tm_success(HasBits* has_bits) {
     (*has_bits)[0] |= 16u;
   }
-  static void set_has_next_review_tm_ms(HasBits* has_bits) {
+  static void set_has_last_tm_fail(HasBits* has_bits) {
     (*has_bits)[0] |= 32u;
+  }
+  static void set_has_next_review_tm_ms(HasBits* has_bits) {
+    (*has_bits)[0] |= 64u;
+  }
+  static void set_has_meaning_id(HasBits* has_bits) {
+    (*has_bits)[0] |= 2u;
   }
 };
 
@@ -4078,6 +4155,11 @@ ReqUpdateWordInCurrent::ReqUpdateWordInCurrent(const ReqUpdateWordInCurrent& fro
     word_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_word(),
       GetArena());
   }
+  meaning_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  if (from._internal_has_meaning_id()) {
+    meaning_id_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), from._internal_meaning_id(),
+      GetArena());
+  }
   ::memcpy(&success_count_, &from.success_count_,
     static_cast<size_t>(reinterpret_cast<char*>(&next_review_tm_ms_) -
     reinterpret_cast<char*>(&success_count_)) + sizeof(next_review_tm_ms_));
@@ -4087,6 +4169,7 @@ ReqUpdateWordInCurrent::ReqUpdateWordInCurrent(const ReqUpdateWordInCurrent& fro
 void ReqUpdateWordInCurrent::SharedCtor() {
   ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_ReqUpdateWordInCurrent_proto_2eproto.base);
   word_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  meaning_id_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
   ::memset(&success_count_, 0, static_cast<size_t>(
       reinterpret_cast<char*>(&next_review_tm_ms_) -
       reinterpret_cast<char*>(&success_count_)) + sizeof(next_review_tm_ms_));
@@ -4101,6 +4184,7 @@ ReqUpdateWordInCurrent::~ReqUpdateWordInCurrent() {
 void ReqUpdateWordInCurrent::SharedDtor() {
   GOOGLE_DCHECK(GetArena() == nullptr);
   word_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  meaning_id_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
 }
 
 void ReqUpdateWordInCurrent::ArenaDtor(void* object) {
@@ -4125,10 +4209,15 @@ void ReqUpdateWordInCurrent::Clear() {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x00000001u) {
-    word_.ClearNonDefaultToEmpty();
+  if (cached_has_bits & 0x00000003u) {
+    if (cached_has_bits & 0x00000001u) {
+      word_.ClearNonDefaultToEmpty();
+    }
+    if (cached_has_bits & 0x00000002u) {
+      meaning_id_.ClearNonDefaultToEmpty();
+    }
   }
-  if (cached_has_bits & 0x0000003eu) {
+  if (cached_has_bits & 0x0000007cu) {
     ::memset(&success_count_, 0, static_cast<size_t>(
         reinterpret_cast<char*>(&next_review_tm_ms_) -
         reinterpret_cast<char*>(&success_count_)) + sizeof(next_review_tm_ms_));
@@ -4197,6 +4286,17 @@ const char* ReqUpdateWordInCurrent::_InternalParse(const char* ptr, ::PROTOBUF_N
           CHK_(ptr);
         } else goto handle_unusual;
         continue;
+      // optional string meaning_id = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 58)) {
+          auto str = _internal_mutable_meaning_id();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          #ifndef NDEBUG
+          ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "api.ReqUpdateWordInCurrent.meaning_id");
+          #endif  // !NDEBUG
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
       default: {
       handle_unusual:
         if ((tag & 7) == 4 || tag == 0) {
@@ -4238,33 +4338,43 @@ failure:
   }
 
   // optional uint32 success_count = 2;
-  if (cached_has_bits & 0x00000002u) {
+  if (cached_has_bits & 0x00000004u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(2, this->_internal_success_count(), target);
   }
 
   // optional uint32 fail_count = 3;
-  if (cached_has_bits & 0x00000004u) {
+  if (cached_has_bits & 0x00000008u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt32ToArray(3, this->_internal_fail_count(), target);
   }
 
   // optional uint64 last_tm_success = 4;
-  if (cached_has_bits & 0x00000008u) {
+  if (cached_has_bits & 0x00000010u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(4, this->_internal_last_tm_success(), target);
   }
 
   // optional uint64 last_tm_fail = 5;
-  if (cached_has_bits & 0x00000010u) {
+  if (cached_has_bits & 0x00000020u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(5, this->_internal_last_tm_fail(), target);
   }
 
   // optional uint64 next_review_tm_ms = 6;
-  if (cached_has_bits & 0x00000020u) {
+  if (cached_has_bits & 0x00000040u) {
     target = stream->EnsureSpace(target);
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteUInt64ToArray(6, this->_internal_next_review_tm_ms(), target);
+  }
+
+  // optional string meaning_id = 7;
+  if (cached_has_bits & 0x00000002u) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
+      this->_internal_meaning_id().data(), static_cast<int>(this->_internal_meaning_id().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
+      "api.ReqUpdateWordInCurrent.meaning_id");
+    target = stream->WriteStringMaybeAliased(
+        7, this->_internal_meaning_id(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -4284,7 +4394,7 @@ size_t ReqUpdateWordInCurrent::ByteSizeLong() const {
   (void) cached_has_bits;
 
   cached_has_bits = _has_bits_[0];
-  if (cached_has_bits & 0x0000003fu) {
+  if (cached_has_bits & 0x0000007fu) {
     // optional string word = 1;
     if (cached_has_bits & 0x00000001u) {
       total_size += 1 +
@@ -4292,36 +4402,43 @@ size_t ReqUpdateWordInCurrent::ByteSizeLong() const {
           this->_internal_word());
     }
 
-    // optional uint32 success_count = 2;
+    // optional string meaning_id = 7;
     if (cached_has_bits & 0x00000002u) {
+      total_size += 1 +
+        ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+          this->_internal_meaning_id());
+    }
+
+    // optional uint32 success_count = 2;
+    if (cached_has_bits & 0x00000004u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
           this->_internal_success_count());
     }
 
     // optional uint32 fail_count = 3;
-    if (cached_has_bits & 0x00000004u) {
+    if (cached_has_bits & 0x00000008u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt32Size(
           this->_internal_fail_count());
     }
 
     // optional uint64 last_tm_success = 4;
-    if (cached_has_bits & 0x00000008u) {
+    if (cached_has_bits & 0x00000010u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_last_tm_success());
     }
 
     // optional uint64 last_tm_fail = 5;
-    if (cached_has_bits & 0x00000010u) {
+    if (cached_has_bits & 0x00000020u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_last_tm_fail());
     }
 
     // optional uint64 next_review_tm_ms = 6;
-    if (cached_has_bits & 0x00000020u) {
+    if (cached_has_bits & 0x00000040u) {
       total_size += 1 +
         ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::UInt64Size(
           this->_internal_next_review_tm_ms());
@@ -4360,23 +4477,26 @@ void ReqUpdateWordInCurrent::MergeFrom(const ReqUpdateWordInCurrent& from) {
   (void) cached_has_bits;
 
   cached_has_bits = from._has_bits_[0];
-  if (cached_has_bits & 0x0000003fu) {
+  if (cached_has_bits & 0x0000007fu) {
     if (cached_has_bits & 0x00000001u) {
       _internal_set_word(from._internal_word());
     }
     if (cached_has_bits & 0x00000002u) {
-      success_count_ = from.success_count_;
+      _internal_set_meaning_id(from._internal_meaning_id());
     }
     if (cached_has_bits & 0x00000004u) {
-      fail_count_ = from.fail_count_;
+      success_count_ = from.success_count_;
     }
     if (cached_has_bits & 0x00000008u) {
-      last_tm_success_ = from.last_tm_success_;
+      fail_count_ = from.fail_count_;
     }
     if (cached_has_bits & 0x00000010u) {
-      last_tm_fail_ = from.last_tm_fail_;
+      last_tm_success_ = from.last_tm_success_;
     }
     if (cached_has_bits & 0x00000020u) {
+      last_tm_fail_ = from.last_tm_fail_;
+    }
+    if (cached_has_bits & 0x00000040u) {
       next_review_tm_ms_ = from.next_review_tm_ms_;
     }
     _has_bits_[0] |= cached_has_bits;
@@ -4406,6 +4526,7 @@ void ReqUpdateWordInCurrent::InternalSwap(ReqUpdateWordInCurrent* other) {
   _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
   swap(_has_bits_[0], other->_has_bits_[0]);
   word_.Swap(&other->word_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
+  meaning_id_.Swap(&other->meaning_id_, &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArena());
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(ReqUpdateWordInCurrent, next_review_tm_ms_)
       + sizeof(ReqUpdateWordInCurrent::next_review_tm_ms_)
@@ -6465,216 +6586,6 @@ void ReqSentences::InternalSwap(ReqSentences* other) {
 
 // ===================================================================
 
-void RespSentences::InitAsDefaultInstance() {
-}
-class RespSentences::_Internal {
- public:
-};
-
-RespSentences::RespSentences(::PROTOBUF_NAMESPACE_ID::Arena* arena)
-  : ::PROTOBUF_NAMESPACE_ID::Message(arena),
-  data_(arena) {
-  SharedCtor();
-  RegisterArenaDtor(arena);
-  // @@protoc_insertion_point(arena_constructor:api.RespSentences)
-}
-RespSentences::RespSentences(const RespSentences& from)
-  : ::PROTOBUF_NAMESPACE_ID::Message(),
-      data_(from.data_) {
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  // @@protoc_insertion_point(copy_constructor:api.RespSentences)
-}
-
-void RespSentences::SharedCtor() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&scc_info_RespSentences_proto_2eproto.base);
-}
-
-RespSentences::~RespSentences() {
-  // @@protoc_insertion_point(destructor:api.RespSentences)
-  SharedDtor();
-  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-void RespSentences::SharedDtor() {
-  GOOGLE_DCHECK(GetArena() == nullptr);
-}
-
-void RespSentences::ArenaDtor(void* object) {
-  RespSentences* _this = reinterpret_cast< RespSentences* >(object);
-  (void)_this;
-}
-void RespSentences::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
-}
-void RespSentences::SetCachedSize(int size) const {
-  _cached_size_.Set(size);
-}
-const RespSentences& RespSentences::default_instance() {
-  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_RespSentences_proto_2eproto.base);
-  return *internal_default_instance();
-}
-
-
-void RespSentences::Clear() {
-// @@protoc_insertion_point(message_clear_start:api.RespSentences)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  data_.Clear();
-  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
-}
-
-const char* RespSentences::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
-#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
-  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
-  while (!ctx->Done(&ptr)) {
-    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
-    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
-    CHK_(ptr);
-    switch (tag >> 3) {
-      // repeated string data = 1;
-      case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 10)) {
-          ptr -= 1;
-          do {
-            ptr += 1;
-            auto str = _internal_add_data();
-            ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
-            #ifndef NDEBUG
-            ::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "api.RespSentences.data");
-            #endif  // !NDEBUG
-            CHK_(ptr);
-            if (!ctx->DataAvailable(ptr)) break;
-          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
-        } else goto handle_unusual;
-        continue;
-      default: {
-      handle_unusual:
-        if ((tag & 7) == 4 || tag == 0) {
-          ctx->SetLastTag(tag);
-          goto success;
-        }
-        ptr = UnknownFieldParse(tag,
-            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
-            ptr, ctx);
-        CHK_(ptr != nullptr);
-        continue;
-      }
-    }  // switch
-  }  // while
-success:
-  return ptr;
-failure:
-  ptr = nullptr;
-  goto success;
-#undef CHK_
-}
-
-::PROTOBUF_NAMESPACE_ID::uint8* RespSentences::_InternalSerialize(
-    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:api.RespSentences)
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  // repeated string data = 1;
-  for (int i = 0, n = this->_internal_data_size(); i < n; i++) {
-    const auto& s = this->_internal_data(i);
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::VerifyUTF8StringNamedField(
-      s.data(), static_cast<int>(s.length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::SERIALIZE,
-      "api.RespSentences.data");
-    target = stream->WriteString(1, s, target);
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
-        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:api.RespSentences)
-  return target;
-}
-
-size_t RespSentences::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:api.RespSentences)
-  size_t total_size = 0;
-
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  // Prevent compiler warnings about cached_has_bits being unused
-  (void) cached_has_bits;
-
-  // repeated string data = 1;
-  total_size += 1 *
-      ::PROTOBUF_NAMESPACE_ID::internal::FromIntSize(data_.size());
-  for (int i = 0, n = data_.size(); i < n; i++) {
-    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-      data_.Get(i));
-  }
-
-  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
-    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
-        _internal_metadata_, total_size, &_cached_size_);
-  }
-  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
-  SetCachedSize(cached_size);
-  return total_size;
-}
-
-void RespSentences::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_merge_from_start:api.RespSentences)
-  GOOGLE_DCHECK_NE(&from, this);
-  const RespSentences* source =
-      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<RespSentences>(
-          &from);
-  if (source == nullptr) {
-  // @@protoc_insertion_point(generalized_merge_from_cast_fail:api.RespSentences)
-    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
-  } else {
-  // @@protoc_insertion_point(generalized_merge_from_cast_success:api.RespSentences)
-    MergeFrom(*source);
-  }
-}
-
-void RespSentences::MergeFrom(const RespSentences& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:api.RespSentences)
-  GOOGLE_DCHECK_NE(&from, this);
-  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
-  (void) cached_has_bits;
-
-  data_.MergeFrom(from.data_);
-}
-
-void RespSentences::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-// @@protoc_insertion_point(generalized_copy_from_start:api.RespSentences)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void RespSentences::CopyFrom(const RespSentences& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:api.RespSentences)
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool RespSentences::IsInitialized() const {
-  return true;
-}
-
-void RespSentences::InternalSwap(RespSentences* other) {
-  using std::swap;
-  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
-  data_.InternalSwap(&other->data_);
-}
-
-::PROTOBUF_NAMESPACE_ID::Metadata RespSentences::GetMetadata() const {
-  return GetMetadataStatic();
-}
-
-
-// ===================================================================
-
 void RespDefault::InitAsDefaultInstance() {
 }
 class RespDefault::_Internal {
@@ -7325,9 +7236,6 @@ template<> PROTOBUF_NOINLINE ::api::RespDeleteProfile* Arena::CreateMaybeMessage
 }
 template<> PROTOBUF_NOINLINE ::api::ReqSentences* Arena::CreateMaybeMessage< ::api::ReqSentences >(Arena* arena) {
   return Arena::CreateMessageInternal< ::api::ReqSentences >(arena);
-}
-template<> PROTOBUF_NOINLINE ::api::RespSentences* Arena::CreateMaybeMessage< ::api::RespSentences >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::api::RespSentences >(arena);
 }
 template<> PROTOBUF_NOINLINE ::api::RespDefault* Arena::CreateMaybeMessage< ::api::RespDefault >(Arena* arena) {
   return Arena::CreateMessageInternal< ::api::RespDefault >(arena);

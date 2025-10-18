@@ -5,6 +5,7 @@
 #include <vector>
 #include <mutex>
 #include <memory>
+#include <optional>
 #include "ThirdParty/Sqlite/sqlite3.h"
 
 class MiscDb {
@@ -26,6 +27,7 @@ public:
         uint64_t last_tm_success;
         uint64_t last_tm_fail;
         uint64_t next_review_tm;
+        std::string meaning_id;
     };
 
     struct MetaData {
@@ -36,23 +38,21 @@ public:
 
     bool init(std::string path);
 
-    std::vector<Word> getRecentWords();
-    void putRecentWord(std::string word, std::string json);
+    std::vector<Word> getRecent();
+    void putRecent(std::string word, std::string json);
 
-    std::vector<WordCurrent> getReviewForToday();
+    std::vector<WordCurrent> getCurrentToStudy();
+    
+    std::vector<Word> getDictionary(std::string word, bool useLike);
+    std::vector<Word> getDictionaryRand(int count);
 
-    std::vector<Word> getWords(std::string word, bool useLike);
-    std::vector<Word> getRandWords(int count);
+    void addCurrent(std::string word);
+    void addCurrentWithData(WordCurrent word);
 
-    void addWordInReview(std::string word);
-    void addWordInReview(WordCurrent word);
-
-    void updateWordInReview(MiscDb::WordCurrent word);
-    std::shared_ptr<WordCurrent> getWordInReview(std::string word);
-    void removeWordInReview(std::string word);
-    std::vector<WordCurrent> getWordInReviewList(int limit, int offset, int useSuccessCount);
-
-    std::vector<std::string> getSentences(std::string word, uint32_t limit, uint32_t offset);
+    void updateCurrent(MiscDb::WordCurrent word);
+    std::optional<WordCurrent> getCurrentExact(std::string word);
+    void deleteCurrentExact(std::string word);
+    std::vector<WordCurrent> getCurrentLimit(int limit, int offset, int useSuccessCount);
 
     MetaData getMetadata();
 
