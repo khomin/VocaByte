@@ -19,6 +19,7 @@
 		CE643B472DB410F100DF98B6 /* api_os.mm in Sources */ = {isa = PBXBuildFile; fileRef = CE643B462DB410F100DF98B6 /* api_os.mm */; };
 		CEC8EBD72DBA48220086EACF /* loguru.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC8EBD52DBA48210086EACF /* loguru.cpp */; };
 		CEC8EBD82DBA48220086EACF /* loguru.hpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC8EBD62DBA48220086EACF /* loguru.hpp */; };
+		CEF48C082EA4F616009DA07B /* api_os.h in Sources */ = {isa = PBXBuildFile; fileRef = CE643B452DB410F100DF98B6 /* api_os.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,23 +41,10 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 87F99ED10536475FBE93F4A8;
+			remoteGlobalIDString = 585ABFCAE12F48E68AF01213;
 			remoteInfo = VocaByte;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		4E88B6472B2B338D00133271 /* Embed Foundation Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
@@ -190,7 +178,6 @@
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
-				4E88B6472B2B338D00133271 /* Embed Foundation Extensions */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				4E88B6462B2B338000133271 /* ShellScript */,
 				DA336E0B72E4B0ABA9600363 /* [CP] Embed Pods Frameworks */,
@@ -375,6 +362,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEF48C082EA4F616009DA07B /* api_os.h in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				CE643B472DB410F100DF98B6 /* api_os.mm in Sources */,
 				CEC8EBD72DBA48220086EACF /* loguru.cpp in Sources */,
@@ -443,6 +431,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BKKJDH248G;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -459,12 +448,15 @@
 					../lib_pack/ios/protobuf/include,
 					../cpp,
 					../cpp/api/,
+					"/Users/user/Documents/misc/flutter/bin/cache/dart-sdk/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = ../lib_pack/ios/protobuf/ios_universal;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -540,8 +532,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.VocaByte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -582,6 +572,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = BKKJDH248G;
 				ENABLE_BITCODE = NO;
@@ -605,12 +596,15 @@
 					../lib_pack/ios/protobuf/include,
 					../cpp,
 					../cpp/api/,
+					"/Users/user/Documents/misc/flutter/bin/cache/dart-sdk/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = ../lib_pack/ios/protobuf/ios_universal;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -646,6 +640,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = BKKJDH248G;
 				ENABLE_BITCODE = NO;
@@ -663,12 +658,15 @@
 					../lib_pack/ios/protobuf/include,
 					../cpp,
 					../cpp/api/,
+					"/Users/user/Documents/misc/flutter/bin/cache/dart-sdk/include",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LIBRARY_SEARCH_PATHS = ../lib_pack/ios/protobuf/ios_universal;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				ONLY_ACTIVE_ARCH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
+				STRIP_INSTALLED_PRODUCT = NO;
+				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphonesimulator iphoneos";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -758,8 +756,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.VocaByte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -841,8 +837,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = org.VocaByte;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				STRIP_INSTALLED_PRODUCT = NO;
-				STRIP_STYLE = "non-global";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

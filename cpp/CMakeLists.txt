@@ -83,6 +83,7 @@ set(SOURCES
 
 set(INCLUDE_DIRS ${INCLUDE_DIRS}
     ${FLUTTER_SDK_PATH}/cache/dart-sdk/include
+    ./protobuf/generated/
 )
 
 if (WIN32)
@@ -102,10 +103,10 @@ if(APPLE)
     if(IOS)
         # protobuf
         set(INCLUDE_DIRS ${INCLUDE_DIRS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/macos/protobuf/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/ios/protobuf/include
         )
         set(LIBRARIES ${LIBRARIES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/macos/protobuf/ios_universal/libprotobuf.a
+            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/ios/protobuf/ios_universal/libprotobuf.a
             loguru::loguru
         )
     else()

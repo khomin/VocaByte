@@ -8,9 +8,7 @@ import Foundation
     
     override func application(_ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-                    
-        let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
-    
+                        
         API_OS().onTest_objc()
         
         GeneratedPluginRegistrant.register(with: self)

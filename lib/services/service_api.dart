@@ -108,6 +108,7 @@ class ServiceApi {
   static late Function _getMetaData;
   static late Function _getCurrentLimit;
   static late Function _executeCallback;
+  static late Function _testMethod;
   static late DynamicLibrary _dylib;
   //
   final _player = AudioPlayer();
@@ -139,12 +140,16 @@ class ServiceApi {
         logInfo('$tag: -init [lib opened]');
       }
 
-      _init = _dylib.lookupFunction<
-          Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("init");
+      _testMethod =
+          _dylib.lookupFunction<Int Function(Uint32), int Function(int)>(
+              "testMethod");
 
       _initializeApi = _dylib.lookupFunction<IntPtr Function(Pointer<Void>),
           int Function(Pointer<Void>)>("initDartApiDL");
+
+      _init = _dylib.lookupFunction<
+          Int Function(Uint32, Pointer<Uint8>, Uint32),
+          int Function(int, Pointer<Uint8>, int)>("init");
 
       _getDictionary = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
