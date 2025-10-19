@@ -1,16 +1,17 @@
-
-# Cmake min version
 cmake_minimum_required(VERSION 3.10)
 
-set(PROJECT                         VocaByte)
-set(CMAKE_CXX_STANDARD              20)
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR})
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR})
-set(CMAKE_PDB_OUTPUT_DIRECTORY      ${CMAKE_BINARY_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR})
-set(CMAKE_VERBOSE_MAKEFILE          ON)
-set(BUILD_TESTING                   false   CACHE INTERNAL "")
-set(TARGET_NAME                     ${PROJECT})
+set(CMAKE_VERBOSE_MAKEFILE ON)
+set(CMAKE_CXX_STANDARD 17)
+
+set(CMAKE_CXX_FLAGS_DEBUG "-g -O0" CACHE STRING "Build flag" FORCE)
+set(CMAKE_C_FLAGS_DEBUG "-g -O0" CACHE STRING "Build c flag" FORCE)
+set(CMAKE_CXX_FLAGS_RELEASE "-DNDEBUG -O3 -s" CACHE STRING "Build flag" FORCE)
+set(CMAKE_C_FLAGS_RELEASE "-DNDEBUG -O3 -s" CACHE STRING "Build c flag" FORCE)
+
+set(PROJECT VocaByte)
+set(TARGET_NAME ${PROJECT})
+set(DESTDIR ${CMAKE_CURRENT_BINARY_DIR})
+set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -101,7 +102,6 @@ endif()
 # libraries
 if(APPLE)
     if(IOS)
-        # protobuf
         set(INCLUDE_DIRS ${INCLUDE_DIRS}
             ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/ios/protobuf/include
         )
@@ -162,29 +162,6 @@ if(IOS)
     set_property(TARGET ${PROJECT} PROPERTY XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
     set_property(TARGET ${PROJECT} PROPERTY XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "BKKJDH248G")
     set_property(TARGET ${PROJECT} PROPERTY XCODE_ATTRIBUTE_ENABLE_BITCODE "NO")
-    function(get_all_targets var)
-        set(targets)
-        get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
-        set(${var} ${targets} PARENT_SCOPE)
-    endfunction()
-    macro(get_all_targets_recursive targets dir)
-        get_property(subdirectories DIRECTORY ${dir} PROPERTY SUBDIRECTORIES)
-        foreach(subdir ${subdirectories})
-            get_all_targets_recursive(${targets} ${subdir})
-        endforeach()
-        get_property(current_targets DIRECTORY ${dir} PROPERTY BUILDSYSTEM_TARGETS)
-        list(APPEND ${targets} ${current_targets})
-    endmacro()
-
-    get_all_targets(all_targets)
-    message("All targets: ${all_targets}")
-
-    set_property(TARGET ${all_targets} PROPERTY
-        XCODE_ATTRIBUTE_OTHER_CFLAGS[arch=arm64] "-march=armv8.1-a+crypto"
-    )
-    set_property(TARGET ${all_targets} PROPERTY
-        XCODE_ATTRIBUTE_OTHER_CFLAGS[arch=x86_64] "-D__AESNI -maes -mpclmul -msse4"
-    )
 else()
     add_library(
         ${PROJECT} SHARED

@@ -133,6 +133,8 @@ class ServiceApi {
       if (Platform.isIOS) {
         logInfo('$tag: -init [about to open lib]');
         _dylib = DynamicLibrary.executable();
+        // _dylib = DynamicLibrary.process();
+        // _dylib = DynamicLibrary.open(libraryPath);
         logInfo('$tag: -init [lib opened]');
       } else {
         logInfo('$tag: -init [about to open lib] $libraryPath');
@@ -140,24 +142,43 @@ class ServiceApi {
         logInfo('$tag: -init [lib opened]');
       }
 
-      _testMethod =
-          _dylib.lookupFunction<Int Function(Uint32), int Function(int)>(
-              "testMethod");
+      try {
+        _testMethod =
+            _dylib.lookupFunction<Void Function(Uint32), void Function(int)>(
+                "testMethod");
+      } catch (ex) {
+        logError(ex);
+      }
 
-      _initializeApi = _dylib.lookupFunction<IntPtr Function(Pointer<Void>),
-          int Function(Pointer<Void>)>("initDartApiDL");
+      try {
+        _init = _dylib.lookupFunction<
+            Int Function(Uint32, Pointer<Uint8>, Uint32),
+            int Function(int, Pointer<Uint8>, int)>("init");
+      } catch (ex) {
+        logError(ex);
+      }
 
-      _init = _dylib.lookupFunction<
-          Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("init");
+      try {
+        _initializeApi = _dylib.lookupFunction<IntPtr Function(Pointer<Void>),
+            int Function(Pointer<Void>)>("initDartApiDL");
+      } catch (ex) {
+        logError(ex);
+      }
 
-      _getDictionary = _dylib.lookupFunction<
-          Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getDictionary");
-
-      _getDictionaryRand = _dylib.lookupFunction<
-          Int Function(Uint32, Pointer<Uint8>, Uint32),
-          int Function(int, Pointer<Uint8>, int)>("getDictionaryRand");
+      try {
+        _getDictionary = _dylib.lookupFunction<
+            Int Function(Uint32, Pointer<Uint8>, Uint32),
+            int Function(int, Pointer<Uint8>, int)>("getDictionary");
+      } catch (ex) {
+        logError(ex);
+      }
+      try {
+        _getDictionaryRand = _dylib.lookupFunction<
+            Int Function(Uint32, Pointer<Uint8>, Uint32),
+            int Function(int, Pointer<Uint8>, int)>("getDictionaryRand");
+      } catch (ex) {
+        logError(ex);
+      }
 
       _getRecent = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),

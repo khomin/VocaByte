@@ -42,7 +42,7 @@ dependencies:
   flutter_svg: ^2.0.2
   rxdart: ^0.28.0
   dio: ^5.4.0
-  ffi: ^2.1.0
+  ffi: ^2.0.1
   fixnum: ^1.0.1
   protobuf: ^4.1.0
   collection: ^1.17.0
