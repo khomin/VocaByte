@@ -133,8 +133,6 @@ class ServiceApi {
       if (Platform.isIOS) {
         logInfo('$tag: -init [about to open lib]');
         _dylib = DynamicLibrary.executable();
-        // _dylib = DynamicLibrary.process();
-        // _dylib = DynamicLibrary.open(libraryPath);
         logInfo('$tag: -init [lib opened]');
       } else {
         logInfo('$tag: -init [about to open lib] $libraryPath');
