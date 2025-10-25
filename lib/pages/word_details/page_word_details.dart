@@ -8,13 +8,10 @@ import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/button_with_menu.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
-import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/pages/settings/theme/app_theme.dart';
-import 'package:provider/provider.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
@@ -70,7 +67,7 @@ class PageWordDetailsState extends State<PageWordDetails>
     _dispStream.dispose();
     _playWordCtr.dispose();
     _playExampleCtr.dispose();
-    _pageController?.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 

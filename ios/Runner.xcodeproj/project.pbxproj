@@ -42,14 +42,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = CBDCACCC968C47939B364729;
+			remoteGlobalIDString = 2B28CA35E3FE4F4FB9075CFA;
 			remoteInfo = VocaByte;
 		};
 		CEF48C4C2EA5330A009DA07B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 0E278B3E2B074A8188E0377D;
+			remoteGlobalIDString = A96FD902AF744A2793FC06FB;
 			remoteInfo = loguru;
 		};
 /* End PBXContainerItemProxy section */

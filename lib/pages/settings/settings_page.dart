@@ -1,12 +1,6 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:fixnum/fixnum.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loggy/loggy.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
@@ -18,10 +12,8 @@ import 'package:vocabyte/pages/settings/theme/theme_config.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/pages/settings/theme/app_theme.dart';
-import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/resource/constants.dart';
-import 'package:vocabyte/services/protobuf/proto.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
 
 class SettingsPage extends StatefulWidget {
