@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:loggy/loggy.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
@@ -101,104 +102,115 @@ class _State extends State<SettingsPage> {
         ]),
         Padding(
             padding: const EdgeInsets.only(top: 10, bottom: 25),
-            child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  //
-                  // light
-                  ThemeSwitcher(
-                      clipper: const ThemeSwitcherCircleClipper(),
-                      builder: (context) {
-                        return ItemInMenuList(
-                            useBorderTop: false,
-                            useBorderBot: false,
-                            height: 45,
-                            padding: const EdgeInsets.only(left: 25, right: 25),
-                            margin: const EdgeInsets.only(top: 10),
-                            onClicked: (_) async {
-                              ThemeSwitcher.of(context)
-                                  .changeTheme(theme: lightTheme);
-                              await SettingsRep()
-                                  .changeTheme(ThemeType.values[0]);
-                              _update();
-                            },
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Light',
-                                      textAlign: TextAlign.center,
-                                      style:
-                                          Theme.of(context).colorScheme.title2),
-                                  const IgnorePointer(
-                                      child: Radio<int>(value: 0))
-                                ]));
-                      }),
-                  //
-                  // dark
-                  ThemeSwitcher(
-                      clipper: const ThemeSwitcherCircleClipper(),
-                      builder: (context) {
-                        return ItemInMenuList(
-                            useBorderTop: false,
-                            useBorderBot: false,
-                            height: 45,
-                            padding: const EdgeInsets.only(left: 25, right: 25),
-                            margin: const EdgeInsets.only(top: 10),
-                            onClicked: (_) async {
-                              ThemeSwitcher.of(context)
-                                  .changeTheme(theme: darkTheme);
-                              await SettingsRep()
-                                  .changeTheme(ThemeType.values[1]);
-                              _update();
-                            },
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('Dark',
-                                      textAlign: TextAlign.center,
-                                      style:
-                                          Theme.of(context).colorScheme.title2),
-                                  const IgnorePointer(child: Radio(value: 1))
-                                ]));
-                      }),
-                  //
-                  // system
-                  ThemeSwitcher(
-                      clipper: const ThemeSwitcherCircleClipper(),
-                      builder: (context) {
-                        return ItemInMenuList(
-                            useBorderTop: false,
-                            useBorderBot: false,
-                            height: 45,
-                            padding: const EdgeInsets.only(left: 25, right: 25),
-                            margin: const EdgeInsets.only(top: 10),
-                            onClicked: (pos) async {
-                              ThemeSwitcher.of(context).changeTheme(
-                                  theme: ThemeModelInheritedNotifier.of(context)
-                                              .theme
-                                              .brightness ==
-                                          Brightness.light
-                                      ? darkTheme
-                                      : lightTheme);
-                              await SettingsRep()
-                                  .changeTheme(ThemeType.values[2]);
-                              _update();
-                            },
-                            child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text('System',
-                                      textAlign: TextAlign.center,
-                                      style:
-                                          Theme.of(context).colorScheme.title2),
-                                  const IgnorePointer(child: Radio(value: 2))
-                                ]));
-                      })
-                ]))
+            child: RadioGroup<int>(
+                groupValue: _theme.index,
+                onChanged: (int? value) {},
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      //
+                      // light
+                      ThemeSwitcher(
+                          clipper: const ThemeSwitcherCircleClipper(),
+                          builder: (context) {
+                            return ItemInMenuList(
+                                useBorderTop: false,
+                                useBorderBot: false,
+                                height: 45,
+                                padding:
+                                    const EdgeInsets.only(left: 25, right: 25),
+                                margin: const EdgeInsets.only(top: 10),
+                                onClicked: (_) async {
+                                  ThemeSwitcher.of(context)
+                                      .changeTheme(theme: lightTheme);
+                                  await SettingsRep()
+                                      .changeTheme(ThemeType.values[0]);
+                                  _update();
+                                },
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Light',
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .colorScheme
+                                              .title2),
+                                      const IgnorePointer(
+                                          child: Radio<int>(value: 0))
+                                    ]));
+                          }),
+                      //
+                      // dark
+                      ThemeSwitcher(
+                          clipper: const ThemeSwitcherCircleClipper(),
+                          builder: (context) {
+                            return ItemInMenuList(
+                                useBorderTop: false,
+                                useBorderBot: false,
+                                height: 45,
+                                padding:
+                                    const EdgeInsets.only(left: 25, right: 25),
+                                margin: const EdgeInsets.only(top: 10),
+                                onClicked: (_) async {
+                                  ThemeSwitcher.of(context)
+                                      .changeTheme(theme: darkTheme);
+                                  await SettingsRep()
+                                      .changeTheme(ThemeType.values[1]);
+                                  _update();
+                                },
+                                child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('Dark',
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .colorScheme
+                                              .title2),
+                                      const IgnorePointer(
+                                          child: Radio(value: 1))
+                                    ]));
+                          }),
+                      //
+                      // system
+                      ThemeSwitcher(
+                          clipper: const ThemeSwitcherCircleClipper(),
+                          builder: (context) {
+                            return ItemInMenuList(
+                                useBorderTop: false,
+                                useBorderBot: false,
+                                height: 45,
+                                padding:
+                                    const EdgeInsets.only(left: 25, right: 25),
+                                margin: const EdgeInsets.only(top: 10),
+                                onClicked: (pos) async {
+                                  var systemBr = View.of(context)
+                                      .platformDispatcher
+                                      .platformBrightness;
+                                  ThemeSwitcher.of(context).changeTheme(
+                                      theme: systemBr == Brightness.dark
+                                          ? darkTheme
+                                          : lightTheme);
+                                  await SettingsRep().changeTheme(null);
+                                  _update();
+                                },
+                                child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text('System',
+                                          textAlign: TextAlign.center,
+                                          style: Theme.of(context)
+                                              .colorScheme
+                                              .title2),
+                                      const IgnorePointer(
+                                          child: Radio(value: 2))
+                                    ]));
+                          })
+                    ])))
       ]),
       //
       // daily goal

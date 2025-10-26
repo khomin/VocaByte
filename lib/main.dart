@@ -54,21 +54,6 @@ class _AppState extends State<App> {
   void initState() {
     super.initState();
 
-    // AppLifecycleListener(onStateChange: (value) {
-    //   switch (value) {
-    //     case AppLifecycleState.resumed:
-    //       var br = View.of(context).platformDispatcher.platformBrightness;
-    //       var initTheme = br == Brightness.dark ? darkTheme : lightTheme;
-    //       print('BTEST_THEME-SYSTEM: ${initTheme.brightness}, br=$br');
-    //       break;
-    //     case AppLifecycleState.detached:
-    //     case AppLifecycleState.inactive:
-    //     case AppLifecycleState.hidden:
-    //     case AppLifecycleState.paused:
-    //       break;
-    //   }
-    // });
-
     _appModel = AppModel();
     _appRep = AppRep();
 

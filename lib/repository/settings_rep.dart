@@ -46,9 +46,13 @@ class SettingsRep {
 
   //
   // theme change
-  Future<void> changeTheme(ThemeType themeType) async {
+  Future<void> changeTheme(ThemeType? themeType) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setInt(_themeKey, themeType.index);
+    if (themeType == null) {
+      prefs.remove(_themeKey);
+    } else {
+      prefs.setInt(_themeKey, themeType.index);
+    }
   }
 
   //

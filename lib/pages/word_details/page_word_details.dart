@@ -278,7 +278,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                         child: Row(children: [
                           Expanded(
                               child: Text(data.word,
-                                  maxLines: 1,
+                                  maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                       fontWeight: FontWeight.w500,
@@ -293,18 +293,20 @@ class PageWordDetailsState extends State<PageWordDetails>
                           if (isCurrent &&
                               isCurrentMeaning &&
                               data.meaning.length > 1)
-                            Icon(Icons.verified,
+                            Icon(Icons.check_circle_outlined,
                                 color: Theme.of(context).colorScheme.title4),
                           //
                           // n of n meaning
                           if (data.meaning.length > 1)
                             Container(
-                                width: 100,
+                                width: 55,
                                 padding:
-                                    const EdgeInsets.only(left: 10, right: 10),
+                                    const EdgeInsets.only(left: 5, right: 5),
                                 child: Center(
                                     child: Text(
                                         '${_curMeaningIndex + 1}/${data.meaning.length}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
@@ -317,16 +319,20 @@ class PageWordDetailsState extends State<PageWordDetails>
                           Container(
                               width: 80,
                               padding:
-                                  const EdgeInsets.only(left: 10, right: 10),
-                              child: Text(meaning.speechPart,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 14,
-                                      color: Theme.of(context)
-                                          .colorScheme
-                                          .title4)))
+                                  const EdgeInsets.only(left: 5, right: 10),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(meaning.speechPart,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 14,
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .title4))
+                                  ]))
                         ])),
                     Padding(
                         padding: const EdgeInsets.only(left: 10),
@@ -355,12 +361,14 @@ class PageWordDetailsState extends State<PageWordDetails>
                           const Spacer(),
                           //
                           // play
-                          Padding(
+                          Container(
+                              width: 80,
                               padding:
-                                  const EdgeInsets.only(left: 10, right: 20),
-                              child: AnimatedIcon(
-                                  icon: AnimatedIcons.play_pause,
-                                  progress: _playWordCtr))
+                                  const EdgeInsets.only(left: 10, right: 10),
+                              child: Center(
+                                  child: AnimatedIcon(
+                                      icon: AnimatedIcons.play_pause,
+                                      progress: _playWordCtr)))
                         ]))
                   ])),
               //
