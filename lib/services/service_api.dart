@@ -132,7 +132,7 @@ class ServiceApi {
     try {
       if (Platform.isIOS) {
         logInfo('$tag: -init [about to open lib]');
-        _dylib = DynamicLibrary.executable();
+        _dylib = DynamicLibrary.process();
         logInfo('$tag: -init [lib opened]');
       } else {
         logInfo('$tag: -init [about to open lib] $libraryPath');
@@ -140,43 +140,23 @@ class ServiceApi {
         logInfo('$tag: -init [lib opened]');
       }
 
-      try {
-        _testMethod =
-            _dylib.lookupFunction<Void Function(Uint32), void Function(int)>(
-                "testMethod");
-      } catch (ex) {
-        logError(ex);
-      }
+      _testMethod =
+          _dylib.lookupFunction<Void Function(Uint32), void Function(int)>(
+              "testMethod");
 
-      try {
-        _init = _dylib.lookupFunction<
-            Int Function(Uint32, Pointer<Uint8>, Uint32),
-            int Function(int, Pointer<Uint8>, int)>("init");
-      } catch (ex) {
-        logError(ex);
-      }
+      _init = _dylib.lookupFunction<
+          Int Function(Uint32, Pointer<Uint8>, Uint32),
+          int Function(int, Pointer<Uint8>, int)>("init");
 
-      try {
-        _initializeApi = _dylib.lookupFunction<IntPtr Function(Pointer<Void>),
-            int Function(Pointer<Void>)>("initDartApiDL");
-      } catch (ex) {
-        logError(ex);
-      }
+      _initializeApi = _dylib.lookupFunction<IntPtr Function(Pointer<Void>),
+          int Function(Pointer<Void>)>("initDartApiDL");
 
-      try {
-        _getDictionary = _dylib.lookupFunction<
-            Int Function(Uint32, Pointer<Uint8>, Uint32),
-            int Function(int, Pointer<Uint8>, int)>("getDictionary");
-      } catch (ex) {
-        logError(ex);
-      }
-      try {
-        _getDictionaryRand = _dylib.lookupFunction<
-            Int Function(Uint32, Pointer<Uint8>, Uint32),
-            int Function(int, Pointer<Uint8>, int)>("getDictionaryRand");
-      } catch (ex) {
-        logError(ex);
-      }
+      _getDictionary = _dylib.lookupFunction<
+          Int Function(Uint32, Pointer<Uint8>, Uint32),
+          int Function(int, Pointer<Uint8>, int)>("getDictionary");
+      _getDictionaryRand = _dylib.lookupFunction<
+          Int Function(Uint32, Pointer<Uint8>, Uint32),
+          int Function(int, Pointer<Uint8>, int)>("getDictionaryRand");
 
       _getRecent = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
@@ -257,6 +237,10 @@ class ServiceApi {
         },
         description: 'startLib');
     _init(out.taskId, out.data, out.len);
+  }
+
+  void testMethod() {
+    _testMethod();
   }
 
   Future<RespRecentWords> getRecent() async {

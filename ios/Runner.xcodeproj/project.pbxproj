@@ -10,16 +10,15 @@
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		1BA375C0294776C600B5D9C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BA375BF294776C600B5D9C5 /* Assets.xcassets */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
+		449237FBED6B5B2257E6FA9D /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273843A2B255F5FEB4F44678 /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		CE643B472DB410F100DF98B6 /* api_os.mm in Sources */ = {isa = PBXBuildFile; fileRef = CE643B462DB410F100DF98B6 /* api_os.mm */; };
-		CEC8EBD72DBA48220086EACF /* loguru.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC8EBD52DBA48210086EACF /* loguru.cpp */; };
-		CEC8EBD82DBA48220086EACF /* loguru.hpp in Sources */ = {isa = PBXBuildFile; fileRef = CEC8EBD62DBA48220086EACF /* loguru.hpp */; };
+		CEC7DE6A2EAE29A000E8D2F0 /* libVocaByte.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE643B062DB3B52C00DF98B6 /* libVocaByte.a */; };
+		CEC7DE752EAE388E00E8D2F0 /* libloguru.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC7DE742EAE32B200E8D2F0 /* libloguru.a */; };
 		CEF48C082EA4F616009DA07B /* api_os.h in Sources */ = {isa = PBXBuildFile; fileRef = CE643B452DB410F100DF98B6 /* api_os.h */; };
-		CEF48C622EA53BC8009DA07B /* libVocaByte.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE643B062DB3B52C00DF98B6 /* libVocaByte.a */; };
 		CEF48C632EA53BDE009DA07B /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE643B2F2DB3BEFE00DF98B6 /* libprotobuf.a */; };
-		DF62843B3FFBF2E979708C77 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273843A2B255F5FEB4F44678 /* Pods_Runner.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,25 +29,25 @@
 			remoteGlobalIDString = CED18A1A82E64410A1AE1CB4;
 			remoteInfo = VocaByte;
 		};
-		CE643B072DB3B52C00DF98B6 /* PBXContainerItemProxy */ = {
+		CEC7DE6B2EAE29B400E8D2F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 036E0AFF3F7341CF80C23ED3;
+			remoteInfo = VocaByte;
+		};
+		CEC7DE702EAE32B200E8D2F0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A4D7136691A94A4C8DCBF5AF;
+			remoteInfo = loguru;
+		};
+		CEC7DE732EAE32B200E8D2F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5D4B45881B8C4065A66B17AF;
-			remoteInfo = loguru;
-		};
-		CE643B292DB3BEA600DF98B6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 2B28CA35E3FE4F4FB9075CFA;
-			remoteInfo = VocaByte;
-		};
-		CEC9D3EC2EAD10450034B7C9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = A96FD902AF744A2793FC06FB;
+			remoteGlobalIDString = 0B2BF0D135C14E1C84090663;
 			remoteInfo = loguru;
 		};
 /* End PBXContainerItemProxy section */
@@ -85,9 +84,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CEC7DE752EAE388E00E8D2F0 /* libloguru.a in Frameworks */,
+				CEC7DE6A2EAE29A000E8D2F0 /* libVocaByte.a in Frameworks */,
 				CEF48C632EA53BDE009DA07B /* libprotobuf.a in Frameworks */,
-				CEF48C622EA53BC8009DA07B /* libVocaByte.a in Frameworks */,
-				DF62843B3FFBF2E979708C77 /* Pods_Runner.framework in Frameworks */,
+				449237FBED6B5B2257E6FA9D /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -168,7 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				CE643B062DB3B52C00DF98B6 /* libVocaByte.a */,
-				CE643B082DB3B52C00DF98B6 /* liblogurud.a */,
+				CEC7DE742EAE32B200E8D2F0 /* libloguru.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -191,8 +191,8 @@
 			buildRules = (
 			);
 			dependencies = (
-				CEC9D3ED2EAD10450034B7C9 /* PBXTargetDependency */,
-				CE643B2A2DB3BEA600DF98B6 /* PBXTargetDependency */,
+				CEC7DE712EAE32B200E8D2F0 /* PBXTargetDependency */,
+				CEC7DE6C2EAE29B400E8D2F0 /* PBXTargetDependency */,
 			);
 			name = Runner;
 			productName = Runner;
@@ -247,11 +247,11 @@
 			remoteRef = CE643B052DB3B52C00DF98B6 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CE643B082DB3B52C00DF98B6 /* liblogurud.a */ = {
+		CEC7DE742EAE32B200E8D2F0 /* libloguru.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = liblogurud.a;
-			remoteRef = CE643B072DB3B52C00DF98B6 /* PBXContainerItemProxy */;
+			path = libloguru.a;
+			remoteRef = CEC7DE732EAE32B200E8D2F0 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -351,8 +351,6 @@
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				CE643B472DB410F100DF98B6 /* api_os.mm in Sources */,
 				CEF48C082EA4F616009DA07B /* api_os.h in Sources */,
-				CEC8EBD72DBA48220086EACF /* loguru.cpp in Sources */,
-				CEC8EBD82DBA48220086EACF /* loguru.hpp in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -360,15 +358,15 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CE643B2A2DB3BEA600DF98B6 /* PBXTargetDependency */ = {
+		CEC7DE6C2EAE29B400E8D2F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = VocaByte;
-			targetProxy = CE643B292DB3BEA600DF98B6 /* PBXContainerItemProxy */;
+			targetProxy = CEC7DE6B2EAE29B400E8D2F0 /* PBXContainerItemProxy */;
 		};
-		CEC9D3ED2EAD10450034B7C9 /* PBXTargetDependency */ = {
+		CEC7DE712EAE32B200E8D2F0 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = loguru;
-			targetProxy = CEC9D3EC2EAD10450034B7C9 /* PBXContainerItemProxy */;
+			targetProxy = CEC7DE702EAE32B200E8D2F0 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 

@@ -12,6 +12,7 @@ set(PROJECT VocaByte)
 set(TARGET_NAME ${PROJECT})
 set(DESTDIR ${CMAKE_CURRENT_BINARY_DIR})
 set(PROJECT_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
+project(${PROJECT} VERSION 0.1.0)
 
 if(NOT CMAKE_BUILD_TYPE)
   set(CMAKE_BUILD_TYPE Debug)
@@ -22,8 +23,6 @@ if(WIN32)
 endif()
 
 add_compile_options(-Wall -fPIC -fexceptions -g -fPIC -Wformat)
-
-add_subdirectory(ThirdParty/loguru)
 
 if(${CMAKE_BUILD_TYPE} STREQUAL "Release")
     message("Build: Release")
@@ -46,7 +45,7 @@ if(APPLE)
     endif()
 endif()
 
-project(${PROJECT} VERSION 0.1.0)
+add_subdirectory(ThirdParty/loguru)
 
 if (DEFINED ENV{FLUTTER_SDK_PATH})
     message(STATUS "FLUTTER_SDK_PATH environment variable defined: $ENV{FLUTTER_SDK_PATH}")
@@ -193,6 +192,11 @@ else()
         )
     endif()
 endif()
+
+set_target_properties(loguru
+    PROPERTIES
+    DEBUG_POSTFIX ""
+)
 
 target_include_directories(${PROJECT} PUBLIC
     ./

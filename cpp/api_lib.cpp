@@ -359,6 +359,8 @@ void testMethod(uint32_t taskId) {
     LOG_F(INFO, "%s: %s", TAG, "test method 🔥🔥🔥");
 }
 
+int sum(int a, int b) { return a + b; }
+
 void DartCallResult(DartResult *data, DartCallResultType type) {
     auto callback = eventCb;  // Define storage duration.
     const Work work = [data, callback]() {

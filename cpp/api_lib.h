@@ -49,7 +49,7 @@ void onDebugLogCb(Dart_Port send_port, OnDebugLogCallTypeDef p);
 void onEventCb(Dart_Port send_port, OnEventCbTypedef cb);
 typedef std::function<void()> Work;
 
-void init(uint32_t taskId, uint8_t *data, uint32_t len);
+extern "C" void init(uint32_t taskId, uint8_t *data, uint32_t len);
 void stop(uint32_t taskId);
 
 void getRecent(uint32_t taskId, uint8_t* data, uint32_t len);
@@ -70,6 +70,8 @@ void deleteProfile(uint32_t taskId, uint8_t* data, uint32_t len);
 void getMetadata(uint32_t taskId, uint8_t* data, uint32_t len);
 void destroyAll();
 void testMethod(uint32_t taskId);
+
+extern "C" int sum(int a, int b);
 
 DART_EXPORT void dartExecuteCallback(Work* work_ptr);
 DART_EXPORT intptr_t initDartApiDL(void* data);
