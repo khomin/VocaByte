@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/repository/nav_rep.dart';
@@ -25,6 +26,7 @@ class _State extends State<DevPanel> {
 
   @override
   Widget build(BuildContext context) {
+    var appRep = getIt<AppRep>();
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Opacity(
           opacity: 0.5,
@@ -33,13 +35,13 @@ class _State extends State<DevPanel> {
                 text: 'UPDATE',
                 color: Colors.black26,
                 onPressed: () async {
-                  context.read<AppRep>().refreshWordToLearn();
+                  appRep.refreshWordToLearn();
                 }),
             Button3(
                 text: 'POP',
                 color: Colors.black26,
                 onPressed: () async {
-                  var v = context.read<AppRep>().reviewTask;
+                  var v = appRep.reviewTask;
                   await v.pop(success: false);
                 }),
             Button3(

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/app/utils.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/resource/constants.dart';
@@ -9,9 +8,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SettingsData {}
 
 class Initial {
-  Initial(
-      {required this.theme, required this.version, required this.onboarding});
-  ThemeType theme;
+  Initial({
+    required this.theme,
+    required this.version,
+    required this.onboarding,
+  });
+  ThemeMode theme;
   String version;
   bool onboarding;
 }
@@ -39,31 +41,31 @@ class SettingsRep {
       SettingsRep().getOnboarding()
     ]);
     return Initial(
-        theme: res[0] as ThemeType,
+        theme: res[0] as ThemeMode,
         version: res[1] as String,
         onboarding: res[2] as bool);
   }
 
   //
   // theme change
-  Future<void> changeTheme(ThemeType? themeType) async {
+  Future<void> setTheme(ThemeMode? theme) async {
     final prefs = await SharedPreferences.getInstance();
-    if (themeType == null) {
+    if (theme == null) {
       prefs.remove(_themeKey);
     } else {
-      prefs.setInt(_themeKey, themeType.index);
+      prefs.setInt(_themeKey, theme.index);
     }
   }
 
   //
   // theme get
-  Future<ThemeType> getTheme() async {
+  Future<ThemeMode> getTheme() async {
     final prefs = await SharedPreferences.getInstance();
     var theme = prefs.getInt(_themeKey);
     if (theme == null) {
-      return ThemeType.system;
+      return ThemeMode.system;
     }
-    return ThemeType.values[theme];
+    return ThemeMode.values[theme];
   }
 
   void setScreenSize(Size size) async {

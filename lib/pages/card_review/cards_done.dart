@@ -92,64 +92,60 @@ class CardsDoneState extends State<CardsDone> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return Container(
-          color: Theme.of(context).colorScheme.page,
-          child: Column(children: [
-            Expanded(
-                child: Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Spacer(),
-                          Image.asset('assets/pig_pos_2.png', width: 150),
-                          //
-                          // line1
-                          const SizedBox(height: 50),
-                          SizedBox(
-                              height: 80,
-                              child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: _items)),
-                          const SizedBox(height: 10),
-                          const Spacer(flex: 2),
-                          FixedFooterBottom(
-                              child1: ButtonRoundCorner(
-                                  text: 'Enough for today',
-                                  direction: TextDirection.ltr,
-                                  radious: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOption2,
-                                  colorText: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOptionText,
-                                  onPressed: () {
+    return Container(
+        color: Theme.of(context).colorScheme.page,
+        child: Column(children: [
+          Expanded(
+              child: Padding(
+                  padding: const EdgeInsets.only(top: 50),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Spacer(),
+                        Image.asset('assets/pig_pos_2.png', width: 150),
+                        //
+                        // line1
+                        const SizedBox(height: 50),
+                        SizedBox(
+                            height: 80,
+                            child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: _items)),
+                        const SizedBox(height: 10),
+                        const Spacer(flex: 2),
+                        FixedFooterBottom(
+                            child1: ButtonRoundCorner(
+                                text: 'Enough for today',
+                                direction: TextDirection.ltr,
+                                radious:
+                                    const BorderRadius.all(Radius.circular(10)),
+                                color:
+                                    Theme.of(context).colorScheme.buttonOption2,
+                                colorText: Theme.of(context)
+                                    .colorScheme
+                                    .buttonOptionText,
+                                onPressed: () {
+                                  widget.onDone();
+                                }),
+                            child2: ButtonRoundCorner(
+                                text: "Continue",
+                                direction: TextDirection.ltr,
+                                radious:
+                                    const BorderRadius.all(Radius.circular(10)),
+                                color:
+                                    Theme.of(context).colorScheme.buttonOption1,
+                                colorText: Theme.of(context)
+                                    .colorScheme
+                                    .buttonOptionText,
+                                onPressed: () {
+                                  if (widget.isEnd) {
                                     widget.onDone();
-                                  }),
-                              child2: ButtonRoundCorner(
-                                  text: "Continue",
-                                  direction: TextDirection.ltr,
-                                  radious: const BorderRadius.all(
-                                      Radius.circular(10)),
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOption1,
-                                  colorText: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOptionText,
-                                  onPressed: () {
-                                    if (widget.isEnd) {
-                                      widget.onDone();
-                                    } else {
-                                      widget.onContinue();
-                                    }
-                                  }))
-                        ])))
-          ]));
-    });
+                                  } else {
+                                    widget.onContinue();
+                                  }
+                                }))
+                      ])))
+        ]));
   }
 }

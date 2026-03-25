@@ -30,32 +30,22 @@ class AppRep {
   final onRecentWords = BehaviorSubject<List<SearchInfo>>();
   final onReviewProgress = BehaviorSubject<double>.seeded(0);
   final onManageWordChanged = BehaviorSubject<List<WordInReview>?>();
-
   final onNumeralsProgress = BehaviorSubject<double>.seeded(0);
-  final onNumeralsStage =
-      BehaviorSubject<NumeralsStage>.seeded(NumeralsStage());
+  final onNumeralsStage = BehaviorSubject.seeded(NumeralsStage());
 
   late final ReviewTaskBase reviewTask;
   late final BehaviorSubject<ReviewTaskBase> onReviewTaskChanged;
   FullInfo? cachedWord;
   static const tag = 'appRep';
 
-  static AppRep? _instance;
-  factory AppRep() {
-    if (_instance == null) {
-      var i = AppRep._internal();
-      if (Constants.isMock) {
-        i.reviewTask = ReviewTaskMock();
-      } else {
-        i.reviewTask = ReviewTask();
-      }
-      i.onReviewTaskChanged =
-          BehaviorSubject<ReviewTaskBase>.seeded(i.reviewTask);
-      _instance = i;
+  AppRep() {
+    if (Constants.isMock) {
+      reviewTask = ReviewTaskMock();
+    } else {
+      reviewTask = ReviewTask();
     }
-    return _instance!;
+    onReviewTaskChanged = BehaviorSubject.seeded(reviewTask);
   }
-  AppRep._internal();
 
   Future<void> updateRecent() async {
     var v = await ServiceApi().getRecent();

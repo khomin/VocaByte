@@ -97,35 +97,33 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return Container(
-          color: Theme.of(context).colorScheme.page,
-          child: Column(children: [
-            Expanded(
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: _items),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                top: 50, left: 20, right: 20),
-                            child: Button3(
-                                text: 'Continue',
-                                color:
-                                    Theme.of(context).colorScheme.buttonOption1,
-                                colorText: Theme.of(context)
-                                    .colorScheme
-                                    .buttonOptionText,
-                                onPressed: () {
-                                  widget.onCompleted();
-                                })))
-                  ])
-                ])),
-          ]));
-    });
+    return Container(
+        color: Theme.of(context).colorScheme.page,
+        child: Column(children: [
+          Expanded(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: _items),
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Expanded(
+                      child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 50, left: 20, right: 20),
+                          child: Button3(
+                              text: 'Continue',
+                              color:
+                                  Theme.of(context).colorScheme.buttonOption1,
+                              colorText: Theme.of(context)
+                                  .colorScheme
+                                  .buttonOptionText,
+                              onPressed: () {
+                                widget.onCompleted();
+                              })))
+                ])
+              ])),
+        ]));
   }
 }

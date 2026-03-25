@@ -75,67 +75,62 @@ class CardNoWordsState extends State<CardNoWords>
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      var size = MediaQuery.of(context).size;
-      return Container(
-          width: size.width,
-          height: size.height,
-          color: Theme.of(context).colorScheme.page,
-          child: AnimatedBuilder(
-              animation: _scaleController,
-              builder: (context, child) {
-                return RotationTransition(
-                    turns: _rotateAnimation,
-                    child: SizedBox(
-                        height: size.height / 1.5,
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              RoundButton(
-                                  iconData: Icons.search,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .buttonOption1,
-                                  iconColor: Theme.of(context)
-                                      .colorScheme
-                                      .button3TextInversed,
-                                  size: Size((size.width / 5) + 15,
-                                      (size.width / 5) + 15),
-                                  iconSize: size.width / 5,
-                                  useScaleAnimation: true,
-                                  useShadow: true,
-                                  margin: const EdgeInsets.only(bottom: 20),
-                                  onPressed: (p0) {
-                                    if (_shakeControlller
-                                        .isForwardOrCompleted) {
-                                      _shakeControlller.reverse().orCancel;
-                                    } else {
-                                      _shakeControlller.forward().orCancel;
-                                    }
-                                    widget.onBackOpenSearch();
-                                  }),
-                              ScaleTransition(
-                                  scale: _scaleAnimation,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                            'No words to review\nAdd words using search',
-                                            maxLines: 3,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                fontWeight: FontWeight.w500,
-                                                fontSize: 20,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .title2
-                                                    .color))
-                                      ]))
-                            ])));
-              }));
-    });
+    var size = MediaQuery.of(context).size;
+    return Container(
+        width: size.width,
+        height: size.height,
+        color: Theme.of(context).colorScheme.page,
+        child: AnimatedBuilder(
+            animation: _scaleController,
+            builder: (context, child) {
+              return RotationTransition(
+                  turns: _rotateAnimation,
+                  child: SizedBox(
+                      height: size.height / 1.5,
+                      child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            RoundButton(
+                                iconData: Icons.search,
+                                color:
+                                    Theme.of(context).colorScheme.buttonOption1,
+                                iconColor: Theme.of(context)
+                                    .colorScheme
+                                    .button3TextInversed,
+                                size: Size((size.width / 5) + 15,
+                                    (size.width / 5) + 15),
+                                iconSize: size.width / 5,
+                                useScaleAnimation: true,
+                                useShadow: true,
+                                margin: const EdgeInsets.only(bottom: 20),
+                                onPressed: (p0) {
+                                  if (_shakeControlller.isForwardOrCompleted) {
+                                    _shakeControlller.reverse().orCancel;
+                                  } else {
+                                    _shakeControlller.forward().orCancel;
+                                  }
+                                  widget.onBackOpenSearch();
+                                }),
+                            ScaleTransition(
+                                scale: _scaleAnimation,
+                                child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                          'No words to review\nAdd words using search',
+                                          maxLines: 3,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 20,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .title2
+                                                  .color))
+                                    ]))
+                          ])));
+            }));
   }
 }

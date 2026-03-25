@@ -141,215 +141,64 @@ class _AppRouteState extends State<AppRoute> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      var nav = NavigatorRep().routeBloc.navKey;
-      return PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, result) async {
-            if (didPop) return;
-            var nav = NavigatorRep().routeBloc.navKey;
-            if (nav.currentState?.canPop() == true) {
-              nav.currentState?.pop();
-              return;
-            } else {
-              SystemNavigator.pop();
-            }
-          },
-          child: Navigator(
-              key: nav,
-              initialRoute: PageType.home.name,
-              observers: [_observer],
-              onGenerateRoute: (RouteSettings settings) {
-                var type =
-                    NavigatorRep().routeBloc.routeNameToType(settings.name);
-                switch (type) {
-                  //
-                  // (default)
-                  case PageType.home:
-                    return PageRouteBuilder(
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        settings: RouteSettings(name: type.name),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return child;
-                        },
-                        pageBuilder: (_, __, ___) => PageHome(onReview: () {
-                              // review
-                              NavigatorRep()
-                                  .routeBloc
-                                  .goto(Panel(type: PageType.reviewCard));
-                            }, onSearch: () {
-                              // search
-                              NavigatorRep()
-                                  .routeBloc
-                                  .goto(Panel(type: PageType.searchWord));
-                            }, onManageWords: () {
-                              // manage
-                              NavigatorRep()
-                                  .routeBloc
-                                  .goto(Panel(type: PageType.manageWords));
-                            }, onNumerals: () {
-                              // numerals
-                              nav.currentState?.push(CupertinoPageRoute(
-                                  settings:
-                                      const RouteSettings(name: 'numerals'),
-                                  builder: (context) {
-                                    return const NumeralsNav();
-                                  }));
-                            }));
-                  default:
-                    throw Exception('Invalid route: ${settings.name}');
-                }
-              }));
-    });
+    var nav = NavigatorRep().routeBloc.navKey;
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
+          var nav = NavigatorRep().routeBloc.navKey;
+          if (nav.currentState?.canPop() == true) {
+            nav.currentState?.pop();
+            return;
+          } else {
+            SystemNavigator.pop();
+          }
+        },
+        child: Navigator(
+            key: nav,
+            initialRoute: PageType.home.name,
+            observers: [_observer],
+            onGenerateRoute: (RouteSettings settings) {
+              var type =
+                  NavigatorRep().routeBloc.routeNameToType(settings.name);
+              switch (type) {
+                //
+                // (default)
+                case PageType.home:
+                  return PageRouteBuilder(
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                      settings: RouteSettings(name: type.name),
+                      transitionsBuilder:
+                          (context, animation, secondaryAnimation, child) {
+                        return child;
+                      },
+                      pageBuilder: (_, __, ___) => PageHome(onReview: () {
+                            // review
+                            NavigatorRep()
+                                .routeBloc
+                                .goto(Panel(type: PageType.reviewCard));
+                          }, onSearch: () {
+                            // search
+                            NavigatorRep()
+                                .routeBloc
+                                .goto(Panel(type: PageType.searchWord));
+                          }, onManageWords: () {
+                            // manage
+                            NavigatorRep()
+                                .routeBloc
+                                .goto(Panel(type: PageType.manageWords));
+                          }, onNumerals: () {
+                            // numerals
+                            nav.currentState?.push(CupertinoPageRoute(
+                                settings: const RouteSettings(name: 'numerals'),
+                                builder: (context) {
+                                  return const NumeralsNav();
+                                }));
+                          }));
+                default:
+                  throw Exception('Invalid route: ${settings.name}');
+              }
+            }));
   }
 }
-
-
-//
-                        // search word
-                        // case PageType.searchWord:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           PageSearchWord(onShowWord: (data) async {
-                        //             // context.read<AppModel>().goToPage(
-                        //             //     page: PageType.wordDetails,
-                        //             //     replace: false);
-                        //             // await ServiceApi()
-                        //             //     .putRecentWord(data.word);
-                        //             // AppRep().updateRecent();
-                        //           }));
-                        // //
-                        // // card review
-                        // case PageType.reviewCard:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           CardReviewNav(onBack: () {
-                        //             // context.read<AppModel>().pageBack();
-                        //           }));
-                        // //
-                        // // manage
-                        // case PageType.manageWords:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           ManageWordPage(onShowWord: (data) {
-                        //             // context.read<AppModel>().goToPage(
-                        //             //     page: PageType.wordDetails,
-                        //             //     replace: false);
-                        //           }));
-                        // //
-                        // // settings
-                        // case PageType.settings:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           SettingsPage(onChangeGoal: () {
-                        //             // context.read<AppModel>().goToPage(
-                        //             //     page: PageType.changeDailyGoal,
-                        //             //     replace: false);
-                        //           }));
-                        //                                       //
-                        // // word details
-                        // case PageType.wordDetails:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) => PageWordDetails(
-                        //           playWordAtStart: false,
-                        //           onBack: () {
-                        //             context.read<AppModel>().pageBack();
-                        //           }));
-                        //           //
-                        // // account
-                        // case PageType.account:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) => Container(
-                        //             color: Colors.blue,
-                        //           ));
-                        // //
-                        // // about
-                        // case PageType.about:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           const PageAbout());
-
-                        // //
-                        // // word details
-                        // case PageType.numerals:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           NumeralsNav(onBack: () {
-                        //             context.read<AppModel>().pageBack();
-                        //           }));
-                        // //
-                        // // manage
-                        // case PageType.changeDailyGoal:
-                        //   return PageRouteBuilder(
-                        //       transitionDuration: Duration.zero,
-                        //       reverseTransitionDuration: Duration.zero,
-                        //       settings: RouteSettings(name: type.name),
-                        //       transitionsBuilder: (context, animation,
-                        //           secondaryAnimation, child) {
-                        //         return child;
-                        //       },
-                        //       pageBuilder: (_, __, ___) =>
-                        //           SettingsDailiyGoal(onBack: () {
-                        //             context.read<AppModel>().pageBack();
-                        //           }, onChanged: () {
-                        //             SettingsRep().onChanged.add(null);
-                        //             context.read<AppModel>().pageBack();
-                        //           }));

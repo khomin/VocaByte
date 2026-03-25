@@ -1,11 +1,12 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:loggy/loggy.dart';
+import 'package:provider/provider.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/pages/models/app_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
@@ -33,7 +34,7 @@ class _State extends State<SettingsPage> {
   var _exportProfileBusy = false;
   var _useSound = false;
   final _itemHeight = 70.0;
-  ThemeType _theme = ThemeType.system;
+  ThemeMode _theme = ThemeMode.system;
   final _dispStream = DisposableStream();
   final _buttonSize = 45.0;
   final _iconSize = 25.0;
@@ -93,6 +94,7 @@ class _State extends State<SettingsPage> {
   }
 
   Widget _profile() {
+    var appModel = context.read<AppModel>();
     return Column(children: [
       Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
         Row(children: [
@@ -121,10 +123,9 @@ class _State extends State<SettingsPage> {
                                     const EdgeInsets.only(left: 25, right: 25),
                                 margin: const EdgeInsets.only(top: 10),
                                 onClicked: (_) async {
-                                  ThemeSwitcher.of(context)
-                                      .changeTheme(theme: lightTheme);
-                                  await SettingsRep()
-                                      .changeTheme(ThemeType.values[0]);
+                                  // ThemeSwitcher.of(context)
+                                  //     .changeTheme(theme: lightTheme);
+                                  appModel.theme = ThemeMode.light;
                                   _update();
                                 },
                                 child: Row(
@@ -153,10 +154,9 @@ class _State extends State<SettingsPage> {
                                     const EdgeInsets.only(left: 25, right: 25),
                                 margin: const EdgeInsets.only(top: 10),
                                 onClicked: (_) async {
-                                  ThemeSwitcher.of(context)
-                                      .changeTheme(theme: darkTheme);
-                                  await SettingsRep()
-                                      .changeTheme(ThemeType.values[1]);
+                                  // ThemeSwitcher.of(context)
+                                  //     .changeTheme(theme: darkTheme);
+                                  appModel.theme = ThemeMode.dark;
                                   _update();
                                 },
                                 child: Row(
@@ -185,14 +185,15 @@ class _State extends State<SettingsPage> {
                                     const EdgeInsets.only(left: 25, right: 25),
                                 margin: const EdgeInsets.only(top: 10),
                                 onClicked: (pos) async {
-                                  var systemBr = View.of(context)
-                                      .platformDispatcher
-                                      .platformBrightness;
-                                  ThemeSwitcher.of(context).changeTheme(
-                                      theme: systemBr == Brightness.dark
-                                          ? darkTheme
-                                          : lightTheme);
-                                  await SettingsRep().changeTheme(null);
+                                  // var systemBr = View.of(context)
+                                  //     .platformDispatcher
+                                  //     .platformBrightness;
+                                  // TODO: theme switchers
+                                  // ThemeSwitcher.of(context).changeTheme(
+                                  //     theme: systemBr == Brightness.dark
+                                  //         ? darkTheme
+                                  //         : lightTheme);
+                                  appModel.theme = ThemeMode.system;
                                   _update();
                                 },
                                 child: Row(

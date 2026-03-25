@@ -234,128 +234,124 @@ class NumeralsPageState extends State<NumeralsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      return Container(
-          color: Theme.of(context).colorScheme.page,
-          child: Column(children: [
+    return Container(
+        color: Theme.of(context).colorScheme.page,
+        child: Column(children: [
+          Expanded(
+              child: Column(children: [
             Expanded(
-                child: Column(children: [
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
               Expanded(
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                    Expanded(
-                        child: Padding(
-                            padding: const EdgeInsets.only(
-                                left: 20, right: 20, top: 10, bottom: 10),
-                            child: TextField(
-                                controller: _inputCtr,
-                                enabled: false,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.digitsOnly
-                                ],
-                                keyboardType:
-                                    const TextInputType.numberWithOptions(
-                                        decimal: true),
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 30,
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .appBarText
-                                        .color)))),
-                    if (_backpressVisible)
-                      RoundButton(
-                          iconData: Icons.backspace,
-                          size: const Size(30, 30),
-                          useScaleAnimation: true,
-                          iconColor: Theme.of(context).colorScheme.title5,
-                          margin: const EdgeInsets.only(right: 20),
-                          color: Colors.transparent,
-                          onPressed: (_) {
-                            if (_inputCtr.text.isNotEmpty) {
-                              _inputCtr.text = _inputCtr.text
-                                  .substring(0, _inputCtr.text.length - 1);
-                            }
-                            _inputChanged();
-                          })
-                  ]))
-            ])),
-            Expanded(
-                flex: 2,
-                child: Column(children: [
-                  Expanded(
-                      child: Row(children: [
-                    NumeralItem(
-                        number: 1,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 2,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 3,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                  ])),
-                  Expanded(
-                      child: Row(children: [
-                    NumeralItem(
-                        number: 4,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 5,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 6,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                  ])),
-                  Expanded(
-                      child: Row(children: [
-                    NumeralItem(
-                        number: 7,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 8,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 9,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        })
-                  ])),
-                  Expanded(
-                      child: Row(children: [
-                    NumeralItem(
-                        number: 0,
-                        child: const Icon(Icons.play_arrow, size: 40),
-                        onClicked: (n) {
-                          _playNumber();
-                        }),
-                    NumeralItem(
-                        number: 0,
-                        onClicked: (n) {
-                          _onNumber(n);
-                        }),
-                    NumeralItem(
-                        number: 0, child: const SizedBox(), onClicked: (n) {}),
-                  ]))
+                  child: Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20, right: 20, top: 10, bottom: 10),
+                      child: TextField(
+                          controller: _inputCtr,
+                          enabled: false,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          keyboardType: const TextInputType.numberWithOptions(
+                              decimal: true),
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 30,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .appBarText
+                                  .color)))),
+              if (_backpressVisible)
+                RoundButton(
+                    iconData: Icons.backspace,
+                    size: const Size(30, 30),
+                    useScaleAnimation: true,
+                    iconColor: Theme.of(context).colorScheme.title5,
+                    margin: const EdgeInsets.only(right: 20),
+                    color: Colors.transparent,
+                    onPressed: (_) {
+                      if (_inputCtr.text.isNotEmpty) {
+                        _inputCtr.text = _inputCtr.text
+                            .substring(0, _inputCtr.text.length - 1);
+                      }
+                      _inputChanged();
+                    })
+            ]))
+          ])),
+          Expanded(
+              flex: 2,
+              child: Column(children: [
+                Expanded(
+                    child: Row(children: [
+                  NumeralItem(
+                      number: 1,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 2,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 3,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                ])),
+                Expanded(
+                    child: Row(children: [
+                  NumeralItem(
+                      number: 4,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 5,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 6,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                ])),
+                Expanded(
+                    child: Row(children: [
+                  NumeralItem(
+                      number: 7,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 8,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 9,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      })
+                ])),
+                Expanded(
+                    child: Row(children: [
+                  NumeralItem(
+                      number: 0,
+                      child: const Icon(Icons.play_arrow, size: 40),
+                      onClicked: (n) {
+                        _playNumber();
+                      }),
+                  NumeralItem(
+                      number: 0,
+                      onClicked: (n) {
+                        _onNumber(n);
+                      }),
+                  NumeralItem(
+                      number: 0, child: const SizedBox(), onClicked: (n) {}),
                 ]))
-          ]));
-    });
+              ]))
+        ]));
   }
 }

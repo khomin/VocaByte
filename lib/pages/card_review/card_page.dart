@@ -151,56 +151,54 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    return Builder(builder: (context) {
-      var size = MediaQuery.of(context).size;
-      var pageType = widget.data.pageType;
-      return Scaffold(
-          backgroundColor: Theme.of(context).colorScheme.pageHome,
-          body: AnimatedBuilder(
-              animation: _animateController,
-              builder: (context, child) {
-                return Stack(alignment: Alignment.center, children: [
-                  Positioned(
-                      bottom: 0,
-                      top: 0,
-                      left: 0,
-                      right: 0,
-                      child: Opacity(
-                          opacity: _opacityAnimation.value,
-                          child: Container(
-                              margin: const EdgeInsets.only(top: 20),
-                              width: size.width,
-                              height: size.height,
-                              child: SlideTransition(
-                                  position: _slideAnimation,
-                                  child: RotationTransition(
-                                      turns: _turnAnimation,
-                                      child: ScaleTransition(
-                                          scale: _scaleAnimation1,
-                                          child: SizedBox(
-                                              child: Column(children: [
-                                            if (pageType ==
-                                                CardPageType.defToWords)
-                                              Expanded(child: _defToWords()),
-                                            if (pageType ==
-                                                CardPageType.wordToDef)
-                                              Expanded(child: _wordToDef()),
-                                            if (pageType ==
-                                                CardPageType.learnNewWord)
-                                              Expanded(child: _learnNew()),
-                                            if (pageType ==
-                                                CardPageType.wordRemeberOrNot)
-                                              Expanded(child: _rememberOrNot()),
-                                            if (pageType ==
-                                                CardPageType.audioToDef)
-                                              Expanded(child: _audioToDef()),
-                                            //
-                                            //
-                                            _footerButton()
-                                          ])))))))),
-                ]);
-              }));
-    });
+    var size = MediaQuery.of(context).size;
+    var pageType = widget.data.pageType;
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.pageHome,
+        body: AnimatedBuilder(
+            animation: _animateController,
+            builder: (context, child) {
+              return Stack(alignment: Alignment.center, children: [
+                Positioned(
+                    bottom: 0,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    child: Opacity(
+                        opacity: _opacityAnimation.value,
+                        child: Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            width: size.width,
+                            height: size.height,
+                            child: SlideTransition(
+                                position: _slideAnimation,
+                                child: RotationTransition(
+                                    turns: _turnAnimation,
+                                    child: ScaleTransition(
+                                        scale: _scaleAnimation1,
+                                        child: SizedBox(
+                                            child: Column(children: [
+                                          if (pageType ==
+                                              CardPageType.defToWords)
+                                            Expanded(child: _defToWords()),
+                                          if (pageType ==
+                                              CardPageType.wordToDef)
+                                            Expanded(child: _wordToDef()),
+                                          if (pageType ==
+                                              CardPageType.learnNewWord)
+                                            Expanded(child: _learnNew()),
+                                          if (pageType ==
+                                              CardPageType.wordRemeberOrNot)
+                                            Expanded(child: _rememberOrNot()),
+                                          if (pageType ==
+                                              CardPageType.audioToDef)
+                                            Expanded(child: _audioToDef()),
+                                          //
+                                          //
+                                          _footerButton()
+                                        ])))))))),
+              ]);
+            }));
   }
 
   Widget _footerButton() {

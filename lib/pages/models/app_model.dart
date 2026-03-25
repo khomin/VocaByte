@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
 class AppModel with ChangeNotifier {
   String _appVersion = '';
-  ThemeType _theme = ThemeType.system;
+  ThemeMode _theme = ThemeMode.system;
   bool _onboarding = false;
   bool _serviceInited = false;
   bool _waitCopyResource = false;
@@ -28,6 +27,7 @@ class AppModel with ChangeNotifier {
   }
 
   bool get serviceInited => _serviceInited;
+
   set serviceInited(bool v) {
     if (_serviceInited != v) {
       _serviceInited = v;
@@ -51,14 +51,15 @@ class AppModel with ChangeNotifier {
     }
   }
 
-  set theme(ThemeType v) {
+  set theme(ThemeMode v) {
     if (_theme != v) {
       _theme = v;
+      SettingsRep().setTheme(v);
       notifyListeners();
     }
   }
 
-  ThemeType get theme => _theme;
+  ThemeMode get theme => _theme;
 
   void update() {
     notifyListeners();

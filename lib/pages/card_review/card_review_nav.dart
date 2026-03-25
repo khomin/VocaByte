@@ -250,17 +250,13 @@ class CardReviewNavState extends State<CardReviewNav> {
                             radius: 20,
                             iconData: Icons.switch_right,
                             onPressed: (p0) async {
-                              // await _handleAnswer(success: false);
                               var theme = await SettingsRep().getTheme();
                               if (!context.mounted) return;
                               ThemeSwitcher.of(context).changeTheme(
-                                  theme: theme == ThemeType.dark
+                                  theme: theme == ThemeMode.dark
                                       ? lightTheme
                                       : darkTheme);
-                              await SettingsRep().changeTheme(
-                                  theme == ThemeType.dark
-                                      ? ThemeType.light
-                                      : ThemeType.dark);
+                              await SettingsRep().setTheme(theme);
                             })
                       ]);
                     }))
