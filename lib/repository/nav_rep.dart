@@ -67,7 +67,7 @@ class PanelRouterBlocSecondary {
   }
 
   void onChanged(String name, dynamic arg) {
-    var route = routeNameToType(name);
+    var route = routeNameTo(name);
     onCurrent.add(Panel(type: route, arg: arg));
     NavigatorRep().onCheckPopAllowed = null;
   }
@@ -78,7 +78,7 @@ class PanelRouterBlocSecondary {
     }
   }
 
-  PageType routeNameToType(String? name) {
+  PageType routeNameTo(String? name) {
     for (var it in PageType.values) {
       if (it.name == name) {
         return it;

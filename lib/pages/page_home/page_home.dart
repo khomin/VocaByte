@@ -77,8 +77,7 @@ class PageHomeState extends State<PageHome> {
                         icon: const Icon(Icons.search), onPressed: () {}),
                     const SizedBox(width: 48),
                     IconButton(
-                        icon: const Icon(Icons.library_books),
-                        onPressed: () {}),
+                        icon: const Icon(Icons.menu_book), onPressed: () {}),
                     IconButton(
                         icon: const Icon(Icons.settings), onPressed: () {}),
                   ],
@@ -139,7 +138,7 @@ class PageHomeState extends State<PageHome> {
                 ),
               ),
               SliverList.list(children: [
-                const SizedBox(height: 10),
+                const SizedBox(height: 15),
                 //
                 StreamBuilder(
                     stream: appRep.reviewTask.wordToReviewCnt,
@@ -256,11 +255,11 @@ class PageHomeState extends State<PageHome> {
         radius: 25,
         useShadow: true,
         useScaleAnimation: false,
-        height: 80, //Constants.homeCardHeight,
+        height: Constants.homeCardHeight,
         margin: const EdgeInsets.only(
           left: Constants.homeCardPadding,
           right: Constants.homeCardPadding,
-          bottom: Constants.homeCardPadding * 2,
+          bottom: 16,
         ),
         width: width,
         onPressed: (_) {

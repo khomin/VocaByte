@@ -1,12 +1,23 @@
+import 'package:collection/collection.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/app/log_printer.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
+import 'package:vocabyte/components/navigation_observer.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/app_route.dart';
+import 'package:vocabyte/pages/card_review/card_review_nav.dart';
+import 'package:vocabyte/pages/manage_word/manage_word_page.dart';
 import 'package:vocabyte/pages/models/app_model.dart';
+import 'package:vocabyte/pages/numerals/numerals_nav.dart';
+import 'package:vocabyte/pages/page_home/page_home.dart';
+import 'package:vocabyte/pages/page_search_word/page_search.dart';
+import 'package:vocabyte/pages/settings/settings_daily_goal.dart';
+import 'package:vocabyte/pages/settings/settings_page.dart';
+import 'package:vocabyte/pages/word_details/page_word_details.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/pages/splash/splash.dart';
 import 'package:vocabyte/pages/splash/splash_install.dart';
@@ -24,6 +35,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late AppModel _appModel;
+  late NavigatorObserverCustom _observer;
   final _dispStream = DisposableStream();
   final tag = 'app';
 
@@ -80,6 +92,106 @@ class _AppState extends State<App> {
         await getIt<AppRep>().refreshManageList();
       });
     });
+
+    _observer = NavigatorObserverCustom(
+        onDidPop: () {},
+        onChanged: (name, arg) {
+          var page = PageType.values.firstWhereOrNull((v) => v.name == name);
+          switch (page) {
+            case null:
+              if (name == 'numerals') {
+                NavigatorRep().routeBloc.onHideBottom.add(true);
+              }
+              break;
+            case PageType.home:
+              NavigatorRep().routeBloc.onHideBottom.add(false);
+              break;
+            case PageType.reviewCard:
+              NavigatorRep().routeBloc.onHideBottom.add(true);
+              break;
+            case PageType.searchWord:
+            case PageType.manageWords:
+            case PageType.settings:
+              break;
+          }
+          if (page != null) {
+            NavigatorRep().routeBloc.onCurrent.add(Panel(type: page));
+          }
+        });
+    _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((page) {
+      if (page == null) return;
+      var settings = RouteSettings(name: page.type.name);
+      var nav = NavigatorRep().routeBloc.navKey.currentState;
+      while (nav?.canPop() == true) {
+        nav?.pop();
+      }
+      switch (page.type) {
+        case PageType.searchWord:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return SearchWordPage(onShow: (data) async {
+                  getIt<AppRep>().cachedWord = data;
+                  await ServiceApi().putRecent(data.word);
+                  await getIt<AppRep>().updateRecent();
+                  nav.push(CupertinoPageRoute(
+                      settings: settings,
+                      builder: (context) {
+                        return PageWordDetails(
+                            playWordAtStart: true,
+                            primary: true,
+                            onBack: () {
+                              Navigator.of(context).pop();
+                            });
+                      }));
+                });
+              }));
+          break;
+        case PageType.reviewCard:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return const CardReviewNav();
+              }));
+          break;
+        case PageType.manageWords:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return ManageWordPage(onShowWord: (data) {
+                  nav.push(CupertinoPageRoute(
+                      settings: settings,
+                      builder: (context) {
+                        return PageWordDetails(
+                            primary: true,
+                            onBack: () {
+                              Navigator.of(context).pop();
+                            },
+                            playWordAtStart: true);
+                      }));
+                });
+              }));
+          break;
+        case PageType.settings:
+          nav?.push(CupertinoPageRoute(
+              settings: settings,
+              builder: (context) {
+                return SettingsPage(onChangeGoal: () {
+                  nav.push(CupertinoPageRoute(
+                      settings: settings,
+                      builder: (context) {
+                        return SettingsDailiyGoal(onChanged: (v) {
+                          SettingsRep().setDailyGoal(v);
+                          SettingsRep().onChanged.add(null);
+                        });
+                      }));
+                });
+              }));
+          break;
+        default:
+          break;
+      }
+    }));
   }
 
   @override
@@ -97,6 +209,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     var model = context.watch<AppModel>();
+    var nav = NavigatorRep().routeBloc.navKey;
     //
     // initial copy of assets
     if (model.waitCopyResource) {
@@ -112,185 +225,64 @@ class _AppState extends State<App> {
     }
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.baseColor1,
-      // backgroundColor: Colors.transparent,
-      body: const AppRoute(),
+      body: PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) return;
+            var nav = NavigatorRep().routeBloc.navKey;
+            if (nav.currentState?.canPop() == true) {
+              nav.currentState?.pop();
+              return;
+            } else {
+              SystemNavigator.pop();
+            }
+          },
+          child: Navigator(
+              key: nav,
+              initialRoute: PageType.home.name,
+              observers: [_observer],
+              onGenerateRoute: (RouteSettings settings) {
+                var type = NavigatorRep().routeBloc.routeNameTo(settings.name);
+                switch (type) {
+                  //
+                  // (default)
+                  case PageType.home:
+                    return PageRouteBuilder(
+                        transitionDuration: Duration.zero,
+                        reverseTransitionDuration: Duration.zero,
+                        settings: RouteSettings(name: type.name),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          return child;
+                        },
+                        pageBuilder: (_, __, ___) => PageHome(onReview: () {
+                              // review
+                              NavigatorRep()
+                                  .routeBloc
+                                  .goto(Panel(type: PageType.reviewCard));
+                            }, onSearch: () {
+                              // search
+                              NavigatorRep()
+                                  .routeBloc
+                                  .goto(Panel(type: PageType.searchWord));
+                            }, onManageWords: () {
+                              // manage
+                              NavigatorRep()
+                                  .routeBloc
+                                  .goto(Panel(type: PageType.manageWords));
+                            }, onNumerals: () {
+                              // numerals
+                              nav.currentState?.push(CupertinoPageRoute(
+                                  settings:
+                                      const RouteSettings(name: 'numerals'),
+                                  builder: (context) {
+                                    return const NumeralsNav();
+                                  }));
+                            }));
+                  default:
+                    throw Exception('Invalid route: ${settings.name}');
+                }
+              })),
     );
-    // return SafeArea(
-    //     child: Scaffold(
-    //         body: Builder(builder: (context) {
-    //           var model = context.watch<AppModel>();
-    //           //
-    //           // initial copy of assets
-    //           if (model.waitCopyResource) {
-    //             return const SplashWithText(text: 'Copying database...');
-    //           }
-    //           if (model.waitMigratingDb) {
-    //             return const SplashWithText(
-    //                 text: "Installing update\nPlease don't close the app");
-    //           }
-    //           // cpp not ready
-    //           if (!model.serviceInited) {
-    //             return const Splash();
-    //           }
-    //           return const AppRoute();
-    //         }),
-    //         bottomNavigationBar: StreamBuilder(
-    //             stream: NavigatorRep().routeBloc.onHideBottom,
-    //             initialData: NavigatorRep().routeBloc.onHideBottom.valueOrNull,
-    //             // TODO: bar itself - fbfbfb
-    //             // page color - fdfdfd
-    //             // icons - 8ca1b5
-    //             // active icons - 34c7f3
-    //             builder: (context, snapshot) {
-    //               var hide = snapshot.data ?? false;
-    //               var model = context.watch<AppModel>();
-    //               if (model.waitCopyResource || model.waitMigratingDb) {
-    //                 hide = true;
-    //               }
-    //               return AnimatedContainer(
-    //                 duration: const Duration(milliseconds: 250),
-    //                 height: hide ? 0 : _bottomNavHeight,
-    //                 // decoration: const BoxDecoration(
-    //                 //   color: Colors
-    //                 //       .pink, //Theme.of(context).colorScheme.bottomNavBg,
-    //                 // boxShadow: [
-    //                 //   BoxShadow(
-    //                 //       color: Theme.of(context).colorScheme.shadowBox,
-    //                 //       blurRadius: 10,
-    //                 //       offset: const Offset(0, 0))
-    //                 // ]
-    //                 // ),
-    //                 // child: StreamBuilder(
-    //                 //     stream: NavigatorRep().routeBloc.onCurrent,
-    //                 //     initialData:
-    //                 //         NavigatorRep().routeBloc.onCurrent.valueOrNull,
-    //                 //     builder: (context, snapshot) {
-    //                 //       var page = snapshot.data?.type;
-    //                 //       return Stack(alignment: Alignment.center, children: [
-    //                 //         Positioned(
-    //                 //           top: 0,
-    //                 //           left: 0,
-    //                 //           right: 0,
-    //                 //           bottom: page == PageType.reviewCard ? null : null,
-    //                 //           // child: SizedBox(
-    //                 //           //   height: _bottomNavHeight,
-    //                 //           child: Container(
-    //                 //             padding: const EdgeInsets.symmetric(
-    //                 //                 horizontal: 10, vertical: 30),
-    //                 //             decoration: const BoxDecoration(),
-    //                 //             child: ConvexAppBar(
-    //                 //               style: TabStyle
-    //                 //                   .fixedCircle, // This makes the center button stand out
-    //                 //               backgroundColor: Colors.white,
-    //                 //               color: Colors.black,
-    //                 //               activeColor: Colors
-    //                 //                   .deepPurple, // Or your primary theme color
-    //                 //               items: [
-    //                 //                 TabItem(icon: Icons.home, title: 'Home'),
-    //                 //                 TabItem(
-    //                 //                     icon: Icons.search, title: 'Search'),
-    //                 //                 TabItem(
-    //                 //                     icon: Icons
-    //                 //                         .add), // The "Fixed Circle" index
-    //                 //                 TabItem(
-    //                 //                     icon: Icons.library_books,
-    //                 //                     title: 'Manage'),
-    //                 //                 TabItem(
-    //                 //                     icon: Icons.settings,
-    //                 //                     title: 'Settings'),
-    //                 //               ],
-    //                 //               initialActiveIndex: 2,
-    //                 //               onTap: (int i) {
-    //                 //                 if (i == 2) {
-    //                 //                   // Trigger your Review/Add logic here
-    //                 //                 }
-    //                 //               },
-    //                 //             ),
-    //                 //             // child: ConvexAppBar(
-    //                 //             //   backgroundColor: Colors.white,
-    //                 //             //   cornerRadius: 5,
-    //                 //             //   color: Colors.black,
-    //                 //             //   activeColor: Theme.of(context)
-    //                 //             //       .colorScheme
-    //                 //             //       .bottomNavIconSelected,
-    //                 //             //   // style: TabStyle.fixedCircle,
-    //                 //             //   style: TabStyle.react,
-    //                 //             //   shadowColor: Colors.grey.shade400,
-    //                 //             //   height: _bottomNavHeight - 10,
-    //                 //             //   items: [
-    //                 //             //     const TabItem(
-    //                 //             //         title: 'Home', icon: Icons.list),
-    //                 //             //     const TabItem(
-    //                 //             //         title: 'Home', icon: Icons.list),
-    //                 //             //     TabItem(icon: Icon(Icons.add)
-    //                 //             //         //   icon: Container(
-    //                 //             //         //     padding: const EdgeInsets.all(5),
-    //                 //             //         //     decoration: BoxDecoration(
-    //                 //             //         //       color: Colors.amber,
-    //                 //             //         //       shape: BoxShape.circle,
-    //                 //             //         //     ),
-    //                 //             //         //     child:
-    //                 //             //         //         const Icon(Icons.abc_sharp),
-    //                 //             //         //   ),
-    //                 //             //         ),
-    //                 //             //     const TabItem(
-    //                 //             //         title: 'Home', icon: Icons.list),
-    //                 //             //     const TabItem(
-    //                 //             //         title: 'Home', icon: Icons.list),
-    //                 //             //   ],
-    //                 //             //   initialActiveIndex: 1,
-    //                 //             //   onTap: (int i) =>
-    //                 //             //       print('click index=$i'),
-    //                 //             // ),
-    //                 //           ),
-    //                 //           // child: BottomNavigationBar(
-    //                 //           //     elevation: 0,
-    //                 //           //     selectedFontSize: 12,
-    //                 //           //     unselectedFontSize: 12,
-    //                 //           //     backgroundColor: Colors.transparent,
-    //                 //           //     selectedItemColor: Theme.of(context)
-    //                 //           //         .colorScheme
-    //                 //           //         .bottomNavIconSelected,
-    //                 //           //     unselectedItemColor:
-    //                 //           //         Theme.of(context)
-    //                 //           //             .colorScheme
-    //                 //           //             .bottomNavBgIconUnselected,
-    //                 //           //     items: const [
-    //                 //           //       BottomNavigationBarItem(
-    //                 //           //           icon: Icon(Icons.home),
-    //                 //           //           label: 'Home'),
-    //                 //           //       BottomNavigationBarItem(
-    //                 //           //           icon: Icon(Icons.text_fields),
-    //                 //           //           label: 'Search'),
-    //                 //           //       BottomNavigationBarItem(
-    //                 //           //           icon: Icon(Icons.view_agenda),
-    //                 //           //           label: 'Review'),
-    //                 //           //       BottomNavigationBarItem(
-    //                 //           //           icon:
-    //                 //           //               Icon(Icons.edit_document),
-    //                 //           //           label: 'Manage'),
-    //                 //           //       BottomNavigationBarItem(
-    //                 //           //           icon: Icon(Icons.settings),
-    //                 //           //           label: 'Settings'),
-    //                 //           //     ],
-    //                 //           //     currentIndex: page?.index ?? 0,
-    //                 //           //     onTap: (value) async {
-    //                 //           //       var cur = NavigatorRep()
-    //                 //           //           .routeBloc
-    //                 //           //           .onCurrent
-    //                 //           //           .valueOrNull;
-    //                 //           //       var type = PageType.values[value];
-    //                 //           //       if (cur?.type == type) {
-    //                 //           //         return;
-    //                 //           //       }
-    //                 //           //       NavigatorRep()
-    //                 //           //           .routeBloc
-    //                 //           //           .goto(Panel(type: type));
-    //                 //           //     }),
-    //                 //         )
-    //                 //       ]);
-    //                 //     }),
-    //               );
-    //             })));
   }
 }
