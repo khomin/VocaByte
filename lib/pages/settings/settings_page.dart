@@ -1,10 +1,10 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
+import 'package:vocabyte/components/page_transition2.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/models/app_model.dart';
@@ -560,11 +560,10 @@ class _State extends State<SettingsPage> {
             onClicked: (_) {
               Navigator.push(
                   context,
-                  CupertinoPageRoute(
-                      settings: const RouteSettings(),
-                      builder: (context) {
-                        return const SettingsAbout();
-                      }));
+                  PageTransition2.build(
+                    settings: const RouteSettings(),
+                    child: const SettingsAbout(),
+                  ));
             },
             height: _itemHeight,
             child: Row(children: [

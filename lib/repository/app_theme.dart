@@ -22,7 +22,7 @@ extension MenuColorScheme on ColorScheme {
   Color get manageCardPastel => Colors.blue;
   Color get numeralsCardPastel => Colors.purple;
 
-  Color get fabButton => Colors.deepPurple;
+  Color get fabButton => const Color(0xFF7B61D1);
 
   Color get baseColor2 => const Color(0xFFFFFFFF);
   Color get baseLight => const Color(0xFFF5F5F5);

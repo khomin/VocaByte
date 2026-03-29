@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
@@ -8,6 +7,7 @@ import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/app/log_printer.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/navigation_observer.dart';
+import 'package:vocabyte/components/page_transition2.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/manage_word/manage_word_page.dart';
@@ -44,7 +44,6 @@ class _AppState extends State<App> {
     super.initState();
 
     Future.microtask(() async {
-      //
       // local app dir
       await FileUtils.init();
       //
@@ -118,6 +117,7 @@ class _AppState extends State<App> {
             NavigatorRep().routeBloc.onCurrent.add(Panel(type: page));
           }
         });
+
     _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((page) {
       if (page == null) return;
       var settings = RouteSettings(name: page.type.name);
@@ -127,66 +127,51 @@ class _AppState extends State<App> {
       }
       switch (page.type) {
         case PageType.searchWord:
-          nav?.push(CupertinoPageRoute(
+          nav?.push(PageTransition2.build(
               settings: settings,
-              builder: (context) {
-                return SearchWordPage(onShow: (data) async {
-                  getIt<AppRep>().cachedWord = data;
-                  await ServiceApi().putRecent(data.word);
-                  await getIt<AppRep>().updateRecent();
-                  nav.push(CupertinoPageRoute(
-                      settings: settings,
-                      builder: (context) {
-                        return PageWordDetails(
-                            playWordAtStart: true,
-                            primary: true,
-                            onBack: () {
-                              Navigator.of(context).pop();
-                            });
-                      }));
-                });
-              }));
+              child: SearchWordPage(onShow: (data) async {
+                getIt<AppRep>().cachedWord = data;
+                await ServiceApi().putRecent(data.word);
+                await getIt<AppRep>().updateRecent();
+                nav.push(PageTransition2.build(
+                    settings: settings,
+                    child: PageWordDetails(
+                        playWordAtStart: true,
+                        primary: true,
+                        onBack: () {
+                          Navigator.of(context).pop();
+                        })));
+              })));
           break;
         case PageType.reviewCard:
-          nav?.push(CupertinoPageRoute(
-              settings: settings,
-              builder: (context) {
-                return const CardReviewNav();
-              }));
+          nav?.push(PageTransition2.build(
+              settings: settings, child: const CardReviewNav()));
           break;
         case PageType.manageWords:
-          nav?.push(CupertinoPageRoute(
+          nav?.push(PageTransition2.build(
               settings: settings,
-              builder: (context) {
-                return ManageWordPage(onShowWord: (data) {
-                  nav.push(CupertinoPageRoute(
-                      settings: settings,
-                      builder: (context) {
-                        return PageWordDetails(
-                            primary: true,
-                            onBack: () {
-                              Navigator.of(context).pop();
-                            },
-                            playWordAtStart: true);
-                      }));
-                });
-              }));
+              child: ManageWordPage(onShowWord: (data) {
+                nav.push(PageTransition2.build(
+                    settings: settings,
+                    child: PageWordDetails(
+                        primary: true,
+                        onBack: () {
+                          Navigator.of(context).pop();
+                        },
+                        playWordAtStart: true)));
+              })));
           break;
         case PageType.settings:
-          nav?.push(CupertinoPageRoute(
+          nav?.push(PageTransition2.build(
               settings: settings,
-              builder: (context) {
-                return SettingsPage(onChangeGoal: () {
-                  nav.push(CupertinoPageRoute(
-                      settings: settings,
-                      builder: (context) {
-                        return SettingsDailiyGoal(onChanged: (v) {
-                          SettingsRep().setDailyGoal(v);
-                          SettingsRep().onChanged.add(null);
-                        });
-                      }));
-                });
-              }));
+              child: SettingsPage(onChangeGoal: () {
+                nav.push(PageTransition2.build(
+                    settings: settings,
+                    child: SettingsDailiyGoal(onChanged: (v) {
+                      SettingsRep().setDailyGoal(v);
+                      SettingsRep().onChanged.add(null);
+                    })));
+              })));
           break;
         default:
           break;
@@ -205,6 +190,14 @@ class _AppState extends State<App> {
     _appModel = context.read<AppModel>();
     super.didChangeDependencies();
   }
+
+  // TOOD: fix UI color/navigation
+  // TODO: audio search
+  // TODO: scan text
+  // TOOD: a feature to add 100 new words at start
+  // TOOD: ru-en l10n
+  // TODO: when added a word count didn't update
+  // TODO: flavor build - google/rustore sdk
 
   @override
   Widget build(BuildContext context) {
@@ -272,12 +265,10 @@ class _AppState extends State<App> {
                                   .goto(Panel(type: PageType.manageWords));
                             }, onNumerals: () {
                               // numerals
-                              nav.currentState?.push(CupertinoPageRoute(
+                              nav.currentState?.push(PageTransition2.build(
                                   settings:
                                       const RouteSettings(name: 'numerals'),
-                                  builder: (context) {
-                                    return const NumeralsNav();
-                                  }));
+                                  child: const NumeralsNav()));
                             }));
                   default:
                     throw Exception('Invalid route: ${settings.name}');
