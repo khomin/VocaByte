@@ -1,31 +1,33 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 class RoundButton extends StatefulWidget {
-  const RoundButton(
-      {required this.color,
-      required this.onPressed,
-      this.iconData,
-      this.iconColor,
-      this.padding,
-      this.margin,
-      this.useScaleAnimation = false,
-      this.iconSize,
-      this.vertTransform = false,
-      this.radius = 30,
-      this.child,
-      this.useShadow = false,
-      this.size,
-      super.key});
+  const RoundButton({
+    required this.color,
+    required this.onPressed,
+    this.iconData,
+    this.iconColor,
+    this.padding,
+    this.margin,
+    this.useScaleAnimation = false,
+    this.iconSize,
+    this.radius = 30,
+    this.child,
+    this.useShadow = false,
+    this.width,
+    this.height,
+    super.key,
+  });
   final IconData? iconData;
   final Color? iconColor;
   final Color color;
   final bool useScaleAnimation;
   final EdgeInsets? padding;
   final EdgeInsets? margin;
-  final Size? size;
+  final double? height;
+  final double? width;
   final double? iconSize;
   final Widget? child;
-  final bool vertTransform;
   final double radius;
   final bool useShadow;
   final Function(Offset)? onPressed;
@@ -66,10 +68,9 @@ class RoundButtonState extends State<RoundButton>
   }
 
   Widget _button() {
-    var size2 = widget.size;
     return Container(
-        width: widget.size?.width,
-        height: widget.size?.height,
+        width: widget.width,
+        height: widget.height,
         margin: widget.margin,
         decoration: BoxDecoration(boxShadow: [
           if (widget.useShadow)
@@ -82,37 +83,35 @@ class RoundButtonState extends State<RoundButton>
             child: Stack(alignment: Alignment.center, children: [
           Positioned.fill(
               child: ElevatedButton(
-                  onPressed: () async {
+                  onPressed: () {
                     if (widget.useScaleAnimation) {
                       _controller.forward();
-                      await Future.delayed(const Duration(milliseconds: 50));
-                      if (!mounted) return;
-                      _controller.reverse();
+                      Timer(
+                        const Duration(milliseconds: 50),
+                        () async {
+                          widget.onPressed?.call(Offset.zero);
+                          if (!mounted) return;
+                          _controller.reverse();
+                        },
+                      );
+                    } else {
+                      widget.onPressed?.call(Offset.zero);
                     }
-                    widget.onPressed?.call(Offset.zero);
                   },
                   key: widget.key,
                   style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(widget.radius)),
-                      shadowColor: widget.color,
-                      fixedSize: size2 ?? const Size(50, 50),
-                      padding: widget.padding ?? EdgeInsets.zero,
-                      backgroundColor: widget.color),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(widget.radius),
+                    ),
+                    shadowColor: widget.color,
+                    // fixedSize: widget.size ?? const Size(50, 50),
+                    padding: widget.padding ?? EdgeInsets.zero,
+                    backgroundColor: widget.color,
+                  ),
                   child: Center(
-                      child: widget.vertTransform
-                          ? Transform.rotate(
-                              angle: -90 *
-                                  3.1415927 /
-                                  180, // Rotate -90 degrees in radians
-                              child: Icon(
-                                widget.iconData,
-                                color: widget.iconColor,
-                                size: widget.iconSize ?? 30,
-                              ))
-                          : Icon(widget.iconData,
-                              color: widget.iconColor,
-                              size: widget.iconSize ?? 30)))),
+                    child: Icon(widget.iconData,
+                        color: widget.iconColor, size: widget.iconSize ?? 30),
+                  ))),
           //
           // text
           if (widget.child != null) Positioned.fill(child: widget.child!)

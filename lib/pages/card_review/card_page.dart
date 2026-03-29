@@ -3,10 +3,11 @@ import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_item.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/tts.dart';
@@ -143,7 +144,9 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
   void _onDone(bool success) {
     if (_finished) return;
     _finished = true;
-    AppRep().play(success ? SoundType.successShort : SoundType.failedShort);
+    getIt<AppRep>().play(
+      success ? SoundType.successShort : SoundType.failedShort,
+    );
     Timer(Constants.animDurationMid, () {
       widget.onDone(success);
     });
@@ -151,7 +154,7 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     var pageType = widget.data.pageType;
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.pageHome,

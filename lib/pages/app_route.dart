@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/navigation_observer.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/manage_word/manage_word_page.dart';
 import 'package:vocabyte/pages/numerals/numerals_nav.dart';
@@ -70,9 +71,9 @@ class _AppRouteState extends State<AppRoute> {
               settings: settings,
               builder: (context) {
                 return SearchWordPage(onShow: (data) async {
-                  AppRep().cachedWord = data;
+                  getIt<AppRep>().cachedWord = data;
                   await ServiceApi().putRecent(data.word);
-                  await AppRep().updateRecent();
+                  await getIt<AppRep>().updateRecent();
                   nav.push(CupertinoPageRoute(
                       settings: settings,
                       builder: (context) {

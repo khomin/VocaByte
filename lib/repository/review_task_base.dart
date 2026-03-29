@@ -1,4 +1,5 @@
 import 'package:rxdart/rxdart.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
@@ -20,7 +21,7 @@ class ReviewTaskBase {
   void resetProgress() {
     // TODO: store daily progress in sql
     wordDoneCount.add(0);
-    AppRep().onReviewProgress.add(0);
+    getIt<AppRep>().onReviewProgress.add(0);
   }
 
   Future refresh() {

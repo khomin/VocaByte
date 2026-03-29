@@ -4,10 +4,12 @@ import 'package:flutter/services.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/numerals/numeral_item.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/tts.dart';
 
 class NumeralsResult {
@@ -173,8 +175,8 @@ class NumeralsPageState extends State<NumeralsPage> {
     TextToSpeach().onChange(_number.toString());
     TextToSpeach().speak();
     var pg = _result.correctCnt * 100 / _result.allCnt;
-    AppRep().onNumeralsProgress.add(pg / 100);
-    AppRep()
+    getIt<AppRep>().onNumeralsProgress.add(pg / 100);
+    getIt<AppRep>()
         .onNumeralsStage
         .add(NumeralsStage(stage: _stage, all: _getStageAll()));
   }
@@ -200,8 +202,8 @@ class NumeralsPageState extends State<NumeralsPage> {
               _genNextNumber();
             } else {
               _result.success = true;
-              AppRep().play(SoundType.successLong);
-              AppRep().onNumeralsProgress.add(1);
+              getIt<AppRep>().play(SoundType.successLong);
+              getIt<AppRep>().onNumeralsProgress.add(1);
               Timer(const Duration(milliseconds: 200), () {
                 widget.onCompleted(_result);
               });
@@ -210,7 +212,7 @@ class NumeralsPageState extends State<NumeralsPage> {
         } else {
           _result.success = false;
           _result.failedValue = _number.toString();
-          AppRep().play(SoundType.failedLong);
+          getIt<AppRep>().play(SoundType.failedLong);
           Timer(const Duration(milliseconds: 200), () {
             widget.onCompleted(_result);
           });
@@ -223,7 +225,7 @@ class NumeralsPageState extends State<NumeralsPage> {
   }
 
   void _onNumber(int num) {
-    AppRep().play(SoundType.successShort);
+    getIt<AppRep>().play(SoundType.successShort);
     _inputCtr.text = _inputCtr.text + num.toString();
   }
 
@@ -264,7 +266,8 @@ class NumeralsPageState extends State<NumeralsPage> {
               if (_backpressVisible)
                 RoundButton(
                     iconData: Icons.backspace,
-                    size: const Size(30, 30),
+                    width: Constants.baseButton,
+                    height: Constants.baseButton,
                     useScaleAnimation: true,
                     iconColor: Theme.of(context).colorScheme.title5,
                     margin: const EdgeInsets.only(right: 20),

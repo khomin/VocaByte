@@ -9,9 +9,10 @@ import 'package:vocabyte/components/button_with_menu.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
@@ -42,7 +43,7 @@ class PageWordDetailsState extends State<PageWordDetails>
   late AnimationController _playWordCtr;
   late AnimationController _playExampleCtr;
   final _pageController = PageController();
-  final _word = AppRep().cachedWord?.word ?? 'undefined';
+  final _word = getIt<AppRep>().cachedWord?.word ?? 'undefined';
   final tag = 'wordDetails';
 
   @override
@@ -72,14 +73,15 @@ class PageWordDetailsState extends State<PageWordDetails>
   }
 
   Future _refreshStatus({required bool initial}) async {
-    var status = await AppRep().reviewTask.getWordReviewStatus(word: _word);
+    var status =
+        await getIt<AppRep>().reviewTask.getWordReviewStatus(word: _word);
     if (status != null) {
-      var reviewIn = AppRep().reviewTimeInDuration(status);
+      var reviewIn = getIt<AppRep>().reviewTimeInDuration(status);
       if (mounted) {
         var initialIndex = 0;
         if (initial) {
           if (status.meaningId.isNotEmpty) {
-            var meanings = AppRep().cachedWord?.meaning;
+            var meanings = getIt<AppRep>().cachedWord?.meaning;
             if (meanings != null) {
               var found = meanings.firstWhereOrNull(
                   (element) => element.id == status.meaningId);
@@ -91,7 +93,7 @@ class PageWordDetailsState extends State<PageWordDetails>
         }
         setState(() {
           _status = status;
-          _reviewIn = AppRep().reviewInToString(reviewIn);
+          _reviewIn = getIt<AppRep>().reviewInToString(reviewIn);
         });
         if (initial && initialIndex != 0) {
           _pageController.animateToPage(initialIndex,
@@ -117,8 +119,8 @@ class PageWordDetailsState extends State<PageWordDetails>
   }
 
   void _playExample() async {
-    var word = AppRep().cachedWord?.word;
-    var meaning = AppRep().cachedWord?.meaning;
+    var word = getIt<AppRep>().cachedWord?.word;
+    var meaning = getIt<AppRep>().cachedWord?.meaning;
     if (word == null || meaning == null) return;
     var definition = meaning[_curMeaningIndex].definition;
     var example = meaning[_curMeaningIndex].example;
@@ -154,7 +156,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                 : null,
             body: Builder(builder: (context) {
               var size = MediaQuery.sizeOf(context);
-              var data = AppRep().cachedWord;
+              var data = getIt<AppRep>().cachedWord;
               var sentences = data?.examples;
               if (data == null) {
                 return const SizedBox();
@@ -233,10 +235,10 @@ class PageWordDetailsState extends State<PageWordDetails>
 
   Widget _cardView() {
     return Builder(builder: (context) {
-      var data = AppRep().cachedWord;
+      var data = getIt<AppRep>().cachedWord;
       if (data == null) return const SizedBox();
       var meaning = data.meaning[_curMeaningIndex];
-      var size = MediaQuery.of(context).size;
+      var size = MediaQuery.sizeOf(context);
       var isCurrent = false;
       if (_status != null) {
         isCurrent = true;
@@ -502,12 +504,13 @@ class PageWordDetailsState extends State<PageWordDetails>
                           bottomLeft: Radius.circular(16),
                           bottomRight: Radius.circular(16)),
                       onPressed: () async {
-                        var data = AppRep().cachedWord;
+                        var data = getIt<AppRep>().cachedWord;
                         var w = data?.word;
                         if (w == null) return;
                         var id = meaning.id;
                         if (id == null) return;
-                        await AppRep().updateMeaningId(word: w, meaningId: id);
+                        await getIt<AppRep>()
+                            .updateMeaningId(word: w, meaningId: id);
                         _refreshStatus(initial: false);
                       }))
             ]))
@@ -567,7 +570,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                     direction: TextDirection.ltr,
                     radious: const BorderRadius.all(Radius.circular(10)),
                     onPressed: () async {
-                      var data = AppRep().cachedWord;
+                      var data = getIt<AppRep>().cachedWord;
                       if (data == null) return;
                       String? meaingId;
                       try {
@@ -585,7 +588,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                         meaningId: meaingId,
                       ));
                       _refreshStatus(initial: false);
-                      AppRep().refreshManageList();
+                      getIt<AppRep>().refreshManageList();
                     }),
             childFlex2: 13,
             child2: _status == null
@@ -608,22 +611,23 @@ class PageWordDetailsState extends State<PageWordDetails>
                           ),
                           builder: (context) {
                             return NextReviewPanel(
-                                review: AppRep.reviewTimeToEnum(_status),
+                                review:
+                                    getIt<AppRep>().reviewTimeToEnum(_status),
                                 onChanged: (review) async {
                                   var time = AppRep.reviewTimeToInt(review);
-                                  var data = AppRep().cachedWord;
-                                  await AppRep()
+                                  var data = getIt<AppRep>().cachedWord;
+                                  await getIt<AppRep>()
                                       .updateReviewTime(data?.word, time);
                                   _refreshStatus(initial: false);
                                 },
                                 onAlreadyKnow: () async {
-                                  var data = AppRep().cachedWord;
+                                  var data = getIt<AppRep>().cachedWord;
                                   var w = data?.word;
                                   if (w == null) return;
                                   await ServiceApi()
                                       .deleteCurrentExact(word: w);
                                   await _refreshStatus(initial: false);
-                                  AppRep().refreshManageList();
+                                  getIt<AppRep>().refreshManageList();
                                 });
                           });
                     })));

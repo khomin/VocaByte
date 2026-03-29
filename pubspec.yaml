@@ -65,6 +65,7 @@ dependencies:
   flutter_animate: ^4.5.2
   share_plus: ^10.1.3
   get_it: ^9.2.1
+  convex_bottom_bar: ^3.2.0
 
 dev_dependencies:
   flutter_test:
@@ -96,6 +97,14 @@ flutter:
   assets:
     - .env
     - assets/
+
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/font/Inter/Inter-VariableFont_opsz,wght.ttf     
+    - family: Fredoka
+      fonts:
+        - asset: assets/font/Fredoka/Fredoka-VariableFont_wdth,wght.ttf
 
 flutter_icons:
   image_path: "assets/icon/logo.png" 

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
@@ -24,8 +25,8 @@ class _State extends State<ManageWordItem> {
 
     Future.microtask(() async {
       if (widget.data.successCount < Constants.reapedToLeanDefault) {
-        var reviewIn = AppRep().reviewTimeInDuration(widget.data);
-        _comment = AppRep().reviewInToString(reviewIn);
+        var reviewIn = getIt<AppRep>().reviewTimeInDuration(widget.data);
+        _comment = getIt<AppRep>().reviewInToString(reviewIn);
         if (mounted) {
           setState(() {});
         }

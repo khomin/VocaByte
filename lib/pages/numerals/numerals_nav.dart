@@ -2,9 +2,10 @@ import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/numerals/numerals_done.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 
@@ -34,7 +35,7 @@ class NumeralsNavState extends State<NumeralsNav> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     return SafeArea(
         child: Scaffold(
             backgroundColor: Theme.of(context).colorScheme.page,
@@ -44,8 +45,9 @@ class NumeralsNavState extends State<NumeralsNav> {
                 leading: AppBar2(
                     type: Type.close,
                     child: StreamBuilder(
-                        stream: AppRep().onNumeralsProgress,
-                        initialData: AppRep().onNumeralsProgress.valueOrNull,
+                        stream: getIt<AppRep>().onNumeralsProgress,
+                        initialData:
+                            getIt<AppRep>().onNumeralsProgress.valueOrNull,
                         builder: (context, snapshot) {
                           var percent = snapshot.data ?? 0.0;
                           var step = (percent * 10).toInt();
@@ -53,9 +55,9 @@ class NumeralsNavState extends State<NumeralsNav> {
                               child: Row(children: [
                             const Spacer(),
                             StreamBuilder(
-                                stream: AppRep().onNumeralsStage,
+                                stream: getIt<AppRep>().onNumeralsStage,
                                 initialData:
-                                    AppRep().onNumeralsStage.valueOrNull,
+                                    getIt<AppRep>().onNumeralsStage.valueOrNull,
                                 builder: (context, snapshot) {
                                   var data = snapshot.data;
                                   return Text(

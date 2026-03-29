@@ -3,13 +3,15 @@ import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/pages/page_search_word/search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:provider/provider.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 
 class SearchWordPage extends StatefulWidget {
@@ -114,7 +116,8 @@ class SearchWordPageState extends State<SearchWordPage> {
                     iconData: Icons.clear_sharp,
                     iconSize: 22,
                     margin: const EdgeInsets.only(right: 15),
-                    size: const Size(40, 40),
+                    height: Constants.baseButton,
+                    width: Constants.baseButton,
                     color: Theme.of(context).colorScheme.roundButton,
                     iconColor: Theme.of(context).colorScheme.appBarText.color,
                     onPressed: (_) {
@@ -153,7 +156,7 @@ class SearchWordPageState extends State<SearchWordPage> {
 
   _searchRecent() {
     return StreamBuilder(
-        stream: AppRep().onRecentWords,
+        stream: getIt<AppRep>().onRecentWords,
         builder: (context, snapshot) {
           return SliverList.builder(
               itemCount: snapshot.data?.length ?? 0,
@@ -173,10 +176,10 @@ class SearchWordPageState extends State<SearchWordPage> {
                       if (word == null) {
                         return;
                       }
-                      var info = await AppRep().wordToInfo(word);
+                      var info = await getIt<AppRep>().wordToInfo(word);
                       _model.loseFocus();
                       if (info == null) return;
-                      AppRep().cachedWord = info;
+                      getIt<AppRep>().cachedWord = info;
                       widget.onShow.call(info);
                     });
               });

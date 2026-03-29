@@ -12,10 +12,20 @@ class Constants {
   static const appGroupLink = 'https://groups.google.com/g/vocabyte';
 
   static double iconHomeSize = 60.0;
+  static double bottomNavHeight = 70.0;
+
+  static String get fontInter => 'Inter';
+  static String get fontFredoka => 'Fredoka';
 
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
+
+  static const appBarButton = 50.0;
+  static double homeAppBarHeight = 100.0;
+  static const baseButton = 55.0;
+  static const homeCardHeight = 100.0;
+  static const homeCardPadding = 10.0;
 
   static const menuFontSize1 = 15.0;
   static const menuFontSize2 = 14.0;

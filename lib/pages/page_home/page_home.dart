@@ -1,12 +1,9 @@
-import 'package:provider/provider.dart';
-import 'package:vocabyte/components/avatar.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
-import 'package:vocabyte/app/ui_helper.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 
 class PageHome extends StatefulWidget {
@@ -44,199 +41,342 @@ class PageHomeState extends State<PageHome> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     var appRep = getIt<AppRep>();
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.pageHome,
-        appBar: AppBar(
-            centerTitle: true,
-            elevation: 1,
-            backgroundColor: Theme.of(context).colorScheme.pageHome,
-            shadowColor: Theme.of(context).colorScheme.title4,
-            title: SizedBox(
-                height: kToolbarHeight,
-                width: double.infinity,
-                child: Stack(children: [
-                  Positioned(
-                      left: 0,
-                      right: 0,
-                      bottom: 0,
-                      top: 0,
-                      child: Center(
-                          child: Text('Home',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: Theme.of(context).colorScheme.title1))),
-                  Positioned(
-                      right: 0,
-                      bottom: 10,
-                      top: 10,
-                      child: Avatar(onPressed: (p0) {}))
-                ]))),
-        body: Column(children: [
-          //
-          // start padding
-          const SizedBox(height: 20),
-          Expanded(
-              child: GridView(
-                  shrinkWrap: true,
-                  padding: const EdgeInsets.only(left: 5, right: 5),
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio:
-                          UiHelper.calculateHomeGridRation(size.width),
-                      crossAxisSpacing: 1),
+        // backgroundColor: Theme.of(context).colorScheme.pageHome,
+        // backgroundColor: Theme.of(context).colorScheme.appBar,
+        // backgroundColor: Colors.amber,
+        backgroundColor: Theme.of(context).colorScheme.baseColor1,
+        extendBody: true,
+        bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: BottomAppBar(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                color: Theme.of(context).colorScheme.bottomNavBg,
+                shape: const CircularNotchedRectangle(),
+                height: Constants.bottomNavHeight,
+                notchMargin: 8.0,
+                elevation: 10,
+                shadowColor: Colors.black,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
+                    IconButton(
+                        icon: const Icon(Icons.home_filled), onPressed: () {}),
+                    IconButton(
+                        icon: const Icon(Icons.search), onPressed: () {}),
+                    const SizedBox(width: 48),
+                    IconButton(
+                        icon: const Icon(Icons.library_books),
+                        onPressed: () {}),
+                    IconButton(
+                        icon: const Icon(Icons.settings), onPressed: () {}),
+                  ],
+                ))),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.fabButton,
+          elevation: 4,
+          shape: const CircleBorder(),
+          onPressed: () {
+            // Trigger your smooth "Review" animation here
+          },
+          child: const Icon(
+            Icons.add,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+        body: CustomScrollView(
+            // physics: const BouncingScrollPhysics(),
+            physics: const ClampingScrollPhysics(),
+            slivers: [
+              SliverAppBar(
+                floating: true,
+                snap: true,
+                pinned: false,
+                expandedHeight: Constants.homeAppBarHeight,
+                collapsedHeight: Constants.homeAppBarHeight,
+                toolbarHeight: Constants.homeAppBarHeight,
+                automaticallyImplyLeading: false,
+                backgroundColor: Theme.of(context).colorScheme.appBar,
+                scrolledUnderElevation: 0,
+                surfaceTintColor: Colors.transparent,
+                elevation: 0,
+                // Use 'title' instead of 'flexibleSpace' to stop the fading shit
+                title: Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(30),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: TextFormField(
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      hintText: "Search your words...",
+                      prefixIcon: Icon(Icons.search, color: Colors.grey),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    ),
+                  ),
+                ),
+              ),
+              SliverList.list(children: [
+                const SizedBox(height: 10),
+                //
                 StreamBuilder(
                     stream: appRep.reviewTask.wordToReviewCnt,
-                    initialData: appRep.reviewTask.wordToReviewCnt.valueOrNull,
                     builder: (context, snapshot) {
                       var v = snapshot.data;
                       return _item(
-                          iconInt: v,
                           header: v == null
-                              ? 'Refreshing..'
+                              ? 'Updating...'
+                              : v == 0
+                                  ? '0 words'
+                                  : v > 1
+                                      ? '$v words'
+                                      : '$v word',
+                          description: v == null
+                              ? 'Words to review'
                               : v > 0
-                                  ? 'Review'
-                                  : 'No words to review',
-                          description:
-                              'Keep your words memorized\nAdd words using search',
-                          canClick: () => v != 0,
-                          onClick: () {
+                                  ? 'Review them today'
+                                  : 'No words to review today',
+                          smallIconColor: v == null
+                              ? Colors.transparent
+                              : Theme.of(context).colorScheme.reviewCardPastel,
+                          smallIcon: v == null
+                              ? Stack(children: [
+                                  Center(
+                                      child: SizedBox(
+                                          width: 25,
+                                          height: 25,
+                                          child: RepaintBoundary(
+                                              child: CircularProgressIndicator(
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .reviewCardPastelRequired,
+                                          ))))
+                                ])
+                              : Icon(
+                                  Icons.menu_book,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .reviewCardPastel,
+                                  size: 25,
+                                ),
+                          width: size.width - Constants.homeCardPadding,
+                          asset: 'assets/study.png',
+                          canTap: () => true,
+                          onTap: () {
                             widget.onReview();
                           });
                     }),
                 _item(
-                    // icon: Icons.search_outlined,
-                    icon: Image.asset('assets/search2.png',
-                        width: Constants.iconHomeSize),
-                    header: 'Search',
-                    description:
-                        'Find a word\nand see its meaning\nwith examples',
-                    canClick: () => true,
-                    onClick: () {
-                      widget.onSearch();
-                    }),
-                _item(
-                    // icon: Icons.confirmation_number,
-                    icon: Image.asset('assets/numeral.png',
-                        cacheWidth: 150,
-                        cacheHeight: 150,
-                        width: Constants.iconHomeSize),
-                    header: 'Numerals',
-                    description:
-                        'Listen to the number\nEnter it without mistakes',
-                    canClick: () => true,
-                    onClick: () {
-                      widget.onNumerals();
-                    }),
-                _item(
-                    // icon: Icons.storage_rounded,
-                    icon: Image.asset('assets/manage.png',
-                        width: Constants.iconHomeSize),
                     header: 'Manage words',
                     description: 'Manage your study list',
-                    canClick: () => true,
-                    onClick: () {
+                    smallIcon: Icon(
+                      Icons.storage_rounded,
+                      color: Theme.of(context).colorScheme.manageCardPastel,
+                      size: 25,
+                    ),
+                    smallIconColor: Theme.of(context)
+                        .colorScheme
+                        .manageCardPastel
+                        .withValues(alpha: 0.5),
+                    width: size.width - Constants.homeCardPadding,
+                    asset: 'assets/search2.png',
+                    canTap: () => true,
+                    onTap: () {
                       widget.onManageWords();
-                    })
-              ]))
-        ]));
+                    }),
+                _item(
+                    header: 'Numerals',
+                    description: 'Listen to the numbers',
+                    smallIcon: Icon(
+                      Icons.confirmation_number,
+                      color: Theme.of(context).colorScheme.numeralsCardPastel,
+                      size: 25,
+                    ),
+                    smallIconColor:
+                        Theme.of(context).colorScheme.numeralsCardPastel,
+                    width: size.width - Constants.homeCardPadding,
+                    asset: 'assets/numeral.png',
+                    canTap: () => true,
+                    onTap: () {
+                      widget.onNumerals();
+                    }),
+              ])
+              // ])
+            ]));
   }
 
-  Widget _item(
-      {Widget? icon,
-      required String header,
-      required String description,
-      int? iconInt,
-      required bool Function() canClick,
-      required Function() onClick}) {
-    return Padding(
-        padding: const EdgeInsets.all(4),
-        child: RoundButton(
-            color: Theme.of(context).colorScheme.cardHome,
-            radius: 12,
-            useShadow: true,
-            useScaleAnimation: true,
-            onPressed: (_) {
-              if (canClick()) {
-                onClick();
-              }
-            },
-            child: IgnorePointer(
-                child: Padding(
-                    padding: const EdgeInsets.only(
-                      left: 14, right: 14, //top: 10,
-                      // bottom: 10
+  Widget _item({
+    required String header,
+    required String description,
+    required double width,
+    required String asset,
+    required bool Function() canTap,
+    required Function() onTap,
+    required Widget smallIcon,
+    required Color smallIconColor,
+  }) {
+    return RoundButton(
+        color: Theme.of(context).colorScheme.cardHome,
+        radius: 25,
+        useShadow: true,
+        useScaleAnimation: false,
+        height: 80, //Constants.homeCardHeight,
+        margin: const EdgeInsets.only(
+          left: Constants.homeCardPadding,
+          right: Constants.homeCardPadding,
+          bottom: Constants.homeCardPadding * 2,
+        ),
+        width: width,
+        onPressed: (_) {
+          if (canTap()) {
+            onTap();
+          }
+        },
+        child: IgnorePointer(
+            child: Stack(children: [
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 14,
+            ),
+            child: Row(children: [
+              Stack(children: [
+                Center(
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      color: smallIconColor,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
+                    child: smallIcon,
+                  ),
+                ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 50),
                     child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Image.asset('assets/numeral.png', width: 80),
-                          Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                icon ??
-                                    SizedBox(
-                                        height: 40,
-                                        child: icon ??
-                                            (iconInt != null
-                                                ? Container(
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            const BorderRadius.all(
-                                                                Radius.circular(
-                                                                    8)),
-                                                        color: iconInt > 0
-                                                            ? Theme.of(context)
-                                                                .colorScheme
-                                                                .buttonOption2
-                                                            : Theme.of(context)
-                                                                .colorScheme
-                                                                .buttonOption1),
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            left: 10,
-                                                            right: 10),
-                                                    child: Center(
-                                                        child: Text('$iconInt',
-                                                            style: Theme.of(context)
-                                                                .colorScheme
-                                                                .titleInverse)))
-                                                : const Padding(
-                                                    padding: EdgeInsets.only(left: 10),
-                                                    child: Stack(children: [
-                                                      SizedBox(
-                                                          width: 20,
-                                                          height: 20,
-                                                          child: Center(
-                                                              child: RepaintBoundary(
-                                                                  child:
-                                                                      CircularProgressIndicator())))
-                                                    ])))),
-                              ]),
-                          Column(children: [
-                            Row(children: [
-                              Expanded(
-                                  child: Text(header,
-                                      style: const TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w500),
-                                      maxLines: 5,
-                                      overflow: TextOverflow.ellipsis))
-                            ]),
-                            // const SizedBox(height: 10),
-                            const SizedBox(height: 10),
-                            Row(children: [
-                              Expanded(
-                                  child: Text(description,
-                                      style: const TextStyle(
-                                          fontSize: 11,
-                                          fontWeight: FontWeight.w400),
-                                      maxLines: 5,
-                                      overflow: TextOverflow.ellipsis))
-                            ])
-                          ])
-                        ])))));
+                          Row(children: [
+                            Text(
+                              header,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: 15,
+                                fontFamily: Constants.fontInter,
+                                // fontWeight: FontWeight.normal,
+                                // fontWeight: FontWeight.w700,
+                                // fontFamily: Constants.font1,
+                                fontWeight: FontWeight.bold,
+                                height: 1.1,
+                                color: Theme.of(context).colorScheme.homeCardH1,
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(height: 8),
+                          Text(
+                            description,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: Constants.fontFredoka,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ]))
+              ])
+            ]),
+          ),
+          // ClipRRect(
+          //     borderRadius: BorderRadius.circular(24),
+          //     child: Stack(children: [
+          //       Positioned(
+          //           top: -0,
+          //           bottom: 0,
+          //           right: 5,
+          //           child: Opacity(
+          //             opacity: 0.50,
+          //             child: SizedBox(
+          //               width: 80,
+          //               height: 80,
+          //               child: Image.asset(asset),
+          //             ),
+          //           )),
+          //     ]))
+          // Positioned(
+          //   right: 0,
+          //   top: 0,
+          //   bottom: 0,
+          //   child: Container(
+          //     width: 40,
+          //     height: 40,
+          //     decoration: BoxDecoration(
+          //       color: smallIconColor,
+          //       borderRadius: const BorderRadius.all(Radius.circular(10)),
+          //     ),
+          //     child: smallIcon,
+          //   ),
+          // ),
+          ClipRRect(
+              borderRadius: BorderRadius.circular(24),
+              child: Stack(children: [
+                Positioned(
+                  top: -0,
+                  bottom: 0,
+                  // left: 0,
+                  right: 0,
+                  child: Container(
+                      width: 85,
+                      // height: 40,
+                      decoration: BoxDecoration(
+                          // color: smallIconColor,
+                          // color: Colors.green.shade50,
+                          // borderRadius:
+                          //     const BorderRadius.all(Radius.circular(10)),
+                          ),
+                      child: Stack(children: [
+                        Center(
+                            child: Opacity(
+                          opacity: 1,
+                          // opacity: 0.65,
+                          // opacity: 0.50,
+                          child: SizedBox(
+                            width: 65,
+                            height: 65,
+                            child: Image.asset(
+                              asset,
+                              // width: 75,
+                              // height: 75,
+                            ),
+                          ),
+                        ))
+                      ])),
+                )
+              ]))
+        ])));
   }
 }

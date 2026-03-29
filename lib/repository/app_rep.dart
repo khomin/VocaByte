@@ -1,11 +1,13 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart' as fixnum;
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
@@ -18,7 +20,6 @@ import 'package:vocabyte/repository/review_task_base.dart';
 import 'package:vocabyte/repository/review_task_mock.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
-import 'package:collection/collection.dart';
 
 class NumeralsStage {
   NumeralsStage({this.stage = 0, this.all = 0});
@@ -50,7 +51,7 @@ class AppRep {
   Future<void> updateRecent() async {
     var v = await ServiceApi().getRecent();
     var list = <SearchInfo>[];
-    var manageList = AppRep().onManageWordChanged.valueOrNull ?? [];
+    var manageList = getIt<AppRep>().onManageWordChanged.valueOrNull ?? [];
     for (var it in v.word) {
       var word = UiHelper.toFormatText(it);
       list.add(SearchInfo(
@@ -134,7 +135,8 @@ class AppRep {
 
   Future updateReviewTime(String? word, Int64 time) async {
     if (word == null) return;
-    var current = await AppRep().reviewTask.getWordReviewStatus(word: word);
+    var current =
+        await getIt<AppRep>().reviewTask.getWordReviewStatus(word: word);
     if (current != null) {
       current.nextReviewTmMs = time;
       current.lastTmSuccess = Int64(DateTime.now().millisecondsSinceEpoch);
@@ -155,7 +157,8 @@ class AppRep {
 
   Future updateMeaningId(
       {required String word, required String meaningId}) async {
-    var current = await AppRep().reviewTask.getWordReviewStatus(word: word);
+    var current =
+        await getIt<AppRep>().reviewTask.getWordReviewStatus(word: word);
     if (current != null) {
       current.meaningId = meaningId;
       await ServiceApi().updateCurrent(
@@ -182,11 +185,11 @@ class AppRep {
     return diff;
   }
 
-  static ReviewTime reviewTimeToEnum(WordInReview? current) {
+  ReviewTime reviewTimeToEnum(WordInReview? current) {
     if (current == null) {
       return ReviewTime.today;
     }
-    var dur = AppRep().reviewTimeInDuration(current);
+    var dur = getIt<AppRep>().reviewTimeInDuration(current);
     if (dur.isNegative) {
       return ReviewTime.today;
     } else {
@@ -224,7 +227,7 @@ class AppRep {
   void refreshWordToLearn() async {
     var v = reviewTask;
     await v.refresh();
-    AppRep().onReviewTaskChanged.add(v);
+    getIt<AppRep>().onReviewTaskChanged.add(v);
   }
 
   static fixnum.Int64 reviewTimeToInt(ReviewTime review) {
@@ -287,7 +290,7 @@ class AppRep {
       required String? meaningId,
       required CardPageType type}) async {
     var search = await ServiceApi().getDictionary(word: v, useLike: false);
-    var info = await AppRep().wordToInfo(search.item.first);
+    var info = await getIt<AppRep>().wordToInfo(search.item.first);
     var randList = await ServiceApi().getDictionaryRand(3);
     if (randList.words.isEmpty) {
       logWarning('$tag: no rand words: [$v]');
@@ -302,7 +305,7 @@ class AppRep {
       case CardPageType.audioToDef:
         var card = CardData(data: info, pageType: type);
         for (var i = 0; i < 3; i++) {
-          var randInfo = await AppRep().wordToInfo(randList.words[i]);
+          var randInfo = await getIt<AppRep>().wordToInfo(randList.words[i]);
           card.options?.add({
             'value': UiHelper.toFormatText(randInfo == null
                 ? 'undefined'

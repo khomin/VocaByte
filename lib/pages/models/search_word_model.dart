@@ -1,8 +1,9 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/service_api.dart';
-import 'package:collection/collection.dart';
+import 'package:vocabyte/main.dart';
 
 class SearchInfo extends FullInfo {
   SearchInfo(
@@ -32,11 +33,11 @@ class SearchWordModel with ChangeNotifier {
     query = v;
     if (v.isNotEmpty) {
       var list = <SearchInfo>[];
-      var manageList = AppRep().onManageWordChanged.valueOrNull ?? [];
+      var manageList = getIt<AppRep>().onManageWordChanged.valueOrNull ?? [];
 
       var search = await ServiceApi().getDictionary(word: v, useLike: true);
       for (var it in search.item) {
-        var info = await AppRep().wordToInfo(it);
+        var info = await getIt<AppRep>().wordToInfo(it);
         if (info != null) {
           list.add(SearchInfo(
               word: info.word,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:vocabyte/app.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -22,29 +23,17 @@ void main() async {
 }
 
 class MainApp extends StatelessWidget {
-  final SystemUiOverlayStyle systemStyleLight = const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
-    statusBarColor: Colors.transparent,
-    systemNavigationBarIconBrightness: Brightness.light,
-  );
-  final SystemUiOverlayStyle systemStyleDark = const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
-    statusBarColor: Colors.transparent,
-    systemNavigationBarIconBrightness: Brightness.light,
-  );
-
   const MainApp({super.key});
 
   SystemUiOverlayStyle _getSystemStyle(BuildContext context, ThemeMode mode) {
-    switch (mode) {
-      case ThemeMode.light:
-        return systemStyleLight;
-      case ThemeMode.dark:
-        return systemStyleLight;
-      case ThemeMode.system:
-        var overlay = MediaQuery.of(context).platformBrightness;
-        return overlay == Brightness.light ? systemStyleLight : systemStyleDark;
-    }
+    var color = Theme.of(context).colorScheme.bottomNavBg;
+    return SystemUiOverlayStyle(
+      systemNavigationBarColor: color,
+      // statusBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Theme.of(context).colorScheme.dark()
+          ? Brightness.light
+          : Brightness.dark,
+    );
   }
 
   @override

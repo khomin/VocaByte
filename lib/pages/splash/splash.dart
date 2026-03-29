@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 
 class Splash extends StatefulWidget {
   const Splash({super.key});

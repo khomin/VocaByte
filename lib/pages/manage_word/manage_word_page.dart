@@ -2,13 +2,15 @@ import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/manage_word/manage_word_item.dart';
 import 'package:vocabyte/pages/manage_word/manage_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:provider/provider.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 
 class ManageWordPage extends StatefulWidget {
@@ -30,9 +32,9 @@ class ManageWordPageState extends State<ManageWordPage> {
     _model = ManageWordModel();
 
     Future.microtask(() async {
-      AppRep().refreshManageList();
+      getIt<AppRep>().refreshManageList();
 
-      _dispStream.add(AppRep().onManageWordChanged.listen((v) async {
+      _dispStream.add(getIt<AppRep>().onManageWordChanged.listen((v) async {
         _model.setModels(data: v ?? []);
         _model.inited = true;
       }));
@@ -43,7 +45,7 @@ class ManageWordPageState extends State<ManageWordPage> {
   void dispose() {
     _model.dispose();
     _dispStream.dispose();
-    AppRep().refreshWordToLearn();
+    getIt<AppRep>().refreshWordToLearn();
     super.dispose();
   }
 
@@ -52,9 +54,9 @@ class ManageWordPageState extends State<ManageWordPage> {
     var r = await ServiceApi().getDictionary(word: text, useLike: false);
     var word = r.item.firstOrNull;
     if (word == null) return;
-    var info = await AppRep().wordToInfo(word);
+    var info = await getIt<AppRep>().wordToInfo(word);
     if (info == null) return;
-    AppRep().cachedWord = info;
+    getIt<AppRep>().cachedWord = info;
     widget.onShowWord.call(info);
   }
 
@@ -141,7 +143,8 @@ class ManageWordPageState extends State<ManageWordPage> {
                     color: Colors.transparent,
                     iconSize: 22,
                     margin: const EdgeInsets.only(right: 15),
-                    size: const Size(40, 40),
+                    width: Constants.baseButton,
+                    height: Constants.baseButton,
                     iconColor: Theme.of(context).colorScheme.roundButton,
                     onPressed: (_) {
                       _model.reset();

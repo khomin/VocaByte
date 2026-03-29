@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 
 class ButtonWithMenu extends StatelessWidget {

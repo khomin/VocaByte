@@ -1,6 +1,6 @@
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:flutter/material.dart';
 
 enum EntyryType { first, book, seacrh, study }
@@ -65,7 +65,7 @@ class _State extends State<Page1> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     return SizedBox(
         width: size.width,
         height: size.height,

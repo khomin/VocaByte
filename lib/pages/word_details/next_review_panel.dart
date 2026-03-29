@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 enum ReviewTime { today, day1, week1, month1, month3 }
 
@@ -70,7 +71,8 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 child: RoundButton(
                     color: Colors.white.withValues(alpha: 0.08),
                     iconColor: Theme.of(context).colorScheme.appBarText.color,
-                    size: const Size(50, 50),
+                    height: Constants.baseButton,
+                    width: Constants.baseButton,
                     iconSize: 22,
                     radius: 20,
                     iconData: Icons.close,

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/tts.dart';
@@ -75,7 +75,7 @@ class CardNoWordsState extends State<CardNoWords>
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     return Container(
         width: size.width,
         height: size.height,
@@ -98,8 +98,7 @@ class CardNoWordsState extends State<CardNoWords>
                                 iconColor: Theme.of(context)
                                     .colorScheme
                                     .button3TextInversed,
-                                size: Size((size.width / 5) + 15,
-                                    (size.width / 5) + 15),
+                                height: Constants.baseButton,
                                 iconSize: size.width / 5,
                                 useScaleAnimation: true,
                                 useShadow: true,

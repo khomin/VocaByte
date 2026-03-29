@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/resource/constants.dart';
 
@@ -104,7 +104,8 @@ class SettingsAboutState extends State<SettingsAbout> {
                               fontWeight: FontWeight.bold)),
                       RoundButton(
                           color: Theme.of(context).colorScheme.roundButton,
-                          size: const Size(50, 50),
+                          height: Constants.baseButton,
+                          width: Constants.baseButton,
                           iconSize: 20,
                           margin: const EdgeInsets.only(left: 10),
                           useScaleAnimation: true,

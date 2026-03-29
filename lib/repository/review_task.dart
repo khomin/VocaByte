@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/review_task_base.dart';
@@ -16,12 +17,12 @@ class ReviewTask extends ReviewTaskBase {
 
     var current = await ServiceApi().getCurrentToStudy();
     for (var it in current.firstNWord) {
-      var r = await AppRep().buildReview(
+      var r = await getIt<AppRep>().buildReview(
           v: it.word, meaningId: it.meaningId, type: randomPages.first);
       if (r != null) {
         // remove double
-        if (cards.firstWhereOrNull((it2) =>
-                it2.data.word.toLowerCase() == it.word.toLowerCase()) ==
+        if (cards.firstWhereOrNull(
+                (v) => v.data.word.toLowerCase() == it.word.toLowerCase()) ==
             null) {
           cards.add(r);
         }
@@ -36,7 +37,7 @@ class ReviewTask extends ReviewTaskBase {
   Future getMore() async {
     var current = await ServiceApi().getCurrentToStudy();
     for (var it in current.firstNWord) {
-      var r = await AppRep().buildReview(
+      var r = await getIt<AppRep>().buildReview(
           v: it.word, meaningId: it.meaningId, type: CardPageType.defToWords);
       if (r != null) {
         // remove double
@@ -48,7 +49,7 @@ class ReviewTask extends ReviewTaskBase {
       }
     }
     wordToReviewCnt.add(current.countAll);
-    AppRep().onReviewTaskChanged.add(this);
+    getIt<AppRep>().onReviewTaskChanged.add(this);
   }
 
   @override
@@ -96,8 +97,8 @@ class ReviewTask extends ReviewTaskBase {
       percent = doneCnt * 100 / reviewCnt;
     }
     // TODO: check progress for errors
-    AppRep().onReviewProgress.add(percent / 100);
-    AppRep().onReviewTaskChanged.add(this);
+    getIt<AppRep>().onReviewProgress.add(percent / 100);
+    getIt<AppRep>().onReviewTaskChanged.add(this);
     wordDoneCount.add(doneCnt);
     if (cardData.length <= 3) {
       await getMore();

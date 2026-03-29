@@ -2,7 +2,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class CardsDone extends StatefulWidget {

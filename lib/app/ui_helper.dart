@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/numerals/numerals_nav.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 
 enum ToastType { normal, error }
 

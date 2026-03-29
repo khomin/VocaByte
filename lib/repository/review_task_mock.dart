@@ -1,3 +1,4 @@
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/review_task_base.dart';
@@ -12,7 +13,7 @@ class ReviewTaskMock extends ReviewTaskBase {
     randomPages.shuffle();
     var i = 0;
     for (var it in mockList) {
-      var r = await AppRep()
+      var r = await getIt<AppRep>()
           .buildReview(v: it, meaningId: null, type: randomPages.first);
       if (r != null) {
         cards.add(r);
@@ -32,7 +33,7 @@ class ReviewTaskMock extends ReviewTaskBase {
   @override
   Future getMore() async {
     for (var it in mockList) {
-      var r = await AppRep()
+      var r = await getIt<AppRep>()
           .buildReview(v: it, meaningId: null, type: CardPageType.defToWords);
       if (r != null) {
         cardData.add(r);
@@ -49,7 +50,7 @@ class ReviewTaskMock extends ReviewTaskBase {
     } else {
       wordToReviewCnt.add(mockList.length);
     }
-    AppRep().onReviewTaskChanged.add(this);
+    getIt<AppRep>().onReviewTaskChanged.add(this);
   }
 
   @override
@@ -65,8 +66,8 @@ class ReviewTaskMock extends ReviewTaskBase {
     if (reviewCnt > 0) {
       percent = doneCnt * 100 / reviewCnt;
     }
-    AppRep().onReviewProgress.add(percent / 100);
-    AppRep().onReviewTaskChanged.add(this);
+    getIt<AppRep>().onReviewProgress.add(percent / 100);
+    getIt<AppRep>().onReviewTaskChanged.add(this);
     wordDoneCount.add(doneCnt);
 
     if (cardData.length < cacheSize) {

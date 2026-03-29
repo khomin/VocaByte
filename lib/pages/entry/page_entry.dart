@@ -1,6 +1,6 @@
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:vocabyte/pages/entry/page_1.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:flutter/material.dart';
 
 class PageOnboard extends StatefulWidget {
@@ -23,7 +23,7 @@ class _State extends State<PageOnboard> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    var size = MediaQuery.sizeOf(context);
     return SafeArea(
         child: Container(
             color: Theme.of(context).colorScheme.baseColor1,

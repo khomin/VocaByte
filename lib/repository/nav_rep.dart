@@ -6,12 +6,13 @@ import 'package:vocabyte/app/utils.dart';
 enum PageType { home, searchWord, reviewCard, manageWords, settings }
 
 class Panel {
-  Panel(
-      {required this.type,
-      this.arg,
-      this.fullPop = false,
-      this.replace = false,
-      this.onePop = false});
+  Panel({
+    required this.type,
+    this.arg,
+    this.fullPop = false,
+    this.replace = false,
+    this.onePop = false,
+  });
   final PageType type;
   final dynamic arg;
   final bool fullPop;

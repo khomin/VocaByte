@@ -6,14 +6,14 @@ import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/models/app_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
-import 'package:vocabyte/pages/settings/theme/theme_config.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
@@ -297,7 +297,8 @@ class _State extends State<SettingsPage> {
                       color: Theme.of(context).colorScheme.title5)),
             RoundButton(
                 iconData: Icons.drive_folder_upload_sharp,
-                size: Size(_buttonSize, _buttonSize),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 iconSize: _iconSize,
                 iconColor: Theme.of(context).colorScheme.title2.color,
                 useScaleAnimation: true,
@@ -333,7 +334,8 @@ class _State extends State<SettingsPage> {
                       color: Theme.of(context).colorScheme.title5)),
             RoundButton(
                 iconData: Icons.folder_zip_sharp,
-                size: Size(_buttonSize, _buttonSize),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 iconSize: _iconSize,
                 iconColor: Theme.of(context).colorScheme.title2.color,
                 useScaleAnimation: true,
@@ -366,7 +368,8 @@ class _State extends State<SettingsPage> {
                       color: Theme.of(context).colorScheme.title5)),
             RoundButton(
                 iconData: Icons.upload_sharp,
-                size: Size(_buttonSize, _buttonSize),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 iconSize: _iconSize,
                 iconColor: Theme.of(context).colorScheme.title2.color,
                 useScaleAnimation: true,
@@ -402,7 +405,8 @@ class _State extends State<SettingsPage> {
                       color: Theme.of(context).colorScheme.title5)),
             RoundButton(
                 iconData: Icons.download_sharp,
-                size: Size(_buttonSize, _buttonSize),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 iconSize: _iconSize,
                 iconColor: Theme.of(context).colorScheme.title2.color,
                 useScaleAnimation: true,
@@ -432,7 +436,8 @@ class _State extends State<SettingsPage> {
             const Spacer(),
             RoundButton(
                 iconData: Icons.delete_sharp,
-                size: Size(_buttonSize, _buttonSize),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 iconSize: _iconSize,
                 iconColor: Theme.of(context).colorScheme.titleErr,
                 useScaleAnimation: true,
@@ -531,7 +536,7 @@ class _State extends State<SettingsPage> {
             useBorderBot: false,
             padding: const EdgeInsets.only(left: 25, right: 25),
             onClicked: (_) {
-              AppRep().shareApp();
+              getIt<AppRep>().shareApp();
             },
             height: _itemHeight,
             child: Row(children: [

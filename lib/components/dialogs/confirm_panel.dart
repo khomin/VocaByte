@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class ConfirmPanel extends StatelessWidget {
   const ConfirmPanel(
@@ -51,7 +52,8 @@ class ConfirmPanel extends StatelessWidget {
                     .withValues(alpha: 0.8),
                 iconColor:
                     Theme.of(context).colorScheme.white.withValues(alpha: 0.8),
-                size: const Size(55, 55),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 radius: 20,
                 useScaleAnimation: true,
                 iconData: iconNo,
@@ -61,7 +63,8 @@ class ConfirmPanel extends StatelessWidget {
             const SizedBox(width: 15),
             RoundButton(
                 color: Theme.of(context).colorScheme.roundButton,
-                size: const Size(55, 55),
+                height: Constants.baseButton,
+                width: Constants.baseButton,
                 radius: 20,
                 useScaleAnimation: true,
                 iconData: iconOk,

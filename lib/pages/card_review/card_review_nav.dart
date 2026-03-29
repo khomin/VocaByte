@@ -1,22 +1,19 @@
 import 'dart:async';
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/components/round_button.dart';
+import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_no_words.dart';
 import 'package:vocabyte/pages/card_review/card_page.dart';
 import 'package:vocabyte/pages/card_review/cards_done.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
-import 'package:vocabyte/pages/settings/theme/theme_config.dart';
 import 'package:vocabyte/pages/word_details/page_word_details.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
-import 'package:vocabyte/resource/constants.dart';
 
 class CardReviewNav extends StatefulWidget {
   const CardReviewNav({super.key});
@@ -54,26 +51,26 @@ class CardReviewNavState extends State<CardReviewNav> {
   @override
   void initState() {
     super.initState();
-    AppRep().reviewTask.resetProgress();
+    getIt<AppRep>().reviewTask.resetProgress();
     Future.microtask(() {
       _nextCard();
     });
-    _leanedCountAll = AppRep().reviewTask.wordDoneCount.valueOrNull ?? 0;
+    _leanedCountAll = getIt<AppRep>().reviewTask.wordDoneCount.valueOrNull ?? 0;
   }
 
   @override
   void dispose() {
-    super.dispose();
     _dispStream.dispose();
-    AppRep().refreshWordToLearn();
+    getIt<AppRep>().refreshWordToLearn();
+    super.dispose();
   }
 
   Future<void> _handleAnswer({required bool success}) async {
-    var review = AppRep().reviewTask;
+    var review = getIt<AppRep>().reviewTask;
     var last = review.current();
     await review.pop(success: success);
     if (last != null) {
-      AppRep().cachedWord = last.data;
+      getIt<AppRep>().cachedWord = last.data;
     }
     _leanedCountAll++;
     _leanedCountSinceBreak++;
@@ -82,12 +79,12 @@ class CardReviewNavState extends State<CardReviewNav> {
   }
 
   Future<bool> _nextCard() async {
-    var v = AppRep().reviewTask;
+    var v = getIt<AppRep>().reviewTask;
     var current = v.current();
     var nav = _navKey.currentState;
     if (current == null) {
       // no more cards to learn
-      AppRep().play(SoundType.successShort);
+      getIt<AppRep>().play(SoundType.successShort);
       return false;
     }
     nav?.pushReplacementNamed(current.pageType.name,
@@ -116,8 +113,8 @@ class CardReviewNavState extends State<CardReviewNav> {
             leading: AppBar2(
                 type: Type.close,
                 child: StreamBuilder(
-                    stream: AppRep().onReviewProgress,
-                    initialData: AppRep().onReviewProgress.valueOrNull,
+                    stream: getIt<AppRep>().onReviewProgress,
+                    initialData: getIt<AppRep>().onReviewProgress.valueOrNull,
                     builder: (context, snapshot) {
                       var percent = snapshot.data ?? 0.0;
                       var step = (percent * 10).toInt();
@@ -136,7 +133,7 @@ class CardReviewNavState extends State<CardReviewNav> {
           Navigator(
               key: _navKey,
               onGenerateRoute: (RouteSettings settings) {
-                var review = AppRep().reviewTask;
+                var review = getIt<AppRep>().reviewTask;
                 var cardData = review.current();
                 var type = UiHelper().routeCardNameToType(settings.name);
                 switch (type) {
@@ -217,7 +214,7 @@ class CardReviewNavState extends State<CardReviewNav> {
                                 var nav = _navKey.currentState;
                                 nav?.pushReplacementNamed(
                                     CardPageType.learnDone.name);
-                                AppRep().play(SoundType.successShort);
+                                getIt<AppRep>().play(SoundType.successShort);
                               } else {
                                 if (!await _nextCard()) {
                                   if (context.mounted) {
@@ -228,38 +225,38 @@ class CardReviewNavState extends State<CardReviewNav> {
                             }));
                 }
               }),
-          if (Constants.isDev)
-            Positioned(
-                bottom: 100,
-                left: 10,
-                child: ThemeSwitcher(
-                    clipper: const ThemeSwitcherCircleClipper(),
-                    builder: (context) {
-                      return Row(children: [
-                        // Text(
-                        //     'CountaAll=$_leanedCountAll,countBreak=$_leanedCountSinceBreak'),
-                        RoundButton(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .buttonOption1
-                                .withValues(alpha: 0.4),
-                            iconColor:
-                                Theme.of(context).colorScheme.title1.color,
-                            size: const Size(50, 50),
-                            iconSize: 22,
-                            radius: 20,
-                            iconData: Icons.switch_right,
-                            onPressed: (p0) async {
-                              var theme = await SettingsRep().getTheme();
-                              if (!context.mounted) return;
-                              ThemeSwitcher.of(context).changeTheme(
-                                  theme: theme == ThemeMode.dark
-                                      ? lightTheme
-                                      : darkTheme);
-                              await SettingsRep().setTheme(theme);
-                            })
-                      ]);
-                    }))
+          // if (Constants.isDev)
+          //   Positioned(
+          //       bottom: 100,
+          //       left: 10,
+          //       child: ThemeSwitcher(
+          //           clipper: const ThemeSwitcherCircleClipper(),
+          //           builder: (context) {
+          //             return Row(children: [
+          //               // Text(
+          //               //     'CountaAll=$_leanedCountAll,countBreak=$_leanedCountSinceBreak'),
+          //               RoundButton(
+          //                   color: Theme.of(context)
+          //                       .colorScheme
+          //                       .buttonOption1
+          //                       .withValues(alpha: 0.4),
+          //                   iconColor:
+          //                       Theme.of(context).colorScheme.title1.color,
+          //                   size: const Size(50, 50),
+          //                   iconSize: 22,
+          //                   radius: 20,
+          //                   iconData: Icons.switch_right,
+          //                   onPressed: (p0) async {
+          //                     var theme = await SettingsRep().getTheme();
+          //                     if (!context.mounted) return;
+          //                     ThemeSwitcher.of(context).changeTheme(
+          //                         theme: theme == ThemeMode.dark
+          //                             ? lightTheme
+          //                             : darkTheme);
+          //                     await SettingsRep().setTheme(theme);
+          //                   })
+          //             ]);
+          //           }))
         ]));
   }
 }

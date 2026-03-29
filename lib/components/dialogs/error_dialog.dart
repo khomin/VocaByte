@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/components/dialogs/dialog_header.dart';
-import 'package:vocabyte/pages/settings/theme/app_theme.dart';
+import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 
 class ErrorDialog {
