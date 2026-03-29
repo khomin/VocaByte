@@ -54,7 +54,8 @@ android {
             cmake {
                 arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=clang",
                         "-DCMAKE_CXX_FLAGS=\"-llog\"",
-                        "-DANDROID_STL=c++_shared"
+                        "-DANDROID_STL=c++_shared"//,
+//                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
                 cFlags "-D__STDC_FORMAT_MACROS", "-D__ANDROID__", "-fPIC", "-Wl,-Bsymbolic"
                 cppFlags "-std=c++17", "-fPIC", "-frtti", "-fexceptions", "--build-id", "-Wl,-Bsymbolic"
                 abiFilters "arm64-v8a", "x86_64"

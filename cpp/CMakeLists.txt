@@ -207,6 +207,13 @@ target_include_directories(${PROJECT} PUBLIC
     ${INCLUDE_DIRS}
 )
 
+if (ANDROID OR __ANDROID__)
+    target_link_options(
+        ${PROJECT} PRIVATE
+        "-Wl,-z,max-page-size=16384"
+    )
+endif()
+
 target_link_libraries(${PROJECT} PUBLIC
     ${LIBRARIES}
 )

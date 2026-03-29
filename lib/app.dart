@@ -129,12 +129,14 @@ class _AppState extends State<App> {
         case PageType.searchWord:
           nav?.push(PageTransition2.build(
               settings: settings,
+              type: TransitionType.opacity,
               child: SearchWordPage(onShow: (data) async {
                 getIt<AppRep>().cachedWord = data;
                 await ServiceApi().putRecent(data.word);
                 await getIt<AppRep>().updateRecent();
                 nav.push(PageTransition2.build(
                     settings: settings,
+                    type: TransitionType.slide,
                     child: PageWordDetails(
                         playWordAtStart: true,
                         primary: true,
@@ -144,15 +146,21 @@ class _AppState extends State<App> {
               })));
           break;
         case PageType.reviewCard:
-          nav?.push(PageTransition2.build(
-              settings: settings, child: const CardReviewNav()));
+          nav?.push(
+            PageTransition2.build(
+                settings: settings,
+                type: TransitionType.opacity,
+                child: const CardReviewNav()),
+          );
           break;
         case PageType.manageWords:
           nav?.push(PageTransition2.build(
               settings: settings,
+              type: TransitionType.slide,
               child: ManageWordPage(onShowWord: (data) {
                 nav.push(PageTransition2.build(
                     settings: settings,
+                    type: TransitionType.slide,
                     child: PageWordDetails(
                         primary: true,
                         onBack: () {
@@ -164,9 +172,11 @@ class _AppState extends State<App> {
         case PageType.settings:
           nav?.push(PageTransition2.build(
               settings: settings,
+              type: TransitionType.slide,
               child: SettingsPage(onChangeGoal: () {
                 nav.push(PageTransition2.build(
                     settings: settings,
+                    type: TransitionType.slide,
                     child: SettingsDailiyGoal(onChanged: (v) {
                       SettingsRep().setDailyGoal(v);
                       SettingsRep().onChanged.add(null);
@@ -268,6 +278,7 @@ class _AppState extends State<App> {
                               nav.currentState?.push(PageTransition2.build(
                                   settings:
                                       const RouteSettings(name: 'numerals'),
+                                  type: TransitionType.opacity,
                                   child: const NumeralsNav()));
                             }));
                   default:
