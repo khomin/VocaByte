@@ -158,9 +158,12 @@ class PageHomeState extends State<PageHome> {
                               : v > 0
                                   ? 'Review them today'
                                   : 'No words to review today',
-                          smallIconColor: v == null
+                          smallIconBackground: v == null
                               ? Colors.transparent
-                              : Theme.of(context).colorScheme.reviewCardPastel,
+                              : Theme.of(context)
+                                  .colorScheme
+                                  .reviewCardPastel
+                                  .withValues(alpha: 0.15),
                           smallIcon: v == null
                               ? Stack(children: [
                                   Center(
@@ -176,9 +179,10 @@ class PageHomeState extends State<PageHome> {
                                 ])
                               : Icon(
                                   Icons.menu_book,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .reviewCardPastel,
+                                  color: Colors.transparent,
+                                  // color: Theme.of(context)
+                                  //     .colorScheme
+                                  //     .reviewCardPastel,
                                   size: 25,
                                 ),
                           width: size.width - Constants.homeCardPadding,
@@ -191,15 +195,19 @@ class PageHomeState extends State<PageHome> {
                 _item(
                     header: 'Manage words',
                     description: 'Manage your study list',
-                    smallIcon: Icon(
-                      Icons.storage_rounded,
-                      color: Theme.of(context).colorScheme.manageCardPastel,
-                      size: 25,
-                    ),
-                    smallIconColor: Theme.of(context)
+                    smallIconBackground: Theme.of(context)
                         .colorScheme
                         .manageCardPastel
-                        .withValues(alpha: 0.5),
+                        .withValues(alpha: 0.15),
+                    smallIcon: Icon(
+                      Icons.storage_rounded,
+                      // color: Theme.of(context)
+                      //     .colorScheme
+                      //     .manageCardPastel
+                      //     .withValues(alpha: 0.3)
+                      color: Colors.transparent,
+                      size: 14,
+                    ),
                     width: size.width - Constants.homeCardPadding,
                     asset: 'assets/search2.png',
                     canTap: () => true,
@@ -211,11 +219,17 @@ class PageHomeState extends State<PageHome> {
                     description: 'Listen to the numbers',
                     smallIcon: Icon(
                       Icons.confirmation_number,
-                      color: Theme.of(context).colorScheme.numeralsCardPastel,
-                      size: 25,
+                      color: Colors.transparent,
+                      // color: Theme.of(context)
+                      //     .colorScheme
+                      //     .numeralsCardPastel
+                      //     .withValues(alpha: 0.15),
+                      size: 14,
                     ),
-                    smallIconColor:
-                        Theme.of(context).colorScheme.numeralsCardPastel,
+                    smallIconBackground: Theme.of(context)
+                        .colorScheme
+                        .numeralsCardPastel
+                        .withValues(alpha: 0.15),
                     width: size.width - Constants.homeCardPadding,
                     asset: 'assets/numeral.png',
                     canTap: () => true,
@@ -235,7 +249,7 @@ class PageHomeState extends State<PageHome> {
     required bool Function() canTap,
     required Function() onTap,
     required Widget smallIcon,
-    required Color smallIconColor,
+    required Color smallIconBackground,
   }) {
     return RoundButton(
         color: Theme.of(context).colorScheme.cardHome,
@@ -264,17 +278,17 @@ class PageHomeState extends State<PageHome> {
               Stack(children: [
                 Center(
                   child: Container(
-                    width: 30,
-                    height: 30,
+                    width: 25,
+                    height: 25,
                     decoration: BoxDecoration(
-                      color: smallIconColor,
+                      color: smallIconBackground,
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
                     ),
                     child: smallIcon,
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(left: 50),
+                    padding: const EdgeInsets.only(left: 40),
                     child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.start,

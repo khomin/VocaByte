@@ -23,10 +23,15 @@ extension MenuColorScheme on ColorScheme {
   // #baffc9 	(186,255,201)
   // #bae1ff 	(186,225,255)
 
-  Color get reviewCardPastel => Colors.green.shade50;
-  Color get reviewCardPastelRequired => Colors.orange.shade50;
-  Color get manageCardPastel => Colors.blue.shade50;
-  Color get numeralsCardPastel => Colors.purple.shade50;
+  // Color get reviewCardPastel => Colors.green.shade50;
+  // Color get reviewCardPastelRequired => Colors.orange.shade50;
+  // Color get manageCardPastel => Colors.blue.shade50;
+  // Color get numeralsCardPastel => Colors.purple.shade50;
+
+  Color get reviewCardPastel => Colors.green;
+  Color get reviewCardPastelRequired => Colors.orange;
+  Color get manageCardPastel => Colors.blue;
+  Color get numeralsCardPastel => Colors.purple;
 
   Color get fabButton => Colors.deepPurple;
 
