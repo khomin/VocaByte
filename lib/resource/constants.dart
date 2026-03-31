@@ -21,7 +21,7 @@ class Constants {
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
 
-  static const appBarButton = 50.0;
+  static const appBarButton = 47.0;
   static double homeAppBarHeight = 100.0;
   static const baseButton = 55.0;
   static const homeCardHeight = 80.0;

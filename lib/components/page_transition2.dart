@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 enum TransitionType { slide, opacity }
@@ -12,12 +11,18 @@ class PageTransition2 {
   }) {
     switch (type) {
       case TransitionType.slide:
-        // TODO: Handle this case.
-        throw UnimplementedError();
-      case TransitionType.opacity:
         return TransparentCupertinoPageRoute(
             settings: settings,
             builder: (context) {
+              return child;
+            });
+      case TransitionType.opacity:
+        return PageRouteBuilder(
+            settings: settings,
+            transitionDuration: const Duration(milliseconds: 250),
+            reverseTransitionDuration: const Duration(milliseconds: 50),
+            transitionsBuilder: transitionOpacity,
+            pageBuilder: (context, animation, secondaryAnimation) {
               return child;
             });
     }
@@ -60,8 +65,26 @@ class PageTransition2 {
     );
   }
 
-  static Duration pageTransitionDuration() {
-    return const Duration(milliseconds: kDebugMode ? 1000 : 180);
+  static FadeTransition transitionOpacity(
+      BuildContext context,
+      Animation<double> animation,
+      Animation<double> animationSecond,
+      Widget? child) {
+    final slideAnimation = Tween<Offset>(
+      begin: const Offset(0.0, 0.1),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: animation,
+      curve: Curves.easeOutCubic, // This curve makes it "snap" smoothly
+    ));
+
+    return FadeTransition(
+      opacity: animation,
+      child: SlideTransition(
+        position: slideAnimation,
+        child: child,
+      ),
+    );
   }
 }
 

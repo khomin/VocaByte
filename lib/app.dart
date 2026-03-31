@@ -12,7 +12,7 @@ import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
 import 'package:vocabyte/pages/manage_word/manage_word_page.dart';
 import 'package:vocabyte/pages/models/app_model.dart';
-import 'package:vocabyte/pages/numerals/numerals_nav.dart';
+import 'package:vocabyte/pages/numerals/numerals_main.dart';
 import 'package:vocabyte/pages/page_home/page_home.dart';
 import 'package:vocabyte/pages/page_search_word/page_search.dart';
 import 'package:vocabyte/pages/settings/settings_daily_goal.dart';
@@ -202,7 +202,6 @@ class _AppState extends State<App> {
   }
 
   // TOOD: fix UI color/navigation
-  // TODO: audio search
   // TODO: scan text
   // TOOD: a feature to add 100 new words at start
   // TOOD: ru-en l10n
@@ -241,6 +240,7 @@ class _AppState extends State<App> {
             }
           },
           child: Navigator(
+              // TODO: move it to global
               key: nav,
               initialRoute: PageType.home.name,
               observers: [_observer],
@@ -279,7 +279,7 @@ class _AppState extends State<App> {
                                   settings:
                                       const RouteSettings(name: 'numerals'),
                                   type: TransitionType.opacity,
-                                  child: const NumeralsNav()));
+                                  child: const NumeralsMain()));
                             }));
                   default:
                     throw Exception('Invalid route: ${settings.name}');

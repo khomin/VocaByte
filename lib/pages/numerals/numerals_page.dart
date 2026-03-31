@@ -45,6 +45,7 @@ class NumeralsPageState extends State<NumeralsPage> {
   var _number = 0;
   var _level = NumeralsLevel.easy;
   var _backpressVisible = false;
+  Timer? _inputDebounceTm;
   final _result = NumeralsResult(false, 0, 0, '');
   final _ranges = {
     NumeralsLevel.easy: <Range>[
@@ -162,10 +163,11 @@ class NumeralsPageState extends State<NumeralsPage> {
 
   @override
   void dispose() {
-    super.dispose();
     TextToSpeach().stop();
     _inputCtr.removeListener(_inputChanged);
     _dispStream.dispose();
+    _inputDebounceTm?.cancel();
+    super.dispose();
   }
 
   void _genNextNumber() {
@@ -193,7 +195,8 @@ class NumeralsPageState extends State<NumeralsPage> {
         if (_number == v) {
           _result.correctCnt++;
           _result.success = true;
-          Timer(const Duration(milliseconds: 500), () {
+          _inputDebounceTm?.cancel();
+          _inputDebounceTm = Timer(const Duration(milliseconds: 500), () {
             _inputCtr.text = '';
             if (_stage + 1 < _getStageAll()) {
               setState(() {
@@ -204,7 +207,8 @@ class NumeralsPageState extends State<NumeralsPage> {
               _result.success = true;
               getIt<AppRep>().play(SoundType.successLong);
               getIt<AppRep>().onNumeralsProgress.add(1);
-              Timer(const Duration(milliseconds: 200), () {
+              _inputDebounceTm?.cancel();
+              _inputDebounceTm = Timer(const Duration(milliseconds: 200), () {
                 widget.onCompleted(_result);
               });
             }
@@ -213,7 +217,8 @@ class NumeralsPageState extends State<NumeralsPage> {
           _result.success = false;
           _result.failedValue = _number.toString();
           getIt<AppRep>().play(SoundType.failedLong);
-          Timer(const Duration(milliseconds: 200), () {
+          _inputDebounceTm?.cancel();
+          _inputDebounceTm = Timer(const Duration(milliseconds: 200), () {
             widget.onCompleted(_result);
           });
         }

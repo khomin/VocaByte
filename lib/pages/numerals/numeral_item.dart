@@ -38,15 +38,15 @@ class NumeralItemState extends State<NumeralItem> {
                 radius: 12,
                 useScaleAnimation: true,
                 onPressed: (_) {
+                  if (!mounted) return;
                   setState(() {
                     _clicked = true;
                   });
                   Timer(const Duration(milliseconds: 100), () {
-                    if (mounted) {
-                      setState(() {
-                        _clicked = false;
-                      });
-                    }
+                    if (!mounted) return;
+                    setState(() {
+                      _clicked = false;
+                    });
                   });
                   widget.onClicked(widget.number);
                 },

@@ -36,7 +36,6 @@ class _State extends State<SettingsPage> {
   final _itemHeight = 70.0;
   ThemeMode _theme = ThemeMode.system;
   final _dispStream = DisposableStream();
-  final _buttonSize = 45.0;
   final _iconSize = 25.0;
 
   @override
@@ -88,8 +87,11 @@ class _State extends State<SettingsPage> {
                       decoration: const BoxDecoration(
                           // color: Theme.of(context).colorScheme.card
                           ),
-                      sliver: SliverList.list(
-                          children: [_profile(), _numComplexity(), _others()]))
+                      sliver: SliverList.list(children: [
+                        _profile(),
+                        _numComplexity(),
+                        _others(),
+                      ]))
                 ])));
   }
 
@@ -123,8 +125,6 @@ class _State extends State<SettingsPage> {
                                     const EdgeInsets.only(left: 25, right: 25),
                                 margin: const EdgeInsets.only(top: 10),
                                 onClicked: (_) async {
-                                  // ThemeSwitcher.of(context)
-                                  //     .changeTheme(theme: lightTheme);
                                   appModel.theme = ThemeMode.light;
                                   _update();
                                 },
@@ -154,8 +154,6 @@ class _State extends State<SettingsPage> {
                                     const EdgeInsets.only(left: 25, right: 25),
                                 margin: const EdgeInsets.only(top: 10),
                                 onClicked: (_) async {
-                                  // ThemeSwitcher.of(context)
-                                  //     .changeTheme(theme: darkTheme);
                                   appModel.theme = ThemeMode.dark;
                                   _update();
                                 },
@@ -185,14 +183,6 @@ class _State extends State<SettingsPage> {
                                     const EdgeInsets.only(left: 25, right: 25),
                                 margin: const EdgeInsets.only(top: 10),
                                 onClicked: (pos) async {
-                                  // var systemBr = View.of(context)
-                                  //     .platformDispatcher
-                                  //     .platformBrightness;
-                                  // TODO: theme switchers
-                                  // ThemeSwitcher.of(context).changeTheme(
-                                  //     theme: systemBr == Brightness.dark
-                                  //         ? darkTheme
-                                  //         : lightTheme);
                                   appModel.theme = ThemeMode.system;
                                   _update();
                                 },

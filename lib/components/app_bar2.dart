@@ -14,24 +14,31 @@ class AppBar2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-            border: Border(
-                bottom: BorderSide(
-                    color: Theme.of(context).colorScheme.menuBorderColor,
-                    width: 1))),
+          border: Border(
+              bottom: BorderSide(
+                  color: Theme.of(context).colorScheme.menuBorderColor,
+                  width: 1)),
+        ),
         child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const SizedBox(width: 5),
-          RoundButton(
-              color: type == Type.close
-                  ? Theme.of(context).colorScheme.roundButton
-                  : Colors.transparent,
-              iconColor: Theme.of(context).colorScheme.appBarText.color,
-              width: Constants.appBarButton,
-              iconSize: 22,
-              radius: 20,
-              iconData: type == Type.close ? Icons.close : Icons.arrow_back_ios,
-              onPressed: (p0) {
-                Navigator.of(context).pop();
-              }),
+          Stack(children: [
+            Container(
+                height: Constants.appBarButton,
+                width: Constants.appBarButton,
+                margin: const EdgeInsets.only(left: 8),
+                child: RoundButton(
+                    color: type == Type.close
+                        ? Theme.of(context).colorScheme.roundButton
+                        : Colors.transparent,
+                    iconColor: Theme.of(context).colorScheme.appBarText.color,
+                    width: Constants.appBarButton,
+                    iconSize: 22,
+                    radius: 20,
+                    iconData:
+                        type == Type.close ? Icons.close : Icons.arrow_back_ios,
+                    onPressed: (_) {
+                      Navigator.of(context).pop();
+                    })),
+          ]),
           if (child != null) child!,
           if (child != null) const SizedBox(width: 20)
         ]));

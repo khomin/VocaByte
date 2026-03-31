@@ -7,11 +7,12 @@ import 'package:vocabyte/resource/constants.dart';
 enum ReviewTime { today, day1, week1, month1, month3 }
 
 class NextReviewPanel extends StatefulWidget {
-  const NextReviewPanel(
-      {required this.review,
-      required this.onChanged,
-      required this.onAlreadyKnow,
-      super.key});
+  const NextReviewPanel({
+    required this.review,
+    required this.onChanged,
+    required this.onAlreadyKnow,
+    super.key,
+  });
   final ReviewTime review;
   final Function(ReviewTime review) onChanged;
   final Function() onAlreadyKnow;
@@ -22,18 +23,6 @@ class NextReviewPanel extends StatefulWidget {
 
 class NextReviewPanelState extends State<NextReviewPanel> {
   late ReviewTime _reviewValue;
-  // List<Color> _pastelColors = [
-  //   Color.fromARGB(255, 255, 182, 193), // Pastel Pink
-  //   Color.fromARGB(255, 174, 214, 241), // Pastel Blue
-  //   Color.fromARGB(255, 119, 221, 119), // Pastel Green
-  //   Color.fromARGB(255, 255, 255, 178), // Pastel Yellow
-  //   Color.fromARGB(255, 230, 230, 250), // Pastel Lavender
-  //   Color.fromARGB(255, 189, 252, 201), // Pastel Mint
-  //   Color.fromARGB(255, 255, 218, 185), // Pastel Peach
-  //   Color.fromARGB(255, 179, 158, 220), // Pastel Purple
-  //   Color.fromARGB(255, 255, 204, 153), // Pastel Orange
-  //   Color.fromARGB(255, 255, 192, 203), // Pastel Coral
-  // ];
 
   @override
   void initState() {
@@ -43,7 +32,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
 
   @override
   Widget build(BuildContext context) {
-    // var paddingSide = size.width / 6;
     return Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
       const SizedBox(height: 10),
       SizedBox(

@@ -5,10 +5,14 @@ import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class NumeralsCompleted extends StatefulWidget {
-  const NumeralsCompleted(
-      {required this.result, required this.onCompleted, super.key});
+  const NumeralsCompleted({
+    required this.result,
+    required this.onCompleted,
+    super.key,
+  });
   final Function() onCompleted;
   final NumeralsResult result;
 
@@ -32,9 +36,6 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
     super.initState();
 
     Future.microtask(() {
-      var duration = UiHelper()
-          .durationFormat(DateTime.now().difference(widget.result.started));
-
       var result = widget.result;
       var correctCnt = result.correctCnt;
 
@@ -46,41 +47,38 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
       } else {
         _line1 = 'You have ${result.correctCnt} corect answers!';
       }
-      _line2 = duration;
+      var duration = UiHelper().durationFormat(
+        DateTime.now().difference(widget.result.started),
+      );
+      _line2 = 'Your time $duration';
 
       _items = [
         Text(_line1,
             textAlign: TextAlign.center,
             style: TextStyle(
-                fontSize: 20,
-                shadows: [
-                  if (mounted)
-                    BoxShadow(
-                        color: Theme.of(context).colorScheme.shadow2,
-                        blurRadius: 25,
-                        offset: const Offset(0, 0))
-                ],
-                foreground: Paint()
-                  ..shader = ui.Gradient.linear(
-                      const Offset(0, 20), const Offset(150, 20), <Color>[
+              fontSize: 20,
+              fontFamily: Constants.fontFredoka,
+              fontWeight: FontWeight.bold,
+              foreground: Paint()
+                ..shader = ui.Gradient.linear(
+                  const Offset(0, 0),
+                  const Offset(300, 0),
+                  [
                     if (mounted) Theme.of(context).colorScheme.textResultGrad1,
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad2
-                  ]))),
+                    if (mounted) Theme.of(context).colorScheme.textResultGrad2,
+                  ],
+                ),
+            )),
         const SizedBox(height: 10),
         Text(_line2,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 20,
-                shadows: [
-                  if (mounted)
-                    BoxShadow(
-                        color: Theme.of(context).colorScheme.shadow2,
-                        blurRadius: 25,
-                        offset: const Offset(0, 0))
-                ],
+                fontFamily: Constants.fontFredoka,
+                fontWeight: FontWeight.bold,
                 foreground: Paint()
                   ..shader = ui.Gradient.linear(
-                      const Offset(0, 20), const Offset(150, 20), <Color>[
+                      const Offset(0, 0), const Offset(300, 0), <Color>[
                     if (mounted) Theme.of(context).colorScheme.textResultGrad1,
                     if (mounted) Theme.of(context).colorScheme.textResultGrad2
                   ])))

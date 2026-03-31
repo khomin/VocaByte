@@ -121,7 +121,7 @@ class ManageWordPageState extends State<ManageWordPage> {
                             Theme.of(context).colorScheme.inputBackground,
                         contentPadding:
                             const EdgeInsets.only(left: 10, right: 10),
-                        hintText: 'Enter word',
+                        hintText: 'Manage word',
                         hintStyle: TextStyle(
                             color: Theme.of(context).colorScheme.inputHint,
                             fontSize: 15),

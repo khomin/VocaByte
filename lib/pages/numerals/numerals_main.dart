@@ -9,15 +9,15 @@ import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 
-class NumeralsNav extends StatefulWidget {
-  const NumeralsNav({super.key});
+class NumeralsMain extends StatefulWidget {
+  const NumeralsMain({super.key});
   @override
-  NumeralsNavState createState() => NumeralsNavState();
+  NumeralsMainState createState() => NumeralsMainState();
 }
 
 enum NumPageType { idle, numerals, completed }
 
-class NumeralsNavState extends State<NumeralsNav> {
+class NumeralsMainState extends State<NumeralsMain> {
   final _navigatorKey = GlobalKey<NavigatorState>();
   final _dispStream = DisposableStream();
   final tag = 'numerals';
@@ -84,9 +84,12 @@ class NumeralsNavState extends State<NumeralsNav> {
                 color: Theme.of(context).colorScheme.page,
                 width: size.width,
                 height: size.height,
+                padding: const EdgeInsets.only(bottom: 20),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [_navigator()]))));
+                    children: [
+                      _navigator(),
+                    ]))));
   }
 
   Widget _navigator() {
@@ -113,19 +116,21 @@ class NumeralsNavState extends State<NumeralsNav> {
                 // numerals
                 case NumPageType.numerals:
                   return PageRouteBuilder(
-                      transitionDuration: Duration.zero,
-                      reverseTransitionDuration: Duration.zero,
-                      settings: RouteSettings(name: type.name),
-                      transitionsBuilder:
-                          (context, animation, secondaryAnimation, child) {
-                        return child;
-                      },
-                      pageBuilder: (_, __, ___) =>
-                          NumeralsPage(onCompleted: (res) {
-                            _navigatorKey.currentState?.pushReplacementNamed(
-                                NumPageType.completed.name,
-                                arguments: {'result': res});
-                          }));
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                    settings: RouteSettings(name: type.name),
+                    transitionsBuilder:
+                        (context, animation, secondaryAnimation, child) {
+                      return child;
+                    },
+                    pageBuilder: (_, __, ___) =>
+                        NumeralsPage(onCompleted: (res) {
+                      _navigatorKey.currentState?.pushReplacementNamed(
+                        NumPageType.completed.name,
+                        arguments: {'result': res},
+                      );
+                    }),
+                  );
                 case NumPageType.completed:
                   return PageRouteBuilder(
                       transitionDuration: Duration.zero,
