@@ -17,6 +17,7 @@ import 'package:vocabyte/app/ui_helper.dart';
 
 class CardReviewNav extends StatefulWidget {
   const CardReviewNav({super.key});
+
   @override
   CardReviewNavState createState() => CardReviewNavState();
 }
@@ -104,159 +105,174 @@ class CardReviewNavState extends State<CardReviewNav> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-            backgroundColor: Theme.of(context).colorScheme.page,
-            leadingWidth: double.infinity,
-            elevation: 1,
-            shadowColor: Theme.of(context).colorScheme.title4,
-            leading: AppBar2(
-                type: Type.close,
-                child: StreamBuilder(
-                    stream: getIt<AppRep>().onReviewProgress,
-                    initialData: getIt<AppRep>().onReviewProgress.valueOrNull,
-                    builder: (context, snapshot) {
-                      var percent = snapshot.data ?? 0.0;
-                      var step = (percent * 10).toInt();
-                      return Flexible(
-                          child: Row(children: [
-                        const Spacer(),
-                        CircularStepProgressIndicator(
-                            totalSteps: 10,
-                            currentStep: step,
-                            width: 30,
-                            height: 30,
-                            roundedCap: (_, isSelected) => isSelected)
-                      ]));
-                    }))),
-        body: Stack(children: [
-          Navigator(
-              key: _navKey,
-              onGenerateRoute: (RouteSettings settings) {
-                var review = getIt<AppRep>().reviewTask;
-                var cardData = review.current();
-                var type = UiHelper().routeCardNameToType(settings.name);
-                switch (type) {
-                  //
-                  // empty
-                  case CardPageType.idle:
-                    return PageRouteBuilder(
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        settings: RouteSettings(name: type.name),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return child;
-                        },
-                        pageBuilder: (_, __, ___) => CardNoWords(onBack: () {
-                              _pop();
-                            }, onBackOpenSearch: () {
-                              _pop();
-                              Timer(const Duration(milliseconds: 50), () {
-                                NavigatorRep().routeBloc.goto(Panel(
-                                    type: PageType.searchWord, fullPop: true));
-                              });
-                            }));
-                  //
-                  // cards
-                  case CardPageType.defToWords:
-                  case CardPageType.audioToDef:
-                  case CardPageType.wordToDef:
-                  case CardPageType.wordRemeberOrNot:
-                  case CardPageType.learnNewWord:
-                    return PageRouteBuilder(
-                        settings: RouteSettings(name: type.name),
-                        transitionDuration: const Duration(seconds: 1),
-                        pageBuilder: (_, __, ___) => cardData != null
-                            ? CardPage(
-                                data: cardData,
-                                onDone: (success) {
-                                  _handleAnswer(success: success);
-                                })
-                            : const Text('error: card data is null'));
-                  case CardPageType.learnDone:
-                    return PageRouteBuilder(
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        settings: RouteSettings(name: type.name),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return child;
-                        },
-                        pageBuilder: (_, __, ___) => CardsDone(
-                            number: _leanedCountAll,
-                            isEnd: review.current() == null,
-                            onDone: () {
-                              Navigator.of(context).pop();
+    return PopScope(
+        canPop: false,
+        onPopInvokedWithResult: (didPop, result) async {
+          if (didPop) return;
+          // var nav = NavigatorRep().routeBloc.navKey;
+          // if (nav.currentState?.canPop() == true) {
+          //   nav.currentState?.pop();
+          //   return;
+          // } else {
+          //   SystemNavigator.pop();
+          // }
+        },
+        child: Scaffold(
+            appBar: AppBar(
+                backgroundColor: Theme.of(context).colorScheme.page,
+                leadingWidth: double.infinity,
+                elevation: 1,
+                shadowColor: Theme.of(context).colorScheme.title4,
+                leading: AppBar2(
+                    type: Type.close,
+                    child: StreamBuilder(
+                        stream: getIt<AppRep>().onReviewProgress,
+                        initialData:
+                            getIt<AppRep>().onReviewProgress.valueOrNull,
+                        builder: (context, snapshot) {
+                          var percent = snapshot.data ?? 0.0;
+                          var step = (percent * 10).toInt();
+                          return Flexible(
+                              child: Row(children: [
+                            const Spacer(),
+                            CircularStepProgressIndicator(
+                                totalSteps: 10,
+                                currentStep: step,
+                                width: 30,
+                                height: 30,
+                                roundedCap: (_, isSelected) => isSelected)
+                          ]));
+                        }))),
+            body: Stack(children: [
+              Navigator(
+                  key: _navKey,
+                  onGenerateRoute: (RouteSettings settings) {
+                    var review = getIt<AppRep>().reviewTask;
+                    var cardData = review.current();
+                    var type = UiHelper().routeCardNameToType(settings.name);
+                    switch (type) {
+                      //
+                      // empty
+                      case CardPageType.idle:
+                        return PageRouteBuilder(
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                            settings: RouteSettings(name: type.name),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return child;
                             },
-                            onContinue: () async {
-                              if (!await _nextCard()) {
-                                if (context.mounted) {
+                            pageBuilder: (_, __, ___) =>
+                                CardNoWords(onBack: () {
+                                  _pop();
+                                }, onBackOpenSearch: () {
+                                  _pop();
+                                  // Timer(const Duration(milliseconds: 50), () {
+                                  //   NavigatorRep().routeBloc.goto(Panel(
+                                  //       type: PageType.searchWord, fullPop: true));
+                                  // });
+                                }));
+                      //
+                      // cards
+                      case CardPageType.defToWords:
+                      case CardPageType.audioToDef:
+                      case CardPageType.wordToDef:
+                      case CardPageType.wordRemeberOrNot:
+                      case CardPageType.learnNewWord:
+                        return PageRouteBuilder(
+                            settings: RouteSettings(name: type.name),
+                            transitionDuration: const Duration(seconds: 1),
+                            pageBuilder: (_, __, ___) => cardData != null
+                                ? CardPage(
+                                    data: cardData,
+                                    onDone: (success) {
+                                      _handleAnswer(success: success);
+                                    })
+                                : const Text('error: card data is null'));
+                      case CardPageType.learnDone:
+                        return PageRouteBuilder(
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                            settings: RouteSettings(name: type.name),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return child;
+                            },
+                            pageBuilder: (_, __, ___) => CardsDone(
+                                number: _leanedCountAll,
+                                isEnd: review.current() == null,
+                                onDone: () {
                                   Navigator.of(context).pop();
-                                }
-                              }
-                            }));
-                  case CardPageType.wordDetails:
-                    return PageRouteBuilder(
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        settings: RouteSettings(name: type.name),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return child;
-                        },
-                        pageBuilder: (_, __, ___) => PageWordDetails(
-                            playWordAtStart: !review.lastAnswerRight,
-                            onBack: () async {
-                              var goal = await SettingsRep().getDailyGoal();
-                              if (_leanedCountSinceBreak == goal) {
-                                _leanedCountSinceBreak = 0;
-                                var nav = _navKey.currentState;
-                                nav?.pushReplacementNamed(
-                                    CardPageType.learnDone.name);
-                                getIt<AppRep>().play(SoundType.successShort);
-                              } else {
-                                if (!await _nextCard()) {
-                                  if (context.mounted) {
-                                    Navigator.of(context).pop();
+                                },
+                                onContinue: () async {
+                                  if (!await _nextCard()) {
+                                    if (context.mounted) {
+                                      Navigator.of(context).pop();
+                                    }
                                   }
-                                }
-                              }
-                            }));
-                }
-              }),
-          // if (Constants.isDev)
-          //   Positioned(
-          //       bottom: 100,
-          //       left: 10,
-          //       child: ThemeSwitcher(
-          //           clipper: const ThemeSwitcherCircleClipper(),
-          //           builder: (context) {
-          //             return Row(children: [
-          //               // Text(
-          //               //     'CountaAll=$_leanedCountAll,countBreak=$_leanedCountSinceBreak'),
-          //               RoundButton(
-          //                   color: Theme.of(context)
-          //                       .colorScheme
-          //                       .buttonOption1
-          //                       .withValues(alpha: 0.4),
-          //                   iconColor:
-          //                       Theme.of(context).colorScheme.title1.color,
-          //                   size: const Size(50, 50),
-          //                   iconSize: 22,
-          //                   radius: 20,
-          //                   iconData: Icons.switch_right,
-          //                   onPressed: (p0) async {
-          //                     var theme = await SettingsRep().getTheme();
-          //                     if (!context.mounted) return;
-          //                     ThemeSwitcher.of(context).changeTheme(
-          //                         theme: theme == ThemeMode.dark
-          //                             ? lightTheme
-          //                             : darkTheme);
-          //                     await SettingsRep().setTheme(theme);
-          //                   })
-          //             ]);
-          //           }))
-        ]));
+                                }));
+                      case CardPageType.wordDetails:
+                        return PageRouteBuilder(
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                            settings: RouteSettings(name: type.name),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return child;
+                            },
+                            pageBuilder: (_, __, ___) => PageWordDetails(
+                                playWordAtStart: !review.lastAnswerRight,
+                                onBack: () async {
+                                  var goal = await SettingsRep().getDailyGoal();
+                                  if (_leanedCountSinceBreak == goal) {
+                                    _leanedCountSinceBreak = 0;
+                                    var nav = _navKey.currentState;
+                                    nav?.pushReplacementNamed(
+                                        CardPageType.learnDone.name);
+                                    getIt<AppRep>()
+                                        .play(SoundType.successShort);
+                                  } else {
+                                    if (!await _nextCard()) {
+                                      if (context.mounted) {
+                                        Navigator.of(context).pop();
+                                      }
+                                    }
+                                  }
+                                }));
+                    }
+                  }),
+              // if (Constants.isDev)
+              //   Positioned(
+              //       bottom: 100,
+              //       left: 10,
+              //       child: ThemeSwitcher(
+              //           clipper: const ThemeSwitcherCircleClipper(),
+              //           builder: (context) {
+              //             return Row(children: [
+              //               // Text(
+              //               //     'CountaAll=$_leanedCountAll,countBreak=$_leanedCountSinceBreak'),
+              //               RoundButton(
+              //                   color: Theme.of(context)
+              //                       .colorScheme
+              //                       .buttonOption1
+              //                       .withValues(alpha: 0.4),
+              //                   iconColor:
+              //                       Theme.of(context).colorScheme.title1.color,
+              //                   size: const Size(50, 50),
+              //                   iconSize: 22,
+              //                   radius: 20,
+              //                   iconData: Icons.switch_right,
+              //                   onPressed: (p0) async {
+              //                     var theme = await SettingsRep().getTheme();
+              //                     if (!context.mounted) return;
+              //                     ThemeSwitcher.of(context).changeTheme(
+              //                         theme: theme == ThemeMode.dark
+              //                             ? lightTheme
+              //                             : darkTheme);
+              //                     await SettingsRep().setTheme(theme);
+              //                   })
+              //             ]);
+              //           }))
+            ])));
   }
 }

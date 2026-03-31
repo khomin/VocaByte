@@ -17,6 +17,11 @@ Future<void> initDependencies() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: [
+  //   SystemUiOverlay.bottom,
+  // ]);
+
   await initDependencies();
 
   runApp(const MainApp());

@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+// ignore: unnecessary_import
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +25,7 @@ import 'package:vocabyte/pages/splash/splash_install.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
+import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 import 'package:vocabyte/services/tts.dart';
 
@@ -35,7 +37,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   late AppModel _appModel;
-  late NavigatorObserverCustom _observer;
+  // late NavigatorObserverCustom _observer;
   final _dispStream = DisposableStream();
   final tag = 'app';
 
@@ -92,101 +94,101 @@ class _AppState extends State<App> {
       });
     });
 
-    _observer = NavigatorObserverCustom(
-        onDidPop: () {},
-        onChanged: (name, arg) {
-          var page = PageType.values.firstWhereOrNull((v) => v.name == name);
-          switch (page) {
-            case null:
-              if (name == 'numerals') {
-                NavigatorRep().routeBloc.onHideBottom.add(true);
-              }
-              break;
-            case PageType.home:
-              NavigatorRep().routeBloc.onHideBottom.add(false);
-              break;
-            case PageType.reviewCard:
-              NavigatorRep().routeBloc.onHideBottom.add(true);
-              break;
-            case PageType.searchWord:
-            case PageType.manageWords:
-            case PageType.settings:
-              break;
-          }
-          if (page != null) {
-            NavigatorRep().routeBloc.onCurrent.add(Panel(type: page));
-          }
-        });
+    // _observer = NavigatorObserverCustom(
+    //     onDidPop: () {},
+    //     onChanged: (name, arg) {
+    //       var page = PageType.values.firstWhereOrNull((v) => v.name == name);
+    //       switch (page) {
+    //         case null:
+    //           if (name == 'numerals') {
+    //             NavigatorRep().routeBloc.onHideBottom.add(true);
+    //           }
+    //           break;
+    //         case PageType.home:
+    //           NavigatorRep().routeBloc.onHideBottom.add(false);
+    //           break;
+    //         case PageType.reviewCard:
+    //           NavigatorRep().routeBloc.onHideBottom.add(true);
+    //           break;
+    //         case PageType.searchWord:
+    //         case PageType.manageWords:
+    //         case PageType.settings:
+    //           break;
+    //       }
+    //       if (page != null) {
+    //         NavigatorRep().routeBloc.onCurrent.add(Panel(type: page));
+    //       }
+    //     });
 
-    _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((page) {
-      if (page == null) return;
-      var settings = RouteSettings(name: page.type.name);
-      var nav = NavigatorRep().routeBloc.navKey.currentState;
-      while (nav?.canPop() == true) {
-        nav?.pop();
-      }
-      switch (page.type) {
-        case PageType.searchWord:
-          nav?.push(PageTransition2.build(
-              settings: settings,
-              type: TransitionType.opacity,
-              child: SearchWordPage(onShow: (data) async {
-                getIt<AppRep>().cachedWord = data;
-                await ServiceApi().putRecent(data.word);
-                await getIt<AppRep>().updateRecent();
-                nav.push(PageTransition2.build(
-                    settings: settings,
-                    type: TransitionType.slide,
-                    child: PageWordDetails(
-                        playWordAtStart: true,
-                        primary: true,
-                        onBack: () {
-                          Navigator.of(context).pop();
-                        })));
-              })));
-          break;
-        case PageType.reviewCard:
-          nav?.push(
-            PageTransition2.build(
-                settings: settings,
-                type: TransitionType.opacity,
-                child: const CardReviewNav()),
-          );
-          break;
-        case PageType.manageWords:
-          nav?.push(PageTransition2.build(
-              settings: settings,
-              type: TransitionType.slide,
-              child: ManageWordPage(onShowWord: (data) {
-                nav.push(PageTransition2.build(
-                    settings: settings,
-                    type: TransitionType.slide,
-                    child: PageWordDetails(
-                        primary: true,
-                        onBack: () {
-                          Navigator.of(context).pop();
-                        },
-                        playWordAtStart: true)));
-              })));
-          break;
-        case PageType.settings:
-          nav?.push(PageTransition2.build(
-              settings: settings,
-              type: TransitionType.slide,
-              child: SettingsPage(onChangeGoal: () {
-                nav.push(PageTransition2.build(
-                    settings: settings,
-                    type: TransitionType.slide,
-                    child: SettingsDailiyGoal(onChanged: (v) {
-                      SettingsRep().setDailyGoal(v);
-                      SettingsRep().onChanged.add(null);
-                    })));
-              })));
-          break;
-        default:
-          break;
-      }
-    }));
+    // _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((page) {
+    //   if (page == null) return;
+    //   var settings = RouteSettings(name: page.type.name);
+    //   var nav = NavigatorRep().routeBloc.navKey.currentState;
+    //   while (nav?.canPop() == true) {
+    //     nav?.pop();
+    //   }
+    //   switch (page.type) {
+    //     case PageType.searchWord:
+    //       nav?.push(PageTransition2.build(
+    //           settings: settings,
+    //           type: TransitionType.opacity,
+    //           child: SearchWordPage(onShow: (data) async {
+    //             getIt<AppRep>().cachedWord = data;
+    //             await ServiceApi().putRecent(data.word);
+    //             await getIt<AppRep>().updateRecent();
+    //             nav.push(PageTransition2.build(
+    //                 settings: settings,
+    //                 type: TransitionType.slide,
+    //                 child: PageWordDetails(
+    //                     playWordAtStart: true,
+    //                     primary: true,
+    //                     onBack: () {
+    //                       Navigator.of(context).pop();
+    //                     })));
+    //           })));
+    //       break;
+    //     case PageType.reviewCard:
+    //       nav?.push(
+    //         PageTransition2.build(
+    //             settings: settings,
+    //             type: TransitionType.opacity,
+    //             child: const CardReviewNav()),
+    //       );
+    //       break;
+    //     case PageType.manageWords:
+    //       nav?.push(PageTransition2.build(
+    //           settings: settings,
+    //           type: TransitionType.slide,
+    //           child: ManageWordPage(onShowWord: (data) {
+    //             nav.push(PageTransition2.build(
+    //                 settings: settings,
+    //                 type: TransitionType.slide,
+    //                 child: PageWordDetails(
+    //                     primary: true,
+    //                     onBack: () {
+    //                       Navigator.of(context).pop();
+    //                     },
+    //                     playWordAtStart: true)));
+    //           })));
+    //       break;
+    //     case PageType.settings:
+    //       nav?.push(PageTransition2.build(
+    //           settings: settings,
+    //           type: TransitionType.slide,
+    //           child: SettingsPage(onChangeGoal: () {
+    //             nav.push(PageTransition2.build(
+    //                 settings: settings,
+    //                 type: TransitionType.slide,
+    //                 child: SettingsDailiyGoal(onChanged: (v) {
+    //                   SettingsRep().setDailyGoal(v);
+    //                   SettingsRep().onChanged.add(null);
+    //                 })));
+    //           })));
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // }));
   }
 
   @override
@@ -211,7 +213,6 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     var model = context.watch<AppModel>();
-    var nav = NavigatorRep().routeBloc.navKey;
     //
     // initial copy of assets
     if (model.waitCopyResource) {
@@ -226,65 +227,197 @@ class _AppState extends State<App> {
       return const Splash();
     }
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.baseColor1,
-      body: PopScope(
-          canPop: false,
-          onPopInvokedWithResult: (didPop, result) async {
-            if (didPop) return;
-            var nav = NavigatorRep().routeBloc.navKey;
-            if (nav.currentState?.canPop() == true) {
-              nav.currentState?.pop();
-              return;
-            } else {
-              SystemNavigator.pop();
-            }
+        backgroundColor: Theme.of(context).colorScheme.baseColor1,
+        extendBody: true,
+        // extendBodyBehindAppBar: true,
+        bottomNavigationBar: Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withValues(alpha: 0.05),
+                  blurRadius: 10,
+                  spreadRadius: 2,
+                  offset: const Offset(0, -2),
+                ),
+              ],
+            ),
+            child: BottomAppBar(
+                padding: const EdgeInsets.symmetric(vertical: 8),
+                color: Theme.of(context).colorScheme.bottomNavBg,
+                shape: const CircularNotchedRectangle(),
+                height: Constants.bottomNavHeight,
+                notchMargin: 10.0,
+                elevation: 10,
+                shadowColor: Colors.black,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    IconButton(
+                        padding: const EdgeInsets.all(15),
+                        icon: Icon(
+                          Icons.home_filled,
+                          color: model.currentPage == PageType.home
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          _appModel.setCurrentPage(PageType.home);
+                        }),
+                    IconButton(
+                        padding: const EdgeInsets.all(15),
+                        icon: Icon(
+                          Icons.search,
+                          color: model.currentPage == PageType.searchWord
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          // _appModel.setCurrentPage(PageType.searchWord);
+                          Navigator.of(context).push(PageTransition2.build(
+                              settings: const RouteSettings(),
+                              type: TransitionType.opacity,
+                              child: SearchWordPage(onShow: (data) async {
+                                getIt<AppRep>().cachedWord = data;
+                                await ServiceApi().putRecent(data.word);
+                                await getIt<AppRep>().updateRecent();
+                                if (!context.mounted) return;
+                                Navigator.push(
+                                    context,
+                                    PageTransition2.build(
+                                        settings: const RouteSettings(),
+                                        type: TransitionType.slide,
+                                        child: PageWordDetails(
+                                            playWordAtStart: true,
+                                            primary: true,
+                                            onBack: () {
+                                              Navigator.of(context).pop();
+                                            })));
+                              })));
+                        }),
+                    const SizedBox(width: 48),
+                    IconButton(
+                        padding: const EdgeInsets.all(15),
+                        icon: Icon(
+                          Icons.menu_book,
+                          color: model.currentPage == PageType.manageWords
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          // _appModel.setCurrentPage(PageType.manageWords);
+                        }),
+                    IconButton(
+                        padding: const EdgeInsets.all(15),
+                        icon: Icon(
+                          Icons.settings,
+                          color: model.currentPage == PageType.settings
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
+                        onPressed: () {
+                          _appModel.setCurrentPage(PageType.settings);
+                        }),
+                  ],
+                ))),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.fabButton,
+          elevation: 4,
+          shape: const CircleBorder(),
+          onPressed: () {
+            Navigator.push(
+                context,
+                PageTransition2.build(
+                  settings: const RouteSettings(),
+                  type: TransitionType.opacity,
+                  child: const CardReviewNav(),
+                ));
           },
-          child: Navigator(
-              // TODO: move it to global
-              key: nav,
-              initialRoute: PageType.home.name,
-              observers: [_observer],
-              onGenerateRoute: (RouteSettings settings) {
-                var type = NavigatorRep().routeBloc.routeNameTo(settings.name);
-                switch (type) {
-                  //
-                  // (default)
-                  case PageType.home:
-                    return PageRouteBuilder(
-                        transitionDuration: Duration.zero,
-                        reverseTransitionDuration: Duration.zero,
-                        settings: RouteSettings(name: type.name),
-                        transitionsBuilder:
-                            (context, animation, secondaryAnimation, child) {
-                          return child;
-                        },
-                        pageBuilder: (_, __, ___) => PageHome(onReview: () {
-                              // review
-                              NavigatorRep()
-                                  .routeBloc
-                                  .goto(Panel(type: PageType.reviewCard));
-                            }, onSearch: () {
-                              // search
-                              NavigatorRep()
-                                  .routeBloc
-                                  .goto(Panel(type: PageType.searchWord));
-                            }, onManageWords: () {
-                              // manage
-                              NavigatorRep()
-                                  .routeBloc
-                                  .goto(Panel(type: PageType.manageWords));
-                            }, onNumerals: () {
-                              // numerals
-                              nav.currentState?.push(PageTransition2.build(
-                                  settings:
-                                      const RouteSettings(name: 'numerals'),
-                                  type: TransitionType.opacity,
-                                  child: const NumeralsMain()));
-                            }));
-                  default:
-                    throw Exception('Invalid route: ${settings.name}');
-                }
-              })),
-    );
+          child: const Icon(
+            Icons.local_library_outlined,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+        body: PopScope(
+            canPop: _appModel.currentPage == PageType.home,
+            onPopInvokedWithResult: (didPop, result) async {
+              if (didPop) return;
+              _appModel.setCurrentPage(PageType.home);
+            },
+            child: Builder(builder: (context) {
+              var model = context.watch<AppModel>();
+              return IndexedStack(index: model.currentPage.index, children: [
+                PageHome(
+                  onReview: () {
+                    Navigator.push(
+                        context,
+                        PageTransition2.build(
+                          settings: const RouteSettings(),
+                          type: TransitionType.opacity,
+                          child: const CardReviewNav(),
+                        ));
+                  },
+                  onSearch: () {
+                    // _appModel.setCurrentPage(PageType.searchWord);
+                  },
+                  onManageWords: () {
+                    // _appModel.setCurrentPage(PageType.manageWords);
+                  },
+                  onNumerals: () {
+                    Navigator.push(
+                        context,
+                        PageTransition2.build(
+                          settings: const RouteSettings(),
+                          type: TransitionType.opacity,
+                          child: const NumeralsMain(),
+                        ));
+                  },
+                ),
+                // SearchWordPage(
+                //     // filter: model.searchFilter,
+                //     onShow: (data) async {
+                //   getIt<AppRep>().cachedWord = data;
+                //   await ServiceApi().putRecent(data.word);
+                //   await getIt<AppRep>().updateRecent();
+                //   if (!context.mounted) return;
+                //   Navigator.push(
+                //       context,
+                //       PageTransition2.build(
+                //           settings: const RouteSettings(),
+                //           type: TransitionType.slide,
+                //           child: PageWordDetails(
+                //               playWordAtStart: true,
+                //               primary: true,
+                //               onBack: () {
+                //                 Navigator.of(context).pop();
+                //               })));
+                // }),
+                // ManageWordPage(onShowWord: (data) {
+                //   Navigator.push(
+                //       context,
+                //       PageTransition2.build(
+                //           settings: const RouteSettings(),
+                //           type: TransitionType.slide,
+                //           child: PageWordDetails(
+                //               primary: true,
+                //               onBack: () {
+                //                 Navigator.of(context).pop();
+                //               },
+                //               playWordAtStart: true)));
+                // }),
+                SettingsPage(onChangeGoal: () {
+                  Navigator.push(
+                      context,
+                      PageTransition2.build(
+                          settings: const RouteSettings(),
+                          type: TransitionType.slide,
+                          child: SettingsDailiyGoal(onChanged: (v) {
+                            SettingsRep().setDailyGoal(v);
+                            SettingsRep().onChanged.add(null);
+                          })));
+                }),
+              ]);
+            })));
   }
 }

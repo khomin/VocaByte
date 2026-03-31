@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
+enum PageType { home, searchWord, manageWords, settings }
+
 class AppModel with ChangeNotifier {
   String _appVersion = '';
   ThemeMode _theme = ThemeMode.system;
@@ -8,6 +10,7 @@ class AppModel with ChangeNotifier {
   bool _serviceInited = false;
   bool _waitCopyResource = false;
   bool _waitMigratingDb = false;
+  PageType currentPage = PageType.home;
 
   String get appVersion => _appVersion;
   set appVersion(String v) {
@@ -61,7 +64,12 @@ class AppModel with ChangeNotifier {
 
   ThemeMode get theme => _theme;
 
-  void update() {
+  void setCurrentPage(PageType v) {
+    currentPage = v;
+    notify();
+  }
+
+  void notify() {
     notifyListeners();
   }
 }

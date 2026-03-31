@@ -44,176 +44,119 @@ class PageHomeState extends State<PageHome> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var appRep = getIt<AppRep>();
-    return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.baseColor1,
-        extendBody: true,
-        bottomNavigationBar: Container(
-            decoration: BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.05),
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            child: BottomAppBar(
-                padding: const EdgeInsets.symmetric(vertical: 8),
-                color: Theme.of(context).colorScheme.bottomNavBg,
-                shape: const CircularNotchedRectangle(),
-                height: Constants.bottomNavHeight,
-                notchMargin: 8.0,
-                elevation: 10,
-                shadowColor: Colors.black,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    IconButton(
-                        icon: const Icon(Icons.home_filled),
-                        onPressed: () {
-                          NavigatorRep()
-                              .routeBloc
-                              .goto(Panel(type: PageType.home, fullPop: true));
-                        }),
-                    IconButton(
-                        icon: const Icon(Icons.search),
-                        onPressed: () {
-                          NavigatorRep().routeBloc.goto(
-                              Panel(type: PageType.searchWord, fullPop: true));
-                        }),
-                    const SizedBox(width: 48),
-                    IconButton(
-                        icon: const Icon(Icons.menu_book),
-                        onPressed: () {
-                          NavigatorRep().routeBloc.goto(
-                              Panel(type: PageType.manageWords, fullPop: true));
-                        }),
-                    IconButton(
-                        icon: const Icon(Icons.settings),
-                        onPressed: () {
-                          NavigatorRep().routeBloc.goto(
-                              Panel(type: PageType.settings, fullPop: true));
-                        }),
+    return CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
+      SliverAppBar(
+          floating: true,
+          snap: true,
+          pinned: false,
+          expandedHeight: Constants.homeAppBarHeight,
+          collapsedHeight: Constants.homeAppBarHeight,
+          toolbarHeight: Constants.homeAppBarHeight,
+          automaticallyImplyLeading: false,
+          // backgroundColor: Theme.of(context).colorScheme.appBar,
+          backgroundColor: Colors.amber,
+          scrolledUnderElevation: 0,
+          surfaceTintColor: Colors.transparent,
+          elevation: 0,
+          title: Hero(
+            tag: 'search_bar',
+            child: Material(
+              color: Colors.transparent,
+              // elevation: 2,
+              // color: Colors.white,
+              // shape: RoundedRectangleBorder(
+              //   borderRadius: BorderRadius.circular(30),
+              // ),
+              child: Container(
+                margin: const EdgeInsets.only(bottom: 8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.1),
+                      blurRadius: 8,
+                      offset: const Offset(0, 2),
+                    ),
                   ],
-                ))),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Theme.of(context).colorScheme.fabButton,
-          elevation: 4,
-          shape: const CircleBorder(),
-          onPressed: () {
-            NavigatorRep().routeBloc.goto(Panel(type: PageType.reviewCard));
-          },
-          child: const Icon(
-            Icons.local_library_outlined,
-            color: Colors.white,
-            size: 30,
-          ),
-        ),
-        body:
-            CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
-          SliverAppBar(
-            floating: true,
-            snap: true,
-            pinned: false,
-            expandedHeight: Constants.homeAppBarHeight,
-            collapsedHeight: Constants.homeAppBarHeight,
-            toolbarHeight: Constants.homeAppBarHeight,
-            automaticallyImplyLeading: false,
-            backgroundColor: Theme.of(context).colorScheme.appBar,
-            scrolledUnderElevation: 0,
-            surfaceTintColor: Colors.transparent,
-            elevation: 0,
-            title: Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(30),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.1),
-                    blurRadius: 8,
-                    offset: const Offset(0, 2),
+                ),
+                child: TextFormField(
+                  enabled: false,
+                  decoration: const InputDecoration(
+                    // TODO: audio search
+                    hintText: "Search your words...",
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(vertical: 15),
                   ),
-                ],
-              ),
-              child: TextFormField(
-                enabled: false,
-                decoration: const InputDecoration(
-                  // TODO: audio search
-                  hintText: "Search your words...",
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 15),
                 ),
               ),
             ),
-          ),
-          SliverList.list(children: [
-            const SizedBox(height: 15),
-            //
-            StreamBuilder(
-                stream: appRep.reviewTask.wordToReviewCnt,
-                builder: (context, snapshot) {
-                  var v = snapshot.data;
-                  return _item(
-                      header: v == null
-                          ? 'Updating...'
-                          : v == 0
-                              ? '0 words'
-                              : v > 1
-                                  ? '$v words'
-                                  : '$v word',
-                      description: v == null
-                          ? 'Words to review'
-                          : v > 0
-                              ? v > 1
-                                  ? 'Review them today'
-                                  : 'Review it today'
-                              : 'No words to review today',
-                      iconBackground: v == null
-                          ? Colors.transparent
-                          : Theme.of(context)
-                              .colorScheme
-                              .reviewCardPastel
-                              .withValues(alpha: 0.15),
-                      width: size.width - Constants.homeCardPadding,
-                      asset: 'assets/study.png',
-                      canTap: () => true,
-                      onTap: () {
-                        widget.onReview();
-                      });
-                }),
-            _item(
-                header: 'Manage words',
-                description: 'Manage your study list',
-                iconBackground: Theme.of(context)
-                    .colorScheme
-                    .manageCardPastel
-                    .withValues(alpha: 0.15),
-                width: size.width - Constants.homeCardPadding,
-                asset: 'assets/search2.png',
-                canTap: () => true,
-                onTap: () {
-                  widget.onManageWords();
-                }),
-            _item(
-                header: 'Numerals',
-                description: 'Listen to the numbers',
-                iconBackground: Theme.of(context)
-                    .colorScheme
-                    .numeralsCardPastel
-                    .withValues(alpha: 0.15),
-                width: size.width - Constants.homeCardPadding,
-                asset: 'assets/numeral.png',
-                canTap: () => true,
-                onTap: () {
-                  widget.onNumerals();
-                }),
-          ])
-          // ])
-        ]));
+          )),
+      SliverList.list(children: [
+        const SizedBox(height: 15),
+        //
+        StreamBuilder(
+            stream: appRep.reviewTask.wordToReviewCnt,
+            builder: (context, snapshot) {
+              var v = snapshot.data;
+              return _item(
+                  header: v == null
+                      ? 'Updating...'
+                      : v == 0
+                          ? '0 words'
+                          : v > 1
+                              ? '$v words'
+                              : '$v word',
+                  description: v == null
+                      ? 'Words to review'
+                      : v > 0
+                          ? v > 1
+                              ? 'Review them today'
+                              : 'Review it today'
+                          : 'No words to review today',
+                  iconBackground: v == null
+                      ? Colors.transparent
+                      : Theme.of(context)
+                          .colorScheme
+                          .reviewCardPastel
+                          .withValues(alpha: 0.15),
+                  width: size.width - Constants.homeCardPadding,
+                  asset: 'assets/study.png',
+                  canTap: () => true,
+                  onTap: () {
+                    widget.onReview();
+                  });
+            }),
+        _item(
+            header: 'Manage words',
+            description: 'Manage your study list',
+            iconBackground: Theme.of(context)
+                .colorScheme
+                .manageCardPastel
+                .withValues(alpha: 0.15),
+            width: size.width - Constants.homeCardPadding,
+            asset: 'assets/search2.png',
+            canTap: () => true,
+            onTap: () {
+              widget.onManageWords();
+            }),
+        _item(
+            header: 'Numerals',
+            description: 'Listen to the numbers',
+            iconBackground: Theme.of(context)
+                .colorScheme
+                .numeralsCardPastel
+                .withValues(alpha: 0.15),
+            width: size.width - Constants.homeCardPadding,
+            asset: 'assets/numeral.png',
+            canTap: () => true,
+            onTap: () {
+              widget.onNumerals();
+            }),
+      ])
+      // ])
+    ]);
   }
 
   Widget _item({
