@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
+import 'package:vocabyte/pages/page_search_word/page_search.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/service_api.dart';
 import 'package:vocabyte/main.dart';
@@ -17,16 +18,19 @@ class SearchInfo extends FullInfo {
 }
 
 class SearchWordModel with ChangeNotifier {
+  SearchMode mode = SearchMode.search;
   final TextEditingController controller = TextEditingController();
   final FocusNode focus = FocusNode();
   String query = '';
   var found = <SearchInfo>[];
   var recent = <SearchInfo>[];
+  var _disposed = false;
 
   @override
   void dispose() {
-    super.dispose();
     focus.dispose();
+    _disposed = true;
+    super.dispose();
   }
 
   void search(String v) async {
@@ -79,5 +83,14 @@ class SearchWordModel with ChangeNotifier {
 
   void loseFocus() {
     focus.unfocus();
+  }
+
+  bool nothingFound() {
+    return query.isNotEmpty && found.isEmpty;
+  }
+
+  void notify() {
+    if (_disposed) return;
+    notifyListeners();
   }
 }

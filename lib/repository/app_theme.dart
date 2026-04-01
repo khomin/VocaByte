@@ -17,6 +17,9 @@ extension MenuColorScheme on ColorScheme {
 
   Color get homeCardH1 => const Color(0xFF43444c);
 
+  Color get chip => const Color(0xFFecebf2);
+  Color get chipActive => const Color(0xFFC0CCFF);
+
   Color get reviewCardPastel => Colors.green;
   Color get reviewCardPastelRequired => Colors.orange;
   Color get manageCardPastel => Colors.blue;

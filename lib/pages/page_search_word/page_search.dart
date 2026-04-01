@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:vocabyte/components/app_bar2.dart';
+import 'package:vocabyte/components/chip_item.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -14,8 +14,15 @@ import 'package:provider/provider.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 
+enum SearchMode { search, manage }
+
 class SearchWordPage extends StatefulWidget {
-  const SearchWordPage({required this.onShow, super.key});
+  const SearchWordPage({
+    required this.mode,
+    required this.onShow,
+    super.key,
+  });
+  final SearchMode mode;
   final Function(FullInfo data) onShow;
 
   @override
@@ -31,6 +38,7 @@ class SearchWordPageState extends State<SearchWordPage> {
   void initState() {
     super.initState();
     _model = SearchWordModel();
+    _model.mode = widget.mode;
   }
 
   @override
@@ -40,12 +48,15 @@ class SearchWordPageState extends State<SearchWordPage> {
     super.dispose();
   }
 
+  // backgroundColor: Theme.of(context).colorScheme.baseColor1,
+  // backgroundColor: Theme.of(context).colorScheme.appBar,
+  // backgroundColor: Colors.pink,
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        // backgroundColor: Theme.of(context).colorScheme.baseColor1,
         extendBody: true,
-        backgroundColor: Colors.pink,
+        backgroundColor: Colors.transparent,
         extendBodyBehindAppBar: true,
         body: ChangeNotifierProvider<SearchWordModel>.value(
             value: _model,
@@ -56,24 +67,22 @@ class SearchWordPageState extends State<SearchWordPage> {
                     SliverAppBar(
                         pinned: true,
                         primary: false,
-                        toolbarHeight: Constants.homeAppBarHeight,
+                        // toolbarHeight: Constants.homeAppBarHeight,
+                        expandedHeight: MediaQuery.of(context).padding.top + 80,
+                        collapsedHeight:
+                            MediaQuery.of(context).padding.top + 80,
+                        toolbarHeight: MediaQuery.of(context).padding.top + 80,
                         automaticallyImplyLeading: false,
-                        // backgroundColor: Theme.of(context).colorScheme.appBar,
-                        backgroundColor: Colors.yellow,
+                        backgroundColor: Theme.of(context).colorScheme.appBar,
+                        // backgroundColor: Colors.yellow,
                         scrolledUnderElevation: 0,
                         surfaceTintColor: Colors.transparent,
-                        // actionsPadding: EdgeInsets.only(),
-                        expandedHeight: 100,
-                        collapsedHeight: 100,
-                        elevation: 4,
                         titleSpacing: 0,
-                        // t
                         title: Hero(
                           tag: 'search_bar',
                           flightShuttleBuilder: (flightContext, animation,
                               flightDirection, fromHeroContext, toHeroContext) {
                             // This creates a smooth interpolation of the corners during flight
-
                             var borderRadius = BorderRadiusTween(
                               begin: const BorderRadius.only(
                                   topLeft: Radius.circular(30),
@@ -113,9 +122,10 @@ class SearchWordPageState extends State<SearchWordPage> {
                             //   borderRadius: BorderRadius.circular(30),
                             // ),
                             child: Container(
-                              margin: const EdgeInsets.only(bottom: 8),
                               // height: 100,
-                              height: MediaQuery.of(context).padding.top + 80,
+                              height:
+                                  MediaQuery.of(context).padding.top + 80 - 8,
+                              margin: const EdgeInsets.only(bottom: 8),
                               padding: EdgeInsets.only(
                                   top: MediaQuery.of(context).padding.top),
                               decoration: BoxDecoration(
@@ -150,13 +160,6 @@ class SearchWordPageState extends State<SearchWordPage> {
                     //
                     _searchResult(),
                     //
-                    if (context.watch<SearchWordModel>().query.isNotEmpty &&
-                        context.watch<SearchWordModel>().found.isEmpty)
-                      _searchNotFound(),
-                    //
-                    // recent viewed
-                    if (context.watch<SearchWordModel>().query.isEmpty)
-                      _searchRecent()
                   ]);
             }));
   }
@@ -241,60 +244,175 @@ class SearchWordPageState extends State<SearchWordPage> {
 
   Widget _searchResult() {
     return Builder(builder: (context) {
-      return SliverList.builder(
-          itemCount: context.watch<SearchWordModel>().found.length,
-          itemBuilder: (BuildContext context, int index) {
-            var obj = context.read<SearchWordModel>().found[index];
-            return SearchWordItem(
-                data: obj,
-                onClicked: () async {
-                  _model.loseFocus();
-                  widget.onShow.call(obj);
-                });
-          });
+      final animation =
+          ModalRoute.of(context)?.animation ?? const AlwaysStoppedAnimation(1);
+      var mode = context.select<SearchWordModel, SearchMode>(
+        (value) => value.mode,
+      );
+      return SliverFillRemaining(
+        child: AnimatedBuilder(
+            animation: animation,
+            builder: (context, child) {
+              final isReversing = animation.status == AnimationStatus.reverse;
+              if (isReversing) {
+                return Opacity(
+                  opacity: isReversing ? 0.0 : 1.0,
+                  child: child,
+                );
+              }
+              return FadeTransition(
+                opacity: animation,
+                child: child,
+              );
+            },
+            child: Container(
+              color: Theme.of(context).colorScheme.appBar,
+              child: Column(children: [
+                //
+                Padding(
+                    padding: const EdgeInsets.only(left: 10, top: 10),
+                    child: Row(
+                      children: [
+                        ChipItem(
+                          text: 'Search',
+                          active: mode == SearchMode.search,
+                          onPressed: () {
+                            _model.mode = SearchMode.search;
+                            _model.notify();
+                          },
+                        ),
+                        const SizedBox(width: 8),
+                        ChipItem(
+                          text: 'Manage words',
+                          active: mode == SearchMode.manage,
+                          onPressed: () {
+                            _model.mode = SearchMode.manage;
+                            _model.notify();
+                          },
+                        )
+                      ],
+                    )),
+                //
+
+                // if (context.watch<SearchWordModel>().query.isNotEmpty && context.watch<SearchWordModel>().found.isEmpty)
+                //   _searchNotFound(),
+                // //
+                // // recent viewed
+                // if (context.watch<SearchWordModel>().query.isEmpty)
+                //   _searchRecent()
+                Flexible(
+                  child: Builder(builder: (context) {
+                    var model = context.watch<SearchWordModel>();
+                    switch (mode) {
+                      case SearchMode.search:
+                        return model.nothingFound()
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 50),
+                                child: Text('Nothing found',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 16,
+                                        fontFamily: Constants.fontFredoka,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .title5)))
+                            : ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: model.found.length,
+                                itemBuilder: (context, index) {
+                                  var obj = model.found[index];
+                                  return SearchWordItem(
+                                      data: obj,
+                                      onClicked: () async {
+                                        _model.loseFocus();
+                                        widget.onShow.call(obj);
+                                      });
+                                });
+                      case SearchMode.manage:
+                        if (model.found.isEmpty) {
+                          return Padding(
+                              padding: const EdgeInsets.only(top: 50),
+                              child: Text('No words',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      fontFamily: Constants.fontFredoka,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .title5)));
+                        }
+                        return ListView.builder(
+                            shrinkWrap: true,
+                            itemCount: model.found.length,
+                            itemBuilder: (context, index) {
+                              var obj = model.found[index];
+                              return SearchWordItem(
+                                  data: obj,
+                                  onClicked: () async {
+                                    _model.loseFocus();
+                                    widget.onShow.call(obj);
+                                  });
+                            });
+                    }
+                  }),
+                ),
+              ]),
+            )),
+      );
+      // return SliverList.builder(
+      //     itemCount: context.watch<SearchWordModel>().found.length,
+      //     itemBuilder: (BuildContext context, int index) {
+      //       var obj = context.read<SearchWordModel>().found[index];
+      //       return SearchWordItem(
+      //           data: obj,
+      //           onClicked: () async {
+      //             _model.loseFocus();
+      //             widget.onShow.call(obj);
+      //           });
+      //     });
     });
   }
 
-  Widget _searchNotFound() {
-    return SliverFillRemaining(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-      Text('Nothing found',
-          style: TextStyle(
-              fontWeight: FontWeight.w400,
-              fontSize: 16,
-              color: Theme.of(context).colorScheme.title5))
-    ]));
-  }
+  // Widget _searchNotFound() {
+  //   return SliverFillRemaining(
+  //       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+  //     Text('Nothing found',
+  //         style: TextStyle(
+  //             fontWeight: FontWeight.w400,
+  //             fontSize: 16,
+  //             color: Theme.of(context).colorScheme.title5))
+  //   ]));
+  // }
 
-  _searchRecent() {
-    return StreamBuilder(
-        stream: getIt<AppRep>().onRecentWords,
-        builder: (context, snapshot) {
-          return SliverList.builder(
-              itemCount: snapshot.data?.length ?? 0,
-              itemBuilder: (BuildContext context, int index) {
-                var model = snapshot.data![index];
-                return SearchWordItem(
-                    data: model,
-                    onClicked: () async {
-                      // recent words have only part of data
-                      // have to use request to get full
-                      // before navigation
-                      var r = await ServiceApi()
-                          .getDictionary(word: model.word, useLike: false);
+  // _searchRecent() {
+  //   return StreamBuilder(
+  //       stream: getIt<AppRep>().onRecentWords,
+  //       builder: (context, snapshot) {
+  //         return ListView.builder(
+  //             itemCount: snapshot.data?.length ?? 0,
+  //             itemBuilder: (BuildContext context, int index) {
+  //               var model = snapshot.data![index];
+  //               return SearchWordItem(
+  //                   data: model,
+  //                   onClicked: () async {
+  //                     // recent words have only part of data
+  //                     // have to use request to get full
+  //                     // before navigation
+  //                     var r = await ServiceApi()
+  //                         .getDictionary(word: model.word, useLike: false);
 
-                      var word = r.item.firstWhereOrNull((it) =>
-                          it.value.toLowerCase() == model.word.toLowerCase());
-                      if (word == null) {
-                        return;
-                      }
-                      var info = await getIt<AppRep>().wordToInfo(word);
-                      _model.loseFocus();
-                      if (info == null) return;
-                      getIt<AppRep>().cachedWord = info;
-                      widget.onShow.call(info);
-                    });
-              });
-        });
-  }
+  //                     var word = r.item.firstWhereOrNull((it) =>
+  //                         it.value.toLowerCase() == model.word.toLowerCase());
+  //                     if (word == null) {
+  //                       return;
+  //                     }
+  //                     var info = await getIt<AppRep>().wordToInfo(word);
+  //                     _model.loseFocus();
+  //                     if (info == null) return;
+  //                     getIt<AppRep>().cachedWord = info;
+  //                     widget.onShow.call(info);
+  //                   });
+  //             });
+  //       });
+  // }
 }

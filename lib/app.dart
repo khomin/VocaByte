@@ -272,27 +272,7 @@ class _AppState extends State<App> {
                               : Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {
-                          // _appModel.setCurrentPage(PageType.searchWord);
-                          Navigator.of(context).push(PageTransition2.build(
-                              settings: const RouteSettings(),
-                              type: TransitionType.opacity,
-                              child: SearchWordPage(onShow: (data) async {
-                                getIt<AppRep>().cachedWord = data;
-                                await ServiceApi().putRecent(data.word);
-                                await getIt<AppRep>().updateRecent();
-                                if (!context.mounted) return;
-                                Navigator.push(
-                                    context,
-                                    PageTransition2.build(
-                                        settings: const RouteSettings(),
-                                        type: TransitionType.slide,
-                                        child: PageWordDetails(
-                                            playWordAtStart: true,
-                                            primary: true,
-                                            onBack: () {
-                                              Navigator.of(context).pop();
-                                            })));
-                              })));
+                          _openSearch(SearchMode.search);
                         }),
                     const SizedBox(width: 48),
                     IconButton(
@@ -304,7 +284,7 @@ class _AppState extends State<App> {
                               : Theme.of(context).colorScheme.onSurfaceVariant,
                         ),
                         onPressed: () {
-                          // _appModel.setCurrentPage(PageType.manageWords);
+                          _openSearch(SearchMode.manage);
                         }),
                     IconButton(
                         padding: const EdgeInsets.all(15),
@@ -419,5 +399,38 @@ class _AppState extends State<App> {
                 }),
               ]);
             })));
+  }
+
+  void _openSearch(SearchMode mode) {
+    Navigator.of(context).push(PageRouteBuilder(
+        settings: const RouteSettings(),
+        opaque: false,
+        barrierDismissible: true,
+        transitionDuration: const Duration(milliseconds: 250),
+        reverseTransitionDuration: const Duration(milliseconds: 250),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return child;
+        },
+        pageBuilder: (context, animation, secondaryAnimation) {
+          return SearchWordPage(
+              mode: mode,
+              onShow: (data) async {
+                getIt<AppRep>().cachedWord = data;
+                await ServiceApi().putRecent(data.word);
+                await getIt<AppRep>().updateRecent();
+                if (!context.mounted) return;
+                Navigator.push(
+                    context,
+                    PageTransition2.build(
+                        settings: const RouteSettings(),
+                        type: TransitionType.slide,
+                        child: PageWordDetails(
+                            playWordAtStart: true,
+                            primary: true,
+                            onBack: () {
+                              Navigator.of(context).pop();
+                            })));
+              });
+        }));
   }
 }
