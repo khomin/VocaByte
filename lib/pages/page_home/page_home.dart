@@ -1,5 +1,6 @@
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
@@ -52,15 +53,11 @@ class PageHomeState extends State<PageHome> {
           snap: true,
           pinned: false,
           primary: false,
-          // expandedHeight: Constants.homeAppBarHeight,
-          // collapsedHeight: Constants.homeAppBarHeight,
-          // toolbarHeight: Constants.homeAppBarHeight,
           expandedHeight: Constants.homeAppBarHeight + padding.top,
           collapsedHeight: Constants.homeAppBarHeight + padding.top,
           toolbarHeight: Constants.homeAppBarHeight + padding.top,
           automaticallyImplyLeading: false,
           backgroundColor: Theme.of(context).colorScheme.appBar,
-          // backgroundColor: Colors.amber,
           scrolledUnderElevation: 0,
           elevation: 0,
           surfaceTintColor: Colors.transparent,
@@ -70,34 +67,37 @@ class PageHomeState extends State<PageHome> {
               color: Colors.transparent,
               child: Container(
                 margin: EdgeInsets.only(top: padding.top),
-                // height: Constants.homeAppBarHeight - 20,
-                // margin: EdgeInsets.only(bottom: padding.top),
-                // padding: EdgeInsets.only(top: padding.top),
-                // padding: EdgeInsets.only(top: padding.top),
-                // margin: EdgeInsets.only(top: padding.top + 10),
-                // margin: EdgeInsets.only(left: 20, right: 20),
-
                 alignment: Alignment.center,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(30),
-                  // boxShadow: [
-                  //   BoxShadow(
-                  //     color: Colors.black.withValues(alpha: 0.1),
-                  //     blurRadius: 8,
-                  //     offset: const Offset(0, 2),
-                  //   ),
-                  // ],
+                child: ElevatedButton(
+                  onPressed: () {
+                    widget.onSearch();
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    shadowColor: Colors.transparent,
+                    // padding: widget.padding ?? EdgeInsets.zero,
+                    backgroundColor: Colors.white,
+                  ),
+                  child: TextFormField(
+                      enabled: false,
+                      decoration: InputDecoration(
+                        // TODO: audio search
+                        hintText: "Search your words...",
+                        prefixIcon: Icon(Icons.search, color: Colors.grey),
+                        hintStyle: TextStyle(
+                          color: Theme.of(context)
+                              .colorScheme
+                              .iconColor
+                              .withValues(alpha: 0.8),
+                          // fontFamily: Constants.fontInter,
+                          fontSize: 16,
+                        ),
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(vertical: 15),
+                      )),
                 ),
-                child: TextFormField(
-                    enabled: false,
-                    decoration: const InputDecoration(
-                      // TODO: audio search
-                      hintText: "Search your words...",
-                      prefixIcon: Icon(Icons.search, color: Colors.grey),
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(vertical: 15),
-                    )),
               ),
             ),
           )),

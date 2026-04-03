@@ -339,10 +339,10 @@ class _AppState extends State<App> {
                         ));
                   },
                   onSearch: () {
-                    // _appModel.setCurrentPage(PageType.searchWord);
+                    _openSearch(SearchMode.search);
                   },
                   onManageWords: () {
-                    // _appModel.setCurrentPage(PageType.manageWords);
+                    _openSearch(SearchMode.manage);
                   },
                   onNumerals: () {
                     Navigator.push(

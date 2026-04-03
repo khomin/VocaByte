@@ -48,198 +48,90 @@ class SearchWordPageState extends State<SearchWordPage> {
     super.dispose();
   }
 
-  // backgroundColor: Theme.of(context).colorScheme.baseColor1,
-  // backgroundColor: Theme.of(context).colorScheme.appBar,
-  // backgroundColor: Colors.pink,
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.transparent,
-        // extendBodyBehindAppBar: true,
-        // extendBody: true,
-        // primary: false,
         body: ChangeNotifierProvider<SearchWordModel>.value(
             value: _model,
             builder: (context, child) {
               var padding = MediaQuery.of(context).padding;
-              // var padding = EdgeInsets.only(top: 32.355555555555554);
-              return Column(children: [
-                // const SizedBox(
-                //   height: 20,
-                // ),
-                Container(
-                    // color: Colors.pink,
-                    height: Constants.homeAppBarHeight + padding.top,
-                    alignment: Alignment.center,
-                    child: Hero(
-                      tag: 'search_bar',
-                      flightShuttleBuilder: (flightContext, animation,
-                          flightDirection, fromHeroContext, toHeroContext) {
-                        var borderRadius = BorderRadiusTween(
-                          begin: const BorderRadius.only(
-                              topLeft: Radius.circular(50),
-                              topRight: Radius.circular(50)),
-                          end: BorderRadius.circular(8),
-                        );
-                        return AnimatedBuilder(
-                          animation: animation,
-                          builder: (context, child) {
-                            return Material(
-                              type: MaterialType.canvas,
-                              // color: Colors.white,
+              return CustomScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  slivers: [
+                    SliverAppBar(
+                      pinned: true,
+                      primary: false,
+                      toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Theme.of(context).colorScheme.appBar,
+                      surfaceTintColor: Colors.transparent,
+                      titleSpacing: 0,
+                      title: Container(
+                          // color: Colors.pink,
+                          // height: Constants.homeAppBarHeight + padding.top,
+                          alignment: Alignment.center,
+                          child: Hero(
+                            tag: 'search_bar',
+                            flightShuttleBuilder: (flightContext,
+                                animation,
+                                flightDirection,
+                                fromHeroContext,
+                                toHeroContext) {
+                              var borderRadius = BorderRadiusTween(
+                                begin: const BorderRadius.only(
+                                    topLeft: Radius.circular(50),
+                                    topRight: Radius.circular(50)),
+                                end: BorderRadius.circular(8),
+                              );
+                              return AnimatedBuilder(
+                                animation: animation,
+                                builder: (context, child) {
+                                  return Material(
+                                    type: MaterialType.canvas,
+                                    // color: Colors.white,
+                                    color: Colors.transparent,
+                                    clipBehavior: Clip.antiAlias,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius:
+                                          borderRadius.evaluate(animation)!,
+                                    ),
+                                    child: toHeroContext.widget,
+                                  );
+                                },
+                              );
+                            },
+                            child: Material(
                               color: Colors.transparent,
-                              clipBehavior: Clip.antiAlias,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: borderRadius.evaluate(animation)!,
-                              ),
-                              child: toHeroContext.widget,
-                            );
-                          },
-                        );
-                      },
-                      child: Material(
-                        // color: Colors.white,
-                        color: Colors.transparent,
-                        // shape: const RoundedRectangleBorder(
-                        //   borderRadius: BorderRadius.zero,
-                        // ),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero),
-                        child: Container(
-                            // height:
-                            //     padding.top + 80 - 8,
-                            // margin: const EdgeInsets.only(bottom: 8),
-                            padding: EdgeInsets.only(top: padding.top),
-                            // margin: EdgeInsets.only(top: padding.top),
-                            height: Constants.homeAppBarHeight + padding.top,
-                            alignment: Alignment.center,
-                            // height: Constants.homeAppBarHeight,
-
-                            // height: padding.top + Constants.homeAppBarHeight,
-                            // margin: const EdgeInsets.only(bottom: 8),
-                            // padding: EdgeInsets.only(top: 30),
-                            // padding: EdgeInsets.only(top: padding.top),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              // color: Colors.pink.withValues(alpha: 0.2),
-                              borderRadius: BorderRadius.circular(5),
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.zero),
+                              child: Container(
+                                  padding: EdgeInsets.only(top: padding.top),
+                                  height:
+                                      Constants.homeAppBarHeight + padding.top,
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    // color: Colors.pink.withValues(alpha: 0.2),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: _buildSearchInput()),
                             ),
-                            child: _buildSearchInput()),
-                      ),
-                    )),
-                Flexible(
-                  child: CustomScrollView(
-                      physics: const ClampingScrollPhysics(),
-                      slivers: [
-                        // SliverAppBar(
-                        //     pinned: true,
-                        //     primary: false,
-                        //     // expandedHeight:
-                        //     //     Constants.homeAppBarHeight + padding.top + 10,
-                        //     // collapsedHeight:
-                        //     //     Constants.homeAppBarHeight + padding.top + 10,
-                        //     // toolbarHeight: Constants.homeAppBarHeight + padding.top,
-                        //     toolbarHeight: Constants.homeAppBarHeight + padding.top,
-                        //     automaticallyImplyLeading: false,
-                        //     backgroundColor: Theme.of(context).colorScheme.appBar,
-                        //     // scrolledUnderElevation: 0,
-                        //     surfaceTintColor: Colors.transparent,
-                        //     titleSpacing: 0,
-                        //     title: Hero(
-                        //       tag: 'search_bar',
-                        //       flightShuttleBuilder: (flightContext, animation,
-                        //           flightDirection, fromHeroContext, toHeroContext) {
-                        //         var borderRadius = BorderRadiusTween(
-                        //           begin: const BorderRadius.only(
-                        //               topLeft: Radius.circular(50),
-                        //               topRight: Radius.circular(50)),
-                        //           end: BorderRadius.circular(8),
-                        //         );
-                        //         return AnimatedBuilder(
-                        //           animation: animation,
-                        //           builder: (context, child) {
-                        //             return Material(
-                        //               type: MaterialType.canvas,
-                        //               // color: Colors.white,
-                        //               color: Colors.transparent,
-                        //               clipBehavior: Clip.antiAlias,
-                        //               shape: RoundedRectangleBorder(
-                        //                 borderRadius:
-                        //                     borderRadius.evaluate(animation)!,
-                        //               ),
-                        //               child: toHeroContext.widget,
-                        //             );
-                        //           },
-                        //         );
-                        //       },
-                        //       child: Material(
-                        //         // color: Colors.white,
-                        //         color: Colors.transparent,
-                        //         // shape: const RoundedRectangleBorder(
-                        //         //   borderRadius: BorderRadius.zero,
-                        //         // ),
-                        //         child: Container(
-                        //           // height:
-                        //           //     padding.top + 80 - 8,
-                        //           // margin: const EdgeInsets.only(bottom: 8),
-                        //           // padding: EdgeInsets.only(top: padding.top),
-                        //           // margin: EdgeInsets.only(top: padding.top),
-                        //           height: Constants.homeAppBarHeight + padding.top,
-                        //           // height: Constants.homeAppBarHeight,
+                          )),
+                    ),
 
-                        //           // height: padding.top + Constants.homeAppBarHeight,
-                        //           // margin: const EdgeInsets.only(bottom: 8),
-                        //           // padding: EdgeInsets.only(top: 30),
-                        //           // padding: EdgeInsets.only(top: padding.top),
-                        //           decoration: BoxDecoration(
-                        //             color: Colors.white,
-                        //             // color: Colors.pink.withValues(alpha: 0.2),
-                        //             borderRadius: BorderRadius.circular(5),
-                        //           ),
-                        //           child: Center(
-                        //             child: Padding(
-                        //                 padding: EdgeInsets.only(),
-                        //                 // padding: EdgeInsets.only(top: padding.top),
-                        //                 child: TextFormField(
-                        //                     enabled: true,
-                        //                     decoration: InputDecoration(
-                        //                       // TODO: audio search
-                        //                       hintText: 'Search your words...',
-                        //                       hintStyle: TextStyle(
-                        //                           color: Theme.of(context)
-                        //                               .colorScheme
-                        //                               .iconColor),
-                        //                       prefixIcon: Icon(
-                        //                         Icons.arrow_back,
-                        //                         color: Theme.of(context)
-                        //                             .colorScheme
-                        //                             .iconColor,
-                        //                       ),
-                        //                       border: InputBorder.none,
-                        //                       contentPadding: EdgeInsets.symmetric(
-                        //                         vertical: 15,
-                        //                       ),
-                        //                     ))),
-                        //           ),
-                        //         ),
-                        //       ),
-                        //     )),
-
-                        // SliverAppBar(
-                        //   automaticallyImplyLeading: false,
-                        //   flexibleSpace: AppBar2(
-                        //       type: Type.back,
-                        //       child: Flexible(
-                        //         child: _input(),
-                        //       )),
-                        // ),
-                        //
-                        _searchResult(),
-                        //
-                      ]),
-                )
-              ]);
+                    // SliverAppBar(
+                    //   automaticallyImplyLeading: false,
+                    //   flexibleSpace: AppBar2(
+                    //       type: Type.back,
+                    //       child: Flexible(
+                    //         child: _input(),
+                    //       )),
+                    // ),
+                    //
+                    _searchResult(),
+                    //
+                  ]);
             }));
   }
 
@@ -453,32 +345,41 @@ class SearchWordPageState extends State<SearchWordPage> {
   }
 
   Widget _buildSearchInput() {
-    return TextFormField(
-      enabled: true,
-      decoration: InputDecoration(
-        // TODO: audio search
-        hintText: 'Search your words...',
-        hintStyle: TextStyle(color: Theme.of(context).colorScheme.iconColor),
-        prefixIcon: Icon(
-          Icons.arrow_back,
-          color: Theme.of(context).colorScheme.iconColor,
-        ),
-        border: InputBorder.none,
-        // contentPadding: EdgeInsets.symmetric(
-        //   vertical: Constants.homeAppBarHeight / 2,
-        // ),
-        contentPadding: EdgeInsets.symmetric(vertical: 15),
-        alignLabelWithHint: true,
-        floatingLabelAlignment: FloatingLabelAlignment.center,
-        // icon: Icon(
-        //   Icons.arrow_back,
-        //   color: Theme.of(context).colorScheme.iconColor,
-        // ),
-        // maintainHintHeight: true,
-        // maintainHintSize: true,
-        // maintainLabelSize: true,
+    return Row(children: [
+      Container(
+        height: Constants.appBarButton,
+        width: Constants.appBarButton,
+        margin: const EdgeInsets.only(left: 5, right: 5),
+        child: RoundButton(
+            color: Colors.transparent,
+            iconColor: Theme.of(context).colorScheme.appBarText.color,
+            width: Constants.appBarButton,
+            iconSize: 22,
+            radius: 30,
+            padding: const EdgeInsets.only(left: 5),
+            iconData: Icons.arrow_back_ios,
+            onPressed: (_) {
+              Navigator.of(context).pop();
+            }),
       ),
-    );
+      Flexible(
+          child: TextFormField(
+        enabled: true,
+        decoration: InputDecoration(
+          // TODO: audio search
+          hintText: 'Search your words...',
+          hintStyle: TextStyle(
+            color: Theme.of(context).colorScheme.iconColor,
+            // fontFamily: Constants.fontFredoka,
+            fontSize: 16,
+          ),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(vertical: 15),
+          alignLabelWithHint: true,
+          floatingLabelAlignment: FloatingLabelAlignment.center,
+        ),
+      ))
+    ]);
   }
 
   // Widget _searchNotFound() {
