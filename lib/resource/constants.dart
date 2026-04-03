@@ -20,6 +20,7 @@ class Constants {
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
+  static const searchHeroDuration = Duration(milliseconds: 250);
 
   static const appBarButton = 52.0;
   static double homeAppBarHeight = 70.0;

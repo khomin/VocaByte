@@ -406,8 +406,8 @@ class _AppState extends State<App> {
         settings: const RouteSettings(),
         opaque: false,
         barrierDismissible: true,
-        transitionDuration: const Duration(milliseconds: 250),
-        reverseTransitionDuration: const Duration(milliseconds: 250),
+        transitionDuration: Constants.searchHeroDuration,
+        reverseTransitionDuration: Constants.searchHeroDuration,
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           return child;
         },

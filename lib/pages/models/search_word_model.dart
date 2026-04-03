@@ -33,6 +33,11 @@ class SearchWordModel with ChangeNotifier {
     super.dispose();
   }
 
+  void notify() {
+    if (_disposed) return;
+    notifyListeners();
+  }
+
   void search(String v) async {
     query = v;
     if (v.isNotEmpty) {
@@ -89,8 +94,7 @@ class SearchWordModel with ChangeNotifier {
     return query.isNotEmpty && found.isEmpty;
   }
 
-  void notify() {
-    if (_disposed) return;
-    notifyListeners();
+  bool showRecent() {
+    return query.isEmpty;
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:vocabyte/components/chip_item.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
@@ -39,6 +41,11 @@ class SearchWordPageState extends State<SearchWordPage> {
     super.initState();
     _model = SearchWordModel();
     _model.mode = widget.mode;
+
+    Future.delayed(
+        Constants.searchHeroDuration + const Duration(milliseconds: 20), () {
+      _model.focus.requestFocus();
+    });
   }
 
   @override
@@ -50,166 +57,85 @@ class SearchWordPageState extends State<SearchWordPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.transparent,
-        body: ChangeNotifierProvider<SearchWordModel>.value(
-            value: _model,
-            builder: (context, child) {
-              var padding = MediaQuery.of(context).padding;
-              return CustomScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  slivers: [
-                    SliverAppBar(
-                      pinned: true,
-                      primary: false,
-                      toolbarHeight: Constants.homeAppBarHeight + padding.top,
-                      automaticallyImplyLeading: false,
-                      backgroundColor: Theme.of(context).colorScheme.appBar,
-                      surfaceTintColor: Colors.transparent,
-                      titleSpacing: 0,
-                      title: Container(
-                          // color: Colors.pink,
-                          // height: Constants.homeAppBarHeight + padding.top,
-                          alignment: Alignment.center,
-                          child: Hero(
-                            tag: 'search_bar',
-                            flightShuttleBuilder: (flightContext,
-                                animation,
-                                flightDirection,
-                                fromHeroContext,
-                                toHeroContext) {
-                              var borderRadius = BorderRadiusTween(
-                                begin: const BorderRadius.only(
-                                    topLeft: Radius.circular(50),
-                                    topRight: Radius.circular(50)),
-                                end: BorderRadius.circular(8),
-                              );
-                              return AnimatedBuilder(
-                                animation: animation,
-                                builder: (context, child) {
-                                  return Material(
-                                    type: MaterialType.canvas,
-                                    // color: Colors.white,
-                                    color: Colors.transparent,
-                                    clipBehavior: Clip.antiAlias,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius:
-                                          borderRadius.evaluate(animation)!,
-                                    ),
-                                    child: toHeroContext.widget,
-                                  );
-                                },
-                              );
-                            },
-                            child: Material(
-                              color: Colors.transparent,
-                              shape: const RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.zero),
-                              child: Container(
-                                  padding: EdgeInsets.only(top: padding.top),
-                                  height:
-                                      Constants.homeAppBarHeight + padding.top,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    // color: Colors.pink.withValues(alpha: 0.2),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: _buildSearchInput()),
-                            ),
-                          )),
-                    ),
-
-                    // SliverAppBar(
-                    //   automaticallyImplyLeading: false,
-                    //   flexibleSpace: AppBar2(
-                    //       type: Type.back,
-                    //       child: Flexible(
-                    //         child: _input(),
-                    //       )),
-                    // ),
-                    //
-                    _searchResult(),
-                    //
-                  ]);
-            }));
-  }
-
-  Widget _input() {
-    return HoverClick(
-        onPressedL: (_) {
-          _model.focus.requestFocus();
-        },
-        child: Hero(
-            tag: 'search_bar',
-            child: ChangeNotifierProvider<SearchWordModel>.value(
+    return SafeArea(
+        top: false,
+        child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: ChangeNotifierProvider<SearchWordModel>.value(
                 value: _model,
                 builder: (context, child) {
-                  return Material(
-                      child: SizedBox(
-                          height: kToolbarHeight,
-                          child: Row(children: [
-                            Flexible(
-                                child: TextField(
-                                    controller: _model.controller,
-                                    focusNode: _model.focus,
-                                    onChanged: (value) {
-                                      _model.search(value);
+                  var padding = MediaQuery.of(context).padding;
+                  return CustomScrollView(
+                      physics: const NeverScrollableScrollPhysics(),
+                      slivers: [
+                        SliverAppBar(
+                            pinned: true,
+                            primary: false,
+                            toolbarHeight:
+                                Constants.homeAppBarHeight + padding.top,
+                            automaticallyImplyLeading: false,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.appBar,
+                            surfaceTintColor: Colors.transparent,
+                            titleSpacing: 0,
+                            title: HoverClick(
+                              onPressedL: (_) {
+                                _model.focus.requestFocus();
+                              },
+                              child: Container(
+                                  alignment: Alignment.center,
+                                  child: Hero(
+                                    tag: 'search_bar',
+                                    flightShuttleBuilder: (flightContext,
+                                        animation,
+                                        flightDirection,
+                                        fromHeroContext,
+                                        toHeroContext) {
+                                      var borderRadius = BorderRadiusTween(
+                                        begin: const BorderRadius.only(
+                                            topLeft: Radius.circular(50),
+                                            topRight: Radius.circular(50)),
+                                        end: BorderRadius.circular(8),
+                                      );
+                                      return AnimatedBuilder(
+                                        animation: animation,
+                                        builder: (context, child) {
+                                          return Material(
+                                            type: MaterialType.canvas,
+                                            color: Colors.transparent,
+                                            clipBehavior: Clip.antiAlias,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius: borderRadius
+                                                  .evaluate(animation)!,
+                                            ),
+                                            child: toHeroContext.widget,
+                                          );
+                                        },
+                                      );
                                     },
-                                    keyboardType: TextInputType.text,
-                                    onEditingComplete: () {},
-                                    style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inputText,
-                                        fontSize: 15),
-                                    decoration: InputDecoration(
-                                      fillColor: Theme.of(context)
-                                          .colorScheme
-                                          .inputBackground,
-                                      contentPadding: const EdgeInsets.only(
-                                          left: 10, right: 10),
-                                      hintText: 'Enter word',
-                                      hintStyle: TextStyle(
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .inputHint,
-                                          fontSize: 15),
-                                      enabledBorder: const OutlineInputBorder(
+                                    child: Material(
+                                      color: Colors.transparent,
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.zero),
+                                      child: Container(
+                                        padding:
+                                            EdgeInsets.only(top: padding.top),
+                                        height: Constants.homeAppBarHeight +
+                                            padding.top,
+                                        alignment: Alignment.center,
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
                                           borderRadius:
-                                              BorderRadius.all(Radius.zero),
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent)),
-                                      focusedBorder: const OutlineInputBorder(
-                                          borderRadius: BorderRadius.all(
-                                              Radius.circular(6)),
-                                          borderSide: BorderSide(
-                                              color: Colors.transparent)),
-                                    ))),
-                            Builder(builder: (context) {
-                              var search =
-                                  context.watch<SearchWordModel>().query;
-                              var empty = search.isEmpty;
-                              if (empty) {
-                                return const SizedBox();
-                              }
-                              return RoundButton(
-                                  iconData: Icons.clear_sharp,
-                                  iconSize: 22,
-                                  margin: const EdgeInsets.only(right: 15),
-                                  height: Constants.baseButton,
-                                  width: Constants.baseButton,
-                                  color:
-                                      Theme.of(context).colorScheme.roundButton,
-                                  iconColor: Theme.of(context)
-                                      .colorScheme
-                                      .appBarText
-                                      .color,
-                                  onPressed: (_) {
-                                    _model.reset();
-                                  });
-                            })
-                          ])));
+                                              BorderRadius.circular(5),
+                                        ),
+                                        child: _buildSearchInput(),
+                                      ),
+                                    ),
+                                  )),
+                            )),
+                        //
+                        _searchResult(),
+                      ]);
                 })));
   }
 
@@ -264,13 +190,6 @@ class SearchWordPageState extends State<SearchWordPage> {
                       ],
                     )),
                 //
-
-                // if (context.watch<SearchWordModel>().query.isNotEmpty && context.watch<SearchWordModel>().found.isEmpty)
-                //   _searchNotFound(),
-                // //
-                // // recent viewed
-                // if (context.watch<SearchWordModel>().query.isEmpty)
-                //   _searchRecent()
                 Flexible(
                   child: Builder(builder: (context) {
                     var model = context.watch<SearchWordModel>();
@@ -287,18 +206,23 @@ class SearchWordPageState extends State<SearchWordPage> {
                                         color: Theme.of(context)
                                             .colorScheme
                                             .title5)))
-                            : ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: model.found.length,
-                                itemBuilder: (context, index) {
-                                  var obj = model.found[index];
-                                  return SearchWordItem(
-                                      data: obj,
-                                      onClicked: () async {
-                                        _model.loseFocus();
-                                        widget.onShow.call(obj);
-                                      });
-                                });
+                            : model.showRecent()
+                                ? _recent()
+                                : ListView.builder(
+                                    shrinkWrap: true,
+                                    padding: const EdgeInsets.only(top: 10),
+                                    primary: false,
+                                    itemCount: model.found.length,
+                                    itemBuilder: (context, index) {
+                                      var obj = model.found[index];
+                                      // return Text()
+                                      return SearchWordItem(
+                                          data: obj,
+                                          onClicked: () async {
+                                            _model.loseFocus();
+                                            widget.onShow.call(obj);
+                                          });
+                                    });
                       case SearchMode.manage:
                         if (model.found.isEmpty) {
                           return Padding(
@@ -314,6 +238,8 @@ class SearchWordPageState extends State<SearchWordPage> {
                         }
                         return ListView.builder(
                             shrinkWrap: true,
+                            padding: const EdgeInsets.only(top: 10),
+                            primary: false,
                             itemCount: model.found.length,
                             itemBuilder: (context, index) {
                               var obj = model.found[index];
@@ -330,17 +256,6 @@ class SearchWordPageState extends State<SearchWordPage> {
               ]),
             )),
       );
-      // return SliverList.builder(
-      //     itemCount: context.watch<SearchWordModel>().found.length,
-      //     itemBuilder: (BuildContext context, int index) {
-      //       var obj = context.read<SearchWordModel>().found[index];
-      //       return SearchWordItem(
-      //           data: obj,
-      //           onClicked: () async {
-      //             _model.loseFocus();
-      //             widget.onShow.call(obj);
-      //           });
-      //     });
     });
   }
 
@@ -364,13 +279,16 @@ class SearchWordPageState extends State<SearchWordPage> {
       ),
       Flexible(
           child: TextFormField(
-        enabled: true,
+        controller: _model.controller,
+        focusNode: _model.focus,
+        onChanged: (value) {
+          _model.search(value);
+        },
+        keyboardType: TextInputType.text,
         decoration: InputDecoration(
-          // TODO: audio search
           hintText: 'Search your words...',
           hintStyle: TextStyle(
             color: Theme.of(context).colorScheme.iconColor,
-            // fontFamily: Constants.fontFredoka,
             fontSize: 16,
           ),
           border: InputBorder.none,
@@ -378,50 +296,87 @@ class SearchWordPageState extends State<SearchWordPage> {
           alignLabelWithHint: true,
           floatingLabelAlignment: FloatingLabelAlignment.center,
         ),
-      ))
+      )),
+      ChangeNotifierProvider<SearchWordModel>.value(
+          value: _model,
+          builder: (context, child) {
+            var search = context.watch<SearchWordModel>().query;
+            var empty = search.isEmpty;
+            if (empty) {
+              return const SizedBox();
+            }
+            return RoundButton(
+                iconData: Icons.clear_sharp,
+                color: Theme.of(context).colorScheme.roundButton,
+                iconSize: 15,
+                height: 30,
+                width: 30,
+                margin: const EdgeInsets.only(right: 5),
+                iconColor: Theme.of(context).colorScheme.appBarText.color,
+                onPressed: (_) {
+                  _model.reset();
+                });
+          }),
+      // TODO: audio search
     ]);
   }
 
-  // Widget _searchNotFound() {
-  //   return SliverFillRemaining(
-  //       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-  //     Text('Nothing found',
-  //         style: TextStyle(
-  //             fontWeight: FontWeight.w400,
-  //             fontSize: 16,
-  //             color: Theme.of(context).colorScheme.title5))
-  //   ]));
-  // }
+  Widget _recent() {
+    return StreamBuilder(
+        stream: getIt<AppRep>().onRecentWords,
+        builder: (context, snapshot) {
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Padding(
+                    padding: const EdgeInsets.only(left: 15, top: 15),
+                    child: Text('Recent search',
+                        style: TextStyle(
+                            fontWeight: FontWeight.w400,
+                            fontSize: 14,
+                            fontFamily: Constants.fontInter,
+                            color: Theme.of(context).colorScheme.title5))),
+                Flexible(
+                    child: Container(
+                        margin: const EdgeInsets.only(top: 20),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withValues(alpha: 0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: ListView.builder(
+                            itemCount: snapshot.data?.length ?? 0,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.only(top: 10),
+                            primary: true,
+                            itemBuilder: (BuildContext context, int index) {
+                              var model = snapshot.data![index];
+                              return SearchWordItem(
+                                  data: model,
+                                  onClicked: () async {
+                                    // recent words have only part of data
+                                    // have to use request to get full
+                                    // before navigation
+                                    var r = await ServiceApi().getDictionary(
+                                        word: model.word, useLike: false);
 
-  // _searchRecent() {
-  //   return StreamBuilder(
-  //       stream: getIt<AppRep>().onRecentWords,
-  //       builder: (context, snapshot) {
-  //         return ListView.builder(
-  //             itemCount: snapshot.data?.length ?? 0,
-  //             itemBuilder: (BuildContext context, int index) {
-  //               var model = snapshot.data![index];
-  //               return SearchWordItem(
-  //                   data: model,
-  //                   onClicked: () async {
-  //                     // recent words have only part of data
-  //                     // have to use request to get full
-  //                     // before navigation
-  //                     var r = await ServiceApi()
-  //                         .getDictionary(word: model.word, useLike: false);
-
-  //                     var word = r.item.firstWhereOrNull((it) =>
-  //                         it.value.toLowerCase() == model.word.toLowerCase());
-  //                     if (word == null) {
-  //                       return;
-  //                     }
-  //                     var info = await getIt<AppRep>().wordToInfo(word);
-  //                     _model.loseFocus();
-  //                     if (info == null) return;
-  //                     getIt<AppRep>().cachedWord = info;
-  //                     widget.onShow.call(info);
-  //                   });
-  //             });
-  //       });
-  // }
+                                    var word = r.item.firstWhereOrNull((it) =>
+                                        it.value.toLowerCase() ==
+                                        model.word.toLowerCase());
+                                    if (word == null) {
+                                      return;
+                                    }
+                                    var info =
+                                        await getIt<AppRep>().wordToInfo(word);
+                                    _model.loseFocus();
+                                    if (info == null) return;
+                                    getIt<AppRep>().cachedWord = info;
+                                    widget.onShow.call(info);
+                                  });
+                              // })))
+                              // ]);
+                            })))
+              ]);
+        });
+  }
 }
