@@ -55,112 +55,191 @@ class SearchWordPageState extends State<SearchWordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        extendBody: true,
         backgroundColor: Colors.transparent,
-        extendBodyBehindAppBar: true,
+        // extendBodyBehindAppBar: true,
+        // extendBody: true,
+        // primary: false,
         body: ChangeNotifierProvider<SearchWordModel>.value(
             value: _model,
             builder: (context, child) {
-              return CustomScrollView(
-                  physics: const ClampingScrollPhysics(),
-                  slivers: [
-                    SliverAppBar(
-                        pinned: true,
-                        primary: false,
-                        // toolbarHeight: Constants.homeAppBarHeight,
-                        expandedHeight: MediaQuery.of(context).padding.top + 80,
-                        collapsedHeight:
-                            MediaQuery.of(context).padding.top + 80,
-                        toolbarHeight: MediaQuery.of(context).padding.top + 80,
-                        automaticallyImplyLeading: false,
-                        backgroundColor: Theme.of(context).colorScheme.appBar,
-                        // backgroundColor: Colors.yellow,
-                        scrolledUnderElevation: 0,
-                        surfaceTintColor: Colors.transparent,
-                        titleSpacing: 0,
-                        title: Hero(
-                          tag: 'search_bar',
-                          flightShuttleBuilder: (flightContext, animation,
-                              flightDirection, fromHeroContext, toHeroContext) {
-                            // This creates a smooth interpolation of the corners during flight
-                            var borderRadius = BorderRadiusTween(
-                              begin: const BorderRadius.only(
-                                  topLeft: Radius.circular(30),
-                                  topRight:
-                                      Radius.circular(30)), // Home Page shape
-                              end:
-                                  BorderRadius.circular(0), // Search Page shape
-                            );
-                            return AnimatedBuilder(
-                              animation: animation,
-                              builder: (context, child) {
-                                return Material(
-                                  type: MaterialType.canvas,
-                                  // elevation: 4,
-                                  // color: Colors.white,
-                                  color: Colors.transparent,
-                                  clipBehavior: Clip
-                                      .antiAlias, // Critical for rounded corners
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        borderRadius.evaluate(animation)!,
-                                  ),
-                                  child: toHeroContext
-                                      .widget, // Fly the Search Page's content
-                                );
-                              },
+              var padding = MediaQuery.of(context).padding;
+              // var padding = EdgeInsets.only(top: 32.355555555555554);
+              return Column(children: [
+                // const SizedBox(
+                //   height: 20,
+                // ),
+                Container(
+                    // color: Colors.pink,
+                    height: Constants.homeAppBarHeight + padding.top,
+                    alignment: Alignment.center,
+                    child: Hero(
+                      tag: 'search_bar',
+                      flightShuttleBuilder: (flightContext, animation,
+                          flightDirection, fromHeroContext, toHeroContext) {
+                        var borderRadius = BorderRadiusTween(
+                          begin: const BorderRadius.only(
+                              topLeft: Radius.circular(50),
+                              topRight: Radius.circular(50)),
+                          end: BorderRadius.circular(8),
+                        );
+                        return AnimatedBuilder(
+                          animation: animation,
+                          builder: (context, child) {
+                            return Material(
+                              type: MaterialType.canvas,
+                              // color: Colors.white,
+                              color: Colors.transparent,
+                              clipBehavior: Clip.antiAlias,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: borderRadius.evaluate(animation)!,
+                              ),
+                              child: toHeroContext.widget,
                             );
                           },
-                          child: Material(
-                            // color: Colors.transparent,
-                            // elevation: 2,
-                            color: Colors.white,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero,
-                            ),
-                            // shape: RoundedRectangleBorder(
-                            //   borderRadius: BorderRadius.circular(30),
-                            // ),
-                            child: Container(
-                              // height: 100,
-                              height:
-                                  MediaQuery.of(context).padding.top + 80 - 8,
-                              margin: const EdgeInsets.only(bottom: 8),
-                              padding: EdgeInsets.only(
-                                  top: MediaQuery.of(context).padding.top),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: Center(
-                                  child: TextFormField(
-                                enabled: false,
-                                decoration: const InputDecoration(
-                                  // TODO: audio search
-                                  hintText: "Search your words...",
-                                  prefixIcon:
-                                      Icon(Icons.search, color: Colors.grey),
-                                  border: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.symmetric(vertical: 15),
-                                ),
-                              )),
-                            ),
-                          ),
-                        )),
+                        );
+                      },
+                      child: Material(
+                        // color: Colors.white,
+                        color: Colors.transparent,
+                        // shape: const RoundedRectangleBorder(
+                        //   borderRadius: BorderRadius.zero,
+                        // ),
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero),
+                        child: Container(
+                            // height:
+                            //     padding.top + 80 - 8,
+                            // margin: const EdgeInsets.only(bottom: 8),
+                            padding: EdgeInsets.only(top: padding.top),
+                            // margin: EdgeInsets.only(top: padding.top),
+                            height: Constants.homeAppBarHeight + padding.top,
+                            alignment: Alignment.center,
+                            // height: Constants.homeAppBarHeight,
 
-                    // SliverAppBar(
-                    //   automaticallyImplyLeading: false,
-                    //   flexibleSpace: AppBar2(
-                    //       type: Type.back,
-                    //       child: Flexible(
-                    //         child: _input(),
-                    //       )),
-                    // ),
-                    //
-                    _searchResult(),
-                    //
-                  ]);
+                            // height: padding.top + Constants.homeAppBarHeight,
+                            // margin: const EdgeInsets.only(bottom: 8),
+                            // padding: EdgeInsets.only(top: 30),
+                            // padding: EdgeInsets.only(top: padding.top),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              // color: Colors.pink.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: _buildSearchInput()),
+                      ),
+                    )),
+                Flexible(
+                  child: CustomScrollView(
+                      physics: const ClampingScrollPhysics(),
+                      slivers: [
+                        // SliverAppBar(
+                        //     pinned: true,
+                        //     primary: false,
+                        //     // expandedHeight:
+                        //     //     Constants.homeAppBarHeight + padding.top + 10,
+                        //     // collapsedHeight:
+                        //     //     Constants.homeAppBarHeight + padding.top + 10,
+                        //     // toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                        //     toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                        //     automaticallyImplyLeading: false,
+                        //     backgroundColor: Theme.of(context).colorScheme.appBar,
+                        //     // scrolledUnderElevation: 0,
+                        //     surfaceTintColor: Colors.transparent,
+                        //     titleSpacing: 0,
+                        //     title: Hero(
+                        //       tag: 'search_bar',
+                        //       flightShuttleBuilder: (flightContext, animation,
+                        //           flightDirection, fromHeroContext, toHeroContext) {
+                        //         var borderRadius = BorderRadiusTween(
+                        //           begin: const BorderRadius.only(
+                        //               topLeft: Radius.circular(50),
+                        //               topRight: Radius.circular(50)),
+                        //           end: BorderRadius.circular(8),
+                        //         );
+                        //         return AnimatedBuilder(
+                        //           animation: animation,
+                        //           builder: (context, child) {
+                        //             return Material(
+                        //               type: MaterialType.canvas,
+                        //               // color: Colors.white,
+                        //               color: Colors.transparent,
+                        //               clipBehavior: Clip.antiAlias,
+                        //               shape: RoundedRectangleBorder(
+                        //                 borderRadius:
+                        //                     borderRadius.evaluate(animation)!,
+                        //               ),
+                        //               child: toHeroContext.widget,
+                        //             );
+                        //           },
+                        //         );
+                        //       },
+                        //       child: Material(
+                        //         // color: Colors.white,
+                        //         color: Colors.transparent,
+                        //         // shape: const RoundedRectangleBorder(
+                        //         //   borderRadius: BorderRadius.zero,
+                        //         // ),
+                        //         child: Container(
+                        //           // height:
+                        //           //     padding.top + 80 - 8,
+                        //           // margin: const EdgeInsets.only(bottom: 8),
+                        //           // padding: EdgeInsets.only(top: padding.top),
+                        //           // margin: EdgeInsets.only(top: padding.top),
+                        //           height: Constants.homeAppBarHeight + padding.top,
+                        //           // height: Constants.homeAppBarHeight,
+
+                        //           // height: padding.top + Constants.homeAppBarHeight,
+                        //           // margin: const EdgeInsets.only(bottom: 8),
+                        //           // padding: EdgeInsets.only(top: 30),
+                        //           // padding: EdgeInsets.only(top: padding.top),
+                        //           decoration: BoxDecoration(
+                        //             color: Colors.white,
+                        //             // color: Colors.pink.withValues(alpha: 0.2),
+                        //             borderRadius: BorderRadius.circular(5),
+                        //           ),
+                        //           child: Center(
+                        //             child: Padding(
+                        //                 padding: EdgeInsets.only(),
+                        //                 // padding: EdgeInsets.only(top: padding.top),
+                        //                 child: TextFormField(
+                        //                     enabled: true,
+                        //                     decoration: InputDecoration(
+                        //                       // TODO: audio search
+                        //                       hintText: 'Search your words...',
+                        //                       hintStyle: TextStyle(
+                        //                           color: Theme.of(context)
+                        //                               .colorScheme
+                        //                               .iconColor),
+                        //                       prefixIcon: Icon(
+                        //                         Icons.arrow_back,
+                        //                         color: Theme.of(context)
+                        //                             .colorScheme
+                        //                             .iconColor,
+                        //                       ),
+                        //                       border: InputBorder.none,
+                        //                       contentPadding: EdgeInsets.symmetric(
+                        //                         vertical: 15,
+                        //                       ),
+                        //                     ))),
+                        //           ),
+                        //         ),
+                        //       ),
+                        //     )),
+
+                        // SliverAppBar(
+                        //   automaticallyImplyLeading: false,
+                        //   flexibleSpace: AppBar2(
+                        //       type: Type.back,
+                        //       child: Flexible(
+                        //         child: _input(),
+                        //       )),
+                        // ),
+                        //
+                        _searchResult(),
+                        //
+                      ]),
+                )
+              ]);
             }));
   }
 
@@ -371,6 +450,35 @@ class SearchWordPageState extends State<SearchWordPage> {
       //           });
       //     });
     });
+  }
+
+  Widget _buildSearchInput() {
+    return TextFormField(
+      enabled: true,
+      decoration: InputDecoration(
+        // TODO: audio search
+        hintText: 'Search your words...',
+        hintStyle: TextStyle(color: Theme.of(context).colorScheme.iconColor),
+        prefixIcon: Icon(
+          Icons.arrow_back,
+          color: Theme.of(context).colorScheme.iconColor,
+        ),
+        border: InputBorder.none,
+        // contentPadding: EdgeInsets.symmetric(
+        //   vertical: Constants.homeAppBarHeight / 2,
+        // ),
+        contentPadding: EdgeInsets.symmetric(vertical: 15),
+        alignLabelWithHint: true,
+        floatingLabelAlignment: FloatingLabelAlignment.center,
+        // icon: Icon(
+        //   Icons.arrow_back,
+        //   color: Theme.of(context).colorScheme.iconColor,
+        // ),
+        // maintainHintHeight: true,
+        // maintainHintSize: true,
+        // maintainLabelSize: true,
+      ),
+    );
   }
 
   // Widget _searchNotFound() {

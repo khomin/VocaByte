@@ -44,56 +44,60 @@ class PageHomeState extends State<PageHome> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var appRep = getIt<AppRep>();
+    // var padding = EdgeInsets.only(top: 32.355555555555554);
+    var padding = MediaQuery.of(context).padding;
     return CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
       SliverAppBar(
           floating: true,
           snap: true,
           pinned: false,
+          primary: false,
           // expandedHeight: Constants.homeAppBarHeight,
           // collapsedHeight: Constants.homeAppBarHeight,
           // toolbarHeight: Constants.homeAppBarHeight,
-          expandedHeight: MediaQuery.of(context).padding.top + 80,
-          collapsedHeight: MediaQuery.of(context).padding.top + 80,
-          toolbarHeight: MediaQuery.of(context).padding.top + 80,
+          expandedHeight: Constants.homeAppBarHeight + padding.top,
+          collapsedHeight: Constants.homeAppBarHeight + padding.top,
+          toolbarHeight: Constants.homeAppBarHeight + padding.top,
           automaticallyImplyLeading: false,
-          // titleSpacing: 0,
           backgroundColor: Theme.of(context).colorScheme.appBar,
           // backgroundColor: Colors.amber,
           scrolledUnderElevation: 0,
-          surfaceTintColor: Colors.transparent,
           elevation: 0,
+          surfaceTintColor: Colors.transparent,
           title: Hero(
             tag: 'search_bar',
             child: Material(
               color: Colors.transparent,
-              // elevation: 2,
-              // color: Colors.white,
-              // shape: RoundedRectangleBorder(
-              //   borderRadius: BorderRadius.circular(30),
-              // ),
               child: Container(
-                margin: const EdgeInsets.only(bottom: 8),
+                margin: EdgeInsets.only(top: padding.top),
+                // height: Constants.homeAppBarHeight - 20,
+                // margin: EdgeInsets.only(bottom: padding.top),
+                // padding: EdgeInsets.only(top: padding.top),
+                // padding: EdgeInsets.only(top: padding.top),
+                // margin: EdgeInsets.only(top: padding.top + 10),
+                // margin: EdgeInsets.only(left: 20, right: 20),
+
+                alignment: Alignment.center,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(30),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withValues(alpha: 0.1),
-                      blurRadius: 8,
-                      offset: const Offset(0, 2),
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: Colors.black.withValues(alpha: 0.1),
+                  //     blurRadius: 8,
+                  //     offset: const Offset(0, 2),
+                  //   ),
+                  // ],
                 ),
                 child: TextFormField(
-                  enabled: false,
-                  decoration: const InputDecoration(
-                    // TODO: audio search
-                    hintText: "Search your words...",
-                    prefixIcon: Icon(Icons.search, color: Colors.grey),
-                    border: InputBorder.none,
-                    contentPadding: EdgeInsets.symmetric(vertical: 15),
-                  ),
-                ),
+                    enabled: false,
+                    decoration: const InputDecoration(
+                      // TODO: audio search
+                      hintText: "Search your words...",
+                      prefixIcon: Icon(Icons.search, color: Colors.grey),
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(vertical: 15),
+                    )),
               ),
             ),
           )),
