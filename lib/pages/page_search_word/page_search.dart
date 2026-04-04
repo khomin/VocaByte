@@ -6,6 +6,7 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
+import 'package:vocabyte/pages/manage_word/manage_word_item.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/pages/page_search_word/search_item.dart';
@@ -174,8 +175,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                           text: 'Search',
                           active: mode == SearchMode.search,
                           onPressed: () {
-                            _model.mode = SearchMode.search;
-                            _model.notify();
+                            _model.setMode(SearchMode.search);
                           },
                         ),
                         const SizedBox(width: 8),
@@ -183,8 +183,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                           text: 'Manage words',
                           active: mode == SearchMode.manage,
                           onPressed: () {
-                            _model.mode = SearchMode.manage;
-                            _model.notify();
+                            _model.setMode(SearchMode.manage);
                           },
                         )
                       ],
@@ -208,23 +207,29 @@ class SearchWordPageState extends State<SearchWordPage> {
                                             .title5)))
                             : model.showRecent()
                                 ? _recent()
-                                : ListView.builder(
-                                    shrinkWrap: true,
-                                    padding: const EdgeInsets.only(top: 10),
-                                    primary: false,
-                                    itemCount: model.found.length,
-                                    itemBuilder: (context, index) {
-                                      var obj = model.found[index];
-                                      // return Text()
-                                      return SearchWordItem(
-                                          data: obj,
-                                          onClicked: () async {
-                                            _model.loseFocus();
-                                            widget.onShow.call(obj);
-                                          });
-                                    });
+                                : Container(
+                                    margin: const EdgeInsets.only(top: 20),
+                                    decoration: BoxDecoration(
+                                      color:
+                                          Colors.white.withValues(alpha: 0.5),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    child: ListView.builder(
+                                        shrinkWrap: true,
+                                        padding: EdgeInsets.zero,
+                                        primary: false,
+                                        itemCount: model.searchResult.length,
+                                        itemBuilder: (context, index) {
+                                          var obj = model.searchResult[index];
+                                          return SearchWordItem(
+                                              data: obj,
+                                              onClicked: () async {
+                                                _model.loseFocus();
+                                                widget.onShow.call(obj);
+                                              });
+                                        }));
                       case SearchMode.manage:
-                        if (model.found.isEmpty) {
+                        if (model.manageList.isEmpty) {
                           return Padding(
                               padding: const EdgeInsets.only(top: 50),
                               child: Text('No words',
@@ -236,20 +241,36 @@ class SearchWordPageState extends State<SearchWordPage> {
                                           .colorScheme
                                           .title5)));
                         }
-                        return ListView.builder(
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 10),
-                            primary: false,
-                            itemCount: model.found.length,
-                            itemBuilder: (context, index) {
-                              var obj = model.found[index];
-                              return SearchWordItem(
-                                  data: obj,
-                                  onClicked: () async {
-                                    _model.loseFocus();
-                                    widget.onShow.call(obj);
-                                  });
-                            });
+                        return Container(
+                            margin: const EdgeInsets.only(top: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withValues(alpha: 0.5),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: ListView.builder(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.zero,
+                                primary: false,
+                                itemCount: model.manageList.length,
+                                itemBuilder: (context, index) {
+                                  var obj = model.manageList[index];
+                                  return ManageWordItem(
+                                      data: obj,
+                                      onClicked: () async {
+                                        _model.loseFocus();
+                                        var r =
+                                            await ServiceApi().getDictionary(
+                                          word: obj.word,
+                                          useLike: false,
+                                        );
+                                        var word = r.item.firstOrNull;
+                                        if (word == null) return;
+                                        var info = await getIt<AppRep>()
+                                            .wordToInfo(word);
+                                        if (info == null) return;
+                                        widget.onShow.call(info);
+                                      });
+                                }));
                     }
                   }),
                 ),
@@ -324,6 +345,7 @@ class SearchWordPageState extends State<SearchWordPage> {
   Widget _recent() {
     return StreamBuilder(
         stream: getIt<AppRep>().onRecentWords,
+        initialData: getIt<AppRep>().onRecentWords.valueOrNull,
         builder: (context, snapshot) {
           return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -347,34 +369,31 @@ class SearchWordPageState extends State<SearchWordPage> {
                         child: ListView.builder(
                             itemCount: snapshot.data?.length ?? 0,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.only(top: 10),
+                            padding: EdgeInsets.zero,
                             primary: true,
                             itemBuilder: (BuildContext context, int index) {
                               var model = snapshot.data![index];
                               return SearchWordItem(
                                   data: model,
                                   onClicked: () async {
-                                    // recent words have only part of data
-                                    // have to use request to get full
-                                    // before navigation
                                     var r = await ServiceApi().getDictionary(
-                                        word: model.word, useLike: false);
-
+                                      word: model.word,
+                                      useLike: false,
+                                    );
                                     var word = r.item.firstWhereOrNull((it) =>
                                         it.value.toLowerCase() ==
                                         model.word.toLowerCase());
                                     if (word == null) {
                                       return;
                                     }
-                                    var info =
-                                        await getIt<AppRep>().wordToInfo(word);
+                                    var info = await getIt<AppRep>().wordToInfo(
+                                      word,
+                                    );
                                     _model.loseFocus();
                                     if (info == null) return;
                                     getIt<AppRep>().cachedWord = info;
                                     widget.onShow.call(info);
                                   });
-                              // })))
-                              // ]);
                             })))
               ]);
         });

@@ -41,63 +41,61 @@ class _State extends State<ManageWordItem> {
   @override
   Widget build(BuildContext context) {
     return ItemInMenuList(
-        height: 60,
+        height: Constants.searchItemHeight,
         useBorderTop: false,
         useBorderBot: true,
         onClicked: (pos) {
           widget.onClicked?.call();
         },
-        child: Column(children: [
-          Expanded(
-              child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                const SizedBox(width: 15),
-                //
-                // word
+        child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const SizedBox(width: 18),
+              //
+              // word
+              Expanded(
+                  child: Row(children: [
                 Expanded(
-                    child: Row(children: [
-                  Expanded(
-                      child: Text(UiHelper.toFormatText(widget.data.word),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                    child: Text(UiHelper.toFormatText(widget.data.word),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.text3)))
+              ])),
+              Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(children: [
+                      //
+                      //
+                      if (widget.data.successCount >=
+                          Constants.reapedToLeanDefault)
+                        const Padding(
+                            padding: EdgeInsets.only(right: 8),
+                            child: Icon(Icons.thumb_up, size: 15)),
+                      //
+                      //
+                      Text('$_comment',
                           style: TextStyle(
                               fontWeight: FontWeight.w600,
-                              fontSize: 14,
-                              color: Theme.of(context).colorScheme.text3)))
-                ])),
-                Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(children: [
-                        //
-                        // 1
-                        if (widget.data.successCount >=
-                            Constants.reapedToLeanDefault)
-                          const Padding(
-                              padding: EdgeInsets.only(right: 8),
-                              child: Icon(Icons.thumb_up, size: 15)),
-                        //
-                        // 2
-                        Text('$_comment',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: Theme.of(context).colorScheme.cardText))
-                      ]),
-                      //
-                      // 3
-                      if (widget.data.successCount <
-                          Constants.reapedToLeanDefault)
-                        Text('Remember ${widget.data.successCount} times',
-                            style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 12,
-                                color: Theme.of(context).colorScheme.cardText)),
+                              fontSize: 12,
+                              color: Theme.of(context).colorScheme.cardText))
                     ]),
-                const SizedBox(width: 10)
-              ]))
-        ]));
+                    //
+                    //
+                    if (widget.data.successCount <
+                        Constants.reapedToLeanDefault)
+                      Text('Remember ${widget.data.successCount} times',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 12,
+                              color: Theme.of(context).colorScheme.cardText)),
+                  ]),
+              const SizedBox(width: 18)
+            ]));
   }
 }

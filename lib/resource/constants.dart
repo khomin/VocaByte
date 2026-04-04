@@ -24,6 +24,8 @@ class Constants {
 
   static const appBarButton = 52.0;
   static double homeAppBarHeight = 70.0;
+  static double searchItemHeight = 50;
+
   static const baseButton = 55.0;
   static const homeCardHeight = 80.0;
   static const homeCardPadding = 10.0;
