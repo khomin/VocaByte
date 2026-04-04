@@ -5,8 +5,8 @@ import 'package:vocabyte/resource/constants.dart';
 
 enum Type { close, back }
 
-class AppBar2 extends StatelessWidget {
-  const AppBar2({required this.type, this.child, super.key});
+class AppBarExtra extends StatelessWidget {
+  const AppBarExtra({required this.type, this.child, super.key});
   final Type type;
   final Widget? child;
 
@@ -40,7 +40,7 @@ class AppBar2 extends StatelessWidget {
                     })),
           ]),
           if (child != null) child!,
-          if (child != null) const SizedBox(width: 20)
+          if (child != null) const SizedBox(width: 18)
         ]));
   }
 }

@@ -45,7 +45,6 @@ class PageHomeState extends State<PageHome> {
   Widget build(BuildContext context) {
     var size = MediaQuery.sizeOf(context);
     var appRep = getIt<AppRep>();
-    // var padding = EdgeInsets.only(top: 32.355555555555554);
     var padding = MediaQuery.of(context).padding;
     return CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
       SliverAppBar(
@@ -77,7 +76,6 @@ class PageHomeState extends State<PageHome> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     shadowColor: Colors.transparent,
-                    // padding: widget.padding ?? EdgeInsets.zero,
                     backgroundColor: Colors.white,
                   ),
                   child: TextFormField(
@@ -85,17 +83,20 @@ class PageHomeState extends State<PageHome> {
                       decoration: InputDecoration(
                         // TODO: audio search
                         hintText: "Search your words...",
-                        prefixIcon: Icon(Icons.search, color: Colors.grey),
+                        prefixIcon: Icon(
+                          Icons.search,
+                          color: Theme.of(context).colorScheme.iconColor,
+                        ),
                         hintStyle: TextStyle(
                           color: Theme.of(context)
                               .colorScheme
                               .iconColor
                               .withValues(alpha: 0.8),
-                          // fontFamily: Constants.fontInter,
                           fontSize: 16,
                         ),
                         border: InputBorder.none,
-                        contentPadding: EdgeInsets.symmetric(vertical: 15),
+                        contentPadding:
+                            const EdgeInsets.symmetric(vertical: 15),
                       )),
                 ),
               ),
@@ -162,8 +163,10 @@ class PageHomeState extends State<PageHome> {
             onTap: () {
               widget.onNumerals();
             }),
-      ])
-      // ])
+      ]),
+      SliverToBoxAdapter(
+        child: SizedBox(height: MediaQuery.of(context).padding.bottom),
+      ),
     ]);
   }
 

@@ -55,7 +55,7 @@ class _State extends State<SettingsDailiyGoal> {
                 elevation: 0,
                 scrolledUnderElevation: 0,
                 backgroundColor: Colors.transparent,
-                leading: AppBar2(
+                leading: AppBarExtra(
                     type: Type.back,
                     child: Flexible(
                         child: Row(

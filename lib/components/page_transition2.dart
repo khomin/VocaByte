@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:vocabyte/resource/constants.dart';
 
-enum TransitionType { slide, opacity }
+enum TransitionType { slide, opacity, animation1 }
 
 class PageTransition2 {
   static Route<dynamic> build({
@@ -22,6 +23,20 @@ class PageTransition2 {
             transitionDuration: const Duration(milliseconds: 250),
             reverseTransitionDuration: const Duration(milliseconds: 50),
             transitionsBuilder: transitionOpacity,
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return child;
+            });
+      case TransitionType.animation1:
+        return PageRouteBuilder(
+            settings: const RouteSettings(),
+            opaque: false,
+            barrierDismissible: true,
+            transitionDuration: Constants.searchHeroDuration,
+            reverseTransitionDuration: Constants.searchHeroDuration,
+            transitionsBuilder:
+                (context, animation, secondaryAnimation, child) {
+              return child;
+            },
             pageBuilder: (context, animation, secondaryAnimation) {
               return child;
             });

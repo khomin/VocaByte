@@ -6,7 +6,7 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/manage_word/manage_word_item.dart';
+import 'package:vocabyte/pages/page_search_word/manage_item.dart';
 import 'package:vocabyte/pages/models/search_word_model.dart';
 import 'package:vocabyte/pages/models/word_data.dart';
 import 'package:vocabyte/pages/page_search_word/search_item.dart';
@@ -229,10 +229,22 @@ class SearchWordPageState extends State<SearchWordPage> {
                                               });
                                         }));
                       case SearchMode.manage:
-                        if (model.manageList.isEmpty) {
+                        if (model.noWordsToManage()) {
                           return Padding(
                               padding: const EdgeInsets.only(top: 50),
                               child: Text('No words',
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 16,
+                                      fontFamily: Constants.fontFredoka,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .title5)));
+                        }
+                        if (model.nothingFound()) {
+                          return Padding(
+                              padding: const EdgeInsets.only(top: 50),
+                              child: Text('Nothing found',
                                   style: TextStyle(
                                       fontWeight: FontWeight.w400,
                                       fontSize: 16,
@@ -251,9 +263,13 @@ class SearchWordPageState extends State<SearchWordPage> {
                                 shrinkWrap: true,
                                 padding: EdgeInsets.zero,
                                 primary: false,
-                                itemCount: model.manageList.length,
+                                itemCount: model.showRecent()
+                                    ? model.manageList.length
+                                    : model.manageFiltered.length,
                                 itemBuilder: (context, index) {
-                                  var obj = model.manageList[index];
+                                  var obj = model.showRecent()
+                                      ? model.manageList[index]
+                                      : model.manageFiltered[index];
                                   return ManageWordItem(
                                       data: obj,
                                       onClicked: () async {

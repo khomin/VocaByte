@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
-enum PageType { home, searchWord, manageWords, settings }
+enum PageType { home, settings }
 
 class AppModel with ChangeNotifier {
   String _appVersion = '';

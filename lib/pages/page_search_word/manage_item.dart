@@ -8,7 +8,11 @@ import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/services/protobuf/proto.pb.dart';
 
 class ManageWordItem extends StatefulWidget {
-  const ManageWordItem({required this.data, this.onClicked, super.key});
+  const ManageWordItem({
+    required this.data,
+    this.onClicked,
+    super.key,
+  });
   final WordInReview data;
   final Function? onClicked;
 
@@ -41,7 +45,6 @@ class _State extends State<ManageWordItem> {
   @override
   Widget build(BuildContext context) {
     return ItemInMenuList(
-        height: Constants.searchItemHeight,
         useBorderTop: false,
         useBorderBot: true,
         onClicked: (pos) {

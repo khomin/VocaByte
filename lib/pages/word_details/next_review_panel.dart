@@ -73,7 +73,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
         ItemInMenuList(
             useBorderTop: true,
             useBorderBot: true,
-            height: 50,
             onClicked: (pos) {
               widget.onAlreadyKnow();
               Navigator.of(context).pop();
@@ -86,7 +85,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
         ItemInMenuList(
             useBorderTop: false,
             useBorderBot: true,
-            height: 50,
             onClicked: (pos) {
               _reviewValue = ReviewTime.today;
               widget.onChanged.call(_reviewValue);
@@ -100,7 +98,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
         ItemInMenuList(
             useBorderTop: false,
             useBorderBot: true,
-            height: 50,
             onClicked: (pos) {
               _reviewValue = ReviewTime.day1;
               widget.onChanged.call(_reviewValue);
@@ -114,7 +111,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
         ItemInMenuList(
             useBorderTop: false,
             useBorderBot: true,
-            height: 50,
             onClicked: (pos) {
               _reviewValue = ReviewTime.week1;
               widget.onChanged.call(_reviewValue);
@@ -128,7 +124,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
         ItemInMenuList(
             useBorderTop: false,
             useBorderBot: true,
-            height: 50,
             onClicked: (pos) {
               _reviewValue = ReviewTime.month1;
               widget.onChanged.call(_reviewValue);
@@ -142,7 +137,6 @@ class NextReviewPanelState extends State<NextReviewPanel> {
         ItemInMenuList(
             useBorderTop: false,
             useBorderBot: true,
-            height: 50,
             onClicked: (pos) {
               _reviewValue = ReviewTime.month3;
               widget.onChanged.call(_reviewValue);

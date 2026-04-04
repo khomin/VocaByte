@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/services.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
@@ -109,13 +110,12 @@ class CardReviewNavState extends State<CardReviewNav> {
         canPop: false,
         onPopInvokedWithResult: (didPop, result) async {
           if (didPop) return;
-          // var nav = NavigatorRep().routeBloc.navKey;
-          // if (nav.currentState?.canPop() == true) {
-          //   nav.currentState?.pop();
-          //   return;
-          // } else {
-          //   SystemNavigator.pop();
-          // }
+          if (Navigator.of(context).canPop() == true) {
+            Navigator.of(context).pop();
+            return;
+          } else {
+            SystemNavigator.pop();
+          }
         },
         child: Scaffold(
             appBar: AppBar(
@@ -123,7 +123,7 @@ class CardReviewNavState extends State<CardReviewNav> {
                 leadingWidth: double.infinity,
                 elevation: 1,
                 shadowColor: Theme.of(context).colorScheme.title4,
-                leading: AppBar2(
+                leading: AppBarExtra(
                     type: Type.close,
                     child: StreamBuilder(
                         stream: getIt<AppRep>().onReviewProgress,

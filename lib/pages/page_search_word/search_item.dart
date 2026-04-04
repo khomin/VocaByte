@@ -37,7 +37,6 @@ class _State extends State<SearchWordItem> {
   @override
   Widget build(BuildContext context) {
     return ItemInMenuList(
-        height: Constants.searchItemHeight,
         useBorderTop: false,
         useBorderBot: true,
         onClicked: (pos) {
@@ -56,21 +55,25 @@ class _State extends State<SearchWordItem> {
                 children: [
                   //
                   // text
-                  Text(widget.data.word,
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: Theme.of(context).colorScheme.text3)),
+                  Text(
+                    widget.data.word,
+                    style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 14,
+                        color: Theme.of(context).colorScheme.text3),
+                  ),
                   //
                   // synonyms
                   if (_synonyms.isNotEmpty)
-                    Text(_synonyms,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: Theme.of(context).colorScheme.text5)),
+                    Text(
+                      _synonyms,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontWeight: FontWeight.w500,
+                          fontSize: 13,
+                          color: Theme.of(context).colorScheme.text5),
+                    ),
                 ]),
           )),
           Padding(
@@ -81,8 +84,11 @@ class _State extends State<SearchWordItem> {
                 if (widget.data.isInStudy)
                   Padding(
                     padding: const EdgeInsets.only(right: 10),
-                    child: Icon(Icons.school_outlined,
-                        size: 20, color: Theme.of(context).colorScheme.text5),
+                    child: Icon(
+                      Icons.school_outlined,
+                      size: 20,
+                      color: Theme.of(context).colorScheme.text5,
+                    ),
                   ),
                 //
                 // populariry

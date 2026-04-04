@@ -11,22 +11,17 @@ class Constants {
       'https://play.google.com/store/apps/details?id=com.vocabyte.app';
   static const appGroupLink = 'https://groups.google.com/g/vocabyte';
 
-  static double iconHomeSize = 60.0;
-  static double bottomNavHeight = 70.0;
-
-  static String get fontInter => 'Inter';
-  static String get fontFredoka => 'Fredoka';
-
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
   static const searchHeroDuration = Duration(milliseconds: 250);
 
   static const appBarButton = 52.0;
+  static double bottomNavHeight = 70.0;
   static double homeAppBarHeight = 70.0;
   static double searchItemHeight = 50;
 
-  static const baseButton = 55.0;
+  static const baseButton = 50.0;
   static const homeCardHeight = 80.0;
   static const homeCardPadding = 10.0;
 
@@ -49,6 +44,9 @@ class Constants {
   static const double dialogHeaderHeight = 30;
   static const double dialogHeaderMiddle = 40;
   static const double dialogHeaderLargeHeight = 56;
+
+  static String get fontInter => 'Inter';
+  static String get fontFredoka => 'Fredoka';
 
   // dialogs
   static const dialogHeadertFontSize = 15.0;

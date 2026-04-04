@@ -61,7 +61,9 @@ extension MenuColorScheme on ColorScheme {
       : const Color.fromARGB(255, 0, 255, 128);
   Color get text3 => dark() ? const Color(0xFFFAFAFA) : const Color(0xFF233F67);
   Color get text4 => dark() ? const Color(0xFF475E7D) : const Color(0xFFB6BECD);
-  Color get text5 => dark() ? const Color(0xFFB5C2D4) : const Color(0xFFB6BECD);
+  Color get text5 => dark()
+      ? const Color(0xFFB5C2D4)
+      : const Color.fromARGB(255, 139, 145, 157);
   //
   // dialogs/inputs
   Color get dialogBackground =>
@@ -96,7 +98,9 @@ extension MenuColorScheme on ColorScheme {
       fontWeight: FontWeight.w500);
 
   TextStyle get title2 => TextStyle(
-      color: dark() ? const Color(0xFFCACACA) : const Color(0xF06A6A6A),
+      color: dark()
+          ? const Color(0xFFCACACA)
+          : const Color.fromARGB(239, 56, 56, 56),
       fontSize: 14,
       fontWeight: FontWeight.w400);
 

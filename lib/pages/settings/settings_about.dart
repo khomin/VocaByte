@@ -27,7 +27,7 @@ class SettingsAboutState extends State<SettingsAbout> {
                 slivers: [
                   SliverAppBar(
                       automaticallyImplyLeading: false,
-                      flexibleSpace: AppBar2(
+                      flexibleSpace: AppBarExtra(
                           type: Type.back,
                           child: Flexible(
                               child: Row(
@@ -92,7 +92,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                 ItemInMenuList(
                     useBorderTop: false,
                     useBorderBot: false,
-                    height: 50,
                     padding: EdgeInsets.zero,
                     margin: EdgeInsets.zero,
                     onClicked: (pos) {},

@@ -28,7 +28,7 @@ class SearchWordModel with ChangeNotifier {
   var searchResult = <SearchInfo>[];
   var recent = <SearchInfo>[];
   var manageList = <WordInReview>[];
-  var _manageFiltered = <WordInReview>[];
+  var manageFiltered = <WordInReview>[];
   final _dispStream = DisposableStream();
   var _disposed = false;
 
@@ -92,6 +92,7 @@ class SearchWordModel with ChangeNotifier {
           });
           searchResult = list;
         } else {
+          controller.text = '';
           searchResult = [];
         }
         notify();
@@ -99,15 +100,17 @@ class SearchWordModel with ChangeNotifier {
       case SearchMode.manage:
         if (query.isEmpty) {
           controller.text = '';
+          manageFiltered = [];
+          notify();
           return;
         }
         if (query.isNotEmpty) {
-          _manageFiltered.clear();
-          _manageFiltered.addAll(manageList.where((it) {
+          manageFiltered.clear();
+          manageFiltered.addAll(manageList.where((it) {
             return it.word.toLowerCase().startsWith(query.toLowerCase());
           }));
         } else {
-          _manageFiltered = [];
+          manageFiltered = [];
         }
         notify();
         break;
@@ -132,7 +135,16 @@ class SearchWordModel with ChangeNotifier {
   }
 
   bool nothingFound() {
-    return query.isNotEmpty && searchResult.isEmpty;
+    switch (mode) {
+      case SearchMode.search:
+        return query.isNotEmpty && searchResult.isEmpty;
+      case SearchMode.manage:
+        return query.isNotEmpty && manageFiltered.isEmpty;
+    }
+  }
+
+  bool noWordsToManage() {
+    return query.isEmpty && manageList.isEmpty;
   }
 
   bool showRecent() {

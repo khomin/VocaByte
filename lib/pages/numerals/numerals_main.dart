@@ -11,6 +11,7 @@ import 'package:vocabyte/repository/app_rep.dart';
 
 class NumeralsMain extends StatefulWidget {
   const NumeralsMain({super.key});
+
   @override
   NumeralsMainState createState() => NumeralsMainState();
 }
@@ -42,7 +43,7 @@ class NumeralsMainState extends State<NumeralsMain> {
             appBar: AppBar(
                 backgroundColor: Theme.of(context).colorScheme.page,
                 leadingWidth: double.infinity,
-                leading: AppBar2(
+                leading: AppBarExtra(
                     type: Type.close,
                     child: StreamBuilder(
                         stream: getIt<AppRep>().onNumeralsProgress,

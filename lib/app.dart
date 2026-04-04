@@ -1,17 +1,12 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-// ignore: unnecessary_import
-import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/app/log_printer.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/components/navigation_observer.dart';
 import 'package:vocabyte/components/page_transition2.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/pages/card_review/card_review_nav.dart';
-import 'package:vocabyte/pages/manage_word/manage_word_page.dart';
 import 'package:vocabyte/pages/models/app_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_main.dart';
 import 'package:vocabyte/pages/page_home/page_home.dart';
@@ -23,7 +18,6 @@ import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/pages/splash/splash.dart';
 import 'package:vocabyte/pages/splash/splash_install.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
@@ -229,7 +223,6 @@ class _AppState extends State<App> {
     return Scaffold(
         backgroundColor: Theme.of(context).colorScheme.baseColor1,
         extendBody: true,
-        // extendBodyBehindAppBar: true,
         bottomNavigationBar: Container(
             decoration: BoxDecoration(
               boxShadow: [
@@ -263,29 +256,7 @@ class _AppState extends State<App> {
                         onPressed: () {
                           _appModel.setCurrentPage(PageType.home);
                         }),
-                    IconButton(
-                        padding: const EdgeInsets.all(15),
-                        icon: Icon(
-                          Icons.search,
-                          color: model.currentPage == PageType.searchWord
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                        onPressed: () {
-                          _openSearch(SearchMode.search);
-                        }),
                     const SizedBox(width: 48),
-                    IconButton(
-                        padding: const EdgeInsets.all(15),
-                        icon: Icon(
-                          Icons.menu_book,
-                          color: model.currentPage == PageType.manageWords
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.onSurfaceVariant,
-                        ),
-                        onPressed: () {
-                          _openSearch(SearchMode.manage);
-                        }),
                     IconButton(
                         padding: const EdgeInsets.all(15),
                         icon: Icon(
@@ -305,16 +276,10 @@ class _AppState extends State<App> {
           elevation: 4,
           shape: const CircleBorder(),
           onPressed: () {
-            Navigator.push(
-                context,
-                PageTransition2.build(
-                  settings: const RouteSettings(),
-                  type: TransitionType.opacity,
-                  child: const CardReviewNav(),
-                ));
+            _openSearch(SearchMode.search);
           },
           child: const Icon(
-            Icons.local_library_outlined,
+            Icons.search,
             color: Colors.white,
             size: 30,
           ),
@@ -354,38 +319,6 @@ class _AppState extends State<App> {
                         ));
                   },
                 ),
-                // SearchWordPage(
-                //     // filter: model.searchFilter,
-                //     onShow: (data) async {
-                //   getIt<AppRep>().cachedWord = data;
-                //   await ServiceApi().putRecent(data.word);
-                //   await getIt<AppRep>().updateRecent();
-                //   if (!context.mounted) return;
-                //   Navigator.push(
-                //       context,
-                //       PageTransition2.build(
-                //           settings: const RouteSettings(),
-                //           type: TransitionType.slide,
-                //           child: PageWordDetails(
-                //               playWordAtStart: true,
-                //               primary: true,
-                //               onBack: () {
-                //                 Navigator.of(context).pop();
-                //               })));
-                // }),
-                // ManageWordPage(onShowWord: (data) {
-                //   Navigator.push(
-                //       context,
-                //       PageTransition2.build(
-                //           settings: const RouteSettings(),
-                //           type: TransitionType.slide,
-                //           child: PageWordDetails(
-                //               primary: true,
-                //               onBack: () {
-                //                 Navigator.of(context).pop();
-                //               },
-                //               playWordAtStart: true)));
-                // }),
                 SettingsPage(onChangeGoal: () {
                   Navigator.push(
                       context,
@@ -402,23 +335,17 @@ class _AppState extends State<App> {
   }
 
   void _openSearch(SearchMode mode) {
-    Navigator.of(context).push(PageRouteBuilder(
-        settings: const RouteSettings(),
-        opaque: false,
-        barrierDismissible: true,
-        transitionDuration: Constants.searchHeroDuration,
-        reverseTransitionDuration: Constants.searchHeroDuration,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return child;
-        },
-        pageBuilder: (context, animation, secondaryAnimation) {
-          return SearchWordPage(
+    Navigator.of(context).push(
+      PageTransition2.build(
+          settings: const RouteSettings(),
+          type: TransitionType.animation1,
+          child: SearchWordPage(
               mode: mode,
               onShow: (data) async {
                 getIt<AppRep>().cachedWord = data;
                 await ServiceApi().putRecent(data.word);
                 await getIt<AppRep>().updateRecent();
-                if (!context.mounted) return;
+                if (!mounted) return;
                 Navigator.push(
                     context,
                     PageTransition2.build(
@@ -430,7 +357,7 @@ class _AppState extends State<App> {
                             onBack: () {
                               Navigator.of(context).pop();
                             })));
-              });
-        }));
+              })),
+    );
   }
 }
