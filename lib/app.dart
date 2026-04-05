@@ -8,11 +8,11 @@ import 'package:vocabyte/app/log_printer.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/page_transition2.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/card_review/card_review_nav.dart';
-import 'package:vocabyte/pages/models/app_model.dart';
+import 'package:vocabyte/pages/card_review/card_review_main.dart';
+import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_main.dart';
-import 'package:vocabyte/pages/page_home/page_home.dart';
-import 'package:vocabyte/pages/page_search_word/page_search.dart';
+import 'package:vocabyte/pages/home/page_home.dart';
+import 'package:vocabyte/pages/search_word/page_search.dart';
 import 'package:vocabyte/pages/settings/settings_daily_goal.dart';
 import 'package:vocabyte/pages/settings/settings_page.dart';
 import 'package:vocabyte/pages/word_details/page_word_details.dart';
@@ -53,9 +53,9 @@ class _AppState extends State<App> {
       //
       // if should copy resources
       if (!await FileUtils.isResourcesReady()) {
-        _appModel.waitCopyResource = true;
+        _appModel.busyCopyResource = true;
         await FileUtils.copyResourcesToDir();
-        _appModel.waitCopyResource = false;
+        _appModel.busyCopyResource = false;
       }
       //
       // ffi-cpp
@@ -66,7 +66,7 @@ class _AppState extends State<App> {
       // check if migrate database
       if (await ServiceApi().migrateDatabase()) {
         // (1) show status "migrating, please don't close the app"
-        _appModel.waitMigratingDb = true;
+        _appModel.busyMigratingDb = true;
         // (2) export all -> profile.json
         var temp = '${FileUtils.homeDir}/backup.json';
         await ServiceApi().exportProfile(explicitDir: temp);
@@ -77,7 +77,7 @@ class _AppState extends State<App> {
         // (6) remove temp profile
         FileUtils.deleteFile(temp);
         // (7) close status
-        _appModel.waitMigratingDb = false;
+        _appModel.busyMigratingDb = false;
       }
       _appModel.serviceInited = true;
 
@@ -89,102 +89,6 @@ class _AppState extends State<App> {
         await getIt<AppRep>().refreshManageList();
       });
     });
-
-    // _observer = NavigatorObserverCustom(
-    //     onDidPop: () {},
-    //     onChanged: (name, arg) {
-    //       var page = PageType.values.firstWhereOrNull((v) => v.name == name);
-    //       switch (page) {
-    //         case null:
-    //           if (name == 'numerals') {
-    //             NavigatorRep().routeBloc.onHideBottom.add(true);
-    //           }
-    //           break;
-    //         case PageType.home:
-    //           NavigatorRep().routeBloc.onHideBottom.add(false);
-    //           break;
-    //         case PageType.reviewCard:
-    //           NavigatorRep().routeBloc.onHideBottom.add(true);
-    //           break;
-    //         case PageType.searchWord:
-    //         case PageType.manageWords:
-    //         case PageType.settings:
-    //           break;
-    //       }
-    //       if (page != null) {
-    //         NavigatorRep().routeBloc.onCurrent.add(Panel(type: page));
-    //       }
-    //     });
-
-    // _dispStream.add(NavigatorRep().routeBloc.onGoto.listen((page) {
-    //   if (page == null) return;
-    //   var settings = RouteSettings(name: page.type.name);
-    //   var nav = NavigatorRep().routeBloc.navKey.currentState;
-    //   while (nav?.canPop() == true) {
-    //     nav?.pop();
-    //   }
-    //   switch (page.type) {
-    //     case PageType.searchWord:
-    //       nav?.push(PageTransition2.build(
-    //           settings: settings,
-    //           type: TransitionType.opacity,
-    //           child: SearchWordPage(onShow: (data) async {
-    //             getIt<AppRep>().cachedWord = data;
-    //             await ServiceApi().putRecent(data.word);
-    //             await getIt<AppRep>().updateRecent();
-    //             nav.push(PageTransition2.build(
-    //                 settings: settings,
-    //                 type: TransitionType.slide,
-    //                 child: PageWordDetails(
-    //                     playWordAtStart: true,
-    //                     primary: true,
-    //                     onBack: () {
-    //                       Navigator.of(context).pop();
-    //                     })));
-    //           })));
-    //       break;
-    //     case PageType.reviewCard:
-    //       nav?.push(
-    //         PageTransition2.build(
-    //             settings: settings,
-    //             type: TransitionType.opacity,
-    //             child: const CardReviewNav()),
-    //       );
-    //       break;
-    //     case PageType.manageWords:
-    //       nav?.push(PageTransition2.build(
-    //           settings: settings,
-    //           type: TransitionType.slide,
-    //           child: ManageWordPage(onShowWord: (data) {
-    //             nav.push(PageTransition2.build(
-    //                 settings: settings,
-    //                 type: TransitionType.slide,
-    //                 child: PageWordDetails(
-    //                     primary: true,
-    //                     onBack: () {
-    //                       Navigator.of(context).pop();
-    //                     },
-    //                     playWordAtStart: true)));
-    //           })));
-    //       break;
-    //     case PageType.settings:
-    //       nav?.push(PageTransition2.build(
-    //           settings: settings,
-    //           type: TransitionType.slide,
-    //           child: SettingsPage(onChangeGoal: () {
-    //             nav.push(PageTransition2.build(
-    //                 settings: settings,
-    //                 type: TransitionType.slide,
-    //                 child: SettingsDailiyGoal(onChanged: (v) {
-    //                   SettingsRep().setDailyGoal(v);
-    //                   SettingsRep().onChanged.add(null);
-    //                 })));
-    //           })));
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // }));
   }
 
   @override
@@ -211,10 +115,10 @@ class _AppState extends State<App> {
     var model = context.watch<AppModel>();
     //
     // initial copy of assets
-    if (model.waitCopyResource) {
+    if (model.busyCopyResource) {
       return const SplashWithText(text: 'Copying database...');
     }
-    if (model.waitMigratingDb) {
+    if (model.busyMigratingDb) {
       return const SplashWithText(
           text: "Installing update\nPlease don't close the app");
     }
@@ -304,7 +208,7 @@ class _AppState extends State<App> {
                         PageTransition2.build(
                           settings: const RouteSettings(),
                           type: TransitionType.opacity,
-                          child: const CardReviewNav(),
+                          child: const CardReviewMain(),
                         ));
                   },
                   onSearch: () {

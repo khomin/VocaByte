@@ -1,11 +1,9 @@
-import 'dart:ui' as ui;
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button3.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
-import 'package:vocabyte/resource/constants.dart';
 
 class NumeralsCompleted extends StatefulWidget {
   const NumeralsCompleted({
@@ -51,37 +49,20 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
         DateTime.now().difference(widget.result.started),
       );
       _line2 = 'Your time $duration';
+      if (!mounted) return;
 
       _items = [
-        Text(_line1,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              fontFamily: Constants.fontFredoka,
-              fontWeight: FontWeight.bold,
-              foreground: Paint()
-                ..shader = ui.Gradient.linear(
-                  const Offset(0, 0),
-                  const Offset(300, 0),
-                  [
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad1,
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad2,
-                  ],
-                ),
-            )),
+        Text(
+          _line1,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).colorScheme.getBeautifulLine1(context),
+        ),
         const SizedBox(height: 10),
-        Text(_line2,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20,
-                fontFamily: Constants.fontFredoka,
-                fontWeight: FontWeight.bold,
-                foreground: Paint()
-                  ..shader = ui.Gradient.linear(
-                      const Offset(0, 0), const Offset(300, 0), <Color>[
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad1,
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad2
-                  ])))
+        Text(
+          _line2,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).colorScheme.getBeautifulLine2(context),
+        ),
       ];
 
       _items = _items
@@ -95,6 +76,7 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
 
   @override
   Widget build(BuildContext context) {
+    var padding = MediaQuery.paddingOf(context);
     return Container(
         color: Theme.of(context).colorScheme.page,
         child: Column(children: [
@@ -108,8 +90,12 @@ class NumeralsCompletedState extends State<NumeralsCompleted> {
                 Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                   Expanded(
                       child: Padding(
-                          padding: const EdgeInsets.only(
-                              top: 50, left: 20, right: 20),
+                          padding: EdgeInsets.only(
+                            top: 50,
+                            left: 20,
+                            right: 20,
+                            bottom: padding.bottom,
+                          ),
                           child: Button3(
                               text: 'Continue',
                               color:

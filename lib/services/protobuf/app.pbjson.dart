@@ -1,6 +1,6 @@
 // This is a generated file - do not edit.
 //
-// Generated from proto.proto.
+// Generated from app.proto.
 
 // @dart = 3.3
 
@@ -8,7 +8,8 @@
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: curly_braces_in_flow_control_structures
 // ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names, unused_import
+// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
+// ignore_for_file: unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -241,11 +242,14 @@ final $typed_data.Uint8List wordDescriptor = $convert.base64Decode(
 @$core.Deprecated('Use reqReviewForTodayDescriptor instead')
 const ReqReviewForToday$json = {
   '1': 'ReqReviewForToday',
+  '2': [
+    {'1': 'now', '3': 1, '4': 1, '5': 4, '10': 'now'},
+  ],
 };
 
 /// Descriptor for `ReqReviewForToday`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List reqReviewForTodayDescriptor =
-    $convert.base64Decode('ChFSZXFSZXZpZXdGb3JUb2RheQ==');
+final $typed_data.Uint8List reqReviewForTodayDescriptor = $convert
+    .base64Decode('ChFSZXFSZXZpZXdGb3JUb2RheRIQCgNub3cYASABKARSA25vdw==');
 
 @$core.Deprecated('Use respReviewForTodayDescriptor instead')
 const RespReviewForToday$json = {

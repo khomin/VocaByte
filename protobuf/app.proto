@@ -86,7 +86,7 @@ message Word {
 }
 
 message ReqReviewForToday {
-    // empty
+    optional uint64 now = 1;
 }
 
 message RespReviewForToday {

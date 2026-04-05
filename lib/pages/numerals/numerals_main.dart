@@ -36,8 +36,10 @@ class NumeralsMainState extends State<NumeralsMain> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
+    var padding = MediaQuery.paddingOf(context);
     return SafeArea(
+        top: false,
+        bottom: false,
         child: Scaffold(
             backgroundColor: Theme.of(context).colorScheme.page,
             appBar: AppBar(
@@ -82,10 +84,8 @@ class NumeralsMainState extends State<NumeralsMain> {
                           ]));
                         }))),
             body: Container(
-                color: Theme.of(context).colorScheme.page,
-                width: size.width,
-                height: size.height,
-                padding: const EdgeInsets.only(bottom: 20),
+                // color: Theme.of(context).colorScheme.page,
+                padding: EdgeInsets.only(bottom: padding.bottom + 50),
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

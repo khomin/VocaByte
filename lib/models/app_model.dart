@@ -38,16 +38,16 @@ class AppModel with ChangeNotifier {
     }
   }
 
-  bool get waitCopyResource => _waitCopyResource;
-  set waitCopyResource(bool v) {
+  bool get busyCopyResource => _waitCopyResource;
+  set busyCopyResource(bool v) {
     if (_waitCopyResource != v) {
       _waitCopyResource = v;
       notifyListeners();
     }
   }
 
-  bool get waitMigratingDb => _waitMigratingDb;
-  set waitMigratingDb(bool v) {
+  bool get busyMigratingDb => _waitMigratingDb;
+  set busyMigratingDb(bool v) {
     if (_waitMigratingDb != v) {
       _waitMigratingDb = v;
       notifyListeners();

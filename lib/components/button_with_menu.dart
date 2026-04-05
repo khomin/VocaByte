@@ -32,27 +32,29 @@ class ButtonWithMenu extends StatelessWidget {
                 onPressed();
               })),
       SizedBox(
-          width: 50,
-          height: Constants.buttonHeight,
-          child: ElevatedButton(
-              onPressed: () {
-                onMenu();
-              },
-              autofocus: false,
-              style: ElevatedButton.styleFrom(
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(8),
-                          bottomRight: Radius.circular(8))),
-                  padding: EdgeInsets.zero,
-                  backgroundColor: Theme.of(context).colorScheme.buttonOption3,
-                  textStyle: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontSize: 12,
-                    color: Theme.of(context).colorScheme.baseColor1,
-                  )),
-              child: Icon(Icons.arrow_drop_down_outlined,
-                  color: Theme.of(context).colorScheme.buttonOptionText)))
+        width: 50,
+        height: Constants.buttonHeight,
+        child: ElevatedButton(
+          onPressed: () {
+            onMenu();
+          },
+          autofocus: false,
+          style: ElevatedButton.styleFrom(
+              shape: const RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(8),
+                      bottomRight: Radius.circular(8))),
+              padding: EdgeInsets.zero,
+              backgroundColor: Theme.of(context).colorScheme.buttonOption3,
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.baseColor1,
+              )),
+          child: Icon(Icons.arrow_drop_down_outlined,
+              color: Theme.of(context).colorScheme.buttonOptionText),
+        ),
+      )
     ]);
   }
 }

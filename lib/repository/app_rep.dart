@@ -8,17 +8,18 @@ import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/models/search_word_model.dart';
+import 'package:vocabyte/models/review_model.dart';
+import 'package:vocabyte/models/search_word_model.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
-import 'package:vocabyte/pages/card_review/card_review_nav.dart';
-import 'package:vocabyte/pages/models/word_data.dart';
+import 'package:vocabyte/pages/card_review/card_review_main.dart';
+import 'package:vocabyte/models/word_data.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/repository/review_task.dart';
 import 'package:vocabyte/repository/review_task_base.dart';
 import 'package:vocabyte/repository/review_task_mock.dart';
-import 'package:vocabyte/services/protobuf/proto.pb.dart';
+import 'package:vocabyte/services/protobuf/app.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
 
 class NumeralsStage {
@@ -135,11 +136,12 @@ class AppRep {
 
   Future updateReviewTime(String? word, Int64 time) async {
     if (word == null) return;
-    var current =
-        await getIt<AppRep>().reviewTask.getWordReviewStatus(word: word);
+    final rep = getIt<AppRep>();
+    var current = await rep.reviewTask.getWordReviewStatus(word: word);
     if (current != null) {
+      final now64 = Int64(DateTime.now().millisecondsSinceEpoch);
       current.nextReviewTmMs = time;
-      current.lastTmSuccess = Int64(DateTime.now().millisecondsSinceEpoch);
+      current.lastTmSuccess = now64;
       await ServiceApi().updateCurrent(
           req: ReqUpdateWordInCurrent(
               word: current.word,
@@ -149,27 +151,35 @@ class AppRep {
               lastTmFail: current.lastTmFail,
               nextReviewTmMs: current.nextReviewTmMs,
               meaningId: current.meaningId));
+      // var study = await ServiceApi().getCurrentToStudy();
+      // logDebug('BTEST_STUDY=$study');
+      // if (time == 0) {
+      //   logDebug('BTEST_STUDY-got: $study');
+      // }
     } else {
       logWarning('$tag: update review time empty current');
     }
     return null;
   }
 
-  Future updateMeaningId(
-      {required String word, required String meaningId}) async {
+  Future updateMeaningId({
+    required String word,
+    required String meaningId,
+  }) async {
     var current =
         await getIt<AppRep>().reviewTask.getWordReviewStatus(word: word);
     if (current != null) {
       current.meaningId = meaningId;
       await ServiceApi().updateCurrent(
           req: ReqUpdateWordInCurrent(
-              word: current.word,
-              successCount: current.successCount,
-              failCount: current.failCount,
-              lastTmSuccess: current.lastTmSuccess,
-              lastTmFail: current.lastTmFail,
-              nextReviewTmMs: current.nextReviewTmMs,
-              meaningId: current.meaningId));
+        word: current.word,
+        successCount: current.successCount,
+        failCount: current.failCount,
+        lastTmSuccess: current.lastTmSuccess,
+        lastTmFail: current.lastTmFail,
+        nextReviewTmMs: current.nextReviewTmMs,
+        meaningId: current.meaningId,
+      ));
     } else {
       logWarning('$tag: update review time empty current');
     }
@@ -285,10 +295,11 @@ class AppRep {
     }
   }
 
-  Future<CardData?> buildReview(
-      {required String v,
-      required String? meaningId,
-      required CardPageType type}) async {
+  Future<CardData?> buildReview({
+    required String v,
+    required String? meaningId,
+    required CardPageType type,
+  }) async {
     var search = await ServiceApi().getDictionary(word: v, useLike: false);
     var info = await getIt<AppRep>().wordToInfo(search.item.first);
     var randList = await ServiceApi().getDictionaryRand(3);

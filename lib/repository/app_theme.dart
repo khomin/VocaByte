@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/resource/constants.dart';
+import 'dart:ui' as ui;
 
 enum ThemeType { light, dark, system }
 
@@ -92,17 +93,16 @@ extension MenuColorScheme on ColorScheme {
   //
   // text
   TextStyle get appBarText => TextStyle(
-      color: dark() ? const Color(0xFFCACACA) : const Color(0xFF202020),
-      fontSize: 14,
-      fontWeight: FontWeight.w500);
-
+        color: dark() ? const Color(0xFFCACACA) : const Color(0xFF202020),
+        fontSize: 14,
+        fontWeight: FontWeight.w500,
+      );
   TextStyle get title1 => TextStyle(
         color: dark() ? const Color(0xFF8A8A9A) : const Color(0xFF202020),
         fontSize: 14,
         fontFamily: Constants.fontInter,
         fontWeight: FontWeight.w600,
       );
-
   TextStyle get title2 => TextStyle(
         color: dark()
             ? const Color(0xFFCACACA)
@@ -111,11 +111,35 @@ extension MenuColorScheme on ColorScheme {
         fontFamily: Constants.fontInter,
         fontWeight: FontWeight.w400,
       );
-
   TextStyle get title3 => TextStyle(
-      color: dark() ? const Color(0xFFAAAAAA) : const Color(0xF04A4A4A),
-      fontSize: 14,
-      fontWeight: FontWeight.w400);
+        color: dark() ? const Color(0xFFAAAAAA) : const Color(0xF04A4A4A),
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+      );
+  TextStyle getBeautifulLine1(BuildContext context) => TextStyle(
+        fontSize: 20,
+        fontFamily: Constants.fontFredoka,
+        fontWeight: FontWeight.w500,
+        foreground: Paint()
+          ..shader = ui.Gradient.linear(
+            const Offset(0, 0),
+            const Offset(300, 0),
+            [
+              Theme.of(context).colorScheme.textResultGrad1,
+              Theme.of(context).colorScheme.textResultGrad2,
+            ],
+          ),
+      );
+  TextStyle getBeautifulLine2(BuildContext context) => TextStyle(
+      fontSize: 20,
+      fontFamily: Constants.fontFredoka,
+      fontWeight: FontWeight.w600,
+      foreground: Paint()
+        ..shader = ui.Gradient.linear(
+            const Offset(0, 0), const Offset(300, 0), <Color>[
+          Theme.of(context).colorScheme.textResultGrad1,
+          Theme.of(context).colorScheme.textResultGrad2
+        ]));
 
   Color get title4 => dark()
       ? const Color.fromARGB(255, 26, 151, 97)
@@ -127,9 +151,11 @@ extension MenuColorScheme on ColorScheme {
       : const Color.fromARGB(255, 195, 42, 34);
 
   TextStyle get titleInverse => TextStyle(
-      color: dark() ? const Color(0xFFF0F0F0) : const Color(0xFFFFFFFF),
-      fontSize: 14,
-      fontWeight: FontWeight.w500);
+        color: dark() ? const Color(0xFFF0F0F0) : const Color(0xFFFFFFFF),
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        fontFamily: Constants.fontInter,
+      );
 
   Color get dialogHeaderText =>
       dark() ? const Color(0xFFB5C2D4) : const Color(0xFF202020);

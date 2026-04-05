@@ -12,6 +12,7 @@ class Constants {
   static const appGroupLink = 'https://groups.google.com/g/vocabyte';
 
   static const bool useDailyGoal = false;
+  static const goalDefaultBreakCount = isDev ? 2 : 10;
 
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);
@@ -24,6 +25,7 @@ class Constants {
   static double searchItemHeight = 50;
 
   static const baseButton = 50.0;
+  static const buttonHeight = 45.0;
   static const homeCardHeight = 80.0;
   static const homeCardPadding = 10.0;
 
@@ -60,8 +62,6 @@ class Constants {
   static const dialogHeaderFontWeight = FontWeight.w400;
   static const dialogFontSize = 14.0;
   static const dialogFontWeight = FontWeight.w200;
-
-  static const buttonHeight = 45.0;
 
   static const animDurationFast = Duration(milliseconds: 50);
   static const animDurationMid = Duration(milliseconds: 200);

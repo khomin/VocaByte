@@ -1,8 +1,8 @@
 import 'package:rxdart/rxdart.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/card_review/card_review_nav.dart';
+import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/services/protobuf/proto.pb.dart';
+import 'package:vocabyte/services/protobuf/app.pb.dart';
 
 class ReviewTaskBase {
   final cardData = <CardData>[];

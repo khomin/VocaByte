@@ -10,7 +10,7 @@
 
 class MiscDb {
 public:
-    MiscDb();
+    MiscDb(std::string path);
     ~MiscDb();
 
     struct Word {
@@ -36,12 +36,10 @@ public:
 
     enum DB_type { Primary, Sentences };
 
-    bool init(std::string path);
-
     std::vector<Word> getRecent();
     void putRecent(std::string word, std::string json);
 
-    std::vector<WordCurrent> getCurrentToStudy();
+    std::vector<WordCurrent> getCurrentToStudy(uint64_t now);
     
     std::vector<Word> getDictionary(std::string word, bool useLike);
     std::vector<Word> getDictionaryRand(int count);
@@ -65,7 +63,7 @@ private:
     int close_db(DB_type type);
     void waitUntilClose();
 
-    sqlite3* m_db;
+    sqlite3* m_db{};
     std::mutex m_lock;
     std::string db_path;
 

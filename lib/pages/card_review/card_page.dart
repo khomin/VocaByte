@@ -4,8 +4,9 @@ import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/main.dart';
+import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/pages/card_review/card_item.dart';
-import 'package:vocabyte/pages/card_review/card_review_nav.dart';
+import 'package:vocabyte/pages/card_review/card_review_main.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
@@ -157,65 +158,74 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
     var size = MediaQuery.sizeOf(context);
     var pageType = widget.data.pageType;
     return Scaffold(
-        backgroundColor: Theme.of(context).colorScheme.pageHome,
+        backgroundColor: Theme.of(context).colorScheme.baseColor1,
+        extendBodyBehindAppBar: true,
+        extendBody: true,
         body: AnimatedBuilder(
             animation: _animateController,
             builder: (context, child) {
               return Stack(alignment: Alignment.center, children: [
                 Positioned(
-                    bottom: 0,
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    child: Opacity(
-                        opacity: _opacityAnimation.value,
-                        child: Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            width: size.width,
-                            height: size.height,
-                            child: SlideTransition(
-                                position: _slideAnimation,
-                                child: RotationTransition(
-                                    turns: _turnAnimation,
-                                    child: ScaleTransition(
-                                        scale: _scaleAnimation1,
-                                        child: SizedBox(
-                                            child: Column(children: [
-                                          if (pageType ==
-                                              CardPageType.defToWords)
-                                            Expanded(child: _defToWords()),
-                                          if (pageType ==
-                                              CardPageType.wordToDef)
-                                            Expanded(child: _wordToDef()),
-                                          if (pageType ==
-                                              CardPageType.learnNewWord)
-                                            Expanded(child: _learnNew()),
-                                          if (pageType ==
-                                              CardPageType.wordRemeberOrNot)
-                                            Expanded(child: _rememberOrNot()),
-                                          if (pageType ==
-                                              CardPageType.audioToDef)
-                                            Expanded(child: _audioToDef()),
-                                          //
-                                          //
-                                          _footerButton()
-                                        ])))))))),
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: Opacity(
+                    opacity: _opacityAnimation.value,
+                    child: Container(
+                      margin: const EdgeInsets.only(top: 20),
+                      width: size.width,
+                      height: size.height,
+                      child: SlideTransition(
+                        position: _slideAnimation,
+                        child: RotationTransition(
+                          turns: _turnAnimation,
+                          child: ScaleTransition(
+                            scale: _scaleAnimation1,
+                            child: SizedBox(
+                              child: Column(children: [
+                                if (pageType == CardPageType.defToWords)
+                                  Expanded(child: _defToWords()),
+                                if (pageType == CardPageType.wordToDef)
+                                  Expanded(child: _wordToDef()),
+                                if (pageType == CardPageType.learnNewWord)
+                                  Expanded(child: _learnNew()),
+                                if (pageType == CardPageType.wordRemeberOrNot)
+                                  Expanded(child: _rememberOrNot()),
+                                if (pageType == CardPageType.audioToDef)
+                                  Expanded(child: _audioToDef()),
+                                //
+                                //
+                                _footerButton()
+                              ]),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
               ]);
             }));
   }
 
   Widget _footerButton() {
-    return FixedFooterBottom(
-        child2: ButtonRoundCorner(
-            text: 'Not sure',
-            color: Theme.of(context).colorScheme.buttonOption4,
-            colorText: Theme.of(context).colorScheme.buttonOptionText,
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            direction: TextDirection.ltr,
-            radious: const BorderRadius.all(Radius.circular(10)),
-            onPressed: () {
-              _onDone(false);
-            }));
+    return Builder(builder: (context) {
+      var padding = MediaQuery.paddingOf(context);
+      return Padding(
+          padding: EdgeInsets.only(bottom: padding.bottom),
+          child: FixedFooterBottom(
+              child2: ButtonRoundCorner(
+                  text: 'Not sure',
+                  color: Theme.of(context).colorScheme.buttonOption4,
+                  colorText: Theme.of(context).colorScheme.buttonOptionText,
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  direction: TextDirection.ltr,
+                  radious: const BorderRadius.all(Radius.circular(10)),
+                  onPressed: () {
+                    _onDone(false);
+                  })));
+    });
   }
 
   Widget _defToWords() {

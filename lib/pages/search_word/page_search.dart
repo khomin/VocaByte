@@ -6,10 +6,10 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/page_search_word/manage_item.dart';
-import 'package:vocabyte/pages/models/search_word_model.dart';
-import 'package:vocabyte/pages/models/word_data.dart';
-import 'package:vocabyte/pages/page_search_word/search_item.dart';
+import 'package:vocabyte/pages/search_word/manage_item.dart';
+import 'package:vocabyte/models/search_word_model.dart';
+import 'package:vocabyte/models/word_data.dart';
+import 'package:vocabyte/pages/search_word/search_item.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
@@ -223,6 +223,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                                           var obj = model.searchResult[index];
                                           return SearchWordItem(
                                               data: obj,
+                                              key: ValueKey('s-search-$obj'),
                                               onClicked: () async {
                                                 _model.loseFocus();
                                                 widget.onShow.call(obj);
@@ -272,6 +273,7 @@ class SearchWordPageState extends State<SearchWordPage> {
                                       : model.manageFiltered[index];
                                   return ManageWordItem(
                                       data: obj,
+                                      key: ValueKey('s-manage-$obj'),
                                       onClicked: () async {
                                         _model.loseFocus();
                                         var r =

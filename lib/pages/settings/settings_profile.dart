@@ -4,7 +4,7 @@ import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/models/settings_model.dart';
+import 'package:vocabyte/models/settings_model.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -246,8 +246,9 @@ class SettingsProfileState extends State<SettingsProfile> {
                       await ServiceApi().deleteProfile();
                       if (context.mounted) {
                         UiHelper.showToast(context, 'Deleted');
-                        getIt<AppRep>().refreshWordToLearn();
                       }
+                      getIt<AppRep>().refreshWordToLearn();
+                      getIt<AppRep>().refreshManageList();
                     },
                   );
                 });
@@ -270,17 +271,16 @@ class SettingsProfileState extends State<SettingsProfile> {
       return Container(
         decoration: BoxDecoration(
           color: Theme.of(context).colorScheme.cardHome,
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(15),
         ),
         margin: const EdgeInsets.only(
-          top: 8,
           left: Constants.homeCardPadding,
           right: Constants.homeCardPadding,
-          bottom: 8,
+          top: 15,
         ),
         child: Column(children: [
           Container(
-              height: 20,
+              height: 30,
               margin: Constants.settingsHeaderPadding,
               child: Row(children: [
                 Text(

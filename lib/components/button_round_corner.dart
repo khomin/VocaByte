@@ -64,58 +64,68 @@ class State2 extends State<ButtonRoundCorner>
     return ScaleTransition(
         scale: _animation,
         child: Padding(
-            padding: widget.padding ?? EdgeInsets.zero,
-            child: ElevatedButton(
-                onPressed: () async {
-                  _controller.forward();
-                  await Future.delayed(const Duration(milliseconds: 50));
-                  if (!mounted) return;
-                  _controller.reverse();
-                  widget.onPressed?.call();
-                },
-                autofocus: false,
-                style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                        borderRadius: widget.radious,
-                        side: widget.borderColor != null
-                            ? BorderSide(width: 1.5, color: widget.borderColor!)
-                            : BorderSide.none),
-                    padding: EdgeInsets.zero,
-                    backgroundColor: widget.color,
-                    shadowColor: Colors.black,
-                    elevation: 8,
-                    textStyle: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 12,
-                      color: Theme.of(context).colorScheme.baseColor1,
-                    )),
-                child: Directionality(
-                    textDirection: widget.direction,
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          // to preserve same height
-                          const SizedBox(height: Constants.buttonHeight),
-                          if (widget.iconData != null)
-                            Icon(widget.iconData,
-                                color: widget.colorText, size: 14),
-                          if (widget.iconPath != null)
-                            SvgPicture.asset(widget.iconPath!,
-                                height: 14,
-                                width: 14,
-                                colorFilter: widget.colorText != null
-                                    ? ColorFilter.mode(
-                                        widget.colorText!, BlendMode.srcIn)
-                                    : null),
-                          if (widget.text != null) const SizedBox(width: 8),
-                          if (widget.text != null)
-                            Text(widget.text!,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    color: widget.colorText,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: UiHelper.isMobile() ? 14 : 12))
-                        ])))));
+          padding: widget.padding ?? EdgeInsets.zero,
+          child: ElevatedButton(
+            onPressed: () async {
+              _controller.forward();
+              await Future.delayed(const Duration(milliseconds: 50));
+              if (!mounted) return;
+              _controller.reverse();
+              widget.onPressed?.call();
+            },
+            autofocus: false,
+            style: ElevatedButton.styleFrom(
+              shape: RoundedRectangleBorder(
+                  borderRadius: widget.radious,
+                  side: widget.borderColor != null
+                      ? BorderSide(width: 1.5, color: widget.borderColor!)
+                      : BorderSide.none),
+              padding: EdgeInsets.zero,
+              backgroundColor: widget.color,
+              shadowColor: Colors.black,
+              elevation: 8,
+              textStyle: TextStyle(
+                fontWeight: FontWeight.w300,
+                fontSize: 12,
+                color: Theme.of(context).colorScheme.baseColor1,
+              ),
+            ),
+            child: Directionality(
+              textDirection: widget.direction,
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                // to preserve same height
+                const SizedBox(height: Constants.buttonHeight),
+                if (widget.iconData != null)
+                  Icon(
+                    widget.iconData,
+                    color: widget.colorText,
+                    size: 14,
+                  ),
+                if (widget.iconPath != null)
+                  SvgPicture.asset(widget.iconPath!,
+                      height: 14,
+                      width: 14,
+                      colorFilter: widget.colorText != null
+                          ? ColorFilter.mode(
+                              widget.colorText!,
+                              BlendMode.srcIn,
+                            )
+                          : null),
+                if (widget.text != null) const SizedBox(width: 8),
+                if (widget.text != null)
+                  Text(
+                    widget.text!,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                        color: widget.colorText,
+                        fontWeight: FontWeight.w500,
+                        fontSize: UiHelper.isMobile() ? 14 : 12),
+                  )
+              ]),
+            ),
+          ),
+        ));
   }
 }

@@ -6,7 +6,7 @@ import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:vocabyte/pages/models/app_model.dart';
+import 'package:vocabyte/models/app_model.dart';
 
 final getIt = GetIt.instance;
 

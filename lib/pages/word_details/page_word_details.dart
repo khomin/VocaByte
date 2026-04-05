@@ -1,9 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:expandable_page_view/expandable_page_view.dart';
 import 'package:fixnum/fixnum.dart';
-import 'package:provider/provider.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
-import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/button_with_menu.dart';
@@ -17,17 +15,17 @@ import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/app/ui_helper.dart';
-import 'package:vocabyte/services/protobuf/proto.pb.dart';
-import 'package:vocabyte/services/protobuf/proto.pbserver.dart';
+import 'package:vocabyte/services/protobuf/app.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
 import 'package:vocabyte/services/tts.dart';
 
 class PageWordDetails extends StatefulWidget {
-  const PageWordDetails(
-      {required this.playWordAtStart,
-      this.primary = false,
-      required this.onBack,
-      super.key});
+  const PageWordDetails({
+    required this.playWordAtStart,
+    this.primary = false,
+    required this.onBack,
+    super.key,
+  });
   final Function() onBack;
   final bool playWordAtStart;
   final bool primary;
@@ -152,32 +150,33 @@ class PageWordDetailsState extends State<PageWordDetails>
             return CustomScrollView(
                 physics: const ClampingScrollPhysics(),
                 slivers: [
-                  SliverAppBar(
-                    pinned: true,
-                    primary: false,
-                    toolbarHeight: Constants.homeAppBarHeight + padding.top,
-                    automaticallyImplyLeading: false,
-                    backgroundColor: Theme.of(context).colorScheme.appBar,
-                    surfaceTintColor: Colors.transparent,
-                    titleSpacing: 0,
-                    title: Container(
-                      alignment: Alignment.center,
-                      child: Material(
-                          color: Colors.transparent,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius: BorderRadius.zero),
-                          child: Container(
-                            padding: EdgeInsets.only(top: padding.top),
-                            height: Constants.homeAppBarHeight + padding.top,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: _buildTopBar(),
-                          )),
+                  if (widget.primary)
+                    SliverAppBar(
+                      pinned: true,
+                      primary: false,
+                      toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                      automaticallyImplyLeading: false,
+                      backgroundColor: Theme.of(context).colorScheme.appBar,
+                      surfaceTintColor: Colors.transparent,
+                      titleSpacing: 0,
+                      title: Container(
+                        alignment: Alignment.center,
+                        child: Material(
+                            color: Colors.transparent,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero),
+                            child: Container(
+                              padding: EdgeInsets.only(top: padding.top),
+                              height: Constants.homeAppBarHeight + padding.top,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(5),
+                              ),
+                              child: _buildTopBar(),
+                            )),
+                      ),
                     ),
-                  ),
                   //
                   _sliverCard(),
                   //
@@ -514,8 +513,10 @@ class PageWordDetailsState extends State<PageWordDetails>
                               if (w == null) return;
                               var id = meaning.id;
                               if (id == null) return;
-                              await getIt<AppRep>()
-                                  .updateMeaningId(word: w, meaningId: id);
+                              await getIt<AppRep>().updateMeaningId(
+                                word: w,
+                                meaningId: id,
+                              );
                               _refreshStatus(initial: false);
                             }))
                   ]))
@@ -538,7 +539,7 @@ class PageWordDetailsState extends State<PageWordDetails>
         leftText = '$countKnow times know';
       }
       return Container(
-          height: Constants.bottomNavHeight,
+          height: Constants.bottomNavHeight + 10,
           margin: EdgeInsets.only(bottom: padding.bottom),
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.appBar,
@@ -624,14 +625,22 @@ class PageWordDetailsState extends State<PageWordDetails>
                             ),
                             builder: (context) {
                               return NextReviewPanel(
-                                  review:
-                                      getIt<AppRep>().reviewTimeToEnum(_status),
+                                  review: getIt<AppRep>().reviewTimeToEnum(
+                                    _status,
+                                  ),
                                   onChanged: (review) async {
                                     var time = AppRep.reviewTimeToInt(review);
                                     var data = getIt<AppRep>().cachedWord;
-                                    await getIt<AppRep>()
-                                        .updateReviewTime(data?.word, time);
-                                    _refreshStatus(initial: false);
+                                    await getIt<AppRep>().updateReviewTime(
+                                      data?.word,
+                                      time,
+                                    );
+                                    await _refreshStatus(initial: false);
+                                    await getIt<AppRep>().refreshManageList();
+                                    Future.delayed(
+                                        const Duration(milliseconds: 100), () {
+                                      getIt<AppRep>().refreshWordToLearn();
+                                    });
                                   },
                                   onAlreadyKnow: () async {
                                     var data = getIt<AppRep>().cachedWord;
@@ -640,6 +649,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                                     await ServiceApi()
                                         .deleteCurrentExact(word: w);
                                     await _refreshStatus(initial: false);
+                                    getIt<AppRep>().refreshWordToLearn();
                                     getIt<AppRep>().refreshManageList();
                                   });
                             });

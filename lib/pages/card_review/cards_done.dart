@@ -1,4 +1,3 @@
-import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
@@ -43,42 +42,20 @@ class CardsDoneState extends State<CardsDone> {
         _line1 = 'Well done!';
       }
       _line2 = 'You have learned $num ${num > 1 ? 'words' : 'word'}';
+      if (!mounted) return;
+
       _items = [
-        Text(_line1,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20,
-                shadows: [
-                  if (mounted)
-                    BoxShadow(
-                        color: Theme.of(context).colorScheme.shadow2,
-                        blurRadius: 25,
-                        offset: const Offset(0, 0))
-                ],
-                foreground: Paint()
-                  ..shader = ui.Gradient.linear(
-                      const Offset(0, 20), const Offset(150, 20), <Color>[
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad1,
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad2
-                  ]))),
+        Text(
+          _line1,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).colorScheme.getBeautifulLine1(context),
+        ),
         const SizedBox(height: 10),
-        Text(_line2,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 20,
-                shadows: [
-                  if (mounted)
-                    BoxShadow(
-                        color: Theme.of(context).colorScheme.shadow2,
-                        blurRadius: 25,
-                        offset: const Offset(0, 0))
-                ],
-                foreground: Paint()
-                  ..shader = ui.Gradient.linear(
-                      const Offset(0, 20), const Offset(150, 20), <Color>[
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad1,
-                    if (mounted) Theme.of(context).colorScheme.textResultGrad2
-                  ])))
+        Text(
+          _line2,
+          textAlign: TextAlign.center,
+          style: Theme.of(context).colorScheme.getBeautifulLine2(context),
+        )
       ];
 
       _items = _items
@@ -92,6 +69,7 @@ class CardsDoneState extends State<CardsDone> {
 
   @override
   Widget build(BuildContext context) {
+    var padding = MediaQuery.paddingOf(context);
     return Container(
         color: Theme.of(context).colorScheme.page,
         child: Column(children: [
@@ -102,7 +80,7 @@ class CardsDoneState extends State<CardsDone> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Spacer(),
-                        Image.asset('assets/pig_pos_2.png', width: 150),
+                        Image.asset('assets/happy_pigeon.png', width: 250),
                         //
                         // line1
                         const SizedBox(height: 50),
@@ -114,37 +92,41 @@ class CardsDoneState extends State<CardsDone> {
                                 children: _items)),
                         const SizedBox(height: 10),
                         const Spacer(flex: 2),
-                        FixedFooterBottom(
-                            child1: ButtonRoundCorner(
-                                text: 'Enough for today',
-                                direction: TextDirection.ltr,
-                                radious:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                color:
-                                    Theme.of(context).colorScheme.buttonOption2,
-                                colorText: Theme.of(context)
-                                    .colorScheme
-                                    .buttonOptionText,
-                                onPressed: () {
-                                  widget.onDone();
-                                }),
-                            child2: ButtonRoundCorner(
-                                text: "Continue",
-                                direction: TextDirection.ltr,
-                                radious:
-                                    const BorderRadius.all(Radius.circular(10)),
-                                color:
-                                    Theme.of(context).colorScheme.buttonOption1,
-                                colorText: Theme.of(context)
-                                    .colorScheme
-                                    .buttonOptionText,
-                                onPressed: () {
-                                  if (widget.isEnd) {
-                                    widget.onDone();
-                                  } else {
-                                    widget.onContinue();
-                                  }
-                                }))
+                        Padding(
+                            padding: EdgeInsets.only(bottom: padding.bottom),
+                            child: FixedFooterBottom(
+                                child1: ButtonRoundCorner(
+                                    text: 'Enough for today',
+                                    direction: TextDirection.ltr,
+                                    radious: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .buttonOption2,
+                                    colorText: Theme.of(context)
+                                        .colorScheme
+                                        .buttonOptionText,
+                                    onPressed: () {
+                                      widget.onDone();
+                                    }),
+                                child2: ButtonRoundCorner(
+                                    text: "Continue",
+                                    direction: TextDirection.ltr,
+                                    radious: const BorderRadius.all(
+                                        Radius.circular(10)),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .buttonOption1,
+                                    colorText: Theme.of(context)
+                                        .colorScheme
+                                        .buttonOptionText,
+                                    onPressed: () {
+                                      if (widget.isEnd) {
+                                        widget.onDone();
+                                      } else {
+                                        widget.onContinue();
+                                      }
+                                    }))),
                       ])))
         ]));
   }

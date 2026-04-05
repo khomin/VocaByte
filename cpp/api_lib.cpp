@@ -55,8 +55,7 @@ void init(uint32_t taskId, uint8_t *data, uint32_t len) {
     if(thread_pool == nullptr) {
         thread_pool = new BS::thread_pool(5);
     }
-    db = std::make_shared<MiscDb>();
-    db->init(initParams.local_dir());
+    db = std::make_shared<MiscDb>(initParams.local_dir());
 }
 
 void stop(uint32_t taskId) {
@@ -256,10 +255,11 @@ void updateCurrent(uint32_t taskId, uint8_t* data, uint32_t len) {
 void getCurrentToStudy(uint32_t taskId, uint8_t* data, uint32_t len) {
     std::lock_guard<std::mutex> lk(threadLock);
     if (thread_pool == nullptr) return;
-    thread_pool->push_task([taskId] {
+    thread_pool->push_task([data, len, taskId] {
         api::ReqReviewForToday in;
         api::RespReviewForToday out;
-        auto r = db->getCurrentToStudy();
+        in.ParseFromArray(data, len);
+        auto r = db->getCurrentToStudy(in.now());
         auto count = 0;
         out.set_count_all(r.size());
         for(const auto & it : r) {

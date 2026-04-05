@@ -1,11 +1,9 @@
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
-import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
-import 'package:vocabyte/repository/nav_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
 
 class PageHome extends StatefulWidget {
@@ -16,7 +14,6 @@ class PageHome extends StatefulWidget {
     required this.onNumerals,
     super.key,
   });
-
   final Function() onReview;
   final Function() onSearch;
   final Function() onManageWords;

@@ -3,10 +3,11 @@ import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
 import 'package:vocabyte/main.dart';
-import 'package:vocabyte/pages/card_review/card_review_nav.dart';
+import 'package:vocabyte/models/review_model.dart';
+import 'package:vocabyte/pages/card_review/card_review_main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/review_task_base.dart';
-import 'package:vocabyte/services/protobuf/proto.pb.dart';
+import 'package:vocabyte/services/protobuf/app.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
 
 class ReviewTask extends ReviewTaskBase {
@@ -80,13 +81,14 @@ class ReviewTask extends ReviewTaskBase {
       }
       await ServiceApi().updateCurrent(
           req: ReqUpdateWordInCurrent(
-              word: current.word,
-              successCount: current.successCount,
-              failCount: current.failCount,
-              lastTmSuccess: current.lastTmSuccess,
-              lastTmFail: current.lastTmFail,
-              nextReviewTmMs: current.nextReviewTmMs,
-              meaningId: current.meaningId));
+        word: current.word,
+        successCount: current.successCount,
+        failCount: current.failCount,
+        lastTmSuccess: current.lastTmSuccess,
+        lastTmFail: current.lastTmFail,
+        nextReviewTmMs: current.nextReviewTmMs,
+        meaningId: current.meaningId,
+      ));
     } else {
       logWarning('$tag: update card result empty current');
     }

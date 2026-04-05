@@ -11,7 +11,7 @@ import 'package:protobuf/protobuf.dart';
 import 'package:ffi/ffi.dart';
 import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/app/ui_helper.dart';
-import 'package:vocabyte/services/protobuf/proto.pb.dart';
+import 'package:vocabyte/services/protobuf/app.pb.dart';
 import 'package:fixnum/fixnum.dart' as fixnum;
 
 class LibPath {
@@ -367,8 +367,9 @@ class ServiceApi {
     return completer.future;
   }
 
-  Future<RespUpdateWordInCurrent> updateCurrent(
-      {required ReqUpdateWordInCurrent req}) async {
+  Future<RespUpdateWordInCurrent> updateCurrent({
+    required ReqUpdateWordInCurrent req,
+  }) async {
     Completer<RespUpdateWordInCurrent> completer = Completer();
     var out = registerCall(
         proto: req,
@@ -384,7 +385,9 @@ class ServiceApi {
 
   Future<RespReviewForToday> getCurrentToStudy() async {
     Completer<RespReviewForToday> completer = Completer();
-    var req = ReqUpdateWordInCurrent();
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final now64 = fixnum.Int64(now);
+    var req = ReqReviewForToday(now: now64);
     var out = registerCall(
         proto: req,
         cb: (p) {

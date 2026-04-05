@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
-import 'package:vocabyte/pages/models/search_word_model.dart';
-import 'package:vocabyte/pages/models/word_data.dart';
+import 'package:vocabyte/models/search_word_model.dart';
+import 'package:vocabyte/models/word_data.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 

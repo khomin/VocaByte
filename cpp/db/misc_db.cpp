@@ -32,15 +32,16 @@ void regexpFunc(sqlite3_context* context, int argc, sqlite3_value** argv) {
     }
 }
 
-MiscDb::MiscDb(){}
-
-MiscDb::~MiscDb() {
-    waitUntilClose();
+MiscDb::MiscDb(std::string path) {
+    db_path = path;
+    if(open_db(DB_type::Primary) != SQLITE_OK) {
+        LOG_F(INFO, "failed to open db");
+    }
 }
 
-bool MiscDb::init(std::string path) {
-    db_path = path;
-    return true;
+MiscDb::~MiscDb() {
+    close_db(DB_type::Primary);
+    waitUntilClose();
 }
 
 std::vector<MiscDb::Word> MiscDb::getRecent() {
@@ -48,9 +49,6 @@ std::vector<MiscDb::Word> MiscDb::getRecent() {
     sqlite3_stmt *stmt;
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return res;
-    }
     try {
         query = "SELECT word FROM recent " \
                 "WHERE id IS NOT NULL " \
@@ -84,16 +82,12 @@ std::vector<MiscDb::Word> MiscDb::getRecent() {
         LOG_F(INFO, "%s: failed get recent words-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     return res;
 }
 
 void MiscDb::putRecent(std::string word, std::string json) {
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return;
-    }
     query = NativeLibConverter::format(
         "INSERT INTO recent  (word, json) VALUES (LOWER('%s'), '%s'); " \
         "DELETE FROM recent " \
@@ -109,21 +103,20 @@ void MiscDb::putRecent(std::string word, std::string json) {
     if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
         LOG_F(INFO, "%s: failed put recent words: [%s]", TAG, sqlite3_errmsg(m_db));
     }
-    close_db(DB_type::Primary);
 }
 
-std::vector<MiscDb::WordCurrent> MiscDb::getCurrentToStudy() {
+std::vector<MiscDb::WordCurrent> MiscDb::getCurrentToStudy(uint64_t now) {
     std::vector<MiscDb::WordCurrent> res;
     sqlite3_stmt *stmt;
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return res;
-    }
     try {
-        query = "SELECT* FROM current_words " \
-                "WHERE max(last_tm_success, last_tm_fail) + next_review_tm <= strftime('%s', 'now') * 1000 " \
-                "AND success_count < 10";
+        query = NativeLibConverter::format(
+                "SELECT* FROM current_words " \
+                "WHERE max(last_tm_success, last_tm_fail) + next_review_tm <= %ld " \
+                "AND success_count < 10",
+                now
+        );
         if(sqlite3_prepare_v2(m_db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
             while ((sqlite3_step(stmt)) == SQLITE_ROW) {
                 if(sqlite3_column_count(stmt) > 0) {
@@ -153,7 +146,6 @@ std::vector<MiscDb::WordCurrent> MiscDb::getCurrentToStudy() {
         LOG_F(INFO, "%s: failed get words-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     return res;
 }
 
@@ -162,9 +154,6 @@ std::vector<MiscDb::Word> MiscDb::getDictionary(std::string word, bool useLike) 
     sqlite3_stmt *stmt;
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return res;
-    }
     try {
         std::string query;
         if(useLike) {
@@ -208,7 +197,6 @@ std::vector<MiscDb::Word> MiscDb::getDictionary(std::string word, bool useLike) 
         LOG_F(INFO, "%s: failed get words-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     return res;
 }
 
@@ -217,9 +205,6 @@ std::vector<MiscDb::Word> MiscDb::getDictionaryRand(int count) {
     sqlite3_stmt *stmt;
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return res;
-    }
     try {
         query = NativeLibConverter::format(
             "SELECT * FROM dictionary " \
@@ -254,16 +239,12 @@ std::vector<MiscDb::Word> MiscDb::getDictionaryRand(int count) {
         LOG_F(INFO, "%s: failed get words-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     return res;
 }
 
 void MiscDb::addCurrent(std::string word) {
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return;
-    }
     query = NativeLibConverter::format(
         "INSERT INTO current_words (word) "\
         "SELECT word FROM dictionary WHERE word = LOWER('%s')",
@@ -272,15 +253,11 @@ void MiscDb::addCurrent(std::string word) {
     if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
         LOG_F(INFO, "%s: failed add word: [%s]", TAG, sqlite3_errmsg(m_db));
     }
-    close_db(DB_type::Primary);
 }
 
 void MiscDb::addCurrentWithData(WordCurrent word){
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return;
-    }
     query = NativeLibConverter::format(
         "INSERT INTO current_words (word, success_count, fail_count, last_tm_success, last_tm_fail, next_review_tm, meaning_id) "\
         "SELECT word, %lld, %lld, %lld, %lld, %lld, '%s' FROM dictionary WHERE word = LOWER('%s')",
@@ -292,15 +269,11 @@ void MiscDb::addCurrentWithData(WordCurrent word){
     if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
         LOG_F(INFO, "%s: failed add word: [%s]", TAG, sqlite3_errmsg(m_db));
     }
-    close_db(DB_type::Primary);
 }
 
 void MiscDb::updateCurrent(MiscDb::WordCurrent word) {
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return;
-    }
     query = NativeLibConverter::format(
         "UPDATE current_words SET success_count = %lld, fail_count = %lld, last_tm_success = %lld, last_tm_fail = %lld, next_review_tm = %lld, meaning_id='%s' " \
         "WHERE word = LOWER('%s')",
@@ -313,7 +286,6 @@ void MiscDb::updateCurrent(MiscDb::WordCurrent word) {
     if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
         LOG_F(INFO, "%s: failed put recent words: [%s]", TAG, sqlite3_errmsg(m_db));
     }
-    close_db(DB_type::Primary);
 }
 
 std::optional<MiscDb::WordCurrent> MiscDb::getCurrentExact(std::string word) {
@@ -322,9 +294,6 @@ std::optional<MiscDb::WordCurrent> MiscDb::getCurrentExact(std::string word) {
     std::string query;
     bool success = false;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return res;
-    }
     try {
         query = NativeLibConverter::format(
             "SELECT * FROM current_words " \
@@ -360,7 +329,6 @@ std::optional<MiscDb::WordCurrent> MiscDb::getCurrentExact(std::string word) {
         LOG_F(INFO, "%s: failed get words-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     if(success) {
         return res;
     }
@@ -371,9 +339,6 @@ void MiscDb::deleteCurrentExact(std::string word) {
     std::shared_ptr<MiscDb::WordCurrent> res;
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return;
-    }
     query = NativeLibConverter::format(
         "DELETE FROM current_words " \
         "WHERE word = LOWER('%s')",
@@ -382,7 +347,6 @@ void MiscDb::deleteCurrentExact(std::string word) {
     if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
         LOG_F(INFO, "%s: failed remove word: [%s]", TAG, sqlite3_errmsg(m_db));
     }
-    close_db(DB_type::Primary);
 }
 
 std::vector<MiscDb::WordCurrent> MiscDb::getCurrentLimit(int limit, int offset, int useSuccessCount) {
@@ -390,9 +354,6 @@ std::vector<MiscDb::WordCurrent> MiscDb::getCurrentLimit(int limit, int offset, 
     sqlite3_stmt *stmt;
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return res;
-    }
     try {
         if(useSuccessCount > 0) {
             query = NativeLibConverter::format(
@@ -435,7 +396,6 @@ std::vector<MiscDb::WordCurrent> MiscDb::getCurrentLimit(int limit, int offset, 
         LOG_F(INFO, "%s: failed get words-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     return res;
 }
 
@@ -444,10 +404,6 @@ MiscDb::MetaData MiscDb::getMetadata() {
     std::string query;
     MetaData res {};
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        res.version = -1;
-        return res;
-    }
     try {
         auto query = std::string("SELECT version FROM meta_data");
         if(sqlite3_prepare_v2(m_db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
@@ -463,22 +419,17 @@ MiscDb::MetaData MiscDb::getMetadata() {
         LOG_F(INFO, "%s: failed get version-ex: [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    close_db(DB_type::Primary);
     return res;
 }
 
 void MiscDb::deleteAll() {
     std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
-        return;
-    }
     query = "DELETE FROM recent;" \
             "DELETE FROM current_words";
     if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
         LOG_F(INFO, "%s: failed remove word: [%s]", TAG, sqlite3_errmsg(m_db));
     }
-    close_db(DB_type::Primary);
 }
 
 int MiscDb::open_db(DB_type type) {

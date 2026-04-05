@@ -91,43 +91,54 @@ class CardNoWordsState extends State<CardNoWords>
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            RoundButton(
-                                iconData: Icons.search,
-                                color:
-                                    Theme.of(context).colorScheme.buttonOption1,
-                                iconColor: Theme.of(context)
-                                    .colorScheme
-                                    .button3TextInversed,
-                                height: Constants.baseButton,
-                                iconSize: size.width / 5,
-                                useScaleAnimation: true,
-                                useShadow: true,
-                                margin: const EdgeInsets.only(bottom: 20),
-                                onPressed: (p0) {
-                                  if (_shakeControlller.isForwardOrCompleted) {
-                                    _shakeControlller.reverse().orCancel;
-                                  } else {
-                                    _shakeControlller.forward().orCancel;
-                                  }
-                                  widget.onBackOpenSearch();
-                                }),
+                            Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Spacer(),
+                                  Flexible(
+                                    child: RoundButton(
+                                        iconData: Icons.search,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .buttonOption1,
+                                        iconColor: Theme.of(context)
+                                            .colorScheme
+                                            .button3TextInversed,
+                                        height: 50,
+                                        useScaleAnimation: true,
+                                        useShadow: true,
+                                        margin:
+                                            const EdgeInsets.only(bottom: 20),
+                                        onPressed: (p0) {
+                                          if (_shakeControlller
+                                              .isForwardOrCompleted) {
+                                            _shakeControlller
+                                                .reverse()
+                                                .orCancel;
+                                          } else {
+                                            _shakeControlller
+                                                .forward()
+                                                .orCancel;
+                                          }
+                                          widget.onBackOpenSearch();
+                                        }),
+                                  ),
+                                  const Spacer(),
+                                ]),
                             ScaleTransition(
                                 scale: _scaleAnimation,
                                 child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                          'No words to review\nAdd words using search',
-                                          maxLines: 3,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 20,
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .title2
-                                                  .color))
+                                        'No words to review\nAdd words using search',
+                                        maxLines: 3,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.center,
+                                        style: Theme.of(context)
+                                            .colorScheme
+                                            .getBeautifulLine1(context),
+                                      )
                                     ]))
                           ])));
             }));
