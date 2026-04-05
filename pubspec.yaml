@@ -67,6 +67,7 @@ dependencies:
   get_it: ^9.2.1
   convex_bottom_bar: ^3.2.0
   random_avatar: ^0.0.8
+  random_string: ^2.3.1
 
 dev_dependencies:
   flutter_test:

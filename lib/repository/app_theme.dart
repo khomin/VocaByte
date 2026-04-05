@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/app/ui_helper.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 enum ThemeType { light, dark, system }
 
@@ -19,6 +20,9 @@ extension MenuColorScheme on ColorScheme {
 
   Color get chip => const Color(0xFFecebf2);
   Color get chipActive => const Color(0xFFC0CCFF);
+
+  Color get snackColor =>
+      dark() ? const Color(0xFFecebf2) : const Color(0xFFC5C4C9);
 
   Color get reviewCardPastel => Colors.green;
   Color get reviewCardPastelRequired => Colors.orange;
@@ -93,16 +97,20 @@ extension MenuColorScheme on ColorScheme {
       fontWeight: FontWeight.w500);
 
   TextStyle get title1 => TextStyle(
-      color: dark() ? const Color(0xFF8A8A9A) : const Color(0xFF202020),
-      fontSize: 14,
-      fontWeight: FontWeight.w500);
+        color: dark() ? const Color(0xFF8A8A9A) : const Color(0xFF202020),
+        fontSize: 14,
+        fontFamily: Constants.fontInter,
+        fontWeight: FontWeight.w600,
+      );
 
   TextStyle get title2 => TextStyle(
-      color: dark()
-          ? const Color(0xFFCACACA)
-          : const Color.fromARGB(239, 56, 56, 56),
-      fontSize: 14,
-      fontWeight: FontWeight.w400);
+        color: dark()
+            ? const Color(0xFFCACACA)
+            : const Color.fromARGB(239, 56, 56, 56),
+        fontSize: 14,
+        fontFamily: Constants.fontInter,
+        fontWeight: FontWeight.w400,
+      );
 
   TextStyle get title3 => TextStyle(
       color: dark() ? const Color(0xFFAAAAAA) : const Color(0xF04A4A4A),

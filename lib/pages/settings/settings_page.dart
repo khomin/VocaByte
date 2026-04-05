@@ -1,6 +1,7 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:random_avatar/random_avatar.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
@@ -12,6 +13,7 @@ import 'package:vocabyte/pages/models/settings_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
+import 'package:vocabyte/pages/settings/settings_profile.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
@@ -20,11 +22,7 @@ import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 
 class SettingsPage extends StatefulWidget {
-  const SettingsPage({
-    required this.onChangeGoal,
-    super.key,
-  });
-  final Function() onChangeGoal;
+  const SettingsPage({super.key});
 
   @override
   State<SettingsPage> createState() => _State();
@@ -32,10 +30,6 @@ class SettingsPage extends StatefulWidget {
 
 class _State extends State<SettingsPage> {
   final _model = SettingsModel();
-  final _cardPadding =
-      const EdgeInsets.only(left: 25, right: 25, top: 5, bottom: 5);
-  final _headerPadding =
-      const EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10);
 
   @override
   void initState() {
@@ -65,8 +59,6 @@ class _State extends State<SettingsPage> {
                   slivers: [
                     SliverAppBar(
                         floating: true,
-                        // snap: true,
-                        // pinned: true,
                         primary: false,
                         expandedHeight:
                             Constants.homeAppBarHeight + padding.top,
@@ -74,8 +66,6 @@ class _State extends State<SettingsPage> {
                             Constants.homeAppBarHeight + padding.top,
                         toolbarHeight: Constants.homeAppBarHeight + padding.top,
                         automaticallyImplyLeading: false,
-                        // backgroundColor:
-                        //     Theme.of(context).colorScheme.appBar,
                         scrolledUnderElevation: 0,
                         elevation: 0,
                         surfaceTintColor: Colors.transparent,
@@ -91,7 +81,6 @@ class _State extends State<SettingsPage> {
                               height: Constants.homeAppBarHeight + padding.top,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                  // color: Colors.white,
                                   color: Theme.of(context).colorScheme.appBar,
                                   borderRadius: BorderRadius.circular(5),
                                   boxShadow: [
@@ -135,400 +124,158 @@ class _State extends State<SettingsPage> {
     ]);
   }
 
-  Widget _theme() {
-    return Builder(builder: (context) {
-      var appModel = context.read<AppModel>();
-      var model = context.watch<SettingsModel>();
-      return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.cardHome,
-            borderRadius: BorderRadius.circular(25),
-          ),
-          margin: const EdgeInsets.only(
-            top: 8,
-            left: Constants.homeCardPadding,
-            right: Constants.homeCardPadding,
-            bottom: 8,
-          ),
-          child: Column(children: [
-            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
-              Container(
-                  height: 60,
-                  alignment: Alignment.centerLeft,
-                  margin: _cardPadding,
-                  child: Text(
-                    'Theme',
-                    style: Theme.of(context).colorScheme.title1,
-                  )),
-              Padding(
-                  padding: const EdgeInsets.only(),
-                  child: RadioGroup<int>(
-                      groupValue: model.theme.index,
-                      onChanged: (int? value) {},
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            //
-                            // light
-                            ThemeSwitcher(
-                                clipper: const ThemeSwitcherCircleClipper(),
-                                builder: (context) {
-                                  return ItemInMenuList(
-                                      useBorderTop: false,
-                                      useBorderBot: false,
-                                      padding: const EdgeInsets.only(
-                                          left: 25, right: 25),
-                                      margin: const EdgeInsets.only(top: 10),
-                                      onClicked: (_) async {
-                                        appModel.theme = ThemeMode.light;
-                                        model.update();
-                                      },
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              'Light',
-                                              textAlign: TextAlign.center,
-                                              style: Theme.of(context)
-                                                  .colorScheme
-                                                  .title2,
-                                            ),
-                                            const IgnorePointer(
-                                                child: Radio<int>(value: 0))
-                                          ]));
-                                }),
-                            //
-                            // dark
-                            ThemeSwitcher(
-                                clipper: const ThemeSwitcherCircleClipper(),
-                                builder: (context) {
-                                  return ItemInMenuList(
-                                      useBorderTop: false,
-                                      useBorderBot: false,
-                                      padding: const EdgeInsets.only(
-                                          left: 25, right: 25),
-                                      margin: const EdgeInsets.only(top: 10),
-                                      onClicked: (_) async {
-                                        appModel.theme = ThemeMode.dark;
-                                        model.update();
-                                      },
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('Dark',
-                                                textAlign: TextAlign.center,
-                                                style: Theme.of(context)
-                                                    .colorScheme
-                                                    .title2),
-                                            const IgnorePointer(
-                                                child: Radio(value: 1))
-                                          ]));
-                                }),
-                            //
-                            // system
-                            ThemeSwitcher(
-                                clipper: const ThemeSwitcherCircleClipper(),
-                                builder: (context) {
-                                  return ItemInMenuList(
-                                      useBorderTop: false,
-                                      useBorderBot: false,
-                                      padding: const EdgeInsets.only(
-                                          left: 25, right: 25),
-                                      margin: const EdgeInsets.only(top: 10),
-                                      onClicked: (pos) async {
-                                        appModel.theme = ThemeMode.system;
-                                        _model.update();
-                                      },
-                                      child: Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text('System',
-                                                textAlign: TextAlign.center,
-                                                style: Theme.of(context)
-                                                    .colorScheme
-                                                    .title2),
-                                            const IgnorePointer(
-                                                child: Radio(value: 2))
-                                          ]));
-                                })
-                          ])))
-            ]),
-            //
-            // use sound
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                margin: _cardPadding,
-                onClicked: (_) {
-                  widget.onChangeGoal();
-                },
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Padding(
-                          padding: const EdgeInsets.only(top: 10, bottom: 10),
-                          child: Row(children: [
-                            Text('Use sound',
-                                textAlign: TextAlign.center,
-                                style: Theme.of(context).colorScheme.title2),
-                            const Spacer(),
-                            Switch(
-                                value: model.useSound,
-                                onChanged: (value) async {
-                                  SettingsRep().setUseSound(value);
-                                  model.useSound = value;
-                                  model.notify();
-                                })
-                          ]))
-                    ])),
-          ]));
-    });
-  }
-
   Widget _profile() {
     return Builder(builder: (context) {
       var model = context.watch<SettingsModel>();
       return Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.cardHome,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(15),
           ),
           margin: const EdgeInsets.only(
-            top: 8,
             left: Constants.homeCardPadding,
             right: Constants.homeCardPadding,
-            bottom: 8,
+            bottom: 15,
           ),
           child: Column(children: [
-            Container(
-                height: 40,
-                margin: _headerPadding,
-                child: Row(children: [
-                  Text('Profile', style: Theme.of(context).colorScheme.title1)
-                ])),
+            ItemInMenuList(
+              useBorderTop: false,
+              useBorderBot: false,
+              padding: Constants.settingsCardPadding,
+              onClicked: (_) {
+                Navigator.push(
+                    context,
+                    PageTransition2.build(
+                      settings: const RouteSettings(),
+                      type: TransitionType.slide,
+                      child: SettingsProfile(model: _model),
+                    ));
+              },
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'User ${model.name}',
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.title2.color,
+                        fontSize: 20,
+                      ),
+                    ),
+                    SizedBox(
+                        width: 60,
+                        height: 60,
+                        child: model.name.isNotEmpty
+                            ? RandomAvatar(
+                                model.name,
+                                height: 60,
+                                width: 60,
+                              )
+                            : const SizedBox())
+                  ]),
+            ),
             //
-            // daily goal
             ItemInMenuList(
                 useBorderTop: false,
                 useBorderBot: false,
-                margin: _cardPadding,
+                padding: Constants.settingsCardPadding,
                 onClicked: (_) {
-                  widget.onChangeGoal();
+                  Navigator.push(
+                      context,
+                      PageTransition2.build(
+                        settings: const RouteSettings(),
+                        type: TransitionType.slide,
+                        child: SettingsProfile(model: _model),
+                      ));
+                },
+                child: Row(children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Profile',
+                          style: Theme.of(context).colorScheme.title2,
+                        ),
+                      ]),
+                  const Spacer(),
+                  Icon(
+                    Icons.person_sharp,
+                    size: 25,
+                    color: Theme.of(context).colorScheme.title2.color,
+                  )
+                ])),
+          ]));
+    });
+  }
+
+  Widget _theme() {
+    return Builder(builder: (context) {
+      var appModel = context.read<AppModel>();
+      var model = context.watch<SettingsModel>();
+      var theme = context.watch<AppModel>().theme;
+      var brightness = MediaQuery.platformBrightnessOf(context);
+      var isDark = false;
+      if (theme == ThemeMode.dark) {
+        isDark = true;
+      }
+      if (theme == ThemeMode.system) {
+        isDark = brightness == Brightness.dark;
+      }
+      return Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.cardHome,
+            borderRadius: BorderRadius.circular(15),
+          ),
+          margin: const EdgeInsets.only(
+            left: Constants.homeCardPadding,
+            right: Constants.homeCardPadding,
+            bottom: 15,
+          ),
+          child: Column(children: [
+            Container(
+                height: 30,
+                margin: Constants.settingsHeaderPadding,
+                child: Row(children: [
+                  Text(
+                    'Dark mode',
+                    style: Theme.of(context).colorScheme.title1,
+                  )
+                ])),
+            ItemInMenuList(
+                useBorderTop: false,
+                useBorderBot: false,
+                padding: Constants.settingsCardPadding,
+                onClicked: (_) {
+                  appModel.theme = isDark ? ThemeMode.light : ThemeMode.dark;
+                  model.update();
                 },
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      //
-                      // daily goal
                       Row(children: [
-                        Text('Daily goal',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).colorScheme.title2),
+                        Builder(builder: (context) {
+                          if (isDark) {
+                            return Text('Enabled',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).colorScheme.title2);
+                          } else {
+                            return Text('Disabled',
+                                textAlign: TextAlign.center,
+                                style: Theme.of(context).colorScheme.title2);
+                          }
+                        }),
                         const Spacer(),
-                        Row(children: [
-                          Text('${model.dailyGoal ?? 0} words day',
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context).colorScheme.title2),
-                          Icon(Icons.keyboard_arrow_right,
-                              color:
-                                  Theme.of(context).textTheme.titleSmall?.color)
-                        ])
+                        Switch(
+                            value: isDark,
+                            padding: EdgeInsets.zero,
+                            onChanged: (value) async {
+                              appModel.theme =
+                                  isDark ? ThemeMode.light : ThemeMode.dark;
+                              model.update();
+                            })
                       ])
                     ])),
-            //
-            // export words
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                margin: _cardPadding,
-                child: Row(children: [
-                  Text('Export words',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).colorScheme.title2),
-                  const Spacer(),
-                  if (model.exportBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.title5)),
-                  RoundButton(
-                      iconData: Icons.drive_folder_upload_sharp,
-                      height: Constants.baseButton,
-                      width: Constants.baseButton,
-                      iconSize: _model.iconSize,
-                      iconColor: Theme.of(context).colorScheme.title2.color,
-                      useScaleAnimation: true,
-                      color: Colors.transparent,
-                      onPressed: (_) async {
-                        model.exportBusy = true;
-                        model.notify();
-                        var res = await ServiceApi().exportWords();
-                        model.exportBusy = false;
-                        model.notify();
-                        if (context.mounted && res) {
-                          UiHelper.showToast(context, 'Exported');
-                        }
-                      })
-                ])),
-            //
-            // import words
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                margin: _cardPadding,
-                child: Row(children: [
-                  Text('Import words',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).colorScheme.title2),
-                  const Spacer(),
-                  if (model.importBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.title5)),
-                  RoundButton(
-                      iconData: Icons.folder_zip_sharp,
-                      height: Constants.baseButton,
-                      width: Constants.baseButton,
-                      iconSize: _model.iconSize,
-                      iconColor: Theme.of(context).colorScheme.title2.color,
-                      useScaleAnimation: true,
-                      color: Colors.transparent,
-                      onPressed: (_) async {
-                        model.importBusy = true;
-                        model.notify();
-                        var count = await ServiceApi().importWords();
-                        model.importBusy = false;
-                        model.notify();
-                        if (context.mounted) {
-                          UiHelper.showToast(context,
-                              'Imported $count ${count == 1 ? 'word' : 'word'}');
-                        }
-                      })
-                ])),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                margin: _cardPadding,
-                child: Row(children: [
-                  Text('Export profile',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).colorScheme.title2),
-                  const Spacer(),
-                  if (model.exportProfileBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.title5)),
-                  RoundButton(
-                      iconData: Icons.upload_sharp,
-                      height: Constants.baseButton,
-                      width: Constants.baseButton,
-                      iconSize: model.iconSize,
-                      iconColor: Theme.of(context).colorScheme.title2.color,
-                      useScaleAnimation: true,
-                      color: Colors.transparent,
-                      onPressed: (_) async {
-                        model.exportProfileBusy = true;
-                        model.notify();
-                        var success = await ServiceApi().exportProfile();
-                        model.exportProfileBusy = false;
-                        model.notify();
-                        if (context.mounted) {
-                          if (success) {
-                            UiHelper.showToast(context, 'Exported');
-                          } else {
-                            UiHelper.showToast(context, 'No words to export');
-                          }
-                        }
-                      })
-                ])),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: false,
-                margin: _cardPadding,
-                child: Row(children: [
-                  Text('Import profile',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).colorScheme.title2),
-                  const Spacer(),
-                  if (model.importProfileBusy)
-                    SizedBox(
-                        width: 15,
-                        height: 15,
-                        child: CircularProgressIndicator(
-                            color: Theme.of(context).colorScheme.title5)),
-                  RoundButton(
-                      iconData: Icons.download_sharp,
-                      height: Constants.baseButton,
-                      width: Constants.baseButton,
-                      iconSize: _model.iconSize,
-                      iconColor: Theme.of(context).colorScheme.title2.color,
-                      useScaleAnimation: true,
-                      color: Colors.transparent,
-                      onPressed: (_) async {
-                        model.importProfileBusy = true;
-                        model.notify();
-                        var res = await ServiceApi().importProfile();
-                        model.importProfileBusy = false;
-                        model.notify();
-                        if (context.mounted) {
-                          if (res) {
-                            UiHelper.showToast(context, 'Imported');
-                          } else {
-                            UiHelper.showToast(context, 'Error');
-                          }
-                        }
-                      })
-                ])),
-            ItemInMenuList(
-                useBorderTop: true,
-                useBorderBot: true,
-                margin: _cardPadding,
-                child: Row(children: [
-                  Text('Delete data',
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).colorScheme.title2),
-                  const Spacer(),
-                  RoundButton(
-                      iconData: Icons.delete_sharp,
-                      height: Constants.baseButton,
-                      width: Constants.baseButton,
-                      iconSize: _model.iconSize,
-                      iconColor: Theme.of(context).colorScheme.titleErr,
-                      useScaleAnimation: true,
-                      color: Colors.transparent,
-                      onPressed: (_) async {
-                        showModalBottomSheet(
-                            context: context,
-                            barrierColor: Colors.black26,
-                            builder: (BuildContext context) {
-                              return ConfirmPanel(
-                                title: 'Are you sure?',
-                                text: 'You will lose all progress',
-                                iconNo: Icons.delete,
-                                iconOk: Icons.close,
-                                onOk: () async {
-                                  Navigator.of(context).pop();
-                                  await ServiceApi().deleteProfile();
-                                  if (context.mounted) {
-                                    UiHelper.showToast(context, 'Done');
-                                  }
-                                },
-                              );
-                            });
-                      })
-                ]))
           ]));
     });
   }
@@ -539,25 +286,28 @@ class _State extends State<SettingsPage> {
       return Container(
           decoration: BoxDecoration(
             color: Theme.of(context).colorScheme.cardHome,
-            borderRadius: BorderRadius.circular(25),
+            borderRadius: BorderRadius.circular(15),
           ),
           margin: const EdgeInsets.only(
-            top: 8,
             left: Constants.homeCardPadding,
             right: Constants.homeCardPadding,
-            bottom: 8,
+            bottom: 15,
           ),
           child: Column(children: [
             Container(
-                height: 40,
-                margin: _headerPadding,
+                height: 30,
+                margin: Constants.settingsHeaderPadding,
                 child: Row(children: [
-                  Text('Numerals', style: Theme.of(context).colorScheme.title1)
+                  Text(
+                    'Numerals',
+                    style: Theme.of(context).colorScheme.title1,
+                  )
                 ])),
             ItemInMenuList(
                 useBorderTop: false,
-                useBorderBot: true,
-                margin: _cardPadding,
+                useBorderBot: false,
+                padding: Constants.settingsCardPadding,
+                onClicked: (_) {},
                 child: Row(children: [
                   Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -599,125 +349,151 @@ class _State extends State<SettingsPage> {
 
   Widget _others() {
     return Builder(builder: (context) {
-      return Builder(builder: (context) {
-        var model = context.watch<SettingsModel>();
-        return Column(children: [
-          Container(
-            decoration: BoxDecoration(
+      var model = context.watch<SettingsModel>();
+      return Column(children: [
+        Container(
+          decoration: BoxDecoration(
               color: Theme.of(context).colorScheme.cardHome,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            margin: const EdgeInsets.only(
-              top: 8,
-              left: Constants.homeCardPadding,
-              right: Constants.homeCardPadding,
-              bottom: 16,
-            ),
-            child: Column(children: [
-              Container(
-                  height: 40,
-                  margin: _headerPadding,
-                  child: Row(children: [
-                    Text('Other', style: Theme.of(context).colorScheme.title1)
-                  ])),
-              //
-              // share
-              ItemInMenuList(
-                  useBorderTop: true,
-                  useBorderBot: false,
-                  margin: _cardPadding,
-                  onClicked: (_) {
-                    getIt<AppRep>().shareApp();
-                  },
-                  child: Row(children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Share this app',
-                              style: Theme.of(context).colorScheme.title2)
-                        ]),
-                    const Spacer(),
-                    Icon(Icons.link,
-                        size: 25,
-                        color: Theme.of(context).colorScheme.title2.color)
-                  ])),
-              //
-              // about the app
-              ItemInMenuList(
-                  useBorderTop: true,
-                  useBorderBot: false,
-                  margin: _cardPadding,
-                  onClicked: (_) {
-                    Navigator.push(
-                        context,
-                        PageTransition2.build(
-                          settings: const RouteSettings(),
-                          type: TransitionType.slide,
-                          child: const SettingsAbout(),
-                        ));
-                  },
-                  child: Row(children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('About',
-                              style: Theme.of(context).colorScheme.title2),
-                        ]),
-                    const Spacer(),
-                    Icon(Icons.info_rounded,
-                        size: 25,
-                        color: Theme.of(context).colorScheme.title2.color)
-                  ])),
-              //
-              // licenses page
-              ItemInMenuList(
-                  useBorderTop: true,
-                  useBorderBot: true,
-                  margin: _cardPadding,
-                  onClicked: (_) {
-                    showLicensePage(context: context);
-                  },
-                  child: Row(children: [
-                    Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Licenses',
-                              style: Theme.of(context).colorScheme.title2)
-                        ]),
-                    const Spacer(),
-                    Icon(Icons.description,
-                        size: 25,
-                        color: Theme.of(context).colorScheme.title2.color)
-                  ])),
-            ]),
+              borderRadius: BorderRadius.circular(15)),
+          margin: const EdgeInsets.only(
+            left: Constants.homeCardPadding,
+            right: Constants.homeCardPadding,
+            bottom: 15,
           ),
-          //
-          // version
-          ItemInMenuList(
-              useBorderTop: false,
-              useBorderBot: false,
-              margin: _cardPadding,
-              child: Column(children: [
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Column(children: [
-                    const SizedBox(height: 10),
-                    Text('${Constants.appName} ${Constants.appVersion}',
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).colorScheme.title2)
-                  ])
-                ]),
-                const SizedBox(height: 10),
-                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                  Image.asset('assets/logo.png',
-                      width: 60, height: 60, cacheWidth: 150)
-                ]),
-                const SizedBox(height: 30),
-              ]))
-        ]);
-      });
+          child: Column(children: [
+            Container(
+                height: 30,
+                margin: Constants.settingsHeaderPadding,
+                child: Row(children: [
+                  Text('Other', style: Theme.of(context).colorScheme.title1)
+                ])),
+            //
+            // use sound
+            ItemInMenuList(
+                useBorderTop: false,
+                useBorderBot: false,
+                padding: Constants.settingsCardPadding,
+                onClicked: (_) {
+                  model.setUseSound(!model.useSound);
+                },
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Row(children: [
+                        Text('Play sound',
+                            textAlign: TextAlign.center,
+                            style: Theme.of(context).colorScheme.title2),
+                        const Spacer(),
+                        Switch(
+                            value: model.useSound,
+                            padding: EdgeInsets.zero,
+                            onChanged: (value) async {
+                              model.setUseSound(value);
+                            })
+                      ])
+                    ])),
+            //
+            // share
+            ItemInMenuList(
+                useBorderTop: true,
+                useBorderBot: false,
+                padding: Constants.settingsCardPadding,
+                onClicked: (_) {
+                  getIt<AppRep>().shareApp();
+                },
+                child: Row(children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Share this app',
+                          style: Theme.of(context).colorScheme.title2,
+                        )
+                      ]),
+                  const Spacer(),
+                  Icon(
+                    Icons.link,
+                    size: 25,
+                    color: Theme.of(context).colorScheme.title2.color,
+                  )
+                ])),
+            //
+            // about the app
+            ItemInMenuList(
+                useBorderTop: true,
+                useBorderBot: false,
+                padding: Constants.settingsCardPadding,
+                onClicked: (_) {
+                  Navigator.push(
+                      context,
+                      PageTransition2.build(
+                        settings: const RouteSettings(),
+                        type: TransitionType.slide,
+                        child: const SettingsAbout(),
+                      ));
+                },
+                child: Row(children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('About',
+                            style: Theme.of(context).colorScheme.title2),
+                      ]),
+                  const Spacer(),
+                  Icon(Icons.info_rounded,
+                      size: 25,
+                      color: Theme.of(context).colorScheme.title2.color)
+                ])),
+            //
+            // licenses page
+            ItemInMenuList(
+                useBorderTop: true,
+                useBorderBot: false,
+                padding: Constants.settingsCardPadding,
+                onClicked: (_) {
+                  showLicensePage(context: context);
+                },
+                child: Row(children: [
+                  Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Licenses',
+                            style: Theme.of(context).colorScheme.title2)
+                      ]),
+                  const Spacer(),
+                  Icon(Icons.description,
+                      size: 25,
+                      color: Theme.of(context).colorScheme.title2.color)
+                ])),
+          ]),
+        ),
+        //
+        // version
+        ItemInMenuList(
+            useBorderTop: false,
+            useBorderBot: false,
+            padding: Constants.settingsCardPadding,
+            child: Column(children: [
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Column(children: [
+                  const SizedBox(height: 10),
+                  Text('${Constants.appName} ${Constants.appVersion}',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).colorScheme.title2)
+                ])
+              ]),
+              const SizedBox(height: 10),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Image.asset('assets/logo.png',
+                    width: 60, height: 60, cacheWidth: 150)
+              ]),
+              const SizedBox(height: 30),
+            ]))
+      ]);
     });
   }
 }

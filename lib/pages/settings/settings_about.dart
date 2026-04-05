@@ -19,32 +19,82 @@ class SettingsAboutState extends State<SettingsAbout> {
 
   @override
   Widget build(BuildContext context) {
+    var padding = MediaQuery.of(context).padding;
     return SafeArea(
+        top: false,
+        bottom: false,
         child: Scaffold(
-            backgroundColor: Theme.of(context).colorScheme.pageHome,
+            backgroundColor: Theme.of(context).colorScheme.baseColor1,
             body: CustomScrollView(
-                physics: const ClampingScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 slivers: [
                   SliverAppBar(
-                      automaticallyImplyLeading: false,
-                      flexibleSpace: AppBarExtra(
-                          type: Type.back,
-                          child: Flexible(
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                Text('About',
-                                    style: Theme.of(context)
-                                        .colorScheme
-                                        .appBarText)
-                              ])))),
+                    pinned: true,
+                    primary: false,
+                    toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                    automaticallyImplyLeading: false,
+                    backgroundColor: Theme.of(context).colorScheme.appBar,
+                    surfaceTintColor: Colors.transparent,
+                    titleSpacing: 0,
+                    title: Container(
+                      alignment: Alignment.center,
+                      child: Material(
+                        color: Colors.transparent,
+                        shape: const RoundedRectangleBorder(
+                            borderRadius: BorderRadius.zero),
+                        child: Container(
+                            padding: EdgeInsets.only(top: padding.top),
+                            height: Constants.homeAppBarHeight + padding.top,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            child: _buildTopBar()),
+                      ),
+                    ),
+                  ),
+                  //
                   DecoratedSliver(
                       decoration: const BoxDecoration(),
-                      sliver: SliverToBoxAdapter(child: _view()))
+                      sliver: SliverToBoxAdapter(
+                        child: _body(),
+                      ))
                 ])));
   }
 
-  Widget _view() {
+  Widget _buildTopBar() {
+    return Stack(alignment: AlignmentGeometry.center, children: [
+      Row(children: [
+        Container(
+          height: Constants.baseButton,
+          width: Constants.baseButton,
+          margin: const EdgeInsets.only(left: 5, right: 5),
+          child: RoundButton(
+              color: Theme.of(context).colorScheme.roundButton,
+              height: Constants.baseButton,
+              width: Constants.baseButton,
+              iconData: Icons.arrow_back_ios,
+              padding: const EdgeInsets.only(left: 5),
+              iconSize: 22,
+              radius: 20,
+              onPressed: (_) {
+                Navigator.of(context).pop();
+              }),
+        ),
+      ]),
+      Center(
+          child: Text(
+        'About',
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.iconColor,
+          fontSize: 16,
+        ),
+      )),
+    ]);
+  }
+
+  Widget _body() {
     return Builder(builder: (context) {
       return Padding(
           padding: const EdgeInsets.only(top: 10, left: 20, right: 20),

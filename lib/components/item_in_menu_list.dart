@@ -36,17 +36,19 @@ class ItemInMenuList extends StatelessWidget {
                 top: useBorderTop
                     ? BorderSide(
                         color: Theme.of(context).colorScheme.menuBorderColor,
-                        width: 1)
+                        width: 1,
+                      )
                     : BorderSide.none,
                 bottom: useBorderBot
                     ? BorderSide(
                         color: Theme.of(context).colorScheme.menuBorderColor,
-                        width: 1)
+                        width: 1,
+                      )
                     : BorderSide.none)),
         child: onClicked != null
             ? HoverClick(
                 // right click for desktops
-                onPressedR: (p0) {
+                onPressedR: (_) {
                   RenderBox box = context.findRenderObject() as RenderBox;
                   Offset pos = box.localToGlobal(Offset.zero);
                   onClicked?.call(pos);
@@ -63,7 +65,7 @@ class ItemInMenuList extends StatelessWidget {
                   autofocus: false,
                   style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(15),
                         side: BorderSide.none,
                       ),
                       padding: padding ?? EdgeInsets.zero,
@@ -75,7 +77,9 @@ class ItemInMenuList extends StatelessWidget {
                       shadowColor: Colors.transparent,
                       backgroundColor: Colors.transparent,
                       textStyle: const TextStyle(
-                          fontWeight: FontWeight.w300, fontSize: 12)),
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                      )),
                   child: child,
                 ),
               )

@@ -11,6 +11,8 @@ class Constants {
       'https://play.google.com/store/apps/details?id=com.vocabyte.app';
   static const appGroupLink = 'https://groups.google.com/g/vocabyte';
 
+  static const bool useDailyGoal = false;
+
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);
   static const lastFrameDuration = Duration(milliseconds: 150);
@@ -24,6 +26,11 @@ class Constants {
   static const baseButton = 50.0;
   static const homeCardHeight = 80.0;
   static const homeCardPadding = 10.0;
+
+  static const settingsCardPadding =
+      EdgeInsets.only(left: 25, right: 25, top: 4, bottom: 0);
+  static const settingsHeaderPadding =
+      EdgeInsets.only(left: 25, right: 25, top: 10, bottom: 10);
 
   static const menuFontSize1 = 15.0;
   static const menuFontSize2 = 14.0;

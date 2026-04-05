@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:random_string/random_string.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:vocabyte/app/utils.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
@@ -28,6 +29,7 @@ class SettingsRep {
   static const _dayGoalKey = 'goal_k';
   static const _useSoundKey = 'sound_k';
   static const _onboardingKey = 'onboard';
+  static const _userName = 'name';
 
   final onChanged = BehaviorSubject();
 
@@ -45,6 +47,18 @@ class SettingsRep {
         version: res[1] as String,
         onboarding: res[2] as bool);
   }
+
+  //
+  // remove all stored values
+  Future removeAll() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_themeKey);
+  }
+
+  factory SettingsRep() {
+    return _instance;
+  }
+  SettingsRep._internal();
 
   //
   // theme change
@@ -138,15 +152,15 @@ class SettingsRep {
     return v;
   }
 
-  //
-  // remove all stored values
-  Future removeAll() async {
+  Future<String> getUserName() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_themeKey);
+    var v = prefs.getString(_userName);
+    if (v == null) {
+      var random = randomAlphaNumeric(5);
+      await prefs.setString(_userName, random);
+      return random;
+    } else {
+      return v;
+    }
   }
-
-  factory SettingsRep() {
-    return _instance;
-  }
-  SettingsRep._internal();
 }

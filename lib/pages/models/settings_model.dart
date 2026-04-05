@@ -4,6 +4,7 @@ import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
 class SettingsModel with ChangeNotifier {
+  String name = '';
   NumeralsLevel? numLevel;
   int? dailyGoal;
   var importProfileBusy = false;
@@ -20,6 +21,10 @@ class SettingsModel with ChangeNotifier {
     _dispStream.add(SettingsRep().onChanged.stream.listen((_) {
       update();
     }));
+    Future.microtask(() async {
+      name = await SettingsRep().getUserName();
+      notify();
+    });
   }
 
   @override
@@ -32,6 +37,12 @@ class SettingsModel with ChangeNotifier {
   void notify() {
     if (_disposed) return;
     notifyListeners();
+  }
+
+  void setUseSound(bool v) {
+    useSound = v;
+    notify();
+    SettingsRep().setUseSound(v);
   }
 
   void update() async {

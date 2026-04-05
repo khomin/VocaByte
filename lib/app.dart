@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
@@ -237,7 +239,8 @@ class _AppState extends State<App> {
             child: BottomAppBar(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 color: Theme.of(context).colorScheme.bottomNavBg,
-                shape: const CircularNotchedRectangle(),
+                // shape: const CircularNotchedRectangle(),
+                shape: null,
                 height: Constants.bottomNavHeight,
                 notchMargin: 10.0,
                 elevation: 10,
@@ -270,7 +273,8 @@ class _AppState extends State<App> {
                         }),
                   ],
                 ))),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterDocked,
         floatingActionButton: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.fabButton,
           elevation: 4,
@@ -319,22 +323,17 @@ class _AppState extends State<App> {
                         ));
                   },
                 ),
-                SettingsPage(onChangeGoal: () {
-                  Navigator.push(
-                      context,
-                      PageTransition2.build(
-                          settings: const RouteSettings(),
-                          type: TransitionType.slide,
-                          child: SettingsDailiyGoal(onChanged: (v) {
-                            SettingsRep().setDailyGoal(v);
-                            SettingsRep().onChanged.add(null);
-                          })));
-                }),
+                const SettingsPage(),
               ]);
             })));
   }
 
   void _openSearch(SearchMode mode) {
+    if (_appModel.currentPage != PageType.home) {
+      Timer(Constants.animDurationLong, () {
+        _appModel.setCurrentPage(PageType.home);
+      });
+    }
     Navigator.of(context).push(
       PageTransition2.build(
           settings: const RouteSettings(),

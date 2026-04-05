@@ -566,8 +566,8 @@ class ServiceApi {
           bytes: Uint8List.fromList(codeUnits));
       if (UiHelper.isDesktop() && path != null) {
         await FileUtils.saveBufToFile(codeUnits, path);
+        return true;
       }
-      return true;
     } catch (ex) {
       logWarning('$ex: export words ex [$ex]');
     }

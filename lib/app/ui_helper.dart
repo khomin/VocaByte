@@ -42,7 +42,9 @@ class UiHelper {
 
   static void showToast(BuildContext context, String text,
       {ToastType type = ToastType.normal}) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(context).colorScheme.snackColor,
         content: Text(text,
             textAlign: TextAlign.center,
             maxLines: 5,
@@ -53,7 +55,8 @@ class UiHelper {
               color: Theme.of(context).colorScheme.text1,
             )),
         duration: const Duration(seconds: 3),
-        backgroundColor: Theme.of(context).colorScheme.title1.color));
+      ),
+    );
   }
 
   static Future<bool> hadleTextCtrV(
