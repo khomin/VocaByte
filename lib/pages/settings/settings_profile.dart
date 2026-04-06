@@ -227,7 +227,7 @@ class SettingsProfileState extends State<SettingsProfile> {
       return _view(
           header: 'Delete profile',
           comment: 'This will delete all progress',
-          icon: Icons.person_remove_rounded,
+          icon: Icons.remove_circle_sharp,
           important: true,
           busy: false,
           setBusy: (_) {},
@@ -311,7 +311,7 @@ class SettingsProfileState extends State<SettingsProfile> {
                     style: TextStyle(
                       color: important
                           ? Theme.of(context).colorScheme.titleErr
-                          : Theme.of(context).colorScheme.title2.color,
+                          : Theme.of(context).colorScheme.iconColor,
                       fontSize: 14,
                       fontFamily: Constants.fontInter,
                       fontWeight: FontWeight.w400,
@@ -330,8 +330,8 @@ class SettingsProfileState extends State<SettingsProfile> {
                     width: Constants.baseButton,
                     iconSize: model.iconSize,
                     iconColor: important
-                        ? Theme.of(context).colorScheme.error
-                        : Theme.of(context).colorScheme.title2.color,
+                        ? Theme.of(context).colorScheme.titleErr
+                        : Theme.of(context).colorScheme.iconColor,
                     useScaleAnimation: true,
                     color: Colors.transparent,
                     onPressed: (_) async {

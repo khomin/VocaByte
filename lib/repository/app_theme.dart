@@ -3,32 +3,43 @@ import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'dart:ui' as ui;
 
-enum ThemeType { light, dark, system }
-
 extension MenuColorScheme on ColorScheme {
   bool dark() => brightness == Brightness.dark;
 
-  Color get appBar => const Color(0xFFecebf2);
-  Color get baseColor1 => const Color(0xFFecebf2);
+  Color get appBar =>
+      dark() ? const Color(0xFF1c1e23) : const Color(0xFFecebf2);
+  Color get baseColor1 =>
+      dark() ? const Color(0xFF000000) : const Color(0xFFecebf2);
 
-  Color get bottomNavBg =>
-      dark() ? const Color(0xFFecebf2) : const Color(0xFFecebf2);
+  static const bottomBarLight = Color(0xFFecebf2);
+  static const bottomBarDark = Color(0xFF252525);
+
+  Color get bottomNavBg => dark() ? bottomBarDark : bottomBarLight;
   Color get bottomNavIcon => dark() ? Colors.white38 : const Color(0xFF8ca1b5);
   Color get bottomNavIconSelected =>
       dark() ? buttonOption1 : const Color(0xFF8ca1b5);
 
-  Color get homeCardH1 => const Color(0xFF43444c);
+  Color get homeCardH1 =>
+      dark() ? const Color(0xFFCACACA) : const Color(0xFF43444c);
 
-  Color get chip => const Color(0xFFecebf2);
-  Color get chipActive => const Color(0xFFC0CCFF);
+  Color get chip => dark() ? appBar : const Color(0xFFecebf2);
+  Color get chipActive =>
+      dark() ? const Color.fromARGB(255, 63, 67, 84) : const Color(0xFFC0CCFF);
 
   Color get snackColor =>
       dark() ? const Color(0xFFecebf2) : const Color(0xFFC5C4C9);
 
-  Color get reviewCardPastel => Colors.green;
-  Color get reviewCardPastelRequired => Colors.orange;
-  Color get manageCardPastel => Colors.blue;
-  Color get numeralsCardPastel => Colors.purple;
+  Color get textInputBox => dark() ? const Color(0xFF3F3F3F) : Colors.white;
+  Color get textInput => dark() ? Colors.white : Colors.white;
+
+  Color get itemSearch =>
+      dark() ? const Color(0xFF111317) : Colors.white.withValues(alpha: 0.5);
+
+  Color get reviewCardPastel => dark() ? const Color(0x6E4CAF4F) : Colors.green;
+  Color get reviewCardPastelRequired => dark() ? Colors.orange : Colors.orange;
+  Color get manageCardPastel => dark() ? const Color(0x6E2195F3) : Colors.blue;
+  Color get numeralsCardPastel =>
+      dark() ? const Color(0x6E9B27B0) : Colors.purple;
 
   Color get fabButton => const Color(0xFF7B61D1);
 
@@ -42,7 +53,7 @@ extension MenuColorScheme on ColorScheme {
   Color get menuIdle => const Color(0xFF111313);
 
   Color get inputText => dark()
-      ? const Color.fromARGB(255, 231, 231, 231)
+      ? const Color(0xFFE7E7E7)
       : const Color.fromARGB(255, 028, 028, 028);
   Color get inputBackground => dark()
       ? const Color.fromARGB(255, 34, 34, 34)
@@ -146,9 +157,8 @@ extension MenuColorScheme on ColorScheme {
       : const Color.fromARGB(255, 26, 151, 97);
   Color get title5 =>
       dark() ? const Color(0xFFB5C2D4) : const Color(0xFF172339);
-  Color get titleErr => dark()
-      ? const Color.fromARGB(255, 182, 9, 0)
-      : const Color.fromARGB(255, 195, 42, 34);
+  Color get titleErr =>
+      dark() ? const Color(0xFFDF524B) : const Color.fromARGB(255, 195, 42, 34);
 
   TextStyle get titleInverse => TextStyle(
         color: dark() ? const Color(0xFFF0F0F0) : const Color(0xFFFFFFFF),
@@ -211,8 +221,9 @@ extension MenuColorScheme on ColorScheme {
   Color get placeholder1 =>
       dark() ? const Color(0xFF30CC89) : const Color(0x7F172339);
 
-  Color get iconColor =>
-      dark() ? const Color(0xFFB5C2D4) : const Color(0xFF323232);
+  Color get iconColor => dark()
+      ? const Color.fromARGB(255, 226, 226, 226)
+      : const Color(0xFF323232);
 
   Color get roundButton =>
       dark() ? const Color(0x10FFFFFF) : const Color(0x0a000000);

@@ -125,7 +125,9 @@ class SearchWordPageState extends State<SearchWordPage> {
                                             padding.top,
                                         alignment: Alignment.center,
                                         decoration: BoxDecoration(
-                                          color: Colors.white,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .textInputBox,
                                           borderRadius:
                                               BorderRadius.circular(5),
                                         ),
@@ -210,9 +212,10 @@ class SearchWordPageState extends State<SearchWordPage> {
                                 : Container(
                                     margin: const EdgeInsets.only(top: 20),
                                     decoration: BoxDecoration(
-                                      color:
-                                          Colors.white.withValues(alpha: 0.5),
-                                      borderRadius: BorderRadius.circular(10),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .itemSearch,
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                     child: ListView.builder(
                                         shrinkWrap: true,
@@ -255,10 +258,14 @@ class SearchWordPageState extends State<SearchWordPage> {
                                           .title5)));
                         }
                         return Container(
-                            margin: const EdgeInsets.only(top: 20),
+                            margin: const EdgeInsets.only(
+                              top: 20,
+                              left: 8,
+                              right: 8,
+                            ),
                             decoration: BoxDecoration(
-                              color: Colors.white.withValues(alpha: 0.5),
-                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.itemSearch,
+                              borderRadius: BorderRadius.circular(15),
                             ),
                             child: ListView.builder(
                                 shrinkWrap: true,
@@ -381,8 +388,8 @@ class SearchWordPageState extends State<SearchWordPage> {
                     child: Container(
                         margin: const EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
-                          color: Colors.white.withValues(alpha: 0.5),
-                          borderRadius: BorderRadius.circular(10),
+                          color: Theme.of(context).colorScheme.itemSearch,
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         child: ListView.builder(
                             itemCount: snapshot.data?.length ?? 0,

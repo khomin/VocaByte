@@ -4,72 +4,52 @@ import 'package:vocabyte/repository/settings_rep.dart';
 enum PageType { home, settings }
 
 class AppModel with ChangeNotifier {
-  String _appVersion = '';
-  ThemeMode _theme = ThemeMode.system;
-  bool _onboarding = false;
-  bool _serviceInited = false;
-  bool _waitCopyResource = false;
-  bool _waitMigratingDb = false;
+  String appVersion = '';
+  ThemeMode theme = ThemeMode.system;
+  bool onboarding = false;
+  bool serviceInited = false;
+  bool waitCopyResource = false;
+  bool waitMigratingDb = false;
   PageType currentPage = PageType.home;
+  bool _disposed = false;
 
-  String get appVersion => _appVersion;
-  set appVersion(String v) {
-    if (_appVersion != v) {
-      _appVersion = v;
-      notifyListeners();
-    }
+  AppModel({
+    required this.theme,
+    required this.appVersion,
+    required this.onboarding,
+  }) {
+    notify();
   }
 
-  bool get onboarding => _onboarding;
-  set onboarding(bool v) {
-    if (_onboarding != v) {
-      _onboarding = v;
+  @override
+  void dispose() {
+    _disposed = true;
+    super.dispose();
+  }
+
+  void notify() {
+    if (_disposed) return;
+    notifyListeners();
+  }
+
+  void setOnboarding(bool v) {
+    if (onboarding != v) {
+      onboarding = v;
       SettingsRep().setOnboarding(false);
       notifyListeners();
     }
   }
 
-  bool get serviceInited => _serviceInited;
-
-  set serviceInited(bool v) {
-    if (_serviceInited != v) {
-      _serviceInited = v;
-      notifyListeners();
-    }
-  }
-
-  bool get busyCopyResource => _waitCopyResource;
-  set busyCopyResource(bool v) {
-    if (_waitCopyResource != v) {
-      _waitCopyResource = v;
-      notifyListeners();
-    }
-  }
-
-  bool get busyMigratingDb => _waitMigratingDb;
-  set busyMigratingDb(bool v) {
-    if (_waitMigratingDb != v) {
-      _waitMigratingDb = v;
-      notifyListeners();
-    }
-  }
-
-  set theme(ThemeMode v) {
-    if (_theme != v) {
-      _theme = v;
+  void setTheme(ThemeMode v) {
+    if (theme != v) {
+      theme = v;
       SettingsRep().setTheme(v);
       notifyListeners();
     }
   }
 
-  ThemeMode get theme => _theme;
-
   void setCurrentPage(PageType v) {
     currentPage = v;
     notify();
-  }
-
-  void notify() {
-    notifyListeners();
   }
 }

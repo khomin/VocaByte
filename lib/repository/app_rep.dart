@@ -151,11 +151,6 @@ class AppRep {
               lastTmFail: current.lastTmFail,
               nextReviewTmMs: current.nextReviewTmMs,
               meaningId: current.meaningId));
-      // var study = await ServiceApi().getCurrentToStudy();
-      // logDebug('BTEST_STUDY=$study');
-      // if (time == 0) {
-      //   logDebug('BTEST_STUDY-got: $study');
-      // }
     } else {
       logWarning('$tag: update review time empty current');
     }

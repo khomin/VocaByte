@@ -45,17 +45,11 @@ class _AppState extends State<App> {
       // local app dir
       await FileUtils.init();
       //
-      var initial = await SettingsRep().init();
-      //
-      _appModel.appVersion = initial.version;
-      _appModel.onboarding = initial.onboarding;
-      _appModel.theme = initial.theme;
-      //
       // if should copy resources
       if (!await FileUtils.isResourcesReady()) {
-        _appModel.busyCopyResource = true;
+        _appModel.waitCopyResource = true;
         await FileUtils.copyResourcesToDir();
-        _appModel.busyCopyResource = false;
+        _appModel.waitCopyResource = false;
       }
       //
       // ffi-cpp
@@ -66,7 +60,7 @@ class _AppState extends State<App> {
       // check if migrate database
       if (await ServiceApi().migrateDatabase()) {
         // (1) show status "migrating, please don't close the app"
-        _appModel.busyMigratingDb = true;
+        _appModel.waitMigratingDb = true;
         // (2) export all -> profile.json
         var temp = '${FileUtils.homeDir}/backup.json';
         await ServiceApi().exportProfile(explicitDir: temp);
@@ -77,9 +71,10 @@ class _AppState extends State<App> {
         // (6) remove temp profile
         FileUtils.deleteFile(temp);
         // (7) close status
-        _appModel.busyMigratingDb = false;
+        _appModel.waitMigratingDb = false;
       }
       _appModel.serviceInited = true;
+      _appModel.notify();
 
       getIt<AppRep>().refreshWordToLearn();
 
@@ -115,10 +110,10 @@ class _AppState extends State<App> {
     var model = context.watch<AppModel>();
     //
     // initial copy of assets
-    if (model.busyCopyResource) {
+    if (model.waitCopyResource) {
       return const SplashWithText(text: 'Copying database...');
     }
-    if (model.busyMigratingDb) {
+    if (model.waitMigratingDb) {
       return const SplashWithText(
           text: "Installing update\nPlease don't close the app");
     }
@@ -143,7 +138,6 @@ class _AppState extends State<App> {
             child: BottomAppBar(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 color: Theme.of(context).colorScheme.bottomNavBg,
-                // shape: const CircularNotchedRectangle(),
                 shape: null,
                 height: Constants.bottomNavHeight,
                 notchMargin: 10.0,

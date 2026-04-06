@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_theme.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 class ChipItem extends StatelessWidget {
   const ChipItem({
@@ -17,6 +18,15 @@ class ChipItem extends StatelessWidget {
     return ActionChip(
       labelPadding: const EdgeInsets.only(left: 15, right: 15),
       padding: EdgeInsets.zero,
+      shadowColor: Colors.transparent,
+      elevation: 0,
+      surfaceTintColor: Colors.transparent,
+      side: active
+          ? null
+          : BorderSide(
+              color: Theme.of(context).colorScheme.chipActive,
+              width: 1,
+            ),
       backgroundColor: active
           ? Theme.of(context).colorScheme.chipActive
           : Theme.of(context).colorScheme.chip,
@@ -26,7 +36,15 @@ class ChipItem extends StatelessWidget {
       onPressed: () {
         onPressed();
       },
-      label: Text(text),
+      label: Text(
+        text,
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.inputText,
+          fontFamily: Constants.fontInter,
+          fontSize: 14,
+          fontWeight: FontWeight.w400,
+        ),
+      ),
     );
   }
 }

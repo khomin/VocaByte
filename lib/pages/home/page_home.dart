@@ -40,9 +40,9 @@ class PageHomeState extends State<PageHome> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.sizeOf(context);
     var appRep = getIt<AppRep>();
-    var padding = MediaQuery.of(context).padding;
+    var size = MediaQuery.sizeOf(context);
+    var padding = MediaQuery.paddingOf(context);
     return CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
       SliverAppBar(
           floating: true,
@@ -73,7 +73,7 @@ class PageHomeState extends State<PageHome> {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     shadowColor: Colors.transparent,
-                    backgroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.textInputBox,
                   ),
                   child: TextFormField(
                       enabled: false,
@@ -85,11 +85,9 @@ class PageHomeState extends State<PageHome> {
                           color: Theme.of(context).colorScheme.iconColor,
                         ),
                         hintStyle: TextStyle(
-                          color: Theme.of(context)
-                              .colorScheme
-                              .iconColor
-                              .withValues(alpha: 0.8),
+                          color: Theme.of(context).colorScheme.iconColor,
                           fontSize: 16,
+                          fontFamily: Constants.fontInter,
                         ),
                         border: InputBorder.none,
                         contentPadding:
@@ -123,10 +121,7 @@ class PageHomeState extends State<PageHome> {
                           : 'No words to review today',
                   iconBackground: v == null
                       ? Colors.transparent
-                      : Theme.of(context)
-                          .colorScheme
-                          .reviewCardPastel
-                          .withValues(alpha: 0.15),
+                      : Theme.of(context).colorScheme.reviewCardPastel,
                   width: size.width - Constants.homeCardPadding,
                   asset: 'assets/study.png',
                   canTap: () => true,
@@ -137,10 +132,7 @@ class PageHomeState extends State<PageHome> {
         _item(
             header: 'Manage words',
             description: 'Manage your study list',
-            iconBackground: Theme.of(context)
-                .colorScheme
-                .manageCardPastel
-                .withValues(alpha: 0.15),
+            iconBackground: Theme.of(context).colorScheme.manageCardPastel,
             width: size.width - Constants.homeCardPadding,
             asset: 'assets/search2.png',
             canTap: () => true,
@@ -150,10 +142,7 @@ class PageHomeState extends State<PageHome> {
         _item(
             header: 'Numerals',
             description: 'Listen to the numbers',
-            iconBackground: Theme.of(context)
-                .colorScheme
-                .numeralsCardPastel
-                .withValues(alpha: 0.15),
+            iconBackground: Theme.of(context).colorScheme.numeralsCardPastel,
             width: size.width - Constants.homeCardPadding,
             asset: 'assets/numeral.png',
             canTap: () => true,
@@ -242,6 +231,7 @@ class PageHomeState extends State<PageHome> {
                                 fontSize: 14,
                                 fontFamily: Constants.fontFredoka,
                                 fontWeight: FontWeight.w400,
+                                color: Theme.of(context).colorScheme.homeCardH1,
                               ),
                             ),
                           ]))

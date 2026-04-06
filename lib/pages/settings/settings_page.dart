@@ -133,9 +133,9 @@ class _State extends State<SettingsPage> {
             borderRadius: BorderRadius.circular(15),
           ),
           margin: const EdgeInsets.only(
+            top: 15,
             left: Constants.homeCardPadding,
             right: Constants.homeCardPadding,
-            bottom: 15,
           ),
           child: Column(children: [
             ItemInMenuList(
@@ -227,9 +227,9 @@ class _State extends State<SettingsPage> {
             borderRadius: BorderRadius.circular(15),
           ),
           margin: const EdgeInsets.only(
+            top: 15,
             left: Constants.homeCardPadding,
             right: Constants.homeCardPadding,
-            bottom: 15,
           ),
           child: Column(children: [
             Container(
@@ -246,8 +246,7 @@ class _State extends State<SettingsPage> {
                 useBorderBot: false,
                 padding: Constants.settingsCardPadding,
                 onClicked: (_) {
-                  appModel.theme = isDark ? ThemeMode.light : ThemeMode.dark;
-                  model.update();
+                  appModel.setTheme(isDark ? ThemeMode.light : ThemeMode.dark);
                 },
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -270,9 +269,8 @@ class _State extends State<SettingsPage> {
                             value: isDark,
                             padding: EdgeInsets.zero,
                             onChanged: (value) async {
-                              appModel.theme =
-                                  isDark ? ThemeMode.light : ThemeMode.dark;
-                              model.update();
+                              appModel.setTheme(
+                                  isDark ? ThemeMode.light : ThemeMode.dark);
                             })
                       ])
                     ])),
@@ -289,9 +287,9 @@ class _State extends State<SettingsPage> {
             borderRadius: BorderRadius.circular(15),
           ),
           margin: const EdgeInsets.only(
+            top: 15,
             left: Constants.homeCardPadding,
             right: Constants.homeCardPadding,
-            bottom: 15,
           ),
           child: Column(children: [
             Container(
@@ -356,9 +354,9 @@ class _State extends State<SettingsPage> {
               color: Theme.of(context).colorScheme.cardHome,
               borderRadius: BorderRadius.circular(15)),
           margin: const EdgeInsets.only(
+            top: 15,
             left: Constants.homeCardPadding,
             right: Constants.homeCardPadding,
-            bottom: 15,
           ),
           child: Column(children: [
             Container(

@@ -64,9 +64,10 @@ class _State extends State<ManageWordItem> {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
-                            fontWeight: FontWeight.w600,
-                            fontSize: 14,
-                            color: Theme.of(context).colorScheme.text3)))
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                          color: Theme.of(context).colorScheme.text3,
+                        )))
               ])),
               Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -84,9 +85,10 @@ class _State extends State<ManageWordItem> {
                       //
                       Text('$_comment',
                           style: TextStyle(
-                              fontWeight: FontWeight.w600,
-                              fontSize: 12,
-                              color: Theme.of(context).colorScheme.cardText))
+                            fontWeight: FontWeight.w600,
+                            fontSize: 12,
+                            color: Theme.of(context).colorScheme.cardText,
+                          ))
                     ]),
                     //
                     //
