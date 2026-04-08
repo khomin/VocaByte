@@ -150,7 +150,7 @@ class SearchWordModel with ChangeNotifier {
     return query.isEmpty && manageList.isEmpty;
   }
 
-  bool showRecent() {
+  bool showAllOrRecent() {
     return query.isEmpty;
   }
 }

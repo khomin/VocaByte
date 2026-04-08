@@ -170,7 +170,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                               height: Constants.homeAppBarHeight + padding.top,
                               alignment: Alignment.center,
                               decoration: BoxDecoration(
-                                color: Colors.white,
+                                color: Theme.of(context).colorScheme.appBar,
                                 borderRadius: BorderRadius.circular(5),
                               ),
                               child: _buildTopBar(),
@@ -498,9 +498,9 @@ class PageWordDetailsState extends State<PageWordDetails>
                         child: ButtonRoundCorner(
                             text: 'Use this meaning',
                             iconData: Icons.school,
-                            color: Theme.of(context).colorScheme.cardSuccess,
+                            color: Theme.of(context).colorScheme.buttonOption3,
                             colorText:
-                                Theme.of(context).colorScheme.button2Text,
+                                Theme.of(context).colorScheme.buttonOptionText,
                             padding: EdgeInsets.only(
                                 left: size.width / 5, right: size.width / 5),
                             direction: TextDirection.ltr,
@@ -555,24 +555,27 @@ class PageWordDetailsState extends State<PageWordDetails>
                   ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Flexible(
                           child: Column(children: [
-                        Text(leftText,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w500,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .title2
-                                    .color)),
+                        Text(
+                          leftText,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            fontFamily: Constants.fontFredoka,
+                            color: Theme.of(context).colorScheme.title2.color,
+                          ),
+                        ),
                         const SizedBox(height: 10),
                         StepProgressIndicator(
                           totalSteps: Constants.reapedToLeanDefault,
                           currentStep: countKnow,
                           size: 10,
-                          selectedColor:
-                              Theme.of(context).colorScheme.buttonOption1,
-                          unselectedColor:
-                              Theme.of(context).colorScheme.buttonOptionText,
+                          selectedColor: Theme.of(context)
+                              .colorScheme
+                              .progressStepsSelected,
+                          unselectedColor: Theme.of(context)
+                              .colorScheme
+                              .progressStepsUnselected,
                         )
                       ]))
                     ])

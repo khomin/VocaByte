@@ -22,9 +22,12 @@ extension MenuColorScheme on ColorScheme {
   Color get homeCardH1 =>
       dark() ? const Color(0xFFCACACA) : const Color(0xFF43444c);
 
-  Color get chip => dark() ? appBar : const Color(0xFFecebf2);
+  Color get chipsBox => dark()
+      ? const Color(0xFF1c1e23)
+      : const Color.fromARGB(255, 236, 235, 242);
+  Color get chip => dark() ? const Color(0xFF1c1e23) : const Color(0xFFecebf2);
   Color get chipActive =>
-      dark() ? const Color.fromARGB(255, 63, 67, 84) : const Color(0xFFC0CCFF);
+      dark() ? const Color.fromARGB(255, 75, 85, 134) : const Color(0xFFC0CCFF);
 
   Color get snackColor =>
       dark() ? const Color(0xFFecebf2) : const Color(0xFFC5C4C9);
@@ -110,16 +113,14 @@ extension MenuColorScheme on ColorScheme {
       );
   TextStyle get title1 => TextStyle(
         color: dark() ? const Color(0xFF8A8A9A) : const Color(0xFF202020),
-        fontSize: 14,
-        fontFamily: Constants.fontInter,
-        fontWeight: FontWeight.w600,
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        fontFamily: Constants.fontFredoka,
       );
   TextStyle get title2 => TextStyle(
-        color: dark()
-            ? const Color(0xFFCACACA)
-            : const Color.fromARGB(239, 56, 56, 56),
+        color: dark() ? const Color(0xFFCACACA) : const Color(0xEE383838),
         fontSize: 14,
-        fontFamily: Constants.fontInter,
+        fontFamily: Constants.fontFredoka,
         fontWeight: FontWeight.w400,
       );
   TextStyle get title3 => TextStyle(
@@ -164,7 +165,7 @@ extension MenuColorScheme on ColorScheme {
         color: dark() ? const Color(0xFFF0F0F0) : const Color(0xFFFFFFFF),
         fontSize: 15,
         fontWeight: FontWeight.w500,
-        fontFamily: Constants.fontInter,
+        fontFamily: Constants.fontFredoka,
       );
 
   Color get dialogHeaderText =>
@@ -205,12 +206,20 @@ extension MenuColorScheme on ColorScheme {
   Color get menuBorderColor =>
       dark() ? const Color(0xFF303030) : const Color(0x15000000);
 
-  Color get buttonOption1 => const Color.fromARGB(255, 70, 124, 113);
-  Color get buttonOption2 => const Color.fromARGB(255, 162, 74, 167);
-  Color get buttonOption3 => const Color.fromARGB(255, 49, 86, 77);
-  Color get buttonOption4 => const Color.fromARGB(255, 101, 103, 137);
+  Color get buttonOption1 => const Color(0xFF467C71);
+  Color get buttonOption2 => dark()
+      ? const Color.fromARGB(255, 108, 49, 111)
+      : const Color(0xFFA24AA7);
+  Color get buttonOption3 => const Color(0xFF31564D);
+  Color get buttonOption4 => const Color(0xFF656789);
   Color get buttonOptionText =>
-      dark() ? const Color(0xFF202020) : const Color(0xFFDFDFDF);
+      dark() ? const Color(0xFFDFDFDF) : const Color(0xFFDFDFDF);
+
+  Color get progressStepsSelected => dark()
+      ? const Color.fromARGB(255, 175, 175, 175)
+      : const Color(0xFFDFDFDF);
+  Color get progressStepsUnselected =>
+      dark() ? const Color.fromARGB(255, 65, 65, 65) : const Color(0xFFDFDFDF);
 
   Color get cardText =>
       dark() ? const Color(0xFFCACACA) : const Color(0xFF202020);

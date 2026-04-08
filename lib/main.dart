@@ -70,9 +70,11 @@ class MainApp extends StatelessWidget {
               themeMode: theme,
               theme: ThemeData(
                 brightness: Brightness.light,
+                splashColor: Colors.white.withValues(alpha: 0.05),
               ),
               darkTheme: ThemeData(
                 brightness: Brightness.dark,
+                splashColor: Colors.white.withValues(alpha: 0.05),
               ),
               home: AnnotatedRegion<SystemUiOverlayStyle>(
                 value: _getSystemStyle(context, theme),

@@ -285,12 +285,7 @@ class SettingsProfileState extends State<SettingsProfile> {
               child: Row(children: [
                 Text(
                   header,
-                  style: TextStyle(
-                    color: Theme.of(context).colorScheme.title1.color,
-                    fontSize: 14,
-                    fontFamily: Constants.fontInter,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).colorScheme.title1,
                 )
               ])),
           ItemInMenuList(
@@ -306,16 +301,19 @@ class SettingsProfileState extends State<SettingsProfile> {
                 model.notify();
               },
               child: Row(children: [
-                Text(comment,
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: important
-                          ? Theme.of(context).colorScheme.titleErr
-                          : Theme.of(context).colorScheme.iconColor,
-                      fontSize: 14,
-                      fontFamily: Constants.fontInter,
-                      fontWeight: FontWeight.w400,
-                    )),
+                Text(
+                  comment,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: important
+                        ? Theme.of(context).colorScheme.titleErr
+                        : Theme.of(context).colorScheme.title2.color,
+                    fontSize: Theme.of(context).colorScheme.title2.fontSize,
+                    fontFamily: Theme.of(context).colorScheme.title2.fontFamily,
+                    fontWeight: Theme.of(context).colorScheme.title2.fontWeight,
+                  ),
+                  // style: Theme.of(context).colorScheme.title2,
+                ),
                 const Spacer(),
                 if (busy)
                   SizedBox(

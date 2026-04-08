@@ -57,14 +57,18 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text('Please select next review time',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w600,
-                                  color: Theme.of(context)
-                                      .colorScheme
-                                      .dialogHeaderText))
+                          Text(
+                            'Please select next review time',
+                            textAlign: TextAlign.start,
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w500,
+                              fontFamily: Constants.fontFredoka,
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .dialogHeaderText,
+                            ),
+                          )
                         ])),
                 Positioned(
                     right: 10,
@@ -148,13 +152,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                     },
                     child: Text(
                       'Already know',
-                      style: TextStyle(
-                        color:
-                            Theme.of(context).colorScheme.button3TextInversed,
-                        fontSize: 14,
-                        fontFamily: Constants.fontInter,
-                        fontWeight: FontWeight.w600,
-                      ),
+                      style: Theme.of(context).colorScheme.title1,
                     ))),
           ])
         ]));

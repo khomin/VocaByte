@@ -18,8 +18,8 @@ class ChipItem extends StatelessWidget {
     return ActionChip(
       labelPadding: const EdgeInsets.only(left: 15, right: 15),
       padding: EdgeInsets.zero,
-      shadowColor: Colors.transparent,
       elevation: 0,
+      shadowColor: Colors.transparent,
       surfaceTintColor: Colors.transparent,
       side: active
           ? null

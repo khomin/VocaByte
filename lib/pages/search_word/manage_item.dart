@@ -10,11 +10,15 @@ import 'package:vocabyte/services/protobuf/app.pb.dart';
 class ManageWordItem extends StatefulWidget {
   const ManageWordItem({
     required this.data,
-    this.onClicked,
+    required this.isFirst,
+    required this.isLast,
+    required this.onPressed,
     super.key,
   });
   final WordInReview data;
-  final Function? onClicked;
+  final Function() onPressed;
+  final bool isFirst;
+  final bool isLast;
 
   @override
   State<ManageWordItem> createState() => _State();
@@ -44,63 +48,75 @@ class _State extends State<ManageWordItem> {
 
   @override
   Widget build(BuildContext context) {
-    return ItemInMenuList(
-        useBorderTop: false,
-        useBorderBot: true,
-        onClicked: (pos) {
-          widget.onClicked?.call();
-        },
-        child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const SizedBox(width: 18),
-              //
-              // word
-              Expanded(
-                  child: Row(children: [
+    return Container(
+      margin: const EdgeInsets.only(left: 8, right: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.only(
+          topLeft: widget.isFirst ? const Radius.circular(8) : Radius.zero,
+          topRight: widget.isFirst ? const Radius.circular(8) : Radius.zero,
+          bottomLeft: widget.isLast ? const Radius.circular(8) : Radius.zero,
+          bottomRight: widget.isLast ? const Radius.circular(8) : Radius.zero,
+        ),
+        color: Theme.of(context).colorScheme.pageHome,
+      ),
+      child: ItemInMenuList(
+          useBorderTop: false,
+          useBorderBot: !widget.isLast,
+          onClicked: (pos) {
+            widget.onPressed();
+          },
+          child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const SizedBox(width: 18),
+                //
+                // word
                 Expanded(
-                    child: Text(UiHelper.toFormatText(widget.data.word),
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                          color: Theme.of(context).colorScheme.text3,
-                        )))
-              ])),
-              Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(children: [
-                      //
-                      //
-                      if (widget.data.successCount >=
-                          Constants.reapedToLeanDefault)
-                        const Padding(
-                            padding: EdgeInsets.only(right: 8),
-                            child: Icon(Icons.thumb_up, size: 15)),
-                      //
-                      //
-                      Text('$_comment',
+                    child: Row(children: [
+                  Expanded(
+                      child: Text(UiHelper.toFormatText(widget.data.word),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                             fontWeight: FontWeight.w600,
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.cardText,
-                          ))
-                    ]),
-                    //
-                    //
-                    if (widget.data.successCount <
-                        Constants.reapedToLeanDefault)
-                      Text('Remember ${widget.data.successCount} times',
-                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).colorScheme.text3,
+                          )))
+                ])),
+                Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(children: [
+                        //
+                        //
+                        if (widget.data.successCount >=
+                            Constants.reapedToLeanDefault)
+                          const Padding(
+                              padding: EdgeInsets.only(right: 8),
+                              child: Icon(Icons.thumb_up, size: 15)),
+                        //
+                        //
+                        Text('$_comment',
+                            style: TextStyle(
                               fontWeight: FontWeight.w600,
                               fontSize: 12,
-                              color: Theme.of(context).colorScheme.cardText)),
-                  ]),
-              const SizedBox(width: 18)
-            ]));
+                              color: Theme.of(context).colorScheme.cardText,
+                            ))
+                      ]),
+                      //
+                      //
+                      if (widget.data.successCount <
+                          Constants.reapedToLeanDefault)
+                        Text('Remember ${widget.data.successCount} times',
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 12,
+                                color: Theme.of(context).colorScheme.cardText)),
+                    ]),
+                const SizedBox(width: 18)
+              ])),
+    );
   }
 }

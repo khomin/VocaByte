@@ -311,9 +311,11 @@ class _State extends State<SettingsPage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Complexity level',
-                            textAlign: TextAlign.center,
-                            style: Theme.of(context).colorScheme.title2),
+                        Text(
+                          'Complexity level',
+                          textAlign: TextAlign.center,
+                          style: Theme.of(context).colorScheme.title2,
+                        ),
                       ]),
                   const Spacer(),
                   DropdownButton<String>(
