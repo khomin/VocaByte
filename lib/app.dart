@@ -15,6 +15,7 @@ import 'package:vocabyte/pages/home/page_home.dart';
 import 'package:vocabyte/pages/search_word/page_search.dart';
 import 'package:vocabyte/pages/settings/settings_daily_goal.dart';
 import 'package:vocabyte/pages/settings/settings_page.dart';
+import 'package:vocabyte/pages/wizard/wizard.dart';
 import 'package:vocabyte/pages/word_details/page_word_details.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/pages/splash/splash.dart';
@@ -218,6 +219,15 @@ class _AppState extends State<App> {
                           settings: const RouteSettings(),
                           type: TransitionType.opacity,
                           child: const NumeralsMain(),
+                        ));
+                  },
+                  onWizard: () {
+                    Navigator.push(
+                        context,
+                        PageTransition2.build(
+                          settings: const RouteSettings(),
+                          type: TransitionType.opacity,
+                          child: const WizardMain(),
                         ));
                   },
                 ),

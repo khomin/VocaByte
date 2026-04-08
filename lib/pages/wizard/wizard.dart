@@ -6,28 +6,16 @@ import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 
-class PageHome extends StatefulWidget {
-  const PageHome({
-    required this.onReview,
-    required this.onSearch,
-    required this.onManageWords,
-    required this.onNumerals,
-    required this.onWizard,
-    super.key,
-  });
-  final Function() onReview;
-  final Function() onSearch;
-  final Function() onManageWords;
-  final Function() onNumerals;
-  final Function() onWizard;
+class WizardMain extends StatefulWidget {
+  const WizardMain({super.key});
 
   @override
-  PageHomeState createState() => PageHomeState();
+  WizardMainState createState() => WizardMainState();
 }
 
-class PageHomeState extends State<PageHome> {
+class WizardMainState extends State<WizardMain> {
   final _dispStream = DisposableStream();
-  final tag = 'home';
+  final tag = 'wizardMain';
 
   @override
   void initState() {
@@ -47,58 +35,55 @@ class PageHomeState extends State<PageHome> {
     var padding = MediaQuery.paddingOf(context);
     return CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
       SliverAppBar(
-          floating: true,
-          snap: true,
-          pinned: false,
-          primary: false,
-          expandedHeight: Constants.homeAppBarHeight + padding.top,
-          collapsedHeight: Constants.homeAppBarHeight + padding.top,
-          toolbarHeight: Constants.homeAppBarHeight + padding.top,
-          automaticallyImplyLeading: false,
-          backgroundColor: Theme.of(context).colorScheme.appBar,
-          scrolledUnderElevation: 0,
-          elevation: 0,
-          surfaceTintColor: Colors.transparent,
-          title: Hero(
-            tag: 'search_bar',
-            child: Material(
-              color: Colors.transparent,
-              child: Container(
-                margin: EdgeInsets.only(top: padding.top),
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  onPressed: () {
-                    widget.onSearch();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    shadowColor: Colors.transparent,
-                    backgroundColor: Theme.of(context).colorScheme.textInputBox,
-                  ),
-                  child: TextFormField(
-                      enabled: false,
-                      decoration: InputDecoration(
-                        // TODO: audio search
-                        hintText: "Search your words...",
-                        prefixIcon: Icon(
-                          Icons.search,
-                          color: Theme.of(context).colorScheme.iconColor,
-                        ),
-                        hintStyle: TextStyle(
-                          color: Theme.of(context).colorScheme.iconColor,
-                          fontSize: 16,
-                          fontFamily: Constants.fontInter,
-                        ),
-                        border: InputBorder.none,
-                        contentPadding:
-                            const EdgeInsets.symmetric(vertical: 15),
-                      )),
+        floating: true,
+        snap: true,
+        pinned: false,
+        primary: false,
+        expandedHeight: Constants.homeAppBarHeight + padding.top,
+        collapsedHeight: Constants.homeAppBarHeight + padding.top,
+        toolbarHeight: Constants.homeAppBarHeight + padding.top,
+        automaticallyImplyLeading: false,
+        backgroundColor: Theme.of(context).colorScheme.appBar,
+        scrolledUnderElevation: 0,
+        elevation: 0,
+        surfaceTintColor: Colors.transparent,
+        title: Material(
+          color: Colors.transparent,
+          child: Container(
+            margin: EdgeInsets.only(top: padding.top),
+            alignment: Alignment.center,
+            child: ElevatedButton(
+              onPressed: () {
+                widget.onSearch();
+              },
+              style: ElevatedButton.styleFrom(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
+                shadowColor: Colors.transparent,
+                backgroundColor: Theme.of(context).colorScheme.textInputBox,
               ),
+              child: TextFormField(
+                  enabled: false,
+                  decoration: InputDecoration(
+                    // TODO: audio search
+                    hintText: "Search your words...",
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: Theme.of(context).colorScheme.iconColor,
+                    ),
+                    hintStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.iconColor,
+                      fontSize: 16,
+                      fontFamily: Constants.fontInter,
+                    ),
+                    border: InputBorder.none,
+                    contentPadding: const EdgeInsets.symmetric(vertical: 15),
+                  )),
             ),
-          )),
+          ),
+        ),
+      ),
       SliverList.list(children: [
         const SizedBox(height: 15),
         //
@@ -159,7 +144,7 @@ class PageHomeState extends State<PageHome> {
             asset: 'assets/library_pigeon.png',
             canTap: () => true,
             onTap: () {
-              widget.onWizard();
+              widget.onNumerals();
             }),
       ]),
       SliverToBoxAdapter(

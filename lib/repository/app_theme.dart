@@ -43,6 +43,9 @@ extension MenuColorScheme on ColorScheme {
   Color get manageCardPastel => dark() ? const Color(0x6E2195F3) : Colors.blue;
   Color get numeralsCardPastel =>
       dark() ? const Color(0x6E9B27B0) : Colors.purple;
+  Color get libraryCardPastel => dark()
+      ? const Color.fromARGB(109, 39, 162, 176)
+      : const Color.fromARGB(255, 39, 135, 176);
 
   Color get fabButton => const Color(0xFF7B61D1);
 
