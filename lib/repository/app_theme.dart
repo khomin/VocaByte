@@ -29,8 +29,15 @@ extension MenuColorScheme on ColorScheme {
   Color get chipActive =>
       dark() ? const Color.fromARGB(255, 75, 85, 134) : const Color(0xFFC0CCFF);
 
-  Color get snackColor =>
-      dark() ? const Color(0xFFecebf2) : const Color(0xFFC5C4C9);
+  Color get snackColor => dark()
+      ? const Color.fromARGB(255, 82, 70, 152)
+      : const Color.fromARGB(255, 204, 189, 255);
+  Color get snackColorText =>
+      dark() ? const Color(0xFFecebf2) : const Color.fromARGB(255, 28, 28, 28);
+
+  Color get bottomSheet => dark()
+      ? const Color(0xFF1c1e23)
+      : const Color.fromARGB(255, 238, 238, 238);
 
   Color get textInputBox => dark() ? const Color(0xFF3F3F3F) : Colors.white;
   Color get textInput => dark() ? Colors.white : Colors.white;
@@ -203,8 +210,6 @@ extension MenuColorScheme on ColorScheme {
 
   Color get shadow2 =>
       dark() ? const Color(0xFFFFFFFF) : const Color(0x50000000);
-
-  // Color get  => const Color.fromARGB(159, 109, 109, 109);
 
   Color get menuBorderColor =>
       dark() ? const Color(0xFF303030) : const Color(0x15000000);

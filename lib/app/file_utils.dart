@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:vocabyte/models/wizard_model.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:collection/collection.dart';
 
@@ -72,6 +74,11 @@ class FileUtils {
       saveBufToFile(bytesMain, '$homeDir/database.db'),
     ]);
     return null;
+  }
+
+  static Future<dynamic> getWizard() async {
+    final data = await rootBundle.loadString('assets/wizard_list.json');
+    return jsonDecode(data);
   }
 
   Future writeToFile(ByteData data, String path) async {

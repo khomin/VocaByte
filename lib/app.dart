@@ -222,6 +222,7 @@ class _AppState extends State<App> {
                         ));
                   },
                   onWizard: () {
+                    getIt<AppRep>().requestWizardData();
                     Navigator.push(
                         context,
                         PageTransition2.build(

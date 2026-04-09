@@ -7,6 +7,7 @@ import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:vocabyte/app/file_utils.dart';
 import 'package:vocabyte/main.dart';
 import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/models/search_word_model.dart';
@@ -34,6 +35,7 @@ class AppRep {
   final onManageWordChanged = BehaviorSubject<List<WordInReview>?>();
   final onNumeralsProgress = BehaviorSubject<double>.seeded(0);
   final onNumeralsStage = BehaviorSubject.seeded(NumeralsStage());
+  final onWizardList = BehaviorSubject<dynamic>();
 
   late final ReviewTaskBase reviewTask;
   late final BehaviorSubject<ReviewTaskBase> onReviewTaskChanged;
@@ -396,6 +398,11 @@ class AppRep {
 
   void shareApp() {
     Share.shareUri(Uri.parse(Constants.appLink));
+  }
+
+  void requestWizardData() async {
+    var v = await FileUtils.getWizard();
+    onWizardList.add(v);
   }
 }
 

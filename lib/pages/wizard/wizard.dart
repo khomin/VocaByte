@@ -1,10 +1,16 @@
+import 'package:provider/provider.dart';
+import 'package:vocabyte/app/ui_helper.dart';
+import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/main.dart';
+import 'package:vocabyte/models/wizard_model.dart';
+import 'package:vocabyte/pages/home/home_card_item.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
+import 'package:vocabyte/services/service_api.dart';
 
 class WizardMain extends StatefulWidget {
   const WizardMain({super.key});
@@ -14,6 +20,7 @@ class WizardMain extends StatefulWidget {
 }
 
 class WizardMainState extends State<WizardMain> {
+  final _model = WizardModel();
   final _dispStream = DisposableStream();
   final tag = 'wizardMain';
 
@@ -24,235 +31,160 @@ class WizardMainState extends State<WizardMain> {
 
   @override
   void dispose() {
+    _model.dispose();
     _dispStream.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    var appRep = getIt<AppRep>();
+    var padding = MediaQuery.of(context).padding;
     var size = MediaQuery.sizeOf(context);
-    var padding = MediaQuery.paddingOf(context);
-    return CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
-      SliverAppBar(
-        floating: true,
-        snap: true,
-        pinned: false,
-        primary: false,
-        expandedHeight: Constants.homeAppBarHeight + padding.top,
-        collapsedHeight: Constants.homeAppBarHeight + padding.top,
-        toolbarHeight: Constants.homeAppBarHeight + padding.top,
-        automaticallyImplyLeading: false,
-        backgroundColor: Theme.of(context).colorScheme.appBar,
-        scrolledUnderElevation: 0,
-        elevation: 0,
-        surfaceTintColor: Colors.transparent,
-        title: Material(
-          color: Colors.transparent,
-          child: Container(
-            margin: EdgeInsets.only(top: padding.top),
-            alignment: Alignment.center,
-            child: ElevatedButton(
-              onPressed: () {
-                widget.onSearch();
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                shadowColor: Colors.transparent,
-                backgroundColor: Theme.of(context).colorScheme.textInputBox,
-              ),
-              child: TextFormField(
-                  enabled: false,
-                  decoration: InputDecoration(
-                    // TODO: audio search
-                    hintText: "Search your words...",
-                    prefixIcon: Icon(
-                      Icons.search,
-                      color: Theme.of(context).colorScheme.iconColor,
+    return Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.baseColor1,
+        body: ChangeNotifierProvider.value(
+            value: _model,
+            builder: (context, child) {
+              return CustomScrollView(
+                  physics: const ClampingScrollPhysics(),
+                  slivers: [
+                    SliverAppBar(
+                        floating: true,
+                        primary: false,
+                        expandedHeight:
+                            Constants.homeAppBarHeight + padding.top,
+                        collapsedHeight:
+                            Constants.homeAppBarHeight + padding.top,
+                        toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                        automaticallyImplyLeading: false,
+                        scrolledUnderElevation: 0,
+                        elevation: 0,
+                        surfaceTintColor: Colors.transparent,
+                        titleSpacing: 0,
+                        title: Container(
+                          alignment: Alignment.center,
+                          child: Material(
+                            color: Colors.transparent,
+                            shape: const RoundedRectangleBorder(
+                                borderRadius: BorderRadius.zero),
+                            child: Container(
+                              padding: EdgeInsets.only(top: padding.top),
+                              height: Constants.homeAppBarHeight + padding.top,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.appBar,
+                                  borderRadius: BorderRadius.circular(5),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color:
+                                          Colors.black.withValues(alpha: 0.05),
+                                      blurRadius: 10,
+                                      spreadRadius: 2,
+                                      offset: const Offset(0, -2),
+                                    ),
+                                  ]),
+                              child: _buildTopBar(),
+                            ),
+                          ),
+                        )),
+                    StreamBuilder(
+                      stream: getIt<AppRep>().onWizardList,
+                      initialData: getIt<AppRep>().onWizardList.valueOrNull,
+                      builder: (context, snapshot) {
+                        var v = snapshot.data;
+                        if (v == null) {
+                          return const SliverFillRemaining();
+                        }
+                        var keys = v.keys.toList();
+                        return SliverList.builder(
+                            itemCount: keys.length,
+                            itemBuilder: (context, index) {
+                              var key = keys[index];
+                              var i = v[key];
+                              var length = i['list'].length;
+                              return HomeCardItem(
+                                header: i['description'],
+                                description: '${i["name"]}\n$length words',
+                                iconBackground: null,
+                                width: size.width - Constants.homeCardPadding,
+                                asset: 'assets/book.png',
+                                height: 100,
+                                margin: const EdgeInsets.only(
+                                  top: 16,
+                                  left: Constants.homeCardPadding,
+                                  right: Constants.homeCardPadding,
+                                ),
+                                canTap: () => true,
+                                onTap: () {
+                                  showModalBottomSheet(
+                                      context: context,
+                                      barrierColor: Colors.transparent,
+                                      builder: (BuildContext contextSheet) {
+                                        return ConfirmPanel(
+                                          title: 'Are you sure?',
+                                          text: 'You will import $length words',
+                                          iconNo:
+                                              Icons.add_circle_outline_sharp,
+                                          iconOk: Icons.close,
+                                          leftButtonColor:
+                                              Theme.of(contextSheet)
+                                                  .colorScheme
+                                                  .manageCardPastel,
+                                          onOk: () async {
+                                            Navigator.of(contextSheet).pop();
+                                            await ServiceApi()
+                                                .importWords(words: i['list']);
+                                            if (context.mounted) {
+                                              UiHelper.showToast(
+                                                  context, 'Completed');
+                                            }
+                                            getIt<AppRep>()
+                                                .refreshWordToLearn();
+                                            getIt<AppRep>().refreshManageList();
+                                          },
+                                        );
+                                      });
+                                },
+                              );
+                            });
+                      },
                     ),
-                    hintStyle: TextStyle(
-                      color: Theme.of(context).colorScheme.iconColor,
-                      fontSize: 16,
-                      fontFamily: Constants.fontInter,
+                    SliverToBoxAdapter(
+                      child: SizedBox(
+                          height: MediaQuery.of(context).padding.bottom),
                     ),
-                    border: InputBorder.none,
-                    contentPadding: const EdgeInsets.symmetric(vertical: 15),
-                  )),
-            ),
-          ),
-        ),
-      ),
-      SliverList.list(children: [
-        const SizedBox(height: 15),
-        //
-        StreamBuilder(
-            stream: appRep.reviewTask.wordToReviewCnt,
-            builder: (context, snapshot) {
-              var v = snapshot.data;
-              return _item(
-                  header: v == null
-                      ? 'Updating...'
-                      : v == 0
-                          ? '0 words'
-                          : v > 1
-                              ? '$v words'
-                              : '$v word',
-                  description: v == null
-                      ? 'Words to review'
-                      : v > 0
-                          ? v > 1
-                              ? 'Review them today'
-                              : 'Review it today'
-                          : 'No words to review today',
-                  iconBackground: v == null
-                      ? Colors.transparent
-                      : Theme.of(context).colorScheme.reviewCardPastel,
-                  width: size.width - Constants.homeCardPadding,
-                  asset: 'assets/study.png',
-                  canTap: () => true,
-                  onTap: () {
-                    widget.onReview();
-                  });
-            }),
-        _item(
-            header: 'Manage words',
-            description: 'Manage your study list',
-            iconBackground: Theme.of(context).colorScheme.manageCardPastel,
-            width: size.width - Constants.homeCardPadding,
-            asset: 'assets/search2.png',
-            canTap: () => true,
-            onTap: () {
-              widget.onManageWords();
-            }),
-        _item(
-            header: 'Numerals',
-            description: 'Listen to the numbers',
-            iconBackground: Theme.of(context).colorScheme.numeralsCardPastel,
-            width: size.width - Constants.homeCardPadding,
-            asset: 'assets/numeral.png',
-            canTap: () => true,
-            onTap: () {
-              widget.onNumerals();
-            }),
-        _item(
-            header: 'Library',
-            description: 'Choose words to add',
-            iconBackground: Theme.of(context).colorScheme.libraryCardPastel,
-            width: size.width - Constants.homeCardPadding,
-            asset: 'assets/library_pigeon.png',
-            canTap: () => true,
-            onTap: () {
-              widget.onNumerals();
-            }),
-      ]),
-      SliverToBoxAdapter(
-        child: SizedBox(height: MediaQuery.of(context).padding.bottom),
-      ),
-    ]);
+                  ]);
+            }));
   }
 
-  Widget _item({
-    required String header,
-    required String description,
-    required double width,
-    required String asset,
-    required bool Function() canTap,
-    required Function() onTap,
-    required Color iconBackground,
-  }) {
-    return RoundButton(
-        color: Theme.of(context).colorScheme.cardHome,
-        radius: 25,
-        useShadow: true,
-        useScaleAnimation: false,
-        height: Constants.homeCardHeight,
-        margin: const EdgeInsets.only(
-          left: Constants.homeCardPadding,
-          right: Constants.homeCardPadding,
-          bottom: 16,
+  Widget _buildTopBar() {
+    return Stack(alignment: AlignmentGeometry.center, children: [
+      Row(children: [
+        Container(
+          height: Constants.baseButton,
+          width: Constants.baseButton,
+          margin: const EdgeInsets.only(left: 5, right: 5),
+          child: RoundButton(
+              color: Theme.of(context).colorScheme.roundButton,
+              height: Constants.baseButton,
+              width: Constants.baseButton,
+              iconData: Icons.close,
+              padding: const EdgeInsets.only(left: 5),
+              iconSize: 22,
+              radius: 20,
+              onPressed: (_) {
+                Navigator.of(context).pop();
+              }),
         ),
-        width: width,
-        onPressed: (_) {
-          if (canTap()) {
-            onTap();
-          }
-        },
-        child: IgnorePointer(
-          child: Stack(children: [
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 14,
-              ),
-              child: Row(children: [
-                Stack(children: [
-                  Center(
-                    child: Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                        color: iconBackground,
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.only(left: 40),
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(children: [
-                              Text(
-                                header,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontFamily: Constants.fontInter,
-                                  fontWeight: FontWeight.bold,
-                                  height: 1.1,
-                                  color:
-                                      Theme.of(context).colorScheme.homeCardH1,
-                                ),
-                              ),
-                            ]),
-                            const SizedBox(height: 8),
-                            Text(
-                              description,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: 14,
-                                fontFamily: Constants.fontFredoka,
-                                fontWeight: FontWeight.w400,
-                                color: Theme.of(context).colorScheme.homeCardH1,
-                              ),
-                            ),
-                          ]))
-                ])
-              ]),
-            ),
-            Positioned(
-              top: -0,
-              bottom: 0,
-              right: 0,
-              child: SizedBox(
-                  width: 85,
-                  child: Stack(children: [
-                    Center(
-                        child: SizedBox(
-                      width: 75,
-                      height: 75,
-                      child: Image.asset(
-                        asset,
-                      ),
-                    ))
-                  ])),
-            ),
-          ]),
-        ));
+      ]),
+      Center(
+          child: Text(
+        'Library',
+        style: TextStyle(
+          color: Theme.of(context).colorScheme.iconColor,
+          fontSize: 16,
+        ),
+      )),
+    ]);
   }
 }

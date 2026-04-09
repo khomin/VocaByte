@@ -509,32 +509,40 @@ class ServiceApi {
     return false;
   }
 
-  Future<int> importWords({String? explicitDir}) async {
-    try {
-      String? path;
-      if (explicitDir == null) {
-        var res = await FilePicker.platform.pickFiles(allowMultiple: false);
-        if (res == null || res.files.isEmpty) {
-          return 0;
+  Future<int> importWords({String? explicitDir, List<dynamic>? words}) async {
+    if (words == null) {
+      try {
+        String? path;
+        if (explicitDir == null) {
+          var res = await FilePicker.platform.pickFiles(allowMultiple: false);
+          if (res == null || res.files.isEmpty) {
+            return 0;
+          }
+          path = res.files.first.path;
+          if (path == null) {
+            return 0;
+          }
+        } else {
+          path = explicitDir;
         }
-        path = res.files.first.path;
-        if (path == null) {
-          return 0;
+        var addedCnt = 0;
+        var data = await FileUtils.readFileToStringLine(path);
+        for (var i in data) {
+          if (await ServiceApi().addCurrent(
+              req: ReqAddWordInReview(word: i, useExtraFields: false))) {
+            addedCnt++;
+          }
         }
-      } else {
-        path = explicitDir;
+        return addedCnt;
+      } catch (ex) {
+        logWarning('$ex');
       }
-      var addedCnt = 0;
-      var data = await FileUtils.readFileToStringLine(path);
-      for (var it2 in data) {
-        if (await ServiceApi().addCurrent(
-            req: ReqAddWordInReview(word: it2, useExtraFields: false))) {
-          addedCnt++;
-        }
+    } else {
+      for (var i in words) {
+        await ServiceApi().addCurrent(
+            req: ReqAddWordInReview(word: i, useExtraFields: false));
       }
-      return addedCnt;
-    } catch (ex) {
-      logWarning('$ex');
+      return words.length;
     }
     return 0;
   }

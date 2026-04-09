@@ -7,6 +7,7 @@ import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/pages/card_review/card_review_main.dart';
 import 'package:vocabyte/pages/numerals/numerals_main.dart';
 import 'package:vocabyte/repository/app_theme.dart';
+import 'package:vocabyte/resource/constants.dart';
 
 enum ToastType { normal, error }
 
@@ -53,7 +54,8 @@ class UiHelper {
             style: TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 14,
-              color: Theme.of(context).colorScheme.text1,
+              color: Theme.of(context).colorScheme.snackColorText,
+              fontFamily: Constants.fontFredoka,
             )),
         duration: const Duration(seconds: 3),
       ),
