@@ -82,7 +82,7 @@ class PageHomeState extends State<PageHome> {
                       enabled: false,
                       decoration: InputDecoration(
                         // TODO: audio search
-                        hintText: "Search your words...",
+                        hintText: 'Search your words...',
                         prefixIcon: Icon(
                           Icons.search,
                           color: Theme.of(context).colorScheme.iconColor,
