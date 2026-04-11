@@ -75,5 +75,3 @@ cpp/ThirdParty/llama_dictionary/**.**
 
 android/app/.cxx/**
 *.db
-
-*.json
