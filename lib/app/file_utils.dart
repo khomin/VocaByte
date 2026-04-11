@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:vocabyte/models/wizard_model.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:collection/collection.dart';
 
@@ -14,9 +13,11 @@ class FileUtils {
   static Future init() async {
     try {
       if (homeDir.isEmpty) {
-        homeDir = await FileUtils._getLocalFolder();
+        homeDir = await _getLocalFolder();
       }
-      await createFolder(homeDir);
+      if (!await Directory(homeDir).exists()) {
+        await Directory(homeDir).create(recursive: true);
+      }
     } catch (ex) {
       logWarning('$tag: init error [$ex]');
     }
@@ -47,8 +48,8 @@ class FileUtils {
         path = '$path/${Constants.localFolderName}';
         break;
       case 'android':
-        var dir = await getExternalStorageDirectory();
-        path = dir?.path ?? '/';
+        var dir = await getApplicationDocumentsDirectory();
+        path = dir.path;
         break;
       case 'ios':
         var dir = await getApplicationDocumentsDirectory();
@@ -98,12 +99,6 @@ class FileUtils {
     if (dir == null) return null;
     var path = '${dir.path}/$name';
     return path;
-  }
-
-  static Future createFolder(String path) async {
-    if (!await Directory(path).exists()) {
-      await Directory(path).create(recursive: true);
-    }
   }
 
   static Future deleteFolder(String path) async {

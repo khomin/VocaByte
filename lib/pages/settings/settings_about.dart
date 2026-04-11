@@ -37,22 +37,29 @@ class SettingsAboutState extends State<SettingsAbout> {
                     surfaceTintColor: Colors.transparent,
                     titleSpacing: 0,
                     title: Container(
-                      alignment: Alignment.center,
-                      child: Material(
-                        color: Colors.transparent,
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.zero),
-                        child: Container(
+                        alignment: Alignment.center,
+                        child: Material(
+                          color: Colors.transparent,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius: BorderRadius.zero),
+                          child: Container(
                             padding: EdgeInsets.only(top: padding.top),
                             height: Constants.homeAppBarHeight + padding.top,
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(5),
-                            ),
-                            child: _buildTopBar()),
-                      ),
-                    ),
+                                color: Theme.of(context).colorScheme.appBar,
+                                borderRadius: BorderRadius.circular(5),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.05),
+                                    blurRadius: 10,
+                                    spreadRadius: 2,
+                                    offset: const Offset(0, -2),
+                                  ),
+                                ]),
+                            child: _buildTopBar(),
+                          ),
+                        )),
                   ),
                   //
                   DecoratedSliver(
@@ -102,73 +109,69 @@ class SettingsAboutState extends State<SettingsAbout> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(Constants.appName,
+                Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                  Text(
+                    Constants.appName,
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.appBarText.color,
-                        fontSize: Constants.menuFontSize1,
-                        fontWeight: FontWeight.w500)),
-                const SizedBox(height: 8),
-                Text('This app is lightweight and free, with no ads',
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: Constants.fontFredoka,
+                    ),
+                  )
+                ]),
+                const SizedBox(height: 15),
+                Text('No translations\nNo shortcuts',
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.appBarText.color,
-                        fontSize: Constants.menuFontSize1,
-                        fontWeight: FontWeight.w400)),
-                const SizedBox(height: 8),
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: Constants.fontFredoka,
+                    )),
+                const SizedBox(height: 15),
+                Text('Train your mind to work in English',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: Constants.fontFredoka,
+                    )),
+                //
+                const SizedBox(height: 15),
+                Text('Built for learners who want to think in English',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: Constants.fontFredoka,
+                    )),
+                //
+                const SizedBox(height: 15),
+                Text('This app is designed to be offline and lightweight',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: Constants.fontFredoka,
+                    )),
+                const SizedBox(height: 15),
                 Text(
                     'It combines the power of word cards and numeral training to help you improve your language skills and number recognition',
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.appBarText.color,
-                        fontSize: Constants.menuFontSize1,
-                        fontWeight: FontWeight.w400)),
-                const SizedBox(height: 8),
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: Constants.fontFredoka,
+                    )),
+                const SizedBox(height: 15),
                 Text(
-                    'Simply type a word into the search bar to instantly access its card with detailed examples, making it easy to understand and remember',
+                    'Type a word into the search bar to access its card with examples',
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.appBarText.color,
-                        fontSize: Constants.menuFontSize1,
-                        fontWeight: FontWeight.w400)),
-                const SizedBox(height: 8),
-                Text('We hope this app can help you find a use for that',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.appBarText.color,
-                        fontSize: Constants.menuFontSize1,
-                        fontWeight: FontWeight.w400)),
-                const SizedBox(height: 30),
-                Text('We also have a group for bugs & ideas:',
-                    style: TextStyle(
-                        color: Theme.of(context).colorScheme.appBarText.color,
-                        fontSize: Constants.menuFontSize1,
-                        fontWeight: FontWeight.w400)),
-                ItemInMenuList(
-                    useBorderTop: false,
-                    useBorderBot: false,
-                    padding: EdgeInsets.zero,
-                    margin: EdgeInsets.zero,
-                    onClicked: (pos) {},
-                    child: Row(children: [
-                      Text(Constants.appGroupLink,
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.title2.color,
-                              fontSize: 15,
-                              fontWeight: FontWeight.bold)),
-                      RoundButton(
-                          color: Theme.of(context).colorScheme.roundButton,
-                          height: Constants.baseButton,
-                          width: Constants.baseButton,
-                          iconSize: 20,
-                          margin: const EdgeInsets.only(left: 10),
-                          useScaleAnimation: true,
-                          iconData: Icons.copy,
-                          onPressed: (v) async {
-                            Clipboard.setData(const ClipboardData(
-                                text: Constants.appGroupLink));
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  duration: Duration(milliseconds: 500),
-                                  content: Text('Copied')),
-                            );
-                          })
-                    ]))
+                      color: Theme.of(context).colorScheme.appBarText.color,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w400,
+                      fontFamily: Constants.fontFredoka,
+                    )),
               ]));
     });
   }

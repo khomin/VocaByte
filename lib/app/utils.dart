@@ -38,9 +38,4 @@ class Utils {
     }
     return 'undefined';
   }
-
-  Future<String> getVersion() async {
-    var packageInfo = await PackageInfo.fromPlatform();
-    return packageInfo.version;
-  }
 }

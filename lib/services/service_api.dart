@@ -228,8 +228,7 @@ class ServiceApi {
 
   Future init() async {
     Completer completer = Completer();
-    var initParam = InitParams();
-    initParam.localDir = FileUtils.homeDir;
+    var initParam = InitParams(localDir: FileUtils.homeDir);
     var out = registerCall(
         proto: initParam,
         cb: (data) {

@@ -1,25 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:random_string/random_string.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:vocabyte/app/utils.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SettingsData {}
-
-class Initial {
-  Initial({
-    required this.theme,
-    required this.version,
-    required this.onboarding,
-  });
-  ThemeMode theme;
-  String version;
-  bool onboarding;
-}
-
 class SettingsRep {
+  final onChanged = BehaviorSubject();
   static final SettingsRep _instance = SettingsRep._internal();
 
   static const _themeKey = 'theme_type';
@@ -30,23 +17,6 @@ class SettingsRep {
   static const _useSoundKey = 'sound_k';
   static const _onboardingKey = 'onboard';
   static const _userName = 'name';
-
-  final onChanged = BehaviorSubject();
-
-  Future<Initial> init() async {
-    var res = await Future.wait([
-      // theme
-      SettingsRep().getTheme(),
-      // version
-      Utils().getVersion(),
-      // first start
-      SettingsRep().getOnboarding()
-    ]);
-    return Initial(
-        theme: res[0] as ThemeMode,
-        version: res[1] as String,
-        onboarding: res[2] as bool);
-  }
 
   //
   // remove all stored values

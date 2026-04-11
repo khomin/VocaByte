@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:loggy/loggy.dart';
 import 'package:vocabyte/app.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
@@ -18,68 +19,49 @@ Future<void> initDependencies() async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await initDependencies();
+  // Load everything up front
+  final results = await Future.wait([
+    SettingsRep().getTheme(),
+    initDependencies(),
+  ]);
 
-  var initial = await SettingsRep().init();
-  var model = AppModel(
-    theme: initial.theme,
-    appVersion: initial.version,
-    onboarding: initial.onboarding,
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AppModel(theme: results[0] as ThemeMode),
+      child: const MainApp(),
+    ),
   );
-
-  runApp(MainApp(model: model));
 }
 
 class MainApp extends StatelessWidget {
-  const MainApp({required this.model, super.key});
-  final AppModel model;
-
-  SystemUiOverlayStyle _getSystemStyle(BuildContext context, ThemeMode mode) {
-    if (mode == ThemeMode.system) {
-      var overlay = MediaQuery.of(context).platformBrightness;
-      overlay == Brightness.light
-          ? mode = ThemeMode.light
-          : mode = ThemeMode.dark;
-    }
-    switch (mode) {
-      case ThemeMode.light:
-        return const SystemUiOverlayStyle(
-          systemNavigationBarColor: MenuColorScheme.bottomBarLight,
-          statusBarColor: Colors.transparent,
-          systemNavigationBarIconBrightness: Brightness.dark,
-        );
-      case ThemeMode.dark:
-        return const SystemUiOverlayStyle(
-          systemNavigationBarColor: MenuColorScheme.bottomBarDark,
-          statusBarColor: Colors.transparent,
-          systemNavigationBarIconBrightness: Brightness.light,
-        );
-      case ThemeMode.system:
-        return const SystemUiOverlayStyle();
-    }
-  }
+  const MainApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<AppModel>.value(
-        value: model,
-        builder: (context, child) {
-          var theme = context.select<AppModel, ThemeMode>((v) => v.theme);
-          return MaterialApp(
-              title: Constants.appName,
-              themeMode: theme,
-              theme: ThemeData(
-                brightness: Brightness.light,
-                splashColor: Colors.white.withValues(alpha: 0.05),
-              ),
-              darkTheme: ThemeData(
-                brightness: Brightness.dark,
-                splashColor: Colors.white.withValues(alpha: 0.05),
-              ),
-              home: AnnotatedRegion<SystemUiOverlayStyle>(
-                value: _getSystemStyle(context, theme),
-                child: const App(),
-              ));
-        });
+    var theme = context.select<AppModel, ThemeMode>((v) => v.theme);
+    return MaterialApp(
+        title: Constants.appName,
+        themeMode: theme,
+        theme: _buildTheme(Brightness.light),
+        darkTheme: _buildTheme(Brightness.dark),
+        home: const App());
+  }
+
+  ThemeData _buildTheme(Brightness brightness) {
+    final isDark = brightness == Brightness.dark;
+    return ThemeData(
+      brightness: brightness,
+      splashFactory: InkRipple.splashFactory,
+      appBarTheme: AppBarTheme(
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: Colors.transparent,
+          systemNavigationBarColor: isDark
+              ? MenuColorScheme.bottomBarDark
+              : MenuColorScheme.bottomBarLight,
+          systemNavigationBarIconBrightness:
+              isDark ? Brightness.light : Brightness.dark,
+        ),
+      ),
+    );
   }
 }

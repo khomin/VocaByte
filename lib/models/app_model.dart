@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 
 enum PageType { home, settings }
@@ -13,12 +14,12 @@ class AppModel with ChangeNotifier {
   PageType currentPage = PageType.home;
   bool _disposed = false;
 
-  AppModel({
-    required this.theme,
-    required this.appVersion,
-    required this.onboarding,
-  }) {
-    notify();
+  AppModel({required this.theme}) {
+    Future.microtask(() async {
+      var packageInfo = await PackageInfo.fromPlatform();
+      appVersion = packageInfo.version;
+      notify();
+    });
   }
 
   @override

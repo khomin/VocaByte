@@ -43,6 +43,14 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+    signingConfigs {
+        config {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+            storePassword keystoreProperties['storePassword']
+        }
+    }
     defaultConfig {
         minSdk 24
         applicationId "com.vocabyte.app"
@@ -54,8 +62,7 @@ android {
             cmake {
                 arguments "-DANDROID_ARM_NEON=TRUE", "-DANDROID_TOOLCHAIN=clang",
                         "-DCMAKE_CXX_FLAGS=\"-llog\"",
-                        "-DANDROID_STL=c++_shared"//,
-//                        "-DANDROID_SUPPORT_FLEXIBLE_PAGE_SIZES=ON"
+                        "-DANDROID_STL=c++_shared"
                 cFlags "-D__STDC_FORMAT_MACROS", "-D__ANDROID__", "-fPIC", "-Wl,-Bsymbolic"
                 cppFlags "-std=c++17", "-fPIC", "-frtti", "-fexceptions", "--build-id", "-Wl,-Bsymbolic"
                 abiFilters "arm64-v8a", "x86_64"
@@ -74,36 +81,39 @@ android {
             path "../../cpp/CMakeLists.txt"
         }
     }
-    signingConfigs {
-        release {
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
-            storePassword keystoreProperties['storePassword']
-        }
-    }
     buildTypes {
         applicationVariants.all { variant ->
             variant.outputs.all {
-                outputFileName = "${versionName}.apk"
+                outputFileName = "VocaByte-${variant.name}-${versionName}.apk"
             }
         }
         debug {
             debuggable true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt')
-
+            signingConfig signingConfigs.config
+        }
+        profile {
+            debuggable true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            signingConfig signingConfigs.config
+            externalNativeBuild {
+                cmake {
+                    arguments "-DCMAKE_BUILD_TYPE=Release"
+                }
+            }
         }
         release {
-            // minifyEnabled true
-            // minifyEnabled false
-            // shrinkResources false
+            minifyEnabled false
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            // TODO: Add your own signing config for the release build.
-            // Signing with the debug keys for now,
-            // so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.config
+            externalNativeBuild {
+                cmake {
+                    arguments "-DCMAKE_BUILD_TYPE=Release"
+                }
+            }
         }
     }
     buildFeatures {

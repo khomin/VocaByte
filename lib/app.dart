@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/app/file_utils.dart';
@@ -43,21 +44,19 @@ class _AppState extends State<App> {
     super.initState();
 
     Future.microtask(() async {
-      // local app dir
       await FileUtils.init();
-      //
+
       // if should copy resources
       if (!await FileUtils.isResourcesReady()) {
         _appModel.waitCopyResource = true;
         await FileUtils.copyResourcesToDir();
         _appModel.waitCopyResource = false;
       }
-      //
-      // ffi-cpp
+
       Loggy.initLoggy(logPrinter: LogPrinter());
+
       await ServiceApi().initLib(libraryPath: LibPath.path);
 
-      //
       // check if migrate database
       if (await ServiceApi().migrateDatabase()) {
         // (1) show status "migrating, please don't close the app"
@@ -79,7 +78,7 @@ class _AppState extends State<App> {
 
       getIt<AppRep>().refreshWordToLearn();
 
-      Future.delayed(const Duration(milliseconds: 100), () async {
+      Future.delayed(const Duration(milliseconds: 500), () async {
         TextToSpeach().initTts();
         await getIt<AppRep>().updateRecent();
         await getIt<AppRep>().refreshManageList();
@@ -99,17 +98,16 @@ class _AppState extends State<App> {
     super.didChangeDependencies();
   }
 
-  // TOOD: fix UI color/navigation
-  // TODO: scan text
-  // TOOD: a feature to add 100 new words at start
-  // TOOD: ru-en l10n
-  // TODO: when added a word count didn't update
+  // TODO: long start time
+  // TODO: black splash in light theme
+
   // TODO: flavor build - google/rustore sdk
+  // TODO: feature scan text
 
   @override
   Widget build(BuildContext context) {
     var model = context.watch<AppModel>();
-    //
+
     // initial copy of assets
     if (model.waitCopyResource) {
       return const SplashWithText(text: 'Copying database...');
