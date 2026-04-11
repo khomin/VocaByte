@@ -94,9 +94,9 @@ class HomeCardItem extends StatelessWidget {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                fontSize: 14,
+                                fontSize: 14.5,
                                 fontFamily: Constants.fontFredoka,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w600,
                                 color: Theme.of(context).colorScheme.homeCardH1,
                               ),
                             ),

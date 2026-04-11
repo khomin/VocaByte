@@ -40,14 +40,7 @@ class _State extends State<SearchWordItem> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(left: 8, right: 8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: widget.isFirst ? const Radius.circular(8) : Radius.zero,
-          topRight: widget.isFirst ? const Radius.circular(8) : Radius.zero,
-          bottomLeft: widget.isLast ? const Radius.circular(8) : Radius.zero,
-          bottomRight: widget.isLast ? const Radius.circular(8) : Radius.zero,
-        ),
         color: Theme.of(context).colorScheme.pageHome,
       ),
       child: ItemInMenuList(

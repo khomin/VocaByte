@@ -120,9 +120,9 @@ class State2 extends State<ButtonRoundCorner>
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: widget.colorText,
-                      fontWeight: FontWeight.w400,
+                      fontWeight: FontWeight.w500,
                       fontFamily: Constants.fontFredoka,
-                      fontSize: UiHelper.isMobile() ? 15 : 12,
+                      fontSize: 15,
                     ),
                   )
               ]),

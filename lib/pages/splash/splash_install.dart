@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 
-class SplashWithText extends StatefulWidget {
+class SplashWithText extends StatelessWidget {
   const SplashWithText({required this.text, super.key});
   final String text;
 
-  @override
-  State<SplashWithText> createState() => SplashWithTextState();
-}
-
-class SplashWithTextState extends State<SplashWithText> {
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -33,7 +28,7 @@ class SplashWithTextState extends State<SplashWithText> {
                 padding: const EdgeInsets.all(20),
                 child: CircularProgressIndicator(
                     color: Theme.of(context).colorScheme.title5))),
-        Text(widget.text,
+        Text(text,
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontWeight: FontWeight.w400,

@@ -51,8 +51,10 @@ class ButtonWithMenu extends StatelessWidget {
                 fontSize: 12,
                 color: Theme.of(context).colorScheme.baseColor1,
               )),
-          child: Icon(Icons.arrow_drop_down_outlined,
-              color: Theme.of(context).colorScheme.buttonOptionText),
+          child: Icon(
+            Icons.arrow_drop_down_outlined,
+            color: Theme.of(context).colorScheme.buttonOptionText,
+          ),
         ),
       )
     ]);

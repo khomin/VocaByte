@@ -124,14 +124,14 @@ extension MenuColorScheme on ColorScheme {
   TextStyle get title1 => TextStyle(
         color: dark() ? const Color(0xFF8A8A9A) : const Color(0xFF202020),
         fontSize: 15,
-        fontWeight: FontWeight.w500,
+        fontWeight: FontWeight.w800,
         fontFamily: Constants.fontFredoka,
       );
   TextStyle get title2 => TextStyle(
         color: dark() ? const Color(0xFFCACACA) : const Color(0xEE383838),
-        fontSize: 14,
+        fontSize: 15,
+        fontWeight: FontWeight.w600,
         fontFamily: Constants.fontFredoka,
-        fontWeight: FontWeight.w400,
       );
   TextStyle get title3 => TextStyle(
         color: dark() ? const Color(0xFFAAAAAA) : const Color(0xF04A4A4A),

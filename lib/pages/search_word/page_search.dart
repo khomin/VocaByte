@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:collection/collection.dart';
 import 'package:vocabyte/components/chip_item.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
@@ -466,8 +465,9 @@ class SearchWordPageState extends State<SearchWordPage> {
     return AnimatedBuilder(
       animation: animation,
       builder: (context, child) {
+        final isReversing = animation.status == AnimationStatus.reverse;
         return SliverOpacity(
-          opacity: animation.value,
+          opacity: isReversing ? 0.0 : animation.value,
           sliver: child,
         );
       },
@@ -480,7 +480,7 @@ class SearchWordPageState extends State<SearchWordPage> {
       hasScrollBody: false,
       child: _animateWidget(
         child: Container(
-          color: Theme.of(context).colorScheme.page,
+          color: Theme.of(context).colorScheme.chipsBox,
         ),
       ),
     );

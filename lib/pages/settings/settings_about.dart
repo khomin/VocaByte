@@ -1,8 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:vocabyte/components/app_bar2.dart';
-import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/resource/constants.dart';
@@ -116,7 +113,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 18,
                       fontWeight: FontWeight.w500,
-                      fontFamily: Constants.fontFredoka,
                     ),
                   )
                 ]),
@@ -126,7 +122,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: Constants.fontFredoka,
                     )),
                 const SizedBox(height: 15),
                 Text('Train your mind to work in English',
@@ -134,7 +129,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: Constants.fontFredoka,
                     )),
                 //
                 const SizedBox(height: 15),
@@ -143,7 +137,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: Constants.fontFredoka,
                     )),
                 //
                 const SizedBox(height: 15),
@@ -152,7 +145,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: Constants.fontFredoka,
                     )),
                 const SizedBox(height: 15),
                 Text(
@@ -161,7 +153,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: Constants.fontFredoka,
                     )),
                 const SizedBox(height: 15),
                 Text(
@@ -170,7 +161,6 @@ class SettingsAboutState extends State<SettingsAbout> {
                       color: Theme.of(context).colorScheme.appBarText.color,
                       fontSize: 15,
                       fontWeight: FontWeight.w400,
-                      fontFamily: Constants.fontFredoka,
                     )),
               ]));
     });

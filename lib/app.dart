@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/app/file_utils.dart';
@@ -14,7 +13,6 @@ import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_main.dart';
 import 'package:vocabyte/pages/home/page_home.dart';
 import 'package:vocabyte/pages/search_word/page_search.dart';
-import 'package:vocabyte/pages/settings/settings_daily_goal.dart';
 import 'package:vocabyte/pages/settings/settings_page.dart';
 import 'package:vocabyte/pages/wizard/wizard.dart';
 import 'package:vocabyte/pages/word_details/page_word_details.dart';
@@ -22,7 +20,6 @@ import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/pages/splash/splash.dart';
 import 'package:vocabyte/pages/splash/splash_install.dart';
 import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 import 'package:vocabyte/services/tts.dart';
@@ -97,9 +94,6 @@ class _AppState extends State<App> {
     _appModel = context.read<AppModel>();
     super.didChangeDependencies();
   }
-
-  // TODO: long start time
-  // TODO: black splash in light theme
 
   // TODO: flavor build - google/rustore sdk
   // TODO: feature scan text

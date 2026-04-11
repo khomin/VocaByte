@@ -39,6 +39,20 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = context.select<AppModel, ThemeMode>((v) => v.theme);
+    final bool isDark = theme == ThemeMode.system
+        ? MediaQuery.platformBrightnessOf(context) == Brightness.dark
+        : theme == ThemeMode.dark;
+    Future.microtask(() {
+      SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
+        statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
+        systemNavigationBarColor: isDark
+            ? MenuColorScheme.bottomBarDark
+            : MenuColorScheme.bottomBarLight,
+        systemNavigationBarIconBrightness:
+            isDark ? Brightness.light : Brightness.dark,
+      ));
+    });
     return MaterialApp(
         title: Constants.appName,
         themeMode: theme,
