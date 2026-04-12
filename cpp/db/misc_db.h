@@ -68,7 +68,6 @@ private:
     std::string db_path;
 
     static constexpr const char* DB_FILE_PRIMARY_NAME = "database.db";
-    static constexpr const char* DB_FILE_SENTENCES_NAME = "sentences.db";
     static constexpr const char* TAG = "MiscDb";
 };
 

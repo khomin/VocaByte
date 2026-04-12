@@ -96,7 +96,7 @@ class HomeCardItem extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14.5,
                                 fontFamily: Constants.fontFredoka,
-                                fontWeight: FontWeight.w600,
+                                fontWeight: FontWeight.w400,
                                 color: Theme.of(context).colorScheme.homeCardH1,
                               ),
                             ),

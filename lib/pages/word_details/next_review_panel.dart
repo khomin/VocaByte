@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/main.dart';
-import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
 
@@ -99,7 +97,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 },
                 child: Text(
                   'Today',
-                  style: Theme.of(context).colorScheme.title1,
+                  style: Theme.of(context).colorScheme.title2,
                 )),
             ItemInMenuList(
                 useBorderTop: false,
@@ -109,7 +107,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 },
                 child: Text(
                   'In 1 day',
-                  style: Theme.of(context).colorScheme.title1,
+                  style: Theme.of(context).colorScheme.title2,
                 )),
             ItemInMenuList(
                 useBorderTop: false,
@@ -119,7 +117,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 },
                 child: Text(
                   'In 1 week',
-                  style: Theme.of(context).colorScheme.title1,
+                  style: Theme.of(context).colorScheme.title2,
                 )),
             ItemInMenuList(
                 useBorderTop: false,
@@ -129,7 +127,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 },
                 child: Text(
                   'In 1 month',
-                  style: Theme.of(context).colorScheme.title1,
+                  style: Theme.of(context).colorScheme.title2,
                 )),
             ItemInMenuList(
                 useBorderTop: false,
@@ -139,7 +137,7 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                 },
                 child: Text(
                   'In 3 months',
-                  style: Theme.of(context).colorScheme.title1,
+                  style: Theme.of(context).colorScheme.title2,
                 )),
             Container(
                 color: Theme.of(context).colorScheme.buttonOption2,
@@ -152,7 +150,14 @@ class NextReviewPanelState extends State<NextReviewPanel> {
                     },
                     child: Text(
                       'Already know',
-                      style: Theme.of(context).colorScheme.title1,
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.buttonOptionText,
+                        fontSize: Theme.of(context).colorScheme.title2.fontSize,
+                        fontFamily:
+                            Theme.of(context).colorScheme.title2.fontFamily,
+                        fontWeight:
+                            Theme.of(context).colorScheme.title2.fontWeight,
+                      ),
                     ))),
           ])
         ]));

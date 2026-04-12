@@ -75,3 +75,4 @@ cpp/ThirdParty/llama_dictionary/**.**
 
 android/app/.cxx/**
 *.db
+assets/database.db.gz

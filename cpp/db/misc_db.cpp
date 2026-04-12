@@ -436,8 +436,6 @@ int MiscDb::open_db(DB_type type) {
     std::string path;
     if(type == DB_type::Primary) {
         path = db_path + "/" + std::string(DB_FILE_PRIMARY_NAME);
-    } else {
-        path = db_path + "/" + std::string(DB_FILE_SENTENCES_NAME);
     }
     int rc = sqlite3_open(path.c_str(), &m_db);
     if(rc) {

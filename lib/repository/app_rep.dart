@@ -124,11 +124,12 @@ class AppRep {
         });
       }
       return FullInfo(
-          word: UiHelper.toFormatText(objWord),
-          transcript: UiHelper.toFormatText(word.transcript),
-          meaning: meanings,
-          freq: word.frequency.toInt(),
-          examples: examples);
+        word: UiHelper.toFormatText(objWord),
+        transcript: UiHelper.toFormatText(word.transcript),
+        meaning: meanings,
+        freq: word.frequency.toInt(),
+        examples: examples,
+      );
     } catch (ex) {
       logError('$tag: search ex: $ex');
     }

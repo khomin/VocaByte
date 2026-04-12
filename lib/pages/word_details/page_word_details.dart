@@ -589,10 +589,7 @@ class PageWordDetailsState extends State<PageWordDetails>
                       onPressed: () async {
                         var data = getIt<AppRep>().cachedWord;
                         if (data == null) return;
-                        String? meaingId;
-                        try {
-                          meaingId = data.meaning[_curMeaningIndex].id;
-                        } catch (_) {}
+                        var meaingId = data.meaning[_curMeaningIndex].id;
                         await ServiceApi().addCurrent(
                             req: ReqAddWordInReview(
                           word: data.word,
@@ -604,7 +601,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                           successCount: 0,
                           meaningId: meaingId,
                         ));
-                        _refreshStatus(initial: false);
+                        await _refreshStatus(initial: false);
+                        getIt<AppRep>().refreshWordToLearn();
                         getIt<AppRep>().refreshManageList();
                       }),
               childFlex2: 13,
@@ -639,11 +637,8 @@ class PageWordDetailsState extends State<PageWordDetails>
                                       time,
                                     );
                                     await _refreshStatus(initial: false);
-                                    await getIt<AppRep>().refreshManageList();
-                                    Future.delayed(
-                                        const Duration(milliseconds: 100), () {
-                                      getIt<AppRep>().refreshWordToLearn();
-                                    });
+                                    getIt<AppRep>().refreshWordToLearn();
+                                    getIt<AppRep>().refreshManageList();
                                   },
                                   onAlreadyKnow: () async {
                                     var data = getIt<AppRep>().cachedWord;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:loggy/loggy.dart';
 import 'package:vocabyte/app.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
@@ -18,6 +17,14 @@ Future<void> initDependencies() async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.transparent,
+    systemNavigationBarContrastEnforced: false,
+    statusBarColor: Colors.transparent,
+  ));
 
   // Load everything up front
   final results = await Future.wait([
@@ -44,21 +51,21 @@ class MainApp extends StatelessWidget {
         : theme == ThemeMode.dark;
     Future.microtask(() {
       SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        systemNavigationBarColor: Colors.transparent,
+        systemNavigationBarContrastEnforced: false,
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: isDark ? Brightness.light : Brightness.dark,
-        systemNavigationBarColor: isDark
-            ? MenuColorScheme.bottomBarDark
-            : MenuColorScheme.bottomBarLight,
         systemNavigationBarIconBrightness:
             isDark ? Brightness.light : Brightness.dark,
       ));
     });
     return MaterialApp(
-        title: Constants.appName,
-        themeMode: theme,
-        theme: _buildTheme(Brightness.light),
-        darkTheme: _buildTheme(Brightness.dark),
-        home: const App());
+      title: Constants.appName,
+      themeMode: theme,
+      theme: _buildTheme(Brightness.light),
+      darkTheme: _buildTheme(Brightness.dark),
+      home: const App(),
+    );
   }
 
   ThemeData _buildTheme(Brightness brightness) {
@@ -69,12 +76,18 @@ class MainApp extends StatelessWidget {
       appBarTheme: AppBarTheme(
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: Colors.transparent,
-          systemNavigationBarColor: isDark
-              ? MenuColorScheme.bottomBarDark
-              : MenuColorScheme.bottomBarLight,
+          systemNavigationBarColor: Colors.transparent,
           systemNavigationBarIconBrightness:
               isDark ? Brightness.light : Brightness.dark,
         ),
+      ),
+      useMaterial3: true,
+      // This tells the Scaffold to not automatically add padding for the bottom bar
+      // allowing your background color to bleed through
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: isDark
+            ? MenuColorScheme.bottomBarDark
+            : MenuColorScheme.bottomBarLight,
       ),
     );
   }

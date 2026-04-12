@@ -49,8 +49,6 @@ https://github.com/emilk/loguru.git<br>
 https://github.com/bshoshany/thread-pool.git<br>
 https://github.com/wordset/wordset-dictionary.git
 
- - update about
- - wizard
  - release google console
  - add rustore sdk
  - release rustore

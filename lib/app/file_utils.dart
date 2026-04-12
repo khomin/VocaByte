@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:archive/archive_io.dart';
 import 'package:flutter/services.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
@@ -64,17 +65,11 @@ class FileUtils {
     return path;
   }
 
-  static Future copyResourcesToDir() async {
-    Uint8List? bytesMain;
-    {
-      final data = await rootBundle.load('assets/database.db');
-      bytesMain =
-          data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
-    }
-    await Future.wait([
-      saveBufToFile(bytesMain, '$homeDir/database.db'),
-    ]);
-    return null;
+  static Future<void> copyResourcesToDir() async {
+    var data = await rootBundle.load('assets/database.db.gz');
+    var bytes = data.buffer.asUint8List(data.offsetInBytes, data.lengthInBytes);
+    final decompressed = const GZipDecoder().decodeBytes(bytes);
+    await saveBufToFile(decompressed, '$homeDir/database.db');
   }
 
   static Future<dynamic> getWizard() async {
