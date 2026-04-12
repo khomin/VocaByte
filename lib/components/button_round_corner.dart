@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/resource/constants.dart';
-import 'package:vocabyte/app/ui_helper.dart';
 
 class ButtonRoundCorner extends StatefulWidget {
   const ButtonRoundCorner(
@@ -120,7 +119,7 @@ class State2 extends State<ButtonRoundCorner>
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       color: widget.colorText,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w800,
                       fontFamily: Constants.fontFredoka,
                       fontSize: 15,
                     ),
