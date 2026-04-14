@@ -107,6 +107,8 @@ class ServiceApi {
   static late Function _getCurrentToStudy;
   static late Function _getMetaData;
   static late Function _getCurrentLimit;
+  static late Function _checkReviewLimit;
+  static late Function _logReview;
   static late Function _executeCallback;
   static late Function _testMethod;
   static late DynamicLibrary _dylib;
@@ -197,6 +199,12 @@ class ServiceApi {
       _getCurrentLimit = _dylib.lookupFunction<
           Int Function(Uint32, Pointer<Uint8>, Uint32),
           int Function(int, Pointer<Uint8>, int)>("getCurrentLimit");
+
+      _checkReviewLimit =
+          _dylib.lookupFunction<Int Function(Uint32), int Function(int)>(
+              "checkReviewLimit");
+      _logReview = _dylib
+          .lookupFunction<Int Function(Uint32), int Function(int)>("logReview");
       //
       // service callback
       _executeCallback = _dylib.lookupFunction<Void Function(Pointer<Work>),
@@ -590,6 +598,26 @@ class ServiceApi {
       return true;
     }
     return false;
+  }
+
+  Future<bool> checkReviewLimit() {
+    var completer = Completer<bool>();
+    var req = GetMetaDataIn();
+    var out = registerCall(
+        proto: req,
+        cb: (p) {
+          var buf = p.ref.protoBuf.asTypedList(p.ref.protoLen);
+          var res = GetReviewLimitOut.fromBuffer(buf);
+          completer.complete(res.limit);
+        },
+        description: 'checkReviewLimit');
+    _checkReviewLimit(out.taskId, out.data, out.len);
+    return completer.future;
+  }
+
+  void logReview() {
+    var out = registerCall(description: 'logReview');
+    _logReview(out.taskId, out.data, out.len);
   }
 
   Future<RespSearchInReviewList> searchInReviewList(

@@ -11,8 +11,8 @@
 
     "search.exclude": {
         "cpp/CppNative/Third_party/**": true,
-        "cpp/CppNative/protobuf/proto.pb.cc": true,
-        "cpp/CppNative/protobuf/proto.pb.h": true,
+        "cpp/CppNative/protobuf/app.pb.cc": true,
+        "cpp/CppNative/protobuf/app.pb.h": true,
         "ios/proto.pb.swift": true,
         "ios/protobuf/proto.pb.swift": true,
         "cpp/ThirdParty/dictionary/**": true

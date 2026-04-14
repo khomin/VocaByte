@@ -348,6 +348,18 @@ final $typed_data.Uint8List reqSentencesDescriptor = $convert.base64Decode(
     'CgxSZXFTZW50ZW5jZXMSEgoEd29yZBgBIAEoCVIEd29yZBIUCgVsaW1pdBgCIAEoDVIFbGltaX'
     'QSFgoGb2Zmc2V0GAMgASgNUgZvZmZzZXQ=');
 
+@$core.Deprecated('Use getReviewLimitOutDescriptor instead')
+const GetReviewLimitOut$json = {
+  '1': 'GetReviewLimitOut',
+  '2': [
+    {'1': 'limit', '3': 1, '4': 1, '5': 8, '10': 'limit'},
+  ],
+};
+
+/// Descriptor for `GetReviewLimitOut`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getReviewLimitOutDescriptor = $convert
+    .base64Decode('ChFHZXRSZXZpZXdMaW1pdE91dBIUCgVsaW1pdBgBIAEoCFIFbGltaXQ=');
+
 @$core.Deprecated('Use respDefaultDescriptor instead')
 const RespDefault$json = {
   '1': 'RespDefault',

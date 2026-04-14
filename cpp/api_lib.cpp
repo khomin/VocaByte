@@ -1,8 +1,8 @@
 #include "api_lib.h"
 #include <queue>
 #include <thread>
+#include <app.pb.h>
 #include "dart_api.h"
-#include "proto.pb.h"
 #include "ThirdParty/loguru/loguru.hpp"
 #include "db/misc_db.h"
 #include "ThirdParty/thread-pool/include/BS_thread_pool.hpp"
@@ -342,6 +342,33 @@ void getMetadata(uint32_t taskId, uint8_t* data, uint32_t len) {
         res->protoBuf = new uint8_t[out.ByteSizeLong()];
         out.SerializeToArray(res->protoBuf, (int) out.ByteSizeLong());
         res->len = (int) out.ByteSizeLong();
+        DartCallResult(res, DartCallResultType::EventBus);
+    });
+}
+
+void checkReviewLimit(uint32_t taskId) {
+    std::lock_guard<std::mutex> lk(threadLock);
+    if (thread_pool == nullptr) return;
+    thread_pool->push_task([taskId] {
+        api::GetReviewLimitOut out;
+        auto isLimit = db->checkReviewLimit();
+        out.set_limit(isLimit);
+        // result back
+        auto res = new DartResult(taskId);
+        res->protoBuf = new uint8_t[out.ByteSizeLong()];
+        out.SerializeToArray(res->protoBuf, (int) out.ByteSizeLong());
+        res->len = (int) out.ByteSizeLong();
+        DartCallResult(res, DartCallResultType::EventBus);
+    });
+}
+
+void logReview(uint32_t taskId) {
+    std::lock_guard<std::mutex> lk(threadLock);
+    if (thread_pool == nullptr) return;
+    thread_pool->push_task([taskId] {
+        db->logReview();
+        // result back
+        auto res = new DartResult(taskId);
         DartCallResult(res, DartCallResultType::EventBus);
     });
 }

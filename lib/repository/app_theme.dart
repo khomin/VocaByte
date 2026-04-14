@@ -56,6 +56,21 @@ extension MenuColorScheme on ColorScheme {
 
   Color get fabButton => const Color(0xFF7B61D1);
 
+  Color get noPremium => dark() ? Colors.amber : Colors.amber;
+  Color get premium => dark()
+      ? const Color(0xFF979797).withValues(alpha: 0.15)
+      : const Color(0xFF9F9F9F).withValues(alpha: 0.15);
+  Color get noPremiumBorder => dark()
+      ? Colors.amber.withValues(alpha: 0.15)
+      : Colors.amber.withValues(alpha: 0.15);
+  Color get premiumBorder => dark()
+      ? Colors.amber.withValues(alpha: 0.15)
+      : Colors.amber.withValues(alpha: 0.15);
+  Color get premiumText =>
+      dark() ? const Color(0xFFEBEBEB) : const Color(0xFF656565);
+  Color get noPremiumText =>
+      dark() ? const Color(0xFFF04235) : const Color.fromARGB(255, 146, 17, 8);
+
   Color get baseColor2 => const Color(0xFFFFFFFF);
   Color get baseLight => const Color(0xFFF5F5F5);
 
@@ -171,6 +186,15 @@ extension MenuColorScheme on ColorScheme {
   Color get titleErr =>
       dark() ? const Color(0xFFDF524B) : const Color.fromARGB(255, 195, 42, 34);
 
+  TextStyle get titleUpgrade => TextStyle(
+        color: dark()
+            ? const Color.fromARGB(255, 213, 213, 213)
+            : const Color.fromARGB(255, 45, 45, 45),
+        fontSize: 15,
+        fontWeight: FontWeight.w500,
+        fontFamily: Constants.fontFredoka,
+      );
+
   TextStyle get titleInverse => TextStyle(
         color: dark() ? const Color(0xFFF0F0F0) : const Color(0xFFFFFFFF),
         fontSize: 15,
@@ -181,10 +205,11 @@ extension MenuColorScheme on ColorScheme {
   Color get dialogHeaderText =>
       dark() ? const Color(0xFFB5C2D4) : const Color(0xFF202020);
 
-  Color get cardHome =>
-      dark() ? const Color.fromARGB(255, 40, 40, 40) : Colors.white;
+  Color get cardHome => dark() ? const Color(0xFF282828) : Colors.white;
+  Color get cardUpgrade =>
+      dark() ? const Color(0xFF047429) : const Color(0xFF28D966);
   Color get pageHome =>
-      dark() ? const Color.fromARGB(255, 0, 0, 0) : const Color(0xFFFAFAFA);
+      dark() ? const Color(0xFF000000) : const Color(0xFFFAFAFA);
 
   Color get card => dark()
       ? const Color.fromARGB(255, 26, 26, 26)

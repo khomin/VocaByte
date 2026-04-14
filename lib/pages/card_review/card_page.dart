@@ -3,7 +3,7 @@ import 'package:vocabyte/components/button2_animated.dart';
 import 'package:vocabyte/components/button_fixed_down.dart';
 import 'package:vocabyte/components/button_round_corner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/pages/card_review/card_item.dart';
 import 'package:vocabyte/pages/card_review/card_review_main.dart';

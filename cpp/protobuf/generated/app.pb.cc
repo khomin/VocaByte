@@ -109,6 +109,10 @@ class ReqSentencesDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<ReqSentences> _instance;
 } _ReqSentences_default_instance_;
+class GetReviewLimitOutDefaultTypeInternal {
+ public:
+  ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<GetReviewLimitOut> _instance;
+} _GetReviewLimitOut_default_instance_;
 class RespDefaultDefaultTypeInternal {
  public:
   ::PROTOBUF_NAMESPACE_ID::internal::ExplicitlyConstructed<RespDefault> _instance;
@@ -149,6 +153,20 @@ static void InitDefaultsscc_info_GetMetaDataOut_app_2eproto() {
 
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetMetaDataOut_app_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_GetMetaDataOut_app_2eproto}, {}};
+
+static void InitDefaultsscc_info_GetReviewLimitOut_app_2eproto() {
+  GOOGLE_PROTOBUF_VERIFY_VERSION;
+
+  {
+    void* ptr = &::api::_GetReviewLimitOut_default_instance_;
+    new (ptr) ::api::GetReviewLimitOut();
+    ::PROTOBUF_NAMESPACE_ID::internal::OnShutdownDestroyMessage(ptr);
+  }
+  ::api::GetReviewLimitOut::InitAsDefaultInstance();
+}
+
+::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_GetReviewLimitOut_app_2eproto =
+    {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_GetReviewLimitOut_app_2eproto}, {}};
 
 static void InitDefaultsscc_info_InitParams_app_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
@@ -490,7 +508,7 @@ static void InitDefaultsscc_info_WordInReview_app_2eproto() {
 ::PROTOBUF_NAMESPACE_ID::internal::SCCInfo<0> scc_info_WordInReview_app_2eproto =
     {{ATOMIC_VAR_INIT(::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase::kUninitialized), 0, 0, InitDefaultsscc_info_WordInReview_app_2eproto}, {}};
 
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_app_2eproto[26];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_app_2eproto[27];
 static constexpr ::PROTOBUF_NAMESPACE_ID::EnumDescriptor const** file_level_enum_descriptors_app_2eproto = nullptr;
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_app_2eproto = nullptr;
 
@@ -700,6 +718,13 @@ const ::PROTOBUF_NAMESPACE_ID::uint32 TableStruct_app_2eproto::offsets[] PROTOBU
   0,
   1,
   2,
+  PROTOBUF_FIELD_OFFSET(::api::GetReviewLimitOut, _has_bits_),
+  PROTOBUF_FIELD_OFFSET(::api::GetReviewLimitOut, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  PROTOBUF_FIELD_OFFSET(::api::GetReviewLimitOut, limit_),
+  0,
   PROTOBUF_FIELD_OFFSET(::api::RespDefault, _has_bits_),
   PROTOBUF_FIELD_OFFSET(::api::RespDefault, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -744,9 +769,10 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 184, -1, sizeof(::api::ReqDeleteProfile)},
   { 189, -1, sizeof(::api::RespDeleteProfile)},
   { 194, 202, sizeof(::api::ReqSentences)},
-  { 205, 211, sizeof(::api::RespDefault)},
-  { 212, -1, sizeof(::api::GetMetaDataIn)},
-  { 217, 223, sizeof(::api::GetMetaDataOut)},
+  { 205, 211, sizeof(::api::GetReviewLimitOut)},
+  { 212, 218, sizeof(::api::RespDefault)},
+  { 219, -1, sizeof(::api::GetMetaDataIn)},
+  { 224, 230, sizeof(::api::GetMetaDataOut)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -773,6 +799,7 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_ReqDeleteProfile_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_RespDeleteProfile_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_ReqSentences_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_GetReviewLimitOut_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_RespDefault_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_GetMetaDataIn_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::api::_GetMetaDataOut_default_instance_),
@@ -814,15 +841,17 @@ const char descriptor_table_protodef_app_2eproto[] PROTOBUF_SECTION_VARIABLE(pro
   "espSearchInReviewList\022\037\n\004word\030\001 \003(\0132\021.ap"
   "i.WordInReview\"\022\n\020ReqDeleteProfile\"\023\n\021Re"
   "spDeleteProfile\";\n\014ReqSentences\022\014\n\004word\030"
-  "\001 \001(\t\022\r\n\005limit\030\002 \001(\r\022\016\n\006offset\030\003 \001(\r\"\034\n\013"
-  "RespDefault\022\r\n\005value\030\001 \001(\010\"\017\n\rGetMetaDat"
-  "aIn\"!\n\016GetMetaDataOut\022\017\n\007version\030\001 \001(\005"
+  "\001 \001(\t\022\r\n\005limit\030\002 \001(\r\022\016\n\006offset\030\003 \001(\r\"\"\n\021"
+  "GetReviewLimitOut\022\r\n\005limit\030\001 \001(\010\"\034\n\013Resp"
+  "Default\022\r\n\005value\030\001 \001(\010\"\017\n\rGetMetaDataIn\""
+  "!\n\016GetMetaDataOut\022\017\n\007version\030\001 \001(\005"
   ;
 static const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable*const descriptor_table_app_2eproto_deps[1] = {
 };
-static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_app_2eproto_sccs[26] = {
+static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_app_2eproto_sccs[27] = {
   &scc_info_GetMetaDataIn_app_2eproto.base,
   &scc_info_GetMetaDataOut_app_2eproto.base,
+  &scc_info_GetReviewLimitOut_app_2eproto.base,
   &scc_info_InitParams_app_2eproto.base,
   &scc_info_ReqAddWordInReview_app_2eproto.base,
   &scc_info_ReqDeleteProfile_app_2eproto.base,
@@ -850,10 +879,10 @@ static ::PROTOBUF_NAMESPACE_ID::internal::SCCInfoBase*const descriptor_table_app
 };
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_app_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_app_2eproto = {
-  false, false, descriptor_table_protodef_app_2eproto, "app.proto", 1518,
-  &descriptor_table_app_2eproto_once, descriptor_table_app_2eproto_sccs, descriptor_table_app_2eproto_deps, 26, 0,
+  false, false, descriptor_table_protodef_app_2eproto, "app.proto", 1554,
+  &descriptor_table_app_2eproto_once, descriptor_table_app_2eproto_sccs, descriptor_table_app_2eproto_deps, 27, 0,
   schemas, file_default_instances, TableStruct_app_2eproto::offsets,
-  file_level_metadata_app_2eproto, 26, file_level_enum_descriptors_app_2eproto, file_level_service_descriptors_app_2eproto,
+  file_level_metadata_app_2eproto, 27, file_level_enum_descriptors_app_2eproto, file_level_service_descriptors_app_2eproto,
 };
 
 // Force running AddDescriptors() at dynamic initialization time.
@@ -6632,6 +6661,213 @@ void ReqSentences::InternalSwap(ReqSentences* other) {
 
 // ===================================================================
 
+void GetReviewLimitOut::InitAsDefaultInstance() {
+}
+class GetReviewLimitOut::_Internal {
+ public:
+  using HasBits = decltype(std::declval<GetReviewLimitOut>()._has_bits_);
+  static void set_has_limit(HasBits* has_bits) {
+    (*has_bits)[0] |= 1u;
+  }
+};
+
+GetReviewLimitOut::GetReviewLimitOut(::PROTOBUF_NAMESPACE_ID::Arena* arena)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena) {
+  SharedCtor();
+  RegisterArenaDtor(arena);
+  // @@protoc_insertion_point(arena_constructor:api.GetReviewLimitOut)
+}
+GetReviewLimitOut::GetReviewLimitOut(const GetReviewLimitOut& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      _has_bits_(from._has_bits_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  limit_ = from.limit_;
+  // @@protoc_insertion_point(copy_constructor:api.GetReviewLimitOut)
+}
+
+void GetReviewLimitOut::SharedCtor() {
+  limit_ = false;
+}
+
+GetReviewLimitOut::~GetReviewLimitOut() {
+  // @@protoc_insertion_point(destructor:api.GetReviewLimitOut)
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+void GetReviewLimitOut::SharedDtor() {
+  GOOGLE_DCHECK(GetArena() == nullptr);
+}
+
+void GetReviewLimitOut::ArenaDtor(void* object) {
+  GetReviewLimitOut* _this = reinterpret_cast< GetReviewLimitOut* >(object);
+  (void)_this;
+}
+void GetReviewLimitOut::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void GetReviewLimitOut::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+const GetReviewLimitOut& GetReviewLimitOut::default_instance() {
+  ::PROTOBUF_NAMESPACE_ID::internal::InitSCC(&::scc_info_GetReviewLimitOut_app_2eproto.base);
+  return *internal_default_instance();
+}
+
+
+void GetReviewLimitOut::Clear() {
+// @@protoc_insertion_point(message_clear_start:api.GetReviewLimitOut)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  limit_ = false;
+  _has_bits_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GetReviewLimitOut::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  _Internal::HasBits has_bits{};
+  ::PROTOBUF_NAMESPACE_ID::Arena* arena = GetArena(); (void)arena;
+  while (!ctx->Done(&ptr)) {
+    ::PROTOBUF_NAMESPACE_ID::uint32 tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    CHK_(ptr);
+    switch (tag >> 3) {
+      // optional bool limit = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<::PROTOBUF_NAMESPACE_ID::uint8>(tag) == 8)) {
+          _Internal::set_has_limit(&has_bits);
+          limit_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else goto handle_unusual;
+        continue;
+      default: {
+      handle_unusual:
+        if ((tag & 7) == 4 || tag == 0) {
+          ctx->SetLastTag(tag);
+          goto success;
+        }
+        ptr = UnknownFieldParse(tag,
+            _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+            ptr, ctx);
+        CHK_(ptr != nullptr);
+        continue;
+      }
+    }  // switch
+  }  // while
+success:
+  _has_bits_.Or(has_bits);
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto success;
+#undef CHK_
+}
+
+::PROTOBUF_NAMESPACE_ID::uint8* GetReviewLimitOut::_InternalSerialize(
+    ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:api.GetReviewLimitOut)
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = _has_bits_[0];
+  // optional bool limit = 1;
+  if (cached_has_bits & 0x00000001u) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_limit(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:api.GetReviewLimitOut)
+  return target;
+}
+
+size_t GetReviewLimitOut::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:api.GetReviewLimitOut)
+  size_t total_size = 0;
+
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // optional bool limit = 1;
+  cached_has_bits = _has_bits_[0];
+  if (cached_has_bits & 0x00000001u) {
+    total_size += 1 + 1;
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    return ::PROTOBUF_NAMESPACE_ID::internal::ComputeUnknownFieldsSize(
+        _internal_metadata_, total_size, &_cached_size_);
+  }
+  int cached_size = ::PROTOBUF_NAMESPACE_ID::internal::ToCachedSize(total_size);
+  SetCachedSize(cached_size);
+  return total_size;
+}
+
+void GetReviewLimitOut::MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_merge_from_start:api.GetReviewLimitOut)
+  GOOGLE_DCHECK_NE(&from, this);
+  const GetReviewLimitOut* source =
+      ::PROTOBUF_NAMESPACE_ID::DynamicCastToGenerated<GetReviewLimitOut>(
+          &from);
+  if (source == nullptr) {
+  // @@protoc_insertion_point(generalized_merge_from_cast_fail:api.GetReviewLimitOut)
+    ::PROTOBUF_NAMESPACE_ID::internal::ReflectionOps::Merge(from, this);
+  } else {
+  // @@protoc_insertion_point(generalized_merge_from_cast_success:api.GetReviewLimitOut)
+    MergeFrom(*source);
+  }
+}
+
+void GetReviewLimitOut::MergeFrom(const GetReviewLimitOut& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:api.GetReviewLimitOut)
+  GOOGLE_DCHECK_NE(&from, this);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::uint32 cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_limit()) {
+    _internal_set_limit(from._internal_limit());
+  }
+}
+
+void GetReviewLimitOut::CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+// @@protoc_insertion_point(generalized_copy_from_start:api.GetReviewLimitOut)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+void GetReviewLimitOut::CopyFrom(const GetReviewLimitOut& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:api.GetReviewLimitOut)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GetReviewLimitOut::IsInitialized() const {
+  return true;
+}
+
+void GetReviewLimitOut::InternalSwap(GetReviewLimitOut* other) {
+  using std::swap;
+  _internal_metadata_.Swap<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(&other->_internal_metadata_);
+  swap(_has_bits_[0], other->_has_bits_[0]);
+  swap(limit_, other->limit_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GetReviewLimitOut::GetMetadata() const {
+  return GetMetadataStatic();
+}
+
+
+// ===================================================================
+
 void RespDefault::InitAsDefaultInstance() {
 }
 class RespDefault::_Internal {
@@ -7282,6 +7518,9 @@ template<> PROTOBUF_NOINLINE ::api::RespDeleteProfile* Arena::CreateMaybeMessage
 }
 template<> PROTOBUF_NOINLINE ::api::ReqSentences* Arena::CreateMaybeMessage< ::api::ReqSentences >(Arena* arena) {
   return Arena::CreateMessageInternal< ::api::ReqSentences >(arena);
+}
+template<> PROTOBUF_NOINLINE ::api::GetReviewLimitOut* Arena::CreateMaybeMessage< ::api::GetReviewLimitOut >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::api::GetReviewLimitOut >(arena);
 }
 template<> PROTOBUF_NOINLINE ::api::RespDefault* Arena::CreateMaybeMessage< ::api::RespDefault >(Arena* arena) {
   return Arena::CreateMessageInternal< ::api::RespDefault >(arena);

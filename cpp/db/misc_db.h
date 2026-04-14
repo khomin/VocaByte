@@ -34,8 +34,6 @@ public:
         int version {};
     };
 
-    enum DB_type { Primary, Sentences };
-
     std::vector<Word> getRecent();
     void putRecent(std::string word, std::string json);
 
@@ -51,16 +49,15 @@ public:
     std::optional<WordCurrent> getCurrentExact(std::string word);
     void deleteCurrentExact(std::string word);
     std::vector<WordCurrent> getCurrentLimit(int limit, int offset, int useSuccessCount);
-
     MetaData getMetadata();
 
+    bool checkReviewLimit();
+    void logReview();
+
     void deleteAll();
-
 private:
-    void createTableIfNotExists();
-
-    int open_db(DB_type type);
-    int close_db(DB_type type);
+    int open_db();
+    int close_db();
     void waitUntilClose();
 
     sqlite3* m_db{};

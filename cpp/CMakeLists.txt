@@ -77,8 +77,8 @@ set(SOURCES
     ./ThirdParty/Sqlite/sqlite3.c
     ./ThirdParty/Sqlite/sqlite3.h
     # protobuf
-    ./protobuf/generated/proto.pb.cc
-    ./protobuf/generated/proto.pb.h
+    ./protobuf/generated/app.pb.cc
+    ./protobuf/generated/app.pb.h
 )
 
 set(INCLUDE_DIRS ${INCLUDE_DIRS}

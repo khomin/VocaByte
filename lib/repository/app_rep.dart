@@ -8,13 +8,12 @@ import 'package:loggy/loggy.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:vocabyte/app/file_utils.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/models/search_word_model.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
-import 'package:vocabyte/pages/card_review/card_review_main.dart';
 import 'package:vocabyte/models/word_data.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/repository/review_task.dart';
@@ -398,7 +397,7 @@ class AppRep {
   }
 
   void shareApp() {
-    Share.shareUri(Uri.parse(Constants.appLink));
+    Share.shareUri(Uri.parse(AppConfig.shared.storeUrl));
   }
 
   void requestWizardData() async {

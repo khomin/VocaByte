@@ -47,7 +47,7 @@ struct TableStruct_app_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[27]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -61,6 +61,9 @@ extern GetMetaDataInDefaultTypeInternal _GetMetaDataIn_default_instance_;
 class GetMetaDataOut;
 class GetMetaDataOutDefaultTypeInternal;
 extern GetMetaDataOutDefaultTypeInternal _GetMetaDataOut_default_instance_;
+class GetReviewLimitOut;
+class GetReviewLimitOutDefaultTypeInternal;
+extern GetReviewLimitOutDefaultTypeInternal _GetReviewLimitOut_default_instance_;
 class InitParams;
 class InitParamsDefaultTypeInternal;
 extern InitParamsDefaultTypeInternal _InitParams_default_instance_;
@@ -137,6 +140,7 @@ extern WordInReviewDefaultTypeInternal _WordInReview_default_instance_;
 PROTOBUF_NAMESPACE_OPEN
 template<> ::api::GetMetaDataIn* Arena::CreateMaybeMessage<::api::GetMetaDataIn>(Arena*);
 template<> ::api::GetMetaDataOut* Arena::CreateMaybeMessage<::api::GetMetaDataOut>(Arena*);
+template<> ::api::GetReviewLimitOut* Arena::CreateMaybeMessage<::api::GetReviewLimitOut>(Arena*);
 template<> ::api::InitParams* Arena::CreateMaybeMessage<::api::InitParams>(Arena*);
 template<> ::api::ReqAddWordInReview* Arena::CreateMaybeMessage<::api::ReqAddWordInReview>(Arena*);
 template<> ::api::ReqDeleteProfile* Arena::CreateMaybeMessage<::api::ReqDeleteProfile>(Arena*);
@@ -4077,6 +4081,155 @@ class ReqSentences PROTOBUF_FINAL :
 };
 // -------------------------------------------------------------------
 
+class GetReviewLimitOut PROTOBUF_FINAL :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.GetReviewLimitOut) */ {
+ public:
+  inline GetReviewLimitOut() : GetReviewLimitOut(nullptr) {}
+  virtual ~GetReviewLimitOut();
+
+  GetReviewLimitOut(const GetReviewLimitOut& from);
+  GetReviewLimitOut(GetReviewLimitOut&& from) noexcept
+    : GetReviewLimitOut() {
+    *this = ::std::move(from);
+  }
+
+  inline GetReviewLimitOut& operator=(const GetReviewLimitOut& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GetReviewLimitOut& operator=(GetReviewLimitOut&& from) noexcept {
+    if (GetArena() == from.GetArena()) {
+      if (this != &from) InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  inline const ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet& unknown_fields() const {
+    return _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance);
+  }
+  inline ::PROTOBUF_NAMESPACE_ID::UnknownFieldSet* mutable_unknown_fields() {
+    return _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return GetMetadataStatic().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return GetMetadataStatic().reflection;
+  }
+  static const GetReviewLimitOut& default_instance();
+
+  static void InitAsDefaultInstance();  // FOR INTERNAL USE ONLY
+  static inline const GetReviewLimitOut* internal_default_instance() {
+    return reinterpret_cast<const GetReviewLimitOut*>(
+               &_GetReviewLimitOut_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  friend void swap(GetReviewLimitOut& a, GetReviewLimitOut& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GetReviewLimitOut* other) {
+    if (other == this) return;
+    if (GetArena() == other->GetArena()) {
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GetReviewLimitOut* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetArena() == other->GetArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  inline GetReviewLimitOut* New() const final {
+    return CreateMaybeMessage<GetReviewLimitOut>(nullptr);
+  }
+
+  GetReviewLimitOut* New(::PROTOBUF_NAMESPACE_ID::Arena* arena) const final {
+    return CreateMaybeMessage<GetReviewLimitOut>(arena);
+  }
+  void CopyFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void MergeFrom(const ::PROTOBUF_NAMESPACE_ID::Message& from) final;
+  void CopyFrom(const GetReviewLimitOut& from);
+  void MergeFrom(const GetReviewLimitOut& from);
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  ::PROTOBUF_NAMESPACE_ID::uint8* _InternalSerialize(
+      ::PROTOBUF_NAMESPACE_ID::uint8* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  inline void SharedCtor();
+  inline void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GetReviewLimitOut* other);
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "api.GetReviewLimitOut";
+  }
+  protected:
+  explicit GetReviewLimitOut(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+  private:
+  static ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadataStatic() {
+    ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&::descriptor_table_app_2eproto);
+    return ::descriptor_table_app_2eproto.file_level_metadata[kIndexInFileMessages];
+  }
+
+  public:
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLimitFieldNumber = 1,
+  };
+  // optional bool limit = 1;
+  bool has_limit() const;
+  private:
+  bool _internal_has_limit() const;
+  public:
+  void clear_limit();
+  bool limit() const;
+  void set_limit(bool value);
+  private:
+  bool _internal_limit() const;
+  void _internal_set_limit(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:api.GetReviewLimitOut)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::HasBits<1> _has_bits_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  bool limit_;
+  friend struct ::TableStruct_app_2eproto;
+};
+// -------------------------------------------------------------------
+
 class RespDefault PROTOBUF_FINAL :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:api.RespDefault) */ {
  public:
@@ -4126,7 +4279,7 @@ class RespDefault PROTOBUF_FINAL :
                &_RespDefault_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    23;
+    24;
 
   friend void swap(RespDefault& a, RespDefault& b) {
     a.Swap(&b);
@@ -4275,7 +4428,7 @@ class GetMetaDataIn PROTOBUF_FINAL :
                &_GetMetaDataIn_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    24;
+    25;
 
   friend void swap(GetMetaDataIn& a, GetMetaDataIn& b) {
     a.Swap(&b);
@@ -4406,7 +4559,7 @@ class GetMetaDataOut PROTOBUF_FINAL :
                &_GetMetaDataOut_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    25;
+    26;
 
   friend void swap(GetMetaDataOut& a, GetMetaDataOut& b) {
     a.Swap(&b);
@@ -6747,6 +6900,38 @@ inline void ReqSentences::set_offset(::PROTOBUF_NAMESPACE_ID::uint32 value) {
 
 // -------------------------------------------------------------------
 
+// GetReviewLimitOut
+
+// optional bool limit = 1;
+inline bool GetReviewLimitOut::_internal_has_limit() const {
+  bool value = (_has_bits_[0] & 0x00000001u) != 0;
+  return value;
+}
+inline bool GetReviewLimitOut::has_limit() const {
+  return _internal_has_limit();
+}
+inline void GetReviewLimitOut::clear_limit() {
+  limit_ = false;
+  _has_bits_[0] &= ~0x00000001u;
+}
+inline bool GetReviewLimitOut::_internal_limit() const {
+  return limit_;
+}
+inline bool GetReviewLimitOut::limit() const {
+  // @@protoc_insertion_point(field_get:api.GetReviewLimitOut.limit)
+  return _internal_limit();
+}
+inline void GetReviewLimitOut::_internal_set_limit(bool value) {
+  _has_bits_[0] |= 0x00000001u;
+  limit_ = value;
+}
+inline void GetReviewLimitOut::set_limit(bool value) {
+  _internal_set_limit(value);
+  // @@protoc_insertion_point(field_set:api.GetReviewLimitOut.limit)
+}
+
+// -------------------------------------------------------------------
+
 // RespDefault
 
 // optional bool value = 1;
@@ -6816,6 +7001,8 @@ inline void GetMetaDataOut::set_version(::PROTOBUF_NAMESPACE_ID::int32 value) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

@@ -66,8 +66,11 @@ void getCurrentToStudy(uint32_t taskId, uint8_t* data, uint32_t len);
 void getCurrentLimit(uint32_t taskId, uint8_t* data, uint32_t len);
 
 void deleteProfile(uint32_t taskId, uint8_t* data, uint32_t len);
-
 void getMetadata(uint32_t taskId, uint8_t* data, uint32_t len);
+
+void checkReviewLimit(uint32_t taskId);
+void logReview(uint32_t taskId);
+
 void destroyAll();
 void testMethod(uint32_t taskId);
 

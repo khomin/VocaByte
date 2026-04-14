@@ -9,7 +9,7 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:flutter/material.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/pages/word_details/next_review_panel.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';

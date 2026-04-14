@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/app_bar2.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/pages/card_review/card_no_words.dart';
 import 'package:vocabyte/pages/card_review/card_page.dart';

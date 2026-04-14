@@ -1,4 +1,4 @@
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/review_task_base.dart';

@@ -1,15 +1,47 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+enum FlavorType { google, rustore }
+
+class AppConfig {
+  AppConfig({
+    required this.flavor,
+    required this.storeUrl,
+    required this.canHavePremium,
+  });
+  final FlavorType flavor;
+  final String storeUrl;
+  final bool canHavePremium;
+
+  static late AppConfig shared;
+
+  static void instantiate(FlavorType type) {
+    switch (type) {
+      case FlavorType.google:
+        shared = AppConfig(
+          flavor: FlavorType.google,
+          storeUrl:
+              'https://play.google.com/store/apps/details?id=com.vocabyte.app',
+          canHavePremium: false,
+        );
+        break;
+      case FlavorType.rustore:
+        shared = AppConfig(
+          flavor: FlavorType.rustore,
+          storeUrl: 'https://www.rustore.ru/catalog/app/com.vocabyte.app',
+          canHavePremium: true,
+        );
+        break;
+    }
+  }
+}
+
 class Constants {
   static final Constants _instance = Constants._internal();
 
   static const appName = "VocaByte";
   static const localFolderName = 'vocabyte';
   static var appVersion = '1.0.3';
-  static const appLink =
-      'https://play.google.com/store/apps/details?id=com.vocabyte.app';
-  static const appGroupLink = 'https://groups.google.com/g/vocabyte';
 
   static const bool useDailyGoal = false;
   static const goalDefaultBreakCount = isDev ? 2 : 10;

@@ -30,6 +30,13 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/SDK_PAY_SCHEME" />
+            </intent-filter>
         </activity>
 
         <!-- Don't delete the meta-data below.
@@ -37,7 +44,12 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-
+        <meta-data
+            android:name="console_app_id_value"
+            android:value="@string/CONSOLE_APPLICATION_ID" />
+        <meta-data
+            android:name="sdk_pay_scheme_value"
+            android:value="@string/SDK_PAY_SCHEME" />
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-7411731401410312~4631453804"/>

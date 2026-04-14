@@ -4,7 +4,7 @@ import 'package:vocabyte/components/chip_item.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/hover_click.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/pages/search_word/manage_item.dart';
 import 'package:vocabyte/models/search_word_model.dart';
 import 'package:vocabyte/models/word_data.dart';

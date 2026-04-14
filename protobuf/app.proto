@@ -113,6 +113,10 @@ message ReqSentences {
     optional uint32 offset = 3;
 }
 
+message GetReviewLimitOut {
+    optional bool limit = 1;
+}
+
 message RespDefault {
     optional bool value = 1;
 }

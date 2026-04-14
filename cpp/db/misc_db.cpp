@@ -34,13 +34,13 @@ void regexpFunc(sqlite3_context* context, int argc, sqlite3_value** argv) {
 
 MiscDb::MiscDb(std::string path) {
     db_path = path;
-    if(open_db(DB_type::Primary) != SQLITE_OK) {
+    if(open_db() != SQLITE_OK) {
         LOG_F(INFO, "failed to open db");
     }
 }
 
 MiscDb::~MiscDb() {
-    close_db(DB_type::Primary);
+    close_db();
     waitUntilClose();
 }
 
@@ -152,7 +152,6 @@ std::vector<MiscDb::WordCurrent> MiscDb::getCurrentToStudy(uint64_t now) {
 std::vector<MiscDb::Word> MiscDb::getDictionary(std::string word, bool useLike) {
     std::vector<MiscDb::Word> res;
     sqlite3_stmt *stmt;
-    std::string query;
     std::lock_guard<std::mutex> lock(m_lock);
     try {
         std::string query;
@@ -401,7 +400,6 @@ std::vector<MiscDb::WordCurrent> MiscDb::getCurrentLimit(int limit, int offset, 
 
 MiscDb::MetaData MiscDb::getMetadata() {
     sqlite3_stmt *stmt;
-    std::string query;
     MetaData res {};
     std::lock_guard<std::mutex> lock(m_lock);
     try {
@@ -413,13 +411,41 @@ MiscDb::MetaData MiscDb::getMetadata() {
                 }
             }
         } else {
-            LOG_F(INFO, "%s: failed get version: [%s]", TAG, sqlite3_errmsg(m_db));
+            LOG_F(INFO, "%s: failed: [%s]", TAG, sqlite3_errmsg(m_db));
         }
     } catch(std::exception & ex) {
-        LOG_F(INFO, "%s: failed get version-ex: [%s]", TAG, ex.what());
+        LOG_F(INFO, "%s: failed [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
     return res;
+}
+
+bool MiscDb::checkReviewLimit() {
+    sqlite3_stmt *stmt;
+    int count = 0;
+    try {
+        auto query = std::string("SELECT COUNT(*) FROM review_log WHERE review_time > datetime('now', '-24 hours');");
+        if(sqlite3_prepare_v2(m_db, query.c_str(), -1, &stmt, nullptr) == SQLITE_OK) {
+            while ((sqlite3_step(stmt)) == SQLITE_ROW) {
+                if(sqlite3_column_count(stmt) > 0) {
+                    count = sqlite3_column_int(stmt, 0);
+                }
+            }
+        }
+    } catch(std::exception & ex) {
+        LOG_F(INFO, "%s: failed [%s]", TAG, ex.what());
+    }
+    sqlite3_finalize(stmt);
+    return count < 20;
+}
+
+void MiscDb::logReview() {
+    std::string query;
+    std::lock_guard<std::mutex> lock(m_lock);
+    query = "INSERT INTO review_log DEFAULT VALUES;";
+    if(sqlite3_exec(m_db, query.c_str(), nullptr, 0, nullptr) != SQLITE_OK) {
+        LOG_F(INFO, "%s: failed [%s]", TAG, sqlite3_errmsg(m_db));
+    }
 }
 
 void MiscDb::deleteAll() {
@@ -432,11 +458,10 @@ void MiscDb::deleteAll() {
     }
 }
 
-int MiscDb::open_db(DB_type type) {
+int MiscDb::open_db() {
     std::string path;
-    if(type == DB_type::Primary) {
-        path = db_path + "/" + std::string(DB_FILE_PRIMARY_NAME);
-    }
+    std::lock_guard<std::mutex> lock(m_lock);
+    path = db_path + "/" + std::string(DB_FILE_PRIMARY_NAME);
     int rc = sqlite3_open(path.c_str(), &m_db);
     if(rc) {
         LOG_F(INFO, "%s: cannot open db: [%s]", TAG, sqlite3_errmsg(m_db));
@@ -448,10 +473,17 @@ int MiscDb::open_db(DB_type type) {
         sqlite3_close(m_db);
         return 1;
     }
+    auto query= "CREATE TABLE  IF NOT EXISTS \"review_log\"" \
+        "(\"id\" INTEGER," \
+        "\"review_time\" DATETIME DEFAULT CURRENT_TIMESTAMP," \
+        "PRIMARY KEY(\"id\" AUTOINCREMENT));";
+    if(sqlite3_exec(m_db, query, nullptr, 0, nullptr) != SQLITE_OK) {
+        LOG_F(INFO, "%s: failed remove word: [%s]", TAG, sqlite3_errmsg(m_db));
+    }
     return 0;
 }
 
-int MiscDb::close_db(DB_type type) {
+int MiscDb::close_db() {
    if(m_db == NULL) {
        return -1;
    }
@@ -465,7 +497,7 @@ void MiscDb::waitUntilClose() {
    while(m_db != NULL) {
        if(timeout > 10) {
            LOG_F(INFO, "%s: cannot close db: [%s]", TAG, sqlite3_errmsg(m_db));
-           close_db(DB_type::Primary);
+           close_db();
            break;
        }
        timeout++;

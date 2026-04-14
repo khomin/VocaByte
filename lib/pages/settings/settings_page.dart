@@ -7,7 +7,7 @@ import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/page_transition2.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/models/settings_model.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
@@ -15,6 +15,7 @@ import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
 import 'package:vocabyte/pages/settings/settings_profile.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/payment_service.dart';
 import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
@@ -161,6 +162,49 @@ class _State extends State<SettingsPage> {
                         fontSize: 20,
                       ),
                     ),
+                    if (AppConfig.shared.canHavePremium)
+                      StreamBuilder(
+                          stream: getIt<PaymentService>().premiumStatusStream,
+                          initialData: false,
+                          builder: (context, snapshot) {
+                            var premium = snapshot.data ?? false;
+                            return Container(
+                              margin: const EdgeInsets.only(right: 12),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 4),
+                              decoration: BoxDecoration(
+                                color: premium
+                                    ? Theme.of(context).colorScheme.premium
+                                    : Theme.of(context).colorScheme.noPremium,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: premium
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .premiumBorder
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .noPremiumBorder,
+                                  width: 1,
+                                ),
+                              ),
+                              child: Text(
+                                premium ? 'PRO' : 'FREE',
+                                style: TextStyle(
+                                  fontSize: 11,
+                                  fontWeight: FontWeight.w800,
+                                  letterSpacing: 0.5,
+                                  color: premium
+                                      ? Theme.of(context)
+                                          .colorScheme
+                                          .premiumText
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .noPremiumText,
+                                ),
+                              ),
+                            );
+                          }),
                     SizedBox(
                         width: 60,
                         height: 60,
@@ -187,8 +231,9 @@ class _State extends State<SettingsPage> {
                         child: SettingsProfile(model: _model),
                       ));
                 },
-                child: Row(children: [
-                  Column(
+                child: Row(
+                  children: [
+                    Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -196,14 +241,16 @@ class _State extends State<SettingsPage> {
                           'Profile',
                           style: Theme.of(context).colorScheme.title2,
                         ),
-                      ]),
-                  const Spacer(),
-                  Icon(
-                    Icons.person_sharp,
-                    size: 25,
-                    color: Theme.of(context).colorScheme.title2.color,
-                  )
-                ])),
+                      ],
+                    ),
+                    const Spacer(),
+                    Icon(
+                      Icons.person_sharp,
+                      size: 25,
+                      color: Theme.of(context).colorScheme.title2.color,
+                    )
+                  ],
+                )),
           ]));
     });
   }

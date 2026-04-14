@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
-import 'package:vocabyte/main.dart';
 import 'package:vocabyte/models/word_data.dart';
-import 'package:vocabyte/pages/card_review/card_review_main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 
 class CardData {

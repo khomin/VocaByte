@@ -1528,6 +1528,60 @@ class ReqSentences extends $pb.GeneratedMessage {
   void clearOffset() => $_clearField(3);
 }
 
+class GetReviewLimitOut extends $pb.GeneratedMessage {
+  factory GetReviewLimitOut({
+    $core.bool? limit,
+  }) {
+    final result = create();
+    if (limit != null) result.limit = limit;
+    return result;
+  }
+
+  GetReviewLimitOut._();
+
+  factory GetReviewLimitOut.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetReviewLimitOut.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetReviewLimitOut',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'api'),
+      createEmptyInstance: create)
+    ..aOB(1, _omitFieldNames ? '' : 'limit')
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetReviewLimitOut clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetReviewLimitOut copyWith(void Function(GetReviewLimitOut) updates) =>
+      super.copyWith((message) => updates(message as GetReviewLimitOut))
+          as GetReviewLimitOut;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetReviewLimitOut create() => GetReviewLimitOut._();
+  @$core.override
+  GetReviewLimitOut createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static GetReviewLimitOut getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetReviewLimitOut>(create);
+  static GetReviewLimitOut? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get limit => $_getBF(0);
+  @$pb.TagNumber(1)
+  set limit($core.bool value) => $_setBool(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLimit() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLimit() => $_clearField(1);
+}
+
 class RespDefault extends $pb.GeneratedMessage {
   factory RespDefault({
     $core.bool? value,

@@ -6,7 +6,7 @@ import 'package:vocabyte/pages/search_word/page_search.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/services/protobuf/app.pb.dart';
 import 'package:vocabyte/services/service_api.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 
 class SearchInfo extends FullInfo {
   SearchInfo({

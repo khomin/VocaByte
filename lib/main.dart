@@ -1,44 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:vocabyte/app.dart';
-import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/repository/app_theme.dart';
-import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/models/app_model.dart';
 
-final getIt = GetIt.instance;
-
-Future<void> initDependencies() async {
-  getIt.registerLazySingleton<AppRep>(() => AppRep());
-}
-
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
-    systemNavigationBarContrastEnforced: false,
-    statusBarColor: Colors.transparent,
-  ));
-
-  // Load everything up front
-  final results = await Future.wait([
-    SettingsRep().getTheme(),
-    initDependencies(),
-  ]);
-
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => AppModel(theme: results[0] as ThemeMode),
-      child: const MainApp(),
-    ),
-  );
-}
+void main() => runMyFlavoredApp(FlavorType.rustore);
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
@@ -82,8 +51,6 @@ class MainApp extends StatelessWidget {
         ),
       ),
       useMaterial3: true,
-      // This tells the Scaffold to not automatically add padding for the bottom bar
-      // allowing your background color to bleed through
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         backgroundColor: isDark
             ? MenuColorScheme.bottomBarDark

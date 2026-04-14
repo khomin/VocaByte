@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:collection/collection.dart';
 import 'package:fixnum/fixnum.dart';
 import 'package:loggy/loggy.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/review_model.dart';
 import 'package:vocabyte/pages/card_review/card_review_main.dart';
 import 'package:vocabyte/repository/app_rep.dart';
