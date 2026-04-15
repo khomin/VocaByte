@@ -7,6 +7,7 @@ import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/models/settings_model.dart';
+import 'package:vocabyte/pages/ads/upgrade_premium.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
@@ -75,8 +76,6 @@ class SettingsProfileState extends State<SettingsProfile> {
                             ),
                           ),
                         )),
-                    if (AppConfig.shared.canHavePremium)
-                      SliverToBoxAdapter(child: _payStatus()),
                     SliverToBoxAdapter(
                       child: _importWords(),
                     ),
@@ -129,30 +128,6 @@ class SettingsProfileState extends State<SettingsProfile> {
         ),
       )),
     ]);
-  }
-
-  Widget _payStatus() {
-    return StreamBuilder(
-        stream: getIt<PaymentService>().premiumStatusStream,
-        initialData: false,
-        builder: (context, snapshot) {
-          var premium = snapshot.data ?? false;
-          if (premium) {
-            return const SizedBox();
-          }
-          return _buyPremium(
-              busy: false,
-              setBusy: (v) {},
-              doTask: () async {
-                var res = await getIt<PaymentService>().processPremium();
-                if (context.mounted) {
-                  if (res) {
-                    UiHelper.showToast(context, 'Success');
-                  }
-                }
-                return true;
-              });
-        });
   }
 
   Widget _importWords() {
@@ -373,96 +348,6 @@ class SettingsProfileState extends State<SettingsProfile> {
               ]))
         ]),
       );
-    });
-  }
-
-  Widget _buyPremium({
-    required bool busy,
-    required Function(bool v) setBusy,
-    required Future<bool> Function() doTask,
-  }) {
-    return Builder(builder: (context) {
-      var model = context.watch<SettingsModel>();
-      return Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.cardUpgrade,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          margin: const EdgeInsets.only(
-            left: Constants.homeCardPadding,
-            right: Constants.homeCardPadding,
-            top: 30,
-            bottom: 15,
-          ),
-          child: Stack(children: [
-            Column(children: [
-              ItemInMenuList(
-                  useBorderTop: false,
-                  useBorderBot: false,
-                  padding: EdgeInsets.only(
-                      left: Constants.settingsCardPadding.left,
-                      right: Constants.settingsCardPadding.right),
-                  onClicked: (_) async {
-                    setBusy(true);
-                    await doTask();
-                    setBusy(false);
-                    model.notify();
-                  },
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                            padding: const EdgeInsets.only(top: 20),
-                            child: Row(children: [
-                              Text(
-                                'Buy premium',
-                                style:
-                                    Theme.of(context).colorScheme.titleUpgrade,
-                              )
-                            ])),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 20, bottom: 20),
-                          child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'To remove all limits',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Theme.of(context)
-                                        .colorScheme
-                                        .titleUpgrade
-                                        .color,
-                                    fontSize: Theme.of(context)
-                                        .colorScheme
-                                        .title2
-                                        .fontSize,
-                                    fontFamily: Theme.of(context)
-                                        .colorScheme
-                                        .title2
-                                        .fontFamily,
-                                    fontWeight: Theme.of(context)
-                                        .colorScheme
-                                        .title2
-                                        .fontWeight,
-                                  ),
-                                ),
-                              ]),
-                        ),
-                      ])),
-            ]),
-            Positioned(
-              right: 20,
-              top: 0,
-              bottom: 0,
-              child: IgnorePointer(
-                  child: Icon(
-                Symbols.crown,
-                size: 50,
-                color: Theme.of(context).colorScheme.titleUpgrade.color,
-              )),
-            )
-          ]));
     });
   }
 }

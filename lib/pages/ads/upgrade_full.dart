@@ -6,23 +6,27 @@ import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/tts.dart';
 
-class CardNoWords extends StatefulWidget {
-  const CardNoWords(
-      {required this.onBack, required this.onBackOpenSearch, super.key});
+class UpgradeFull extends StatefulWidget {
+  const UpgradeFull({
+    required this.onBack,
+    required this.onUpgrade,
+    super.key,
+  });
   final Function() onBack;
-  final Function() onBackOpenSearch;
+  final Function() onUpgrade;
+
   @override
-  CardNoWordsState createState() => CardNoWordsState();
+  UpgradeFullState createState() => UpgradeFullState();
 }
 
-class CardNoWordsState extends State<CardNoWords>
+class UpgradeFullState extends State<UpgradeFull>
     with TickerProviderStateMixin {
   late AnimationController _scaleController;
   late AnimationController _shakeControlller;
   late Animation<double> _scaleAnimation;
   late Animation<double> _rotateAnimation;
   final _dispStream = DisposableStream();
-  final tag = 'cardNoWords';
+  final tag = 'upgradeFull';
 
   @override
   void initState() {
@@ -120,7 +124,7 @@ class CardNoWordsState extends State<CardNoWords>
                                                 .forward()
                                                 .orCancel;
                                           }
-                                          widget.onBackOpenSearch();
+                                          widget.onUpgrade();
                                         }),
                                   ),
                                   const Spacer(),

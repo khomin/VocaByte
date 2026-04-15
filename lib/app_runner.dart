@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:vocabyte/main.dart';
+import 'package:vocabyte/main_rustore.dart';
 import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/payment_service.dart';
@@ -34,7 +34,6 @@ void runMyFlavoredApp(FlavorType flavor) async {
     statusBarColor: Colors.transparent,
   ));
 
-  // Load everything up front
   final results = await Future.wait([
     SettingsRep().getTheme(),
     initDependencies(),

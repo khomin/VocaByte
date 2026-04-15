@@ -10,6 +10,7 @@ import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/models/settings_model.dart';
+import 'package:vocabyte/pages/ads/upgrade_premium.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
@@ -97,12 +98,18 @@ class _State extends State<SettingsPage> {
                             ),
                           ),
                         )),
-                    SliverList.list(children: [
-                      _profile(),
-                      _theme(),
-                      _numerals(),
-                      _others(),
-                    ]),
+                    //
+                    SliverToBoxAdapter(child: _profile()),
+                    //
+                    if (AppConfig.shared.canHavePremium)
+                      SliverToBoxAdapter(child: _payStatus()),
+                    //
+                    SliverToBoxAdapter(child: _theme()),
+                    //
+                    SliverToBoxAdapter(child: _numerals()),
+                    //
+                    SliverToBoxAdapter(child: _others()),
+                    //
                     SliverToBoxAdapter(
                       child: SizedBox(
                           height: MediaQuery.of(context).padding.bottom),
@@ -253,6 +260,29 @@ class _State extends State<SettingsPage> {
                 )),
           ]));
     });
+  }
+
+  Widget _payStatus() {
+    return StreamBuilder(
+        stream: getIt<PaymentService>().premiumStatusStream,
+        initialData: false,
+        builder: (context, snapshot) {
+          var premium = snapshot.data ?? false;
+          if (premium) {
+            return const SizedBox();
+          }
+          return UpgradePremium(
+              price: getIt<PaymentService>().priceStream,
+              onPressed: () async {
+                var res = await getIt<PaymentService>().processPremium();
+                if (context.mounted) {
+                  if (res) {
+                    UiHelper.showToast(context, 'Success');
+                  }
+                }
+                return true;
+              });
+        });
   }
 
   Widget _theme() {
