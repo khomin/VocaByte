@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:material_symbols_icons/symbols.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/app_runner.dart';
-import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/models/settings_model.dart';
-import 'package:vocabyte/pages/ads/upgrade_premium.dart';
 import 'package:vocabyte/repository/app_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/components/round_button.dart';
-import 'package:vocabyte/repository/payment_service.dart';
 import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/service_api.dart';
 
@@ -139,13 +135,15 @@ class SettingsProfileState extends State<SettingsProfile> {
           icon: Icons.unarchive_rounded,
           busy: model.importBusy,
           setBusy: (v) {
-            model.exportBusy = v;
+            model.importBusy = v;
             model.notify();
           },
           doTask: () async {
             var count = await ServiceApi().importWords();
-            if (context.mounted) {
-              if (count > 0) {
+            if (count > 0) {
+              getIt<AppRep>().refreshWordToLearn();
+              getIt<AppRep>().refreshManageList();
+              if (context.mounted) {
                 UiHelper.showToast(context, 'Imported $count');
               }
             }
@@ -215,10 +213,11 @@ class SettingsProfileState extends State<SettingsProfile> {
           },
           doTask: () async {
             var success = await ServiceApi().importProfile();
-            if (context.mounted) {
-              if (success) {
+            if (success) {
+              getIt<AppRep>().refreshWordToLearn();
+              getIt<AppRep>().refreshManageList();
+              if (context.mounted) {
                 UiHelper.showToast(context, 'Imported');
-                getIt<AppRep>().refreshWordToLearn();
               }
             }
             return true;

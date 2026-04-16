@@ -34,6 +34,7 @@ class CardItemState extends State<CardItem> {
   void initState() {
     super.initState();
     Timer(Duration(milliseconds: widget.delayMs), () {
+      if (!mounted) return;
       setState(() {
         _visible = true;
       });

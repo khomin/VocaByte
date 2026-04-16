@@ -1528,12 +1528,66 @@ class ReqSentences extends $pb.GeneratedMessage {
   void clearOffset() => $_clearField(3);
 }
 
-class GetReviewLimitOut extends $pb.GeneratedMessage {
-  factory GetReviewLimitOut({
-    $core.bool? limit,
+class GetReviewLimitIn extends $pb.GeneratedMessage {
+  factory GetReviewLimitIn({
+    $core.int? limitMax,
   }) {
     final result = create();
-    if (limit != null) result.limit = limit;
+    if (limitMax != null) result.limitMax = limitMax;
+    return result;
+  }
+
+  GetReviewLimitIn._();
+
+  factory GetReviewLimitIn.fromBuffer($core.List<$core.int> data,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromBuffer(data, registry);
+  factory GetReviewLimitIn.fromJson($core.String json,
+          [$pb.ExtensionRegistry registry = $pb.ExtensionRegistry.EMPTY]) =>
+      create()..mergeFromJson(json, registry);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(
+      _omitMessageNames ? '' : 'GetReviewLimitIn',
+      package: const $pb.PackageName(_omitMessageNames ? '' : 'api'),
+      createEmptyInstance: create)
+    ..aI(1, _omitFieldNames ? '' : 'limitMax', fieldType: $pb.PbFieldType.OU3)
+    ..hasRequiredFields = false;
+
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetReviewLimitIn clone() => deepCopy();
+  @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
+  GetReviewLimitIn copyWith(void Function(GetReviewLimitIn) updates) =>
+      super.copyWith((message) => updates(message as GetReviewLimitIn))
+          as GetReviewLimitIn;
+
+  @$core.override
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetReviewLimitIn create() => GetReviewLimitIn._();
+  @$core.override
+  GetReviewLimitIn createEmptyInstance() => create();
+  @$core.pragma('dart2js:noInline')
+  static GetReviewLimitIn getDefault() => _defaultInstance ??=
+      $pb.GeneratedMessage.$_defaultFor<GetReviewLimitIn>(create);
+  static GetReviewLimitIn? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.int get limitMax => $_getIZ(0);
+  @$pb.TagNumber(1)
+  set limitMax($core.int value) => $_setUnsignedInt32(0, value);
+  @$pb.TagNumber(1)
+  $core.bool hasLimitMax() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLimitMax() => $_clearField(1);
+}
+
+class GetReviewLimitOut extends $pb.GeneratedMessage {
+  factory GetReviewLimitOut({
+    $core.bool? isLimit,
+  }) {
+    final result = create();
+    if (isLimit != null) result.isLimit = isLimit;
     return result;
   }
 
@@ -1550,7 +1604,7 @@ class GetReviewLimitOut extends $pb.GeneratedMessage {
       _omitMessageNames ? '' : 'GetReviewLimitOut',
       package: const $pb.PackageName(_omitMessageNames ? '' : 'api'),
       createEmptyInstance: create)
-    ..aOB(1, _omitFieldNames ? '' : 'limit')
+    ..aOB(1, _omitFieldNames ? '' : 'isLimit')
     ..hasRequiredFields = false;
 
   @$core.Deprecated('See https://github.com/google/protobuf.dart/issues/998.')
@@ -1573,13 +1627,13 @@ class GetReviewLimitOut extends $pb.GeneratedMessage {
   static GetReviewLimitOut? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.bool get limit => $_getBF(0);
+  $core.bool get isLimit => $_getBF(0);
   @$pb.TagNumber(1)
-  set limit($core.bool value) => $_setBool(0, value);
+  set isLimit($core.bool value) => $_setBool(0, value);
   @$pb.TagNumber(1)
-  $core.bool hasLimit() => $_has(0);
+  $core.bool hasIsLimit() => $_has(0);
   @$pb.TagNumber(1)
-  void clearLimit() => $_clearField(1);
+  void clearIsLimit() => $_clearField(1);
 }
 
 class RespDefault extends $pb.GeneratedMessage {

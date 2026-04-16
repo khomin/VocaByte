@@ -3,6 +3,9 @@ import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/models/word_data.dart';
 import 'package:vocabyte/repository/app_rep.dart';
+import 'package:vocabyte/repository/payment_service.dart';
+import 'package:vocabyte/resource/constants.dart';
+import 'package:vocabyte/services/service_api.dart';
 
 class CardData {
   CardData({required this.data, required this.pageType, this.options}) {
@@ -15,6 +18,7 @@ class CardData {
 
 enum CardPageType {
   idle,
+  noWords,
   wordToDef,
   defToWords,
   wordRemeberOrNot,
@@ -23,6 +27,8 @@ enum CardPageType {
   wordDetails,
   audioToDef
 }
+
+enum NextCardResultType { ok, noWords, freeLimit }
 
 class ReviewModel with ChangeNotifier {
   final navKey = GlobalKey<NavigatorState>();
@@ -61,18 +67,26 @@ class ReviewModel with ChangeNotifier {
     nav?.pushReplacementNamed(CardPageType.wordDetails.name);
   }
 
-  Future<bool> nextCard() async {
+  Future<NextCardResultType> nextCard() async {
     var v = getIt<AppRep>().reviewTask;
     var current = v.current();
     var nav = navKey.currentState;
+    if (!await getIt<PaymentService>().isPremium(cached: true)) {
+      if (!await ServiceApi().checkReviewLimit(Constants.freeLimit)) {
+        return NextCardResultType.freeLimit;
+      }
+    }
+    //
     if (current == null) {
       // no more cards to learn
       getIt<AppRep>().play(SoundType.successShort);
-      return false;
+      return NextCardResultType.noWords;
     }
-    nav?.pushReplacementNamed(current.pageType.name,
-        arguments: {'word': current});
-    return true;
+    nav?.pushReplacementNamed(
+      current.pageType.name,
+      arguments: {'word': current},
+    );
+    return NextCardResultType.ok;
   }
 
   void pop(BuildContext context) {

@@ -200,9 +200,9 @@ class ServiceApi {
           Int Function(Uint32, Pointer<Uint8>, Uint32),
           int Function(int, Pointer<Uint8>, int)>("getCurrentLimit");
 
-      _checkReviewLimit =
-          _dylib.lookupFunction<Int Function(Uint32), int Function(int)>(
-              "checkReviewLimit");
+      _checkReviewLimit = _dylib.lookupFunction<
+          Int Function(Uint32, Pointer<Uint8>, Uint32),
+          int Function(int, Pointer<Uint8>, int)>("checkReviewLimit");
       _logReview = _dylib
           .lookupFunction<Int Function(Uint32), int Function(int)>("logReview");
       //
@@ -600,15 +600,16 @@ class ServiceApi {
     return false;
   }
 
-  Future<bool> checkReviewLimit() {
+  Future<bool> checkReviewLimit(int limit) {
     var completer = Completer<bool>();
-    var req = GetMetaDataIn();
+    var req = GetReviewLimitIn();
+    req.limitMax = limit;
     var out = registerCall(
         proto: req,
         cb: (p) {
           var buf = p.ref.protoBuf.asTypedList(p.ref.protoLen);
           var res = GetReviewLimitOut.fromBuffer(buf);
-          completer.complete(res.limit);
+          completer.complete(res.isLimit);
         },
         description: 'checkReviewLimit');
     _checkReviewLimit(out.taskId, out.data, out.len);
@@ -617,7 +618,7 @@ class ServiceApi {
 
   void logReview() {
     var out = registerCall(description: 'logReview');
-    _logReview(out.taskId, out.data, out.len);
+    _logReview(out.taskId);
   }
 
   Future<RespSearchInReviewList> searchInReviewList(

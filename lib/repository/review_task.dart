@@ -71,8 +71,9 @@ class ReviewTask extends ReviewTaskBase {
           current.nextReviewTmMs = Int64(0);
         } else {
           var intValDays = pow(current.successCount, 2);
-          current.nextReviewTmMs =
-              Int64(Duration(days: intValDays.toInt()).inMilliseconds);
+          current.nextReviewTmMs = Int64(
+            Duration(days: intValDays.toInt()).inMilliseconds,
+          );
         }
       } else {
         current.failCount++;
@@ -89,6 +90,7 @@ class ReviewTask extends ReviewTaskBase {
         nextReviewTmMs: current.nextReviewTmMs,
         meaningId: current.meaningId,
       ));
+      ServiceApi().logReview();
     } else {
       logWarning('$tag: update card result empty current');
     }

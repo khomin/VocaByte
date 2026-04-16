@@ -420,7 +420,7 @@ MiscDb::MetaData MiscDb::getMetadata() {
     return res;
 }
 
-bool MiscDb::checkReviewLimit() {
+bool MiscDb::checkReviewLimit(uint32_t limit) {
     sqlite3_stmt *stmt;
     int count = 0;
     try {
@@ -436,7 +436,7 @@ bool MiscDb::checkReviewLimit() {
         LOG_F(INFO, "%s: failed [%s]", TAG, ex.what());
     }
     sqlite3_finalize(stmt);
-    return count < 20;
+    return count < limit;
 }
 
 void MiscDb::logReview() {

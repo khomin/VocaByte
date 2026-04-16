@@ -3,7 +3,9 @@ import 'package:flutter/services.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
 import 'package:vocabyte/components/app_bar2.dart';
 import 'package:vocabyte/app_runner.dart';
+import 'package:vocabyte/components/page_transition2.dart';
 import 'package:vocabyte/models/review_model.dart';
+import 'package:vocabyte/pages/ads/upgrade_full.dart';
 import 'package:vocabyte/pages/card_review/card_no_words.dart';
 import 'package:vocabyte/pages/card_review/card_page.dart';
 import 'package:vocabyte/pages/card_review/cards_done.dart';
@@ -100,15 +102,22 @@ class CardReviewMainState extends State<CardReviewMain> {
                                 secondaryAnimation, child) {
                               return child;
                             },
+                            pageBuilder: (_, __, ___) => const SizedBox());
+
+                      case CardPageType.noWords:
+                        return PageRouteBuilder(
+                            transitionDuration: Duration.zero,
+                            reverseTransitionDuration: Duration.zero,
+                            settings: RouteSettings(name: type.name),
+                            transitionsBuilder: (context, animation,
+                                secondaryAnimation, child) {
+                              return child;
+                            },
                             pageBuilder: (_, __, ___) =>
                                 CardNoWords(onBack: () {
                                   _model.pop(context);
                                 }, onBackOpenSearch: () {
                                   _model.pop(context);
-                                  // Timer(const Duration(milliseconds: 50), () {
-                                  //   NavigatorRep().routeBloc.goto(Panel(
-                                  //       type: PageType.searchWord, fullPop: true));
-                                  // });
                                 }));
                       //
                       // cards
@@ -127,6 +136,7 @@ class CardReviewMainState extends State<CardReviewMain> {
                                       _model.handleAnswer(success: success);
                                     })
                                 : const Text('error: card data is null'));
+
                       case CardPageType.learnDone:
                         return PageRouteBuilder(
                             transitionDuration: Duration.zero,
@@ -143,10 +153,25 @@ class CardReviewMainState extends State<CardReviewMain> {
                                   Navigator.of(context).pop();
                                 },
                                 onContinue: () async {
-                                  if (!await _model.nextCard()) {
-                                    if (context.mounted) {
-                                      Navigator.of(context).pop();
-                                    }
+                                  var res = await _model.nextCard();
+                                  switch (res) {
+                                    case NextCardResultType.ok:
+                                      break;
+                                    case NextCardResultType.noWords:
+                                      if (context.mounted) {
+                                        Navigator.of(context).pop();
+                                      }
+                                      break;
+                                    case NextCardResultType.freeLimit:
+                                      var nav = _model.navKey.currentState;
+                                      nav?.push(
+                                        PageTransition2.build(
+                                            settings: const RouteSettings(),
+                                            type: TransitionType.slide,
+                                            child: const UpgradeFull(
+                                                limitReached: true)),
+                                      );
+                                      break;
                                   }
                                 }));
                       case CardPageType.wordDetails:
@@ -175,10 +200,25 @@ class CardReviewMainState extends State<CardReviewMain> {
                                     getIt<AppRep>()
                                         .play(SoundType.successShort);
                                   } else {
-                                    if (!await _model.nextCard()) {
-                                      if (context.mounted) {
-                                        Navigator.of(context).pop();
-                                      }
+                                    var res = await _model.nextCard();
+                                    switch (res) {
+                                      case NextCardResultType.ok:
+                                        break;
+                                      case NextCardResultType.noWords:
+                                        if (context.mounted) {
+                                          Navigator.of(context).pop();
+                                        }
+                                        break;
+                                      case NextCardResultType.freeLimit:
+                                        var nav = _model.navKey.currentState;
+                                        nav?.push(
+                                          PageTransition2.build(
+                                              settings: const RouteSettings(),
+                                              type: TransitionType.slide,
+                                              child: const UpgradeFull(
+                                                  limitReached: true)),
+                                        );
+                                        break;
                                     }
                                   }
                                 }));

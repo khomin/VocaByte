@@ -7,10 +7,14 @@ import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/tts.dart';
 
 class CardNoWords extends StatefulWidget {
-  const CardNoWords(
-      {required this.onBack, required this.onBackOpenSearch, super.key});
+  const CardNoWords({
+    required this.onBack,
+    required this.onBackOpenSearch,
+    super.key,
+  });
   final Function() onBack;
   final Function() onBackOpenSearch;
+
   @override
   CardNoWordsState createState() => CardNoWordsState();
 }

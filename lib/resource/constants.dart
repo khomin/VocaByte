@@ -45,6 +45,7 @@ class Constants {
 
   static const bool useDailyGoal = false;
   static const goalDefaultBreakCount = isDev ? 2 : 10;
+  static const freeLimit = kDebugMode || kProfileMode ? 2 : 20;
 
   static const duration = Duration(milliseconds: 200);
   static const durationPanel = Duration(milliseconds: 100);

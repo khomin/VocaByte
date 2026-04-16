@@ -348,17 +348,29 @@ final $typed_data.Uint8List reqSentencesDescriptor = $convert.base64Decode(
     'CgxSZXFTZW50ZW5jZXMSEgoEd29yZBgBIAEoCVIEd29yZBIUCgVsaW1pdBgCIAEoDVIFbGltaX'
     'QSFgoGb2Zmc2V0GAMgASgNUgZvZmZzZXQ=');
 
+@$core.Deprecated('Use getReviewLimitInDescriptor instead')
+const GetReviewLimitIn$json = {
+  '1': 'GetReviewLimitIn',
+  '2': [
+    {'1': 'limit_max', '3': 1, '4': 1, '5': 13, '10': 'limitMax'},
+  ],
+};
+
+/// Descriptor for `GetReviewLimitIn`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getReviewLimitInDescriptor = $convert.base64Decode(
+    'ChBHZXRSZXZpZXdMaW1pdEluEhsKCWxpbWl0X21heBgBIAEoDVIIbGltaXRNYXg=');
+
 @$core.Deprecated('Use getReviewLimitOutDescriptor instead')
 const GetReviewLimitOut$json = {
   '1': 'GetReviewLimitOut',
   '2': [
-    {'1': 'limit', '3': 1, '4': 1, '5': 8, '10': 'limit'},
+    {'1': 'is_limit', '3': 1, '4': 1, '5': 8, '10': 'isLimit'},
   ],
 };
 
 /// Descriptor for `GetReviewLimitOut`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getReviewLimitOutDescriptor = $convert
-    .base64Decode('ChFHZXRSZXZpZXdMaW1pdE91dBIUCgVsaW1pdBgBIAEoCFIFbGltaXQ=');
+final $typed_data.Uint8List getReviewLimitOutDescriptor = $convert.base64Decode(
+    'ChFHZXRSZXZpZXdMaW1pdE91dBIZCghpc19saW1pdBgBIAEoCFIHaXNMaW1pdA==');
 
 @$core.Deprecated('Use respDefaultDescriptor instead')
 const RespDefault$json = {

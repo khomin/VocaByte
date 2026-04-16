@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 abstract class PaymentService {
   bool isSupported();
 
-  Future<bool> isPremium();
+  Future<bool> isPremium({required bool cached});
   Future<bool> processPremium();
   Future<String?> getPrice();
 
@@ -26,7 +26,7 @@ class GooglePaymentService implements PaymentService {
   }
 
   @override
-  Future<bool> isPremium() async {
+  Future<bool> isPremium({required bool cached}) async {
     return false;
   }
 
@@ -53,7 +53,7 @@ class RuStorePaymentService implements PaymentService {
 
   RuStorePaymentService() {
     getPrice();
-    isPremium();
+    isPremium(cached: false);
   }
 
   @override
@@ -86,23 +86,25 @@ class RuStorePaymentService implements PaymentService {
   }
 
   @override
-  Future<bool> isPremium() async {
+  Future<bool> isPremium({required bool cached}) async {
     final prefs = await SharedPreferences.getInstance();
     bool cachedStatus = prefs.getBool(_premiumKey) ?? false;
     int lastCheck = prefs.getInt(_lastPremiumCheckKey) ?? 0;
     _stream.add(cachedStatus);
-    try {
-      var currentStatus = await checkPremiumSdk();
-      var nowMs = DateTime.now().millisecondsSinceEpoch;
-      await prefs.setBool(_premiumKey, currentStatus);
-      await prefs.setInt(_lastPremiumCheckKey, nowMs);
-      _stream.add(currentStatus);
-    } catch (e) {
-      bool isCacheExpired =
-          DateTime.now().millisecondsSinceEpoch - lastCheck > 2592000000;
-      startPremiumStatusRetryTimer();
-      if (isCacheExpired) {
-        return false;
+    if (!cached) {
+      try {
+        var currentStatus = await checkPremiumSdk();
+        var nowMs = DateTime.now().millisecondsSinceEpoch;
+        await prefs.setBool(_premiumKey, currentStatus);
+        await prefs.setInt(_lastPremiumCheckKey, nowMs);
+        _stream.add(currentStatus);
+      } catch (e) {
+        bool isCacheExpired =
+            DateTime.now().millisecondsSinceEpoch - lastCheck > 2592000000;
+        startPremiumStatusRetryTimer();
+        if (isCacheExpired) {
+          return false;
+        }
       }
     }
     return cachedStatus;
@@ -136,7 +138,7 @@ class RuStorePaymentService implements PaymentService {
         product.first.productId,
       );
       logInfo('$tag: purchase result [$res] ');
-      isPremium();
+      isPremium(cached: false);
       return true;
     } catch (ex) {
       logError('$tag: ex $ex');

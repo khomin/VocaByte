@@ -51,7 +51,7 @@ public:
     std::vector<WordCurrent> getCurrentLimit(int limit, int offset, int useSuccessCount);
     MetaData getMetadata();
 
-    bool checkReviewLimit();
+    bool checkReviewLimit(uint32_t limit);
     void logReview();
 
     void deleteAll();

@@ -129,6 +129,7 @@ class CardPageState extends State<CardPage> with TickerProviderStateMixin {
       }
     });
     Future.delayed(const Duration(milliseconds: 300), () {
+      if (!mounted) return;
       _animateController2.forward(from: 0.0);
     });
   }

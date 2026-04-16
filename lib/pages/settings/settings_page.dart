@@ -10,6 +10,7 @@ import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/models/settings_model.dart';
+import 'package:vocabyte/pages/ads/upgrade_full.dart';
 import 'package:vocabyte/pages/ads/upgrade_premium.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
 import 'package:vocabyte/components/dialogs/confirm_panel.dart';
@@ -274,13 +275,12 @@ class _State extends State<SettingsPage> {
           return UpgradePremium(
               price: getIt<PaymentService>().priceStream,
               onPressed: () async {
-                var res = await getIt<PaymentService>().processPremium();
-                if (context.mounted) {
-                  if (res) {
-                    UiHelper.showToast(context, 'Success');
-                  }
-                }
-                return true;
+                Navigator.push(
+                    context,
+                    PageTransition2.build(
+                        settings: const RouteSettings(),
+                        type: TransitionType.slide,
+                        child: const UpgradeFull(limitReached: false)));
               });
         });
   }
@@ -288,7 +288,6 @@ class _State extends State<SettingsPage> {
   Widget _theme() {
     return Builder(builder: (context) {
       var appModel = context.read<AppModel>();
-      var model = context.watch<SettingsModel>();
       var theme = context.watch<AppModel>().theme;
       var brightness = MediaQuery.platformBrightnessOf(context);
       var isDark = false;
