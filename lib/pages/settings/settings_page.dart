@@ -280,7 +280,10 @@ class _State extends State<SettingsPage> {
                     PageTransition2.build(
                         settings: const RouteSettings(),
                         type: TransitionType.slide,
-                        child: const UpgradeFull(limitReached: false)));
+                        child: const UpgradeFull(
+                          limitReached: false,
+                          withHeader: true,
+                        )));
               });
         });
   }

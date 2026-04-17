@@ -10,8 +10,13 @@ import 'package:vocabyte/resource/constants.dart';
 import 'package:vocabyte/services/tts.dart';
 
 class UpgradeFull extends StatefulWidget {
-  const UpgradeFull({required this.limitReached, super.key});
+  const UpgradeFull({
+    required this.limitReached,
+    required this.withHeader,
+    super.key,
+  });
   final bool limitReached;
+  final bool withHeader;
 
   @override
   UpgradeFullState createState() => UpgradeFullState();
@@ -82,42 +87,43 @@ class UpgradeFullState extends State<UpgradeFull>
         backgroundColor: Theme.of(context).colorScheme.baseColor1,
         body:
             CustomScrollView(physics: const ClampingScrollPhysics(), slivers: [
-          SliverAppBar(
-              floating: true,
-              primary: false,
-              expandedHeight: Constants.homeAppBarHeight + padding.top,
-              collapsedHeight: Constants.homeAppBarHeight + padding.top,
-              toolbarHeight: Constants.homeAppBarHeight + padding.top,
-              automaticallyImplyLeading: false,
-              scrolledUnderElevation: 0,
-              elevation: 0,
-              surfaceTintColor: Colors.transparent,
-              titleSpacing: 0,
-              title: Container(
-                alignment: Alignment.center,
-                child: Material(
-                  color: Colors.transparent,
-                  shape: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.zero),
-                  child: Container(
-                    padding: EdgeInsets.only(top: padding.top),
-                    height: Constants.homeAppBarHeight + padding.top,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).colorScheme.appBar,
-                        borderRadius: BorderRadius.circular(5),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withValues(alpha: 0.05),
-                            blurRadius: 10,
-                            spreadRadius: 2,
-                            offset: const Offset(0, -2),
-                          ),
-                        ]),
-                    child: _buildTopBar(),
+          if (widget.withHeader)
+            SliverAppBar(
+                floating: true,
+                primary: false,
+                expandedHeight: Constants.homeAppBarHeight + padding.top,
+                collapsedHeight: Constants.homeAppBarHeight + padding.top,
+                toolbarHeight: Constants.homeAppBarHeight + padding.top,
+                automaticallyImplyLeading: false,
+                scrolledUnderElevation: 0,
+                elevation: 0,
+                surfaceTintColor: Colors.transparent,
+                titleSpacing: 0,
+                title: Container(
+                  alignment: Alignment.center,
+                  child: Material(
+                    color: Colors.transparent,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.zero),
+                    child: Container(
+                      padding: EdgeInsets.only(top: padding.top),
+                      height: Constants.homeAppBarHeight + padding.top,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).colorScheme.appBar,
+                          borderRadius: BorderRadius.circular(5),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.05),
+                              blurRadius: 10,
+                              spreadRadius: 2,
+                              offset: const Offset(0, -2),
+                            ),
+                          ]),
+                      child: _buildTopBar(),
+                    ),
                   ),
-                ),
-              )),
+                )),
           SliverFillRemaining(
             child: _body(),
           ),
@@ -185,10 +191,19 @@ class UpgradeFullState extends State<UpgradeFull>
                                       children: [
                                         Text(
                                           "Daily Limit Reached\n"
-                                          "Free mode allows 20 words per day.\nUpgrade once to remove all limits forever.\n"
+                                          "Free mode allows ${Constants.freeLimit} words per day\nUpgrade once\nTo remove all limits forever\n",
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.center,
+                                          maxLines: 10,
+                                          style: Theme.of(context)
+                                              .colorScheme
+                                              .getBeautifulLine1(context),
+                                        ),
+                                        Text(
                                           "[Unlock Pro for $v]",
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
+                                          maxLines: 10,
                                           style: Theme.of(context)
                                               .colorScheme
                                               .getBeautifulLine1(context),
@@ -243,6 +258,7 @@ class UpgradeFullState extends State<UpgradeFull>
                                     .button3TextInversed,
                                 fontFamily: Constants.fontFredoka,
                                 fontSize: 15,
+                                fontWeight: FontWeight.w500,
                               ),
                             ))),
                             onPressed: (p0) async {

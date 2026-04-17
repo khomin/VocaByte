@@ -28,7 +28,7 @@ enum CardPageType {
   audioToDef
 }
 
-enum NextCardResultType { ok, noWords, freeLimit }
+enum NextCardResultType { ok, noWords, freeLimitExceeded }
 
 class ReviewModel with ChangeNotifier {
   final navKey = GlobalKey<NavigatorState>();
@@ -73,13 +73,17 @@ class ReviewModel with ChangeNotifier {
     var nav = navKey.currentState;
     if (!await getIt<PaymentService>().isPremium(cached: true)) {
       if (!await ServiceApi().checkReviewLimit(Constants.freeLimit)) {
-        return NextCardResultType.freeLimit;
+        return NextCardResultType.freeLimitExceeded;
       }
     }
     //
     if (current == null) {
       // no more cards to learn
       getIt<AppRep>().play(SoundType.successShort);
+      nav?.pushReplacementNamed(
+        CardPageType.noWords.name,
+        arguments: {'word': current},
+      );
       return NextCardResultType.noWords;
     }
     nav?.pushReplacementNamed(

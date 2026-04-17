@@ -31,10 +31,6 @@ class CardReviewMainState extends State<CardReviewMain> {
   @override
   void initState() {
     super.initState();
-
-    Future.microtask(() {
-      _model.nextCard();
-    });
   }
 
   @override
@@ -42,6 +38,28 @@ class CardReviewMainState extends State<CardReviewMain> {
     _model.dispose();
     getIt<AppRep>().refreshWordToLearn();
     super.dispose();
+  }
+
+  void _nextCard() async {
+    var res = await _model.nextCard();
+    switch (res) {
+      case NextCardResultType.ok:
+        break;
+      case NextCardResultType.noWords:
+        break;
+      case NextCardResultType.freeLimitExceeded:
+        var nav = _model.navKey.currentState;
+        nav?.push(
+          PageTransition2.build(
+              settings: const RouteSettings(),
+              type: TransitionType.slide,
+              child: const UpgradeFull(
+                limitReached: true,
+                withHeader: false,
+              )),
+        );
+        break;
+    }
   }
 
   @override
@@ -94,6 +112,7 @@ class CardReviewMainState extends State<CardReviewMain> {
                       //
                       // empty
                       case CardPageType.idle:
+                        _nextCard();
                         return PageRouteBuilder(
                             transitionDuration: Duration.zero,
                             reverseTransitionDuration: Duration.zero,
@@ -139,41 +158,23 @@ class CardReviewMainState extends State<CardReviewMain> {
 
                       case CardPageType.learnDone:
                         return PageRouteBuilder(
-                            transitionDuration: Duration.zero,
-                            reverseTransitionDuration: Duration.zero,
-                            settings: RouteSettings(name: type.name),
-                            transitionsBuilder: (context, animation,
-                                secondaryAnimation, child) {
-                              return child;
-                            },
-                            pageBuilder: (_, __, ___) => CardsDone(
-                                number: _model.learnedCntAll,
-                                isEnd: review.current() == null,
-                                onDone: () {
-                                  Navigator.of(context).pop();
-                                },
-                                onContinue: () async {
-                                  var res = await _model.nextCard();
-                                  switch (res) {
-                                    case NextCardResultType.ok:
-                                      break;
-                                    case NextCardResultType.noWords:
-                                      if (context.mounted) {
-                                        Navigator.of(context).pop();
-                                      }
-                                      break;
-                                    case NextCardResultType.freeLimit:
-                                      var nav = _model.navKey.currentState;
-                                      nav?.push(
-                                        PageTransition2.build(
-                                            settings: const RouteSettings(),
-                                            type: TransitionType.slide,
-                                            child: const UpgradeFull(
-                                                limitReached: true)),
-                                      );
-                                      break;
-                                  }
-                                }));
+                          transitionDuration: Duration.zero,
+                          reverseTransitionDuration: Duration.zero,
+                          settings: RouteSettings(name: type.name),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                            return child;
+                          },
+                          pageBuilder: (_, __, ___) => CardsDone(
+                              number: _model.learnedCntAll,
+                              isEnd: review.current() == null,
+                              onDone: () {
+                                Navigator.of(context).pop();
+                              },
+                              onContinue: () async {
+                                _nextCard();
+                              }),
+                        );
                       case CardPageType.wordDetails:
                         return PageRouteBuilder(
                             transitionDuration: Duration.zero,
@@ -200,26 +201,7 @@ class CardReviewMainState extends State<CardReviewMain> {
                                     getIt<AppRep>()
                                         .play(SoundType.successShort);
                                   } else {
-                                    var res = await _model.nextCard();
-                                    switch (res) {
-                                      case NextCardResultType.ok:
-                                        break;
-                                      case NextCardResultType.noWords:
-                                        if (context.mounted) {
-                                          Navigator.of(context).pop();
-                                        }
-                                        break;
-                                      case NextCardResultType.freeLimit:
-                                        var nav = _model.navKey.currentState;
-                                        nav?.push(
-                                          PageTransition2.build(
-                                              settings: const RouteSettings(),
-                                              type: TransitionType.slide,
-                                              child: const UpgradeFull(
-                                                  limitReached: true)),
-                                        );
-                                        break;
-                                    }
+                                    _nextCard();
                                   }
                                 }));
                     }
