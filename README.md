@@ -2,6 +2,8 @@
 
 A flashcard app with a text to speech feature and number exercises
 
+Flashcards and exercises are generated using ollama3
+
 It's built on Flutter, uses protobuf and c++
 
 ### Previews
@@ -38,50 +40,3 @@ Download from [GooglePlay](https://play.google.com/store/apps/details?id=com.voc
         ```
 - ``flutter pub get``
 - ``flutter run``
-
-#### Features, how to use
- - Find a word in the search
- - Listen and see its meaning and examples
- - Add the word to the study list where the spaced repetition algorithm will keep track on it
-
-#### Third-party
-https://github.com/emilk/loguru.git<br>
-https://github.com/bshoshany/thread-pool.git<br>
-https://github.com/wordset/wordset-dictionary.git
-
- - release google console
- - add rustore sdk
- - release rustore
-
-
-### TODO
- - keep 5 last logs, remove everything else
-
- - pageView - make offcard if > 1 word
- - add progress in numerals
- - theme - https://pub.dev/packages/animated_theme_switcher
- 
- - navigation, use bottom navigator
- - redesign the controls in card, don't know - already know, dialog
- - no <- but (x) from pages (card, numerals, manage words, search etc)
- - cache everything, make an instant start
- - performace sqlite
- - refactor progress in card
- - search words - show if already in list
- - progress and metrics 
- 
- ### TODO dictionary
-
- 1) remove all json containig ".", ",", two letter in upper case
- 2) come with a logic how to port old profile to new database (in app)
- 3) when moving a word into styding - store particular meaning to use
- 4) remove all "(xxx)" in "def" and "example"
-
-Give one example in sentence for "anisotropically", maximum 15-25 symbols (small better)
-
-give 3 examples in sentence for "mangy", maximum 15-25 symbols (small better).
-Resut in a json with fields:
-{
-"example": <your example>
-"freq": 12345 # << here is what number does word the have in the 100,000 most frequently-used English words list
-}
