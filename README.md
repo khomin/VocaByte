@@ -6,10 +6,12 @@ Flashcards and exercises are generated using ollama3
 
 It's built on Flutter, uses protobuf and c++
 
+<a href="https://play.google.com/store/apps/details?id=com.vocabyte.app">
+  <img src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png" height="60">
+</a>
+
 ### Previews
 ![1](/sceenshots/1.png)
-
-Download from [GooglePlay](https://play.google.com/store/apps/details?id=com.vocabyte.app)
 
 ### Installation
 - ``git clone https://github.com/khomin/VocaByte.git --recurse-submodules``
