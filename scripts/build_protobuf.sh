@@ -113,6 +113,7 @@ case $PLATFORM_ARG in
             -DANDROID_PLATFORM=android-29 \
             -Dprotobuf_BUILD_SHARED_LIBS=OFF \
             -Dprotobuf_BUILD_PROTOC_BINARIES=NO"
+            
         build "android" "x86_64" "-DCMAKE_TOOLCHAIN_FILE=$TOOLCHAIN
             -DANDROID_ABI=x86_64 \
             -DANDROID_PLATFORM=android-29 \

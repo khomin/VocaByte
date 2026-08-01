@@ -32,7 +32,7 @@ if (flutterVersionName == null) {
 android {
     namespace "com.vocabyte.app"
     compileSdk = 37
-    ndkVersion = flutter.ndkVersion
+    ndkVersion = "28.2.13676358" // look it's the same with NDK in protobuf
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
         targetCompatibility JavaVersion.VERSION_11
@@ -54,7 +54,7 @@ android {
     defaultConfig {
         applicationId "com.vocabyte.app"
         targetSdk = 37
-        minSdk 24
+        minSdk 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

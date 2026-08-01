@@ -125,6 +125,7 @@ elseif (ANDROID OR __ANDROID__)
         ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/lib/libutf8_validity.a
         ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/lib/libutf8_range.a
         loguru::loguru
+        android
     )
 elseif(UNIX AND NOT APPLE)
     set(INCLUDE_DIRS ${INCLUDE_DIRS}

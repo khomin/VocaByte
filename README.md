@@ -11,32 +11,53 @@ It's built on Flutter, uses protobuf and c++
 </a>
 
 ### Previews
-![1](/sceenshots/1.png)
+![1](/resources/1.png)
 
-### Installation
-```
-    git clone https://github.com/khomin/VocaByte.git --recurse-submodules
-    cd ./VocaByte
-    chmod +x ./scripts/build_protobuf.sh
-    # for android
-    ./scripts/build_protobuf.sh android
+### Prerequirements
+```sh
+git clone https://github.com/khomin/VocaByte.git --recurse-submodules
+cd ./VocaByte
 
-    # use macos if your host is macos
-    ./scripts/build_protobuf.sh macos
-    # or use linux
-    ./scripts/build_protobuf.sh linux
+chmod +x ./scripts/build_protobuf.sh
+
+# build protobuf for android
+./scripts/build_protobuf.sh android
+
+# build protobuf for ios
+./scripts/build_protobuf.sh ios
 ```
-- Download [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
+
+- Download dictionary [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
 - Unzip in <code>./assets/</code>
-- Specific steps for Android
-    - NDK is required  
-- ``flutter pub get``
-- ``flutter run``
+- Android: NDK is required  
+
+### Build for android
+```sh
+flutter pub get
+flutter run
+```
+
+### Build for ios
+```sh
+# make xcode subproject from cmake
+chmod +x ./scripts/apple/make_build_subprojects.sh
+./scripts/apple/make_build_subprojects.sh
+
+# rebuild protobuf files
+chmod +x ./scripts/gen-proto-macos.sh
+./scripts/gen-proto-macos.sh
+
+flutter pub get
+flutter run
+```
+
+
 
 ### To rebuild protobuf files
-```
+```sh
 # for macos
 ./scripts/gen-proto-macos.sh
+
 # for linux
 ./scripts/gen-proto-linux.sh
 ```

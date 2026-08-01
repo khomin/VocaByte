@@ -4,8 +4,8 @@ if [ -z $PROJECT_DIR ]; then
     PROJECT_DIR=$PWD
 fi
 
-# export PATH=$PATH:$PWD/.lib_pack/macos/protobuf/swift-protobuf/
 export PATH=$PATH:$PWD/.lib_pack/apple/protobuf/macos_universal/bin/
+# export PATH=$PATH:$PWD/.lib_pack/macos/protobuf/swift-protobuf/
 # chmod +x ./.lib_pack/macos/protobuf/swift-protobuf/protoc-gen-swift
 
 mkdir -p ./lib/native-api/protobuf/

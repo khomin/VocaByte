@@ -1,5 +1,6 @@
 #include "api_lib.h"
 #include <queue>
+#include <tuple>
 #include <thread>
 #include <app.pb.h>
 #include "dart_api.h"
@@ -51,7 +52,7 @@ void init(uint32_t taskId, uint8_t *data, uint32_t len) {
     GOOGLE_PROTOBUF_VERIFY_VERSION;
     std::lock_guard<std::mutex> lk(threadLock);
     api::InitParams initParams;
-    initParams.ParseFromArray(data, (int) len);
+    std::ignore = initParams.ParseFromArray(data, (int) len);
     if(thread_pool == nullptr) {
         thread_pool = new BS::thread_pool(5);
     }
