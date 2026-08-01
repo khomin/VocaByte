@@ -51,3 +51,9 @@ chmod +x ./scripts/gen-proto-macos.sh
 flutter pub get
 flutter run
 ```
+
+### License
+This project is licensed under the PolyForm Noncommercial License 1.0.0.
+You may use, modify, and redistribute the code for personal, educational, or
+non-commercial purposes only. Commercial use, including use in a project or
+service that generates profit, is not permitted.
