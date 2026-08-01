@@ -21,22 +21,26 @@ cd ./VocaByte
 
 chmod +x ./scripts/build_protobuf.sh
 
-# build protobuf for android
+# build protobuf for android (may skip)
 ./scripts/build_protobuf.sh android
 
 # build protobuf for ios
 ./scripts/build_protobuf.sh ios
-
+```
 
 ### Build for android
 ```sh
+# rebuild protobuf files (may skip)
+chmod +x ./scripts/gen-proto-macos.sh
+./scripts/gen-proto-macos.sh
+
 flutter pub get
 flutter run
 ```
 
 ### Build for ios
 ```sh
-# make xcode subproject from cmake
+# generate xcode subproject from cmake
 chmod +x ./scripts/apple/make_build_subprojects.sh
 ./scripts/apple/make_build_subprojects.sh
 
@@ -46,15 +50,4 @@ chmod +x ./scripts/gen-proto-macos.sh
 
 flutter pub get
 flutter run
-```
-
-
-
-### To rebuild protobuf files
-```sh
-# for macos
-./scripts/gen-proto-macos.sh
-
-# for linux
-./scripts/gen-proto-linux.sh
 ```
