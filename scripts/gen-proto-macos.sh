@@ -5,8 +5,6 @@ if [ -z $PROJECT_DIR ]; then
 fi
 
 export PATH=$PATH:$PWD/.lib_pack/apple/protobuf/macos_universal/bin/
-# export PATH=$PATH:$PWD/.lib_pack/macos/protobuf/swift-protobuf/
-# chmod +x ./.lib_pack/macos/protobuf/swift-protobuf/protoc-gen-swift
 
 mkdir -p ./lib/native-api/protobuf/
 mkdir -p ./cpp/protobuf/generated

@@ -40,8 +40,8 @@ if(APPLE)
         set(CMAKE_OSX_DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum OS X deployment version" FORCE)
         set(DEPLOYMENT_TARGET "11.0" CACHE STRING "Minimum OS X deployment version")
     else()
-        set(CMAKE_OSX_DEPLOYMENT_TARGET "13.0" CACHE STRING "Minimum OS X deployment version" FORCE)
-        set(DEPLOYMENT_TARGET "13.0" CACHE STRING "Minimum OS X deployment version")
+        set(CMAKE_OSX_DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum OS X deployment version" FORCE)
+        set(DEPLOYMENT_TARGET "14.0" CACHE STRING "Minimum OS X deployment version")
     endif()
 endif()
 
@@ -61,7 +61,20 @@ if(NOT DEFINED FLUTTER_SDK_PATH)
     message(STATUS "FLUTTER_SDK_PATH is ${FLUTTER_SDK_PATH}")
 endif()
 
+set(DART_API_DL_C "${FLUTTER_SDK_PATH}/bin/cache/dart-sdk/include/dart_api_dl.c")
+set(DART_INCLUDE_DIR "${FLUTTER_SDK_PATH}/bin/cache/dart-sdk/include")
+if(NOT EXISTS "${DART_API_DL_C}")
+    message(STATUS "Dart API source: Flutter SDK (${DART_API_DL_C})")
+endif()
+
+set(DART_API_DL_C "${FLUTTER_SDK_PATH}/bin/cache/dart-sdk/include/dart_api_dl.c")
+set(DART_INCLUDE_DIR "${FLUTTER_SDK_PATH}/bin/cache/dart-sdk/include")
+if(NOT EXISTS "${DART_API_DL_C}")
+    message(STATUS "Dart API source: Flutter SDK (${DART_API_DL_C})")
+endif()
+
 set(SOURCES
+    ${DART_API_DL_C}
     ./api_lib.cpp
     ./api_lib.h
     ./db/misc_db.cpp
@@ -74,35 +87,26 @@ set(SOURCES
     ./protobuf/generated/app.pb.h
 )
 
-set(INCLUDE_DIRS ${INCLUDE_DIRS}
-    ${FLUTTER_SDK_PATH}/cache/dart-sdk/include
-    ./protobuf/generated/
-)
-
-set(SOURCES ${SOURCES}
-    ${FLUTTER_SDK_PATH}/cache/dart-sdk/include/dart_api_dl.c
-)
-
 if(APPLE)
     if(IOS)
+        file(GLOB PROTO_ABSL_LIBS
+            ${CMAKE_SOURCE_DIR}/../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_*.a
+        )
         set(INCLUDE_DIRS ${INCLUDE_DIRS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/ios/protobuf/include
+            ${CMAKE_SOURCE_DIR}/../.lib_pack/apple/protobuf/ios_combined/include/
         )
         set(LIBRARIES ${LIBRARIES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/ios/protobuf/ios_universal/libprotobuf.a
+            -Wl,--start-group
+            ${CMAKE_SOURCE_DIR}/../.lib_pack/apple/protobuf/ios_combined/lib/libprotobuf.a
+            ${PROTO_ABSL_LIBS}
+            -Wl,--end-group
+            ${CMAKE_SOURCE_DIR}/../.lib_pack/apple/protobuf/ios_combined/lib/libutf8_validity.a
+            ${CMAKE_SOURCE_DIR}/../.lib_pack/apple/protobuf/ios_combined/lib/libutf8_range.a
             loguru::loguru
         )
-    else()
-        set(INCLUDE_DIRS ${INCLUDE_DIRS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/macos/protobuf/include
-        )
-        set(LIBRARIES$ ${LIBRARIES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/macos/protobuf/macos_universal/libprotobuf.a
-            loguru::loguru
-            "-framework Cocoa"
-            "-framework Security"
-            "-framework Foundation"
-            "-framework ServiceManagement"
+        add_library(
+            ${PROJECT} STATIC
+            ${SOURCES}
         )
     endif()
 elseif (ANDROID OR __ANDROID__)
@@ -127,57 +131,14 @@ elseif (ANDROID OR __ANDROID__)
         loguru::loguru
         android
     )
-elseif(UNIX AND NOT APPLE)
-    set(INCLUDE_DIRS ${INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/linux/protobuf/include
-    )
-    set(LIBRARIES ${LIBRARIES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/linux/protobuf/lib/libprotobuf.a
-        -ldl -lpthread -lxcb -lz
-        loguru::loguru
-    )
-elseif(WIN32)
-    # not supported
-endif()
-
-if(IOS)
-    add_library(
-        ${PROJECT} STATIC
-        ${SOURCES}
-    )
-    set_property(TARGET ${PROJECT} PROPERTY XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "iPhone Developer")
-    set_property(TARGET ${PROJECT} PROPERTY XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "BKKJDH248G")
-    set_property(TARGET ${PROJECT} PROPERTY XCODE_ATTRIBUTE_ENABLE_BITCODE "NO")
-else()
     add_library(
         ${PROJECT} SHARED
         ${SOURCES}
     )
-    if(APPLE) # set xcode attributes to all target 
-        function(get_all_targets var)
-            set(targets)
-            get_all_targets_recursive(targets ${CMAKE_CURRENT_SOURCE_DIR})
-            set(${var} ${targets} PARENT_SCOPE)
-        endfunction()
-        macro(get_all_targets_recursive targets dir)
-            get_property(subdirectories DIRECTORY ${dir} PROPERTY SUBDIRECTORIES)
-            foreach(subdir ${subdirectories})
-                get_all_targets_recursive(${targets} ${subdir})
-            endforeach()
-            get_property(current_targets DIRECTORY ${dir} PROPERTY BUILDSYSTEM_TARGETS)
-            list(APPEND ${targets} ${current_targets})
-        endmacro()
-        
-        get_all_targets(all_targets)
-        message("All targets: ${all_targets}")
-
-        set_property(TARGET ${all_targets} PROPERTY
-            XCODE_ATTRIBUTE_ONLY_ACTIVE_ARCH[variant=Debug] "YES"
-        )
-        set_property(TARGET ${all_targets} PROPERTY
-            XCODE_ATTRIBUTE_SKIP_INSTALL "YES"
-        )
-    endif()
+elseif(UNIX AND NOT APPLE)
+    # not supported
+elseif(WIN32)
+    # not supported
 endif()
 
 set_target_properties(loguru
@@ -186,12 +147,12 @@ set_target_properties(loguru
 )
 
 target_include_directories(${PROJECT} PUBLIC
+    ${DART_INCLUDE_DIR}
+    ${INCLUDE_DIRS}
     ./
     ./api/
     ./misc/
     ./protobuf/generated
-    ${FLUTTER_SDK_PATH}/cache/dart-sdk/include
-    ${INCLUDE_DIRS}
 )
 
 if (ANDROID OR __ANDROID__)

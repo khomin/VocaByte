@@ -14,6 +14,7 @@ It's built on Flutter, uses protobuf and c++
 ![1](/resources/1.png)
 
 ### Prerequirements
+- Android: NDK is required  
 ```sh
 git clone https://github.com/khomin/VocaByte.git --recurse-submodules
 cd ./VocaByte
@@ -25,11 +26,7 @@ chmod +x ./scripts/build_protobuf.sh
 
 # build protobuf for ios
 ./scripts/build_protobuf.sh ios
-```
 
-- Download dictionary [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
-- Unzip in <code>./assets/</code>
-- Android: NDK is required  
 
 ### Build for android
 ```sh

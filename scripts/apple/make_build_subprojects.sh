@@ -12,7 +12,7 @@ rm -rf ${SCRIPT_PATH}/build_ios
 mkdir ${SCRIPT_PATH}/build_ios
 
 cd ${SCRIPT_PATH}/build_ios
-cmake ../ -G Xcode -DCMAKE_TOOLCHAIN_FILE=../submodule/ios-cmake/ios.toolchain.cmake -DPLATFORM=OS64COMBINED -DDEPLOYMENT_TARGET="13.0"
+cmake ../ -G Xcode -DCMAKE_TOOLCHAIN_FILE=../submodule/ios-cmake/ios.toolchain.cmake -DPLATFORM=OS64COMBINED -DDEPLOYMENT_TARGET="14.0"
 
 echo "DONE"
 echo "Result in:"

@@ -64,7 +64,7 @@ case $PLATFORM_ARG in
         build "apple" "ios_combined" \
             "-G Xcode \
             -DPLATFORM=OS64COMBINED \   
-            -DDEPLOYMENT_TARGET=13.0 \
+            -DDEPLOYMENT_TARGET=14.0 \
             -DCMAKE_MACOSX_BUNDLE=OFF \
             -Dprotobuf_BUILD_PROTOC_BINARIES=NO \
             -DCMAKE_TOOLCHAIN_FILE=$PROJECT_DIR/cpp/submodule/ios-cmake/ios.toolchain.cmake"

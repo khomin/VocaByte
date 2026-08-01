@@ -9,16 +9,109 @@
 /* Begin PBXBuildFile section */
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		1BA375C0294776C600B5D9C5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1BA375BF294776C600B5D9C5 /* Assets.xcassets */; };
+		1F262EAA301E39E90081CA9A /* libabsl_malloc_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E4D301E39E80081CA9A /* libabsl_malloc_internal.a */; };
+		1F262EAB301E39E90081CA9A /* libabsl_decode_rust_punycode.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E4E301E39E80081CA9A /* libabsl_decode_rust_punycode.a */; };
+		1F262EAC301E39E90081CA9A /* libabsl_log_internal_format.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E4F301E39E80081CA9A /* libabsl_log_internal_format.a */; };
+		1F262EAD301E39E90081CA9A /* libabsl_low_level_hash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E50301E39E80081CA9A /* libabsl_low_level_hash.a */; };
+		1F262EAE301E39E90081CA9A /* libabsl_crc_cpu_detect.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E51301E39E80081CA9A /* libabsl_crc_cpu_detect.a */; };
+		1F262EAF301E39E90081CA9A /* libabsl_flags_usage_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E52301E39E80081CA9A /* libabsl_flags_usage_internal.a */; };
+		1F262EB0301E39E90081CA9A /* libabsl_examine_stack.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E53301E39E80081CA9A /* libabsl_examine_stack.a */; };
+		1F262EB1301E39E90081CA9A /* libabsl_random_internal_platform.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E54301E39E80081CA9A /* libabsl_random_internal_platform.a */; };
+		1F262EB2301E39E90081CA9A /* libabsl_log_globals.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E55301E39E80081CA9A /* libabsl_log_globals.a */; };
+		1F262EB3301E39E90081CA9A /* libabsl_leak_check.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E56301E39E80081CA9A /* libabsl_leak_check.a */; };
+		1F262EB4301E39E90081CA9A /* libabsl_log_sink.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E57301E39E80081CA9A /* libabsl_log_sink.a */; };
+		1F262EB5301E39E90081CA9A /* libabsl_random_internal_randen_hwaes_impl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E58301E39E80081CA9A /* libabsl_random_internal_randen_hwaes_impl.a */; };
+		1F262EB6301E39E90081CA9A /* libupb.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E59301E39E80081CA9A /* libupb.a */; };
+		1F262EB7301E39E90081CA9A /* libabsl_flags_commandlineflag.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E5A301E39E80081CA9A /* libabsl_flags_commandlineflag.a */; };
+		1F262EB8301E39E90081CA9A /* libabsl_hashtablez_sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E5B301E39E80081CA9A /* libabsl_hashtablez_sampler.a */; };
+		1F262EB9301E39E90081CA9A /* libabsl_random_internal_seed_material.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E5C301E39E80081CA9A /* libabsl_random_internal_seed_material.a */; };
+		1F262EBA301E39E90081CA9A /* libabsl_log_initialize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E5D301E39E80081CA9A /* libabsl_log_initialize.a */; };
+		1F262EBB301E39E90081CA9A /* libabsl_city.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E5E301E39E80081CA9A /* libabsl_city.a */; };
+		1F262EBC301E39E90081CA9A /* libabsl_flags_commandlineflag_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E5F301E39E80081CA9A /* libabsl_flags_commandlineflag_internal.a */; };
+		1F262EBD301E39E90081CA9A /* libabsl_graphcycles_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E60301E39E80081CA9A /* libabsl_graphcycles_internal.a */; };
+		1F262EBE301E39E90081CA9A /* libabsl_crc_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E61301E39E80081CA9A /* libabsl_crc_internal.a */; };
+		1F262EBF301E39E90081CA9A /* libabsl_periodic_sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E62301E39E80081CA9A /* libabsl_periodic_sampler.a */; };
+		1F262EC0301E39E90081CA9A /* libabsl_poison.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E63301E39E80081CA9A /* libabsl_poison.a */; };
+		1F262EC1301E39E90081CA9A /* libabsl_log_flags.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E64301E39E80081CA9A /* libabsl_log_flags.a */; };
+		1F262EC2301E39E90081CA9A /* libabsl_random_internal_randen_hwaes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E65301E39E80081CA9A /* libabsl_random_internal_randen_hwaes.a */; };
+		1F262EC3301E39E90081CA9A /* libabsl_synchronization.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E66301E39E80081CA9A /* libabsl_synchronization.a */; };
+		1F262EC4301E39E90081CA9A /* libabsl_log_internal_conditions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E67301E39E80081CA9A /* libabsl_log_internal_conditions.a */; };
+		1F262EC5301E39E90081CA9A /* libabsl_civil_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E68301E39E80081CA9A /* libabsl_civil_time.a */; };
+		1F262EC6301E39E90081CA9A /* libabsl_random_internal_entropy_pool.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E69301E39E80081CA9A /* libabsl_random_internal_entropy_pool.a */; };
+		1F262EC7301E39E90081CA9A /* libabsl_kernel_timeout_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E6A301E39E80081CA9A /* libabsl_kernel_timeout_internal.a */; };
+		1F262EC8301E39E90081CA9A /* libabsl_random_internal_distribution_test_util.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E6B301E39E80081CA9A /* libabsl_random_internal_distribution_test_util.a */; };
+		1F262EC9301E39E90081CA9A /* libabsl_raw_logging_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E6C301E39E80081CA9A /* libabsl_raw_logging_internal.a */; };
+		1F262ECA301E39E90081CA9A /* libabsl_scoped_set_env.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E6D301E39E80081CA9A /* libabsl_scoped_set_env.a */; };
+		1F262ECB301E39E90081CA9A /* libabsl_spinlock_wait.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E6E301E39E80081CA9A /* libabsl_spinlock_wait.a */; };
+		1F262ECC301E39E90081CA9A /* libabsl_base.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E6F301E39E80081CA9A /* libabsl_base.a */; };
+		1F262ECD301E39E90081CA9A /* libabsl_demangle_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E70301E39E80081CA9A /* libabsl_demangle_internal.a */; };
+		1F262ECE301E39E90081CA9A /* libabsl_cordz_functions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E71301E39E80081CA9A /* libabsl_cordz_functions.a */; };
+		1F262ECF301E39E90081CA9A /* libabsl_status.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E72301E39E80081CA9A /* libabsl_status.a */; };
+		1F262ED0301E39E90081CA9A /* libabsl_tracing_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E73301E39E80081CA9A /* libabsl_tracing_internal.a */; };
+		1F262ED1301E39E90081CA9A /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E74301E39E80081CA9A /* libprotobuf.a */; };
+		1F262ED2301E39E90081CA9A /* libabsl_random_seed_gen_exception.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E75301E39E80081CA9A /* libabsl_random_seed_gen_exception.a */; };
+		1F262ED3301E39E90081CA9A /* libabsl_log_internal_message.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E76301E39E80081CA9A /* libabsl_log_internal_message.a */; };
+		1F262ED4301E39E90081CA9A /* libabsl_log_internal_log_sink_set.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E77301E39E80081CA9A /* libabsl_log_internal_log_sink_set.a */; };
+		1F262ED5301E39E90081CA9A /* libabsl_cord_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E78301E39E80081CA9A /* libabsl_cord_internal.a */; };
+		1F262ED6301E39E90081CA9A /* libprotobuf-lite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E79301E39E80081CA9A /* libprotobuf-lite.a */; };
+		1F262ED7301E39E90081CA9A /* libabsl_log_severity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E7A301E39E80081CA9A /* libabsl_log_severity.a */; };
+		1F262ED8301E39E90081CA9A /* libabsl_random_internal_randen_slow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E7B301E39E80081CA9A /* libabsl_random_internal_randen_slow.a */; };
+		1F262ED9301E39E90081CA9A /* libabsl_vlog_config_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E7C301E39E80081CA9A /* libabsl_vlog_config_internal.a */; };
+		1F262EDA301E39E90081CA9A /* libabsl_die_if_null.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E7D301E39E80081CA9A /* libabsl_die_if_null.a */; };
+		1F262EDB301E39E90081CA9A /* libabsl_log_internal_check_op.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E7E301E39E80081CA9A /* libabsl_log_internal_check_op.a */; };
+		1F262EDC301E39E90081CA9A /* libabsl_strings_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E7F301E39E80081CA9A /* libabsl_strings_internal.a */; };
+		1F262EDD301E39E90081CA9A /* libabsl_flags_config.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E80301E39E80081CA9A /* libabsl_flags_config.a */; };
+		1F262EDE301E39E90081CA9A /* libabsl_hash.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E81301E39E80081CA9A /* libabsl_hash.a */; };
+		1F262EDF301E39E90081CA9A /* libabsl_time_zone.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E82301E39E80081CA9A /* libabsl_time_zone.a */; };
+		1F262EE0301E39E90081CA9A /* libabsl_flags_private_handle_accessor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E83301E39E80081CA9A /* libabsl_flags_private_handle_accessor.a */; };
+		1F262EE1301E39E90081CA9A /* libabsl_failure_signal_handler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E84301E39E80081CA9A /* libabsl_failure_signal_handler.a */; };
+		1F262EE2301E39E90081CA9A /* libabsl_stacktrace.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E85301E39E90081CA9A /* libabsl_stacktrace.a */; };
+		1F262EE3301E39E90081CA9A /* libabsl_log_internal_globals.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E86301E39E90081CA9A /* libabsl_log_internal_globals.a */; };
+		1F262EE4301E39E90081CA9A /* libabsl_log_internal_structured_proto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E87301E39E90081CA9A /* libabsl_log_internal_structured_proto.a */; };
+		1F262EE5301E39E90081CA9A /* libabsl_log_internal_nullguard.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E88301E39E90081CA9A /* libabsl_log_internal_nullguard.a */; };
+		1F262EE6301E39E90081CA9A /* libabsl_exponential_biased.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E89301E39E90081CA9A /* libabsl_exponential_biased.a */; };
+		1F262EE7301E39E90081CA9A /* libabsl_crc_cord_state.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E8A301E39E90081CA9A /* libabsl_crc_cord_state.a */; };
+		1F262EE8301E39E90081CA9A /* libabsl_strings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E8B301E39E90081CA9A /* libabsl_strings.a */; };
+		1F262EE9301E39E90081CA9A /* libabsl_cordz_info.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E8C301E39E90081CA9A /* libabsl_cordz_info.a */; };
+		1F262EEA301E39E90081CA9A /* libabsl_flags_parse.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E8D301E39E90081CA9A /* libabsl_flags_parse.a */; };
+		1F262EEB301E39E90081CA9A /* libabsl_flags_reflection.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E8E301E39E90081CA9A /* libabsl_flags_reflection.a */; };
+		1F262EEC301E39E90081CA9A /* libabsl_flags_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E8F301E39E90081CA9A /* libabsl_flags_internal.a */; };
+		1F262EED301E39E90081CA9A /* libabsl_crc32c.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E90301E39E90081CA9A /* libabsl_crc32c.a */; };
+		1F262EEE301E39E90081CA9A /* libabsl_random_seed_sequences.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E91301E39E90081CA9A /* libabsl_random_seed_sequences.a */; };
+		1F262EEF301E39E90081CA9A /* libabsl_log_internal_proto.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E92301E39E90081CA9A /* libabsl_log_internal_proto.a */; };
+		1F262EF0301E39E90081CA9A /* libabsl_cord.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E93301E39E90081CA9A /* libabsl_cord.a */; };
+		1F262EF1301E39E90081CA9A /* libabsl_debugging_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E94301E39E90081CA9A /* libabsl_debugging_internal.a */; };
+		1F262EF2301E39E90081CA9A /* libabsl_str_format_internal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E95301E39E90081CA9A /* libabsl_str_format_internal.a */; };
+		1F262EF3301E39E90081CA9A /* libabsl_random_distributions.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E96301E39E90081CA9A /* libabsl_random_distributions.a */; };
+		1F262EF4301E39E90081CA9A /* libabsl_strerror.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E97301E39E90081CA9A /* libabsl_strerror.a */; };
+		1F262EF5301E39E90081CA9A /* libabsl_string_view.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E98301E39E90081CA9A /* libabsl_string_view.a */; };
+		1F262EF6301E39E90081CA9A /* libabsl_flags_usage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E99301E39E90081CA9A /* libabsl_flags_usage.a */; };
+		1F262EF7301E39E90081CA9A /* libabsl_statusor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E9A301E39E90081CA9A /* libabsl_statusor.a */; };
+		1F262EF8301E39E90081CA9A /* libabsl_symbolize.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E9B301E39E90081CA9A /* libabsl_symbolize.a */; };
+		1F262EF9301E39E90081CA9A /* libabsl_utf8_for_code_point.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E9C301E39E90081CA9A /* libabsl_utf8_for_code_point.a */; };
+		1F262EFA301E39E90081CA9A /* libabsl_cordz_handle.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E9D301E39E90081CA9A /* libabsl_cordz_handle.a */; };
+		1F262EFB301E39E90081CA9A /* libutf8_range.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E9E301E39E90081CA9A /* libutf8_range.a */; };
+		1F262EFC301E39E90081CA9A /* libabsl_cordz_sample_token.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262E9F301E39E90081CA9A /* libabsl_cordz_sample_token.a */; };
+		1F262EFD301E39E90081CA9A /* libabsl_raw_hash_set.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA0301E39E90081CA9A /* libabsl_raw_hash_set.a */; };
+		1F262EFE301E39E90081CA9A /* libabsl_throw_delegate.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA1301E39E90081CA9A /* libabsl_throw_delegate.a */; };
+		1F262EFF301E39E90081CA9A /* libutf8_validity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA2301E39E90081CA9A /* libutf8_validity.a */; };
+		1F262F00301E39E90081CA9A /* libabsl_flags_program_name.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA3301E39E90081CA9A /* libabsl_flags_program_name.a */; };
+		1F262F01301E39E90081CA9A /* libabsl_flags_marshalling.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA4301E39E90081CA9A /* libabsl_flags_marshalling.a */; };
+		1F262F02301E39E90081CA9A /* libabsl_int128.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA5301E39E90081CA9A /* libabsl_int128.a */; };
+		1F262F03301E39E90081CA9A /* libabsl_log_internal_fnmatch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA6301E39E90081CA9A /* libabsl_log_internal_fnmatch.a */; };
+		1F262F04301E39E90081CA9A /* libabsl_demangle_rust.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA7301E39E90081CA9A /* libabsl_demangle_rust.a */; };
+		1F262F05301E39E90081CA9A /* libabsl_time.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA8301E39E90081CA9A /* libabsl_time.a */; };
+		1F262F06301E39E90081CA9A /* libabsl_random_internal_randen.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1F262EA9301E39E90081CA9A /* libabsl_random_internal_randen.a */; };
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
-		449237FBED6B5B2257E6FA9D /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 273843A2B255F5FEB4F44678 /* Pods_Runner.framework */; };
+		71701C7267608A367C0DFE3B /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5FB19D0B30085E9940BA32D /* Pods_Runner.framework */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
+		78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */ = {isa = PBXBuildFile; productRef = 78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		CE643B472DB410F100DF98B6 /* api_os.mm in Sources */ = {isa = PBXBuildFile; fileRef = CE643B462DB410F100DF98B6 /* api_os.mm */; };
 		CEC7DE6A2EAE29A000E8D2F0 /* libVocaByte.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE643B062DB3B52C00DF98B6 /* libVocaByte.a */; };
 		CEC7DE752EAE388E00E8D2F0 /* libloguru.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC7DE742EAE32B200E8D2F0 /* libloguru.a */; };
 		CEF48C082EA4F616009DA07B /* api_os.h in Sources */ = {isa = PBXBuildFile; fileRef = CE643B452DB410F100DF98B6 /* api_os.h */; };
-		CEF48C632EA53BDE009DA07B /* libprotobuf.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE643B2F2DB3BEFE00DF98B6 /* libprotobuf.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,14 +126,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 036E0AFF3F7341CF80C23ED3;
+			remoteGlobalIDString = CEA26800E1FE7D2378E1C8E9;
 			remoteInfo = VocaByte;
 		};
 		CEC7DE702EAE32B200E8D2F0 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = A4D7136691A94A4C8DCBF5AF;
+			remoteGlobalIDString = 1FCAC1F9E45C5D998C5053FE;
 			remoteInfo = loguru;
 		};
 		CEC7DE732EAE32B200E8D2F0 /* PBXContainerItemProxy */ = {
@@ -53,18 +146,111 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A3DCE2D66481CBCA993BFB6 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		1498D2321E8E86230040F4C2 /* GeneratedPluginRegistrant.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeneratedPluginRegistrant.h; sourceTree = "<group>"; };
 		1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GeneratedPluginRegistrant.m; sourceTree = "<group>"; };
 		1BA375BF294776C600B5D9C5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		236610AE627712D32E94857E /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
-		273843A2B255F5FEB4F44678 /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F262E4D301E39E80081CA9A /* libabsl_malloc_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_malloc_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_malloc_internal.a; sourceTree = "<group>"; };
+		1F262E4E301E39E80081CA9A /* libabsl_decode_rust_punycode.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_decode_rust_punycode.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_decode_rust_punycode.a; sourceTree = "<group>"; };
+		1F262E4F301E39E80081CA9A /* libabsl_log_internal_format.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_format.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_format.a; sourceTree = "<group>"; };
+		1F262E50301E39E80081CA9A /* libabsl_low_level_hash.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_low_level_hash.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_low_level_hash.a; sourceTree = "<group>"; };
+		1F262E51301E39E80081CA9A /* libabsl_crc_cpu_detect.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_crc_cpu_detect.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_crc_cpu_detect.a; sourceTree = "<group>"; };
+		1F262E52301E39E80081CA9A /* libabsl_flags_usage_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_usage_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_usage_internal.a; sourceTree = "<group>"; };
+		1F262E53301E39E80081CA9A /* libabsl_examine_stack.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_examine_stack.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_examine_stack.a; sourceTree = "<group>"; };
+		1F262E54301E39E80081CA9A /* libabsl_random_internal_platform.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_platform.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_platform.a; sourceTree = "<group>"; };
+		1F262E55301E39E80081CA9A /* libabsl_log_globals.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_globals.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_globals.a; sourceTree = "<group>"; };
+		1F262E56301E39E80081CA9A /* libabsl_leak_check.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_leak_check.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_leak_check.a; sourceTree = "<group>"; };
+		1F262E57301E39E80081CA9A /* libabsl_log_sink.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_sink.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_sink.a; sourceTree = "<group>"; };
+		1F262E58301E39E80081CA9A /* libabsl_random_internal_randen_hwaes_impl.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_randen_hwaes_impl.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_randen_hwaes_impl.a; sourceTree = "<group>"; };
+		1F262E59301E39E80081CA9A /* libupb.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libupb.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libupb.a; sourceTree = "<group>"; };
+		1F262E5A301E39E80081CA9A /* libabsl_flags_commandlineflag.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_commandlineflag.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_commandlineflag.a; sourceTree = "<group>"; };
+		1F262E5B301E39E80081CA9A /* libabsl_hashtablez_sampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_hashtablez_sampler.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_hashtablez_sampler.a; sourceTree = "<group>"; };
+		1F262E5C301E39E80081CA9A /* libabsl_random_internal_seed_material.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_seed_material.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_seed_material.a; sourceTree = "<group>"; };
+		1F262E5D301E39E80081CA9A /* libabsl_log_initialize.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_initialize.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_initialize.a; sourceTree = "<group>"; };
+		1F262E5E301E39E80081CA9A /* libabsl_city.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_city.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_city.a; sourceTree = "<group>"; };
+		1F262E5F301E39E80081CA9A /* libabsl_flags_commandlineflag_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_commandlineflag_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_commandlineflag_internal.a; sourceTree = "<group>"; };
+		1F262E60301E39E80081CA9A /* libabsl_graphcycles_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_graphcycles_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_graphcycles_internal.a; sourceTree = "<group>"; };
+		1F262E61301E39E80081CA9A /* libabsl_crc_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_crc_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_crc_internal.a; sourceTree = "<group>"; };
+		1F262E62301E39E80081CA9A /* libabsl_periodic_sampler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_periodic_sampler.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_periodic_sampler.a; sourceTree = "<group>"; };
+		1F262E63301E39E80081CA9A /* libabsl_poison.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_poison.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_poison.a; sourceTree = "<group>"; };
+		1F262E64301E39E80081CA9A /* libabsl_log_flags.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_flags.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_flags.a; sourceTree = "<group>"; };
+		1F262E65301E39E80081CA9A /* libabsl_random_internal_randen_hwaes.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_randen_hwaes.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_randen_hwaes.a; sourceTree = "<group>"; };
+		1F262E66301E39E80081CA9A /* libabsl_synchronization.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_synchronization.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_synchronization.a; sourceTree = "<group>"; };
+		1F262E67301E39E80081CA9A /* libabsl_log_internal_conditions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_conditions.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_conditions.a; sourceTree = "<group>"; };
+		1F262E68301E39E80081CA9A /* libabsl_civil_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_civil_time.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_civil_time.a; sourceTree = "<group>"; };
+		1F262E69301E39E80081CA9A /* libabsl_random_internal_entropy_pool.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_entropy_pool.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_entropy_pool.a; sourceTree = "<group>"; };
+		1F262E6A301E39E80081CA9A /* libabsl_kernel_timeout_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_kernel_timeout_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_kernel_timeout_internal.a; sourceTree = "<group>"; };
+		1F262E6B301E39E80081CA9A /* libabsl_random_internal_distribution_test_util.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_distribution_test_util.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_distribution_test_util.a; sourceTree = "<group>"; };
+		1F262E6C301E39E80081CA9A /* libabsl_raw_logging_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_raw_logging_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_raw_logging_internal.a; sourceTree = "<group>"; };
+		1F262E6D301E39E80081CA9A /* libabsl_scoped_set_env.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_scoped_set_env.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_scoped_set_env.a; sourceTree = "<group>"; };
+		1F262E6E301E39E80081CA9A /* libabsl_spinlock_wait.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_spinlock_wait.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_spinlock_wait.a; sourceTree = "<group>"; };
+		1F262E6F301E39E80081CA9A /* libabsl_base.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_base.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_base.a; sourceTree = "<group>"; };
+		1F262E70301E39E80081CA9A /* libabsl_demangle_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_demangle_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_demangle_internal.a; sourceTree = "<group>"; };
+		1F262E71301E39E80081CA9A /* libabsl_cordz_functions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_cordz_functions.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_cordz_functions.a; sourceTree = "<group>"; };
+		1F262E72301E39E80081CA9A /* libabsl_status.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_status.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_status.a; sourceTree = "<group>"; };
+		1F262E73301E39E80081CA9A /* libabsl_tracing_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_tracing_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_tracing_internal.a; sourceTree = "<group>"; };
+		1F262E74301E39E80081CA9A /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libprotobuf.a; sourceTree = "<group>"; };
+		1F262E75301E39E80081CA9A /* libabsl_random_seed_gen_exception.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_seed_gen_exception.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_seed_gen_exception.a; sourceTree = "<group>"; };
+		1F262E76301E39E80081CA9A /* libabsl_log_internal_message.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_message.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_message.a; sourceTree = "<group>"; };
+		1F262E77301E39E80081CA9A /* libabsl_log_internal_log_sink_set.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_log_sink_set.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_log_sink_set.a; sourceTree = "<group>"; };
+		1F262E78301E39E80081CA9A /* libabsl_cord_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_cord_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_cord_internal.a; sourceTree = "<group>"; };
+		1F262E79301E39E80081CA9A /* libprotobuf-lite.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libprotobuf-lite.a"; path = "../.lib_pack/apple/protobuf/ios_combined/lib/libprotobuf-lite.a"; sourceTree = "<group>"; };
+		1F262E7A301E39E80081CA9A /* libabsl_log_severity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_severity.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_severity.a; sourceTree = "<group>"; };
+		1F262E7B301E39E80081CA9A /* libabsl_random_internal_randen_slow.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_randen_slow.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_randen_slow.a; sourceTree = "<group>"; };
+		1F262E7C301E39E80081CA9A /* libabsl_vlog_config_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_vlog_config_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_vlog_config_internal.a; sourceTree = "<group>"; };
+		1F262E7D301E39E80081CA9A /* libabsl_die_if_null.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_die_if_null.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_die_if_null.a; sourceTree = "<group>"; };
+		1F262E7E301E39E80081CA9A /* libabsl_log_internal_check_op.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_check_op.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_check_op.a; sourceTree = "<group>"; };
+		1F262E7F301E39E80081CA9A /* libabsl_strings_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_strings_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_strings_internal.a; sourceTree = "<group>"; };
+		1F262E80301E39E80081CA9A /* libabsl_flags_config.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_config.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_config.a; sourceTree = "<group>"; };
+		1F262E81301E39E80081CA9A /* libabsl_hash.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_hash.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_hash.a; sourceTree = "<group>"; };
+		1F262E82301E39E80081CA9A /* libabsl_time_zone.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_time_zone.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_time_zone.a; sourceTree = "<group>"; };
+		1F262E83301E39E80081CA9A /* libabsl_flags_private_handle_accessor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_private_handle_accessor.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_private_handle_accessor.a; sourceTree = "<group>"; };
+		1F262E84301E39E80081CA9A /* libabsl_failure_signal_handler.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_failure_signal_handler.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_failure_signal_handler.a; sourceTree = "<group>"; };
+		1F262E85301E39E90081CA9A /* libabsl_stacktrace.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_stacktrace.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_stacktrace.a; sourceTree = "<group>"; };
+		1F262E86301E39E90081CA9A /* libabsl_log_internal_globals.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_globals.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_globals.a; sourceTree = "<group>"; };
+		1F262E87301E39E90081CA9A /* libabsl_log_internal_structured_proto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_structured_proto.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_structured_proto.a; sourceTree = "<group>"; };
+		1F262E88301E39E90081CA9A /* libabsl_log_internal_nullguard.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_nullguard.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_nullguard.a; sourceTree = "<group>"; };
+		1F262E89301E39E90081CA9A /* libabsl_exponential_biased.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_exponential_biased.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_exponential_biased.a; sourceTree = "<group>"; };
+		1F262E8A301E39E90081CA9A /* libabsl_crc_cord_state.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_crc_cord_state.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_crc_cord_state.a; sourceTree = "<group>"; };
+		1F262E8B301E39E90081CA9A /* libabsl_strings.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_strings.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_strings.a; sourceTree = "<group>"; };
+		1F262E8C301E39E90081CA9A /* libabsl_cordz_info.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_cordz_info.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_cordz_info.a; sourceTree = "<group>"; };
+		1F262E8D301E39E90081CA9A /* libabsl_flags_parse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_parse.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_parse.a; sourceTree = "<group>"; };
+		1F262E8E301E39E90081CA9A /* libabsl_flags_reflection.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_reflection.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_reflection.a; sourceTree = "<group>"; };
+		1F262E8F301E39E90081CA9A /* libabsl_flags_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_internal.a; sourceTree = "<group>"; };
+		1F262E90301E39E90081CA9A /* libabsl_crc32c.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_crc32c.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_crc32c.a; sourceTree = "<group>"; };
+		1F262E91301E39E90081CA9A /* libabsl_random_seed_sequences.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_seed_sequences.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_seed_sequences.a; sourceTree = "<group>"; };
+		1F262E92301E39E90081CA9A /* libabsl_log_internal_proto.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_proto.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_proto.a; sourceTree = "<group>"; };
+		1F262E93301E39E90081CA9A /* libabsl_cord.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_cord.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_cord.a; sourceTree = "<group>"; };
+		1F262E94301E39E90081CA9A /* libabsl_debugging_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_debugging_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_debugging_internal.a; sourceTree = "<group>"; };
+		1F262E95301E39E90081CA9A /* libabsl_str_format_internal.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_str_format_internal.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_str_format_internal.a; sourceTree = "<group>"; };
+		1F262E96301E39E90081CA9A /* libabsl_random_distributions.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_distributions.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_distributions.a; sourceTree = "<group>"; };
+		1F262E97301E39E90081CA9A /* libabsl_strerror.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_strerror.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_strerror.a; sourceTree = "<group>"; };
+		1F262E98301E39E90081CA9A /* libabsl_string_view.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_string_view.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_string_view.a; sourceTree = "<group>"; };
+		1F262E99301E39E90081CA9A /* libabsl_flags_usage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_usage.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_usage.a; sourceTree = "<group>"; };
+		1F262E9A301E39E90081CA9A /* libabsl_statusor.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_statusor.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_statusor.a; sourceTree = "<group>"; };
+		1F262E9B301E39E90081CA9A /* libabsl_symbolize.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_symbolize.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_symbolize.a; sourceTree = "<group>"; };
+		1F262E9C301E39E90081CA9A /* libabsl_utf8_for_code_point.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_utf8_for_code_point.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_utf8_for_code_point.a; sourceTree = "<group>"; };
+		1F262E9D301E39E90081CA9A /* libabsl_cordz_handle.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_cordz_handle.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_cordz_handle.a; sourceTree = "<group>"; };
+		1F262E9E301E39E90081CA9A /* libutf8_range.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libutf8_range.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libutf8_range.a; sourceTree = "<group>"; };
+		1F262E9F301E39E90081CA9A /* libabsl_cordz_sample_token.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_cordz_sample_token.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_cordz_sample_token.a; sourceTree = "<group>"; };
+		1F262EA0301E39E90081CA9A /* libabsl_raw_hash_set.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_raw_hash_set.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_raw_hash_set.a; sourceTree = "<group>"; };
+		1F262EA1301E39E90081CA9A /* libabsl_throw_delegate.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_throw_delegate.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_throw_delegate.a; sourceTree = "<group>"; };
+		1F262EA2301E39E90081CA9A /* libutf8_validity.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libutf8_validity.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libutf8_validity.a; sourceTree = "<group>"; };
+		1F262EA3301E39E90081CA9A /* libabsl_flags_program_name.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_program_name.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_program_name.a; sourceTree = "<group>"; };
+		1F262EA4301E39E90081CA9A /* libabsl_flags_marshalling.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_flags_marshalling.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_flags_marshalling.a; sourceTree = "<group>"; };
+		1F262EA5301E39E90081CA9A /* libabsl_int128.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_int128.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_int128.a; sourceTree = "<group>"; };
+		1F262EA6301E39E90081CA9A /* libabsl_log_internal_fnmatch.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_log_internal_fnmatch.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_log_internal_fnmatch.a; sourceTree = "<group>"; };
+		1F262EA7301E39E90081CA9A /* libabsl_demangle_rust.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_demangle_rust.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_demangle_rust.a; sourceTree = "<group>"; };
+		1F262EA8301E39E90081CA9A /* libabsl_time.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_time.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_time.a; sourceTree = "<group>"; };
+		1F262EA9301E39E90081CA9A /* libabsl_random_internal_randen.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libabsl_random_internal_randen.a; path = ../.lib_pack/apple/protobuf/ios_combined/lib/libabsl_random_internal_randen.a; sourceTree = "<group>"; };
 		3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = AppFrameworkInfo.plist; path = Flutter/AppFrameworkInfo.plist; sourceTree = "<group>"; };
 		4E89E6BE2934E4C3009D33FC /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
-		6CDE0948B017E11213A84E49 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		5976E37F51B2AD967C680315 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
+		63A4EA6EA74EF599070F1455 /* Pods-Runner.profile.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.profile.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.profile.xcconfig"; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = FlutterGeneratedPluginSwiftPackage; path = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
-		8819E7B7EFE81B8B3BCECBE1 /* Pods-Runner.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"; sourceTree = "<group>"; };
 		9740EEB21CF90195004384FC /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = Flutter/Debug.xcconfig; sourceTree = "<group>"; };
 		9740EEB31CF90195004384FC /* Generated.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Generated.xcconfig; path = Flutter/Generated.xcconfig; sourceTree = "<group>"; };
 		97C146EE1CF9000F007C117D /* Runner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Runner.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,11 +258,11 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE643AFC2DB3B52C00DF98B6 /* VocaByte.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VocaByte.xcodeproj; path = ../cpp/build_ios/VocaByte.xcodeproj; sourceTree = SOURCE_ROOT; };
-		CE643B2F2DB3BEFE00DF98B6 /* libprotobuf.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libprotobuf.a; path = ../.lib_pack/ios/protobuf/ios_universal/libprotobuf.a; sourceTree = "<group>"; };
 		CE643B452DB410F100DF98B6 /* api_os.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = api_os.h; path = ../ios/Runner/api_os.h; sourceTree = "<absolute>"; };
 		CE643B462DB410F100DF98B6 /* api_os.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = api_os.mm; path = ../ios/Runner/api_os.mm; sourceTree = "<absolute>"; };
 		CEC8EBD52DBA48210086EACF /* loguru.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = loguru.cpp; path = ../cpp/ThirdParty/loguru/loguru.cpp; sourceTree = "<group>"; };
 		CEC8EBD62DBA48220086EACF /* loguru.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; name = loguru.hpp; path = ../cpp/ThirdParty/loguru/loguru.hpp; sourceTree = "<group>"; };
+		F5FB19D0B30085E9940BA32D /* Pods_Runner.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Runner.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,10 +270,103 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F262EAA301E39E90081CA9A /* libabsl_malloc_internal.a in Frameworks */,
+				1F262EAB301E39E90081CA9A /* libabsl_decode_rust_punycode.a in Frameworks */,
+				1F262EAC301E39E90081CA9A /* libabsl_log_internal_format.a in Frameworks */,
+				1F262EAD301E39E90081CA9A /* libabsl_low_level_hash.a in Frameworks */,
+				1F262EAE301E39E90081CA9A /* libabsl_crc_cpu_detect.a in Frameworks */,
+				1F262EAF301E39E90081CA9A /* libabsl_flags_usage_internal.a in Frameworks */,
+				1F262EB0301E39E90081CA9A /* libabsl_examine_stack.a in Frameworks */,
+				1F262EB1301E39E90081CA9A /* libabsl_random_internal_platform.a in Frameworks */,
+				1F262EB2301E39E90081CA9A /* libabsl_log_globals.a in Frameworks */,
+				1F262EB3301E39E90081CA9A /* libabsl_leak_check.a in Frameworks */,
+				1F262EB4301E39E90081CA9A /* libabsl_log_sink.a in Frameworks */,
+				1F262EB5301E39E90081CA9A /* libabsl_random_internal_randen_hwaes_impl.a in Frameworks */,
+				1F262EB6301E39E90081CA9A /* libupb.a in Frameworks */,
+				1F262EB7301E39E90081CA9A /* libabsl_flags_commandlineflag.a in Frameworks */,
+				1F262EB8301E39E90081CA9A /* libabsl_hashtablez_sampler.a in Frameworks */,
+				1F262EB9301E39E90081CA9A /* libabsl_random_internal_seed_material.a in Frameworks */,
+				1F262EBA301E39E90081CA9A /* libabsl_log_initialize.a in Frameworks */,
+				1F262EBB301E39E90081CA9A /* libabsl_city.a in Frameworks */,
+				1F262EBC301E39E90081CA9A /* libabsl_flags_commandlineflag_internal.a in Frameworks */,
+				1F262EBD301E39E90081CA9A /* libabsl_graphcycles_internal.a in Frameworks */,
+				1F262EBE301E39E90081CA9A /* libabsl_crc_internal.a in Frameworks */,
+				1F262EBF301E39E90081CA9A /* libabsl_periodic_sampler.a in Frameworks */,
+				1F262EC0301E39E90081CA9A /* libabsl_poison.a in Frameworks */,
+				1F262EC1301E39E90081CA9A /* libabsl_log_flags.a in Frameworks */,
+				1F262EC2301E39E90081CA9A /* libabsl_random_internal_randen_hwaes.a in Frameworks */,
+				1F262EC3301E39E90081CA9A /* libabsl_synchronization.a in Frameworks */,
+				1F262EC4301E39E90081CA9A /* libabsl_log_internal_conditions.a in Frameworks */,
+				1F262EC5301E39E90081CA9A /* libabsl_civil_time.a in Frameworks */,
+				1F262EC6301E39E90081CA9A /* libabsl_random_internal_entropy_pool.a in Frameworks */,
+				1F262EC7301E39E90081CA9A /* libabsl_kernel_timeout_internal.a in Frameworks */,
+				1F262EC8301E39E90081CA9A /* libabsl_random_internal_distribution_test_util.a in Frameworks */,
+				1F262EC9301E39E90081CA9A /* libabsl_raw_logging_internal.a in Frameworks */,
+				1F262ECA301E39E90081CA9A /* libabsl_scoped_set_env.a in Frameworks */,
+				1F262ECB301E39E90081CA9A /* libabsl_spinlock_wait.a in Frameworks */,
+				1F262ECC301E39E90081CA9A /* libabsl_base.a in Frameworks */,
+				1F262ECD301E39E90081CA9A /* libabsl_demangle_internal.a in Frameworks */,
+				1F262ECE301E39E90081CA9A /* libabsl_cordz_functions.a in Frameworks */,
+				1F262ECF301E39E90081CA9A /* libabsl_status.a in Frameworks */,
+				1F262ED0301E39E90081CA9A /* libabsl_tracing_internal.a in Frameworks */,
+				1F262ED1301E39E90081CA9A /* libprotobuf.a in Frameworks */,
+				1F262ED2301E39E90081CA9A /* libabsl_random_seed_gen_exception.a in Frameworks */,
+				1F262ED3301E39E90081CA9A /* libabsl_log_internal_message.a in Frameworks */,
+				1F262ED4301E39E90081CA9A /* libabsl_log_internal_log_sink_set.a in Frameworks */,
+				1F262ED5301E39E90081CA9A /* libabsl_cord_internal.a in Frameworks */,
+				1F262ED6301E39E90081CA9A /* libprotobuf-lite.a in Frameworks */,
+				1F262ED7301E39E90081CA9A /* libabsl_log_severity.a in Frameworks */,
+				1F262ED8301E39E90081CA9A /* libabsl_random_internal_randen_slow.a in Frameworks */,
+				1F262ED9301E39E90081CA9A /* libabsl_vlog_config_internal.a in Frameworks */,
+				1F262EDA301E39E90081CA9A /* libabsl_die_if_null.a in Frameworks */,
+				1F262EDB301E39E90081CA9A /* libabsl_log_internal_check_op.a in Frameworks */,
+				1F262EDC301E39E90081CA9A /* libabsl_strings_internal.a in Frameworks */,
+				1F262EDD301E39E90081CA9A /* libabsl_flags_config.a in Frameworks */,
+				1F262EDE301E39E90081CA9A /* libabsl_hash.a in Frameworks */,
+				1F262EDF301E39E90081CA9A /* libabsl_time_zone.a in Frameworks */,
+				1F262EE0301E39E90081CA9A /* libabsl_flags_private_handle_accessor.a in Frameworks */,
+				1F262EE1301E39E90081CA9A /* libabsl_failure_signal_handler.a in Frameworks */,
+				1F262EE2301E39E90081CA9A /* libabsl_stacktrace.a in Frameworks */,
+				1F262EE3301E39E90081CA9A /* libabsl_log_internal_globals.a in Frameworks */,
+				1F262EE4301E39E90081CA9A /* libabsl_log_internal_structured_proto.a in Frameworks */,
+				1F262EE5301E39E90081CA9A /* libabsl_log_internal_nullguard.a in Frameworks */,
+				1F262EE6301E39E90081CA9A /* libabsl_exponential_biased.a in Frameworks */,
+				1F262EE7301E39E90081CA9A /* libabsl_crc_cord_state.a in Frameworks */,
+				1F262EE8301E39E90081CA9A /* libabsl_strings.a in Frameworks */,
+				1F262EE9301E39E90081CA9A /* libabsl_cordz_info.a in Frameworks */,
+				1F262EEA301E39E90081CA9A /* libabsl_flags_parse.a in Frameworks */,
+				1F262EEB301E39E90081CA9A /* libabsl_flags_reflection.a in Frameworks */,
+				1F262EEC301E39E90081CA9A /* libabsl_flags_internal.a in Frameworks */,
+				1F262EED301E39E90081CA9A /* libabsl_crc32c.a in Frameworks */,
+				1F262EEE301E39E90081CA9A /* libabsl_random_seed_sequences.a in Frameworks */,
+				1F262EEF301E39E90081CA9A /* libabsl_log_internal_proto.a in Frameworks */,
+				1F262EF0301E39E90081CA9A /* libabsl_cord.a in Frameworks */,
+				1F262EF1301E39E90081CA9A /* libabsl_debugging_internal.a in Frameworks */,
+				1F262EF2301E39E90081CA9A /* libabsl_str_format_internal.a in Frameworks */,
+				1F262EF3301E39E90081CA9A /* libabsl_random_distributions.a in Frameworks */,
+				1F262EF4301E39E90081CA9A /* libabsl_strerror.a in Frameworks */,
+				1F262EF5301E39E90081CA9A /* libabsl_string_view.a in Frameworks */,
+				1F262EF6301E39E90081CA9A /* libabsl_flags_usage.a in Frameworks */,
+				1F262EF7301E39E90081CA9A /* libabsl_statusor.a in Frameworks */,
+				1F262EF8301E39E90081CA9A /* libabsl_symbolize.a in Frameworks */,
+				1F262EF9301E39E90081CA9A /* libabsl_utf8_for_code_point.a in Frameworks */,
+				1F262EFA301E39E90081CA9A /* libabsl_cordz_handle.a in Frameworks */,
+				1F262EFB301E39E90081CA9A /* libutf8_range.a in Frameworks */,
+				1F262EFC301E39E90081CA9A /* libabsl_cordz_sample_token.a in Frameworks */,
+				1F262EFD301E39E90081CA9A /* libabsl_raw_hash_set.a in Frameworks */,
+				1F262EFE301E39E90081CA9A /* libabsl_throw_delegate.a in Frameworks */,
+				1F262EFF301E39E90081CA9A /* libutf8_validity.a in Frameworks */,
+				1F262F00301E39E90081CA9A /* libabsl_flags_program_name.a in Frameworks */,
+				1F262F01301E39E90081CA9A /* libabsl_flags_marshalling.a in Frameworks */,
+				1F262F02301E39E90081CA9A /* libabsl_int128.a in Frameworks */,
+				1F262F03301E39E90081CA9A /* libabsl_log_internal_fnmatch.a in Frameworks */,
+				1F262F04301E39E90081CA9A /* libabsl_demangle_rust.a in Frameworks */,
+				1F262F05301E39E90081CA9A /* libabsl_time.a in Frameworks */,
+				1F262F06301E39E90081CA9A /* libabsl_random_internal_randen.a in Frameworks */,
+				78A318202AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage in Frameworks */,
 				CEC7DE752EAE388E00E8D2F0 /* libloguru.a in Frameworks */,
 				CEC7DE6A2EAE29A000E8D2F0 /* libVocaByte.a in Frameworks */,
-				CEF48C632EA53BDE009DA07B /* libprotobuf.a in Frameworks */,
-				449237FBED6B5B2257E6FA9D /* Pods_Runner.framework in Frameworks */,
+				71701C7267608A367C0DFE3B /* Pods_Runner.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,9 +376,9 @@
 		80DA44727AE7CAE4DD994EED /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				8819E7B7EFE81B8B3BCECBE1 /* Pods-Runner.debug.xcconfig */,
-				6CDE0948B017E11213A84E49 /* Pods-Runner.release.xcconfig */,
-				236610AE627712D32E94857E /* Pods-Runner.profile.xcconfig */,
+				0A3DCE2D66481CBCA993BFB6 /* Pods-Runner.debug.xcconfig */,
+				5976E37F51B2AD967C680315 /* Pods-Runner.release.xcconfig */,
+				63A4EA6EA74EF599070F1455 /* Pods-Runner.profile.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -107,6 +386,7 @@
 		9740EEB11CF90186004384FC /* Flutter */ = {
 			isa = PBXGroup;
 			children = (
+				78E0A7A72DC9AD7400C4905E /* FlutterGeneratedPluginSwiftPackage */,
 				3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */,
 				9740EEB21CF90195004384FC /* Debug.xcconfig */,
 				7AFA3C8E1D35360C0083082E /* Release.xcconfig */,
@@ -158,8 +438,100 @@
 		996E87448F907099967F1CC8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CE643B2F2DB3BEFE00DF98B6 /* libprotobuf.a */,
-				273843A2B255F5FEB4F44678 /* Pods_Runner.framework */,
+				1F262E9C301E39E90081CA9A /* libabsl_utf8_for_code_point.a */,
+				1F262E7C301E39E80081CA9A /* libabsl_vlog_config_internal.a */,
+				1F262E6F301E39E80081CA9A /* libabsl_base.a */,
+				1F262E5E301E39E80081CA9A /* libabsl_city.a */,
+				1F262E68301E39E80081CA9A /* libabsl_civil_time.a */,
+				1F262E93301E39E90081CA9A /* libabsl_cord.a */,
+				1F262E78301E39E80081CA9A /* libabsl_cord_internal.a */,
+				1F262E71301E39E80081CA9A /* libabsl_cordz_functions.a */,
+				1F262E9D301E39E90081CA9A /* libabsl_cordz_handle.a */,
+				1F262E8C301E39E90081CA9A /* libabsl_cordz_info.a */,
+				1F262E9F301E39E90081CA9A /* libabsl_cordz_sample_token.a */,
+				1F262E8A301E39E90081CA9A /* libabsl_crc_cord_state.a */,
+				1F262E51301E39E80081CA9A /* libabsl_crc_cpu_detect.a */,
+				1F262E61301E39E80081CA9A /* libabsl_crc_internal.a */,
+				1F262E90301E39E90081CA9A /* libabsl_crc32c.a */,
+				1F262E94301E39E90081CA9A /* libabsl_debugging_internal.a */,
+				1F262E4E301E39E80081CA9A /* libabsl_decode_rust_punycode.a */,
+				1F262E70301E39E80081CA9A /* libabsl_demangle_internal.a */,
+				1F262EA7301E39E90081CA9A /* libabsl_demangle_rust.a */,
+				1F262E7D301E39E80081CA9A /* libabsl_die_if_null.a */,
+				1F262E53301E39E80081CA9A /* libabsl_examine_stack.a */,
+				1F262E89301E39E90081CA9A /* libabsl_exponential_biased.a */,
+				1F262E84301E39E80081CA9A /* libabsl_failure_signal_handler.a */,
+				1F262E5A301E39E80081CA9A /* libabsl_flags_commandlineflag.a */,
+				1F262E5F301E39E80081CA9A /* libabsl_flags_commandlineflag_internal.a */,
+				1F262E80301E39E80081CA9A /* libabsl_flags_config.a */,
+				1F262E8F301E39E90081CA9A /* libabsl_flags_internal.a */,
+				1F262EA4301E39E90081CA9A /* libabsl_flags_marshalling.a */,
+				1F262E8D301E39E90081CA9A /* libabsl_flags_parse.a */,
+				1F262E83301E39E80081CA9A /* libabsl_flags_private_handle_accessor.a */,
+				1F262EA3301E39E90081CA9A /* libabsl_flags_program_name.a */,
+				1F262E8E301E39E90081CA9A /* libabsl_flags_reflection.a */,
+				1F262E99301E39E90081CA9A /* libabsl_flags_usage.a */,
+				1F262E52301E39E80081CA9A /* libabsl_flags_usage_internal.a */,
+				1F262E60301E39E80081CA9A /* libabsl_graphcycles_internal.a */,
+				1F262E81301E39E80081CA9A /* libabsl_hash.a */,
+				1F262E5B301E39E80081CA9A /* libabsl_hashtablez_sampler.a */,
+				1F262EA5301E39E90081CA9A /* libabsl_int128.a */,
+				1F262E6A301E39E80081CA9A /* libabsl_kernel_timeout_internal.a */,
+				1F262E56301E39E80081CA9A /* libabsl_leak_check.a */,
+				1F262E64301E39E80081CA9A /* libabsl_log_flags.a */,
+				1F262E55301E39E80081CA9A /* libabsl_log_globals.a */,
+				1F262E5D301E39E80081CA9A /* libabsl_log_initialize.a */,
+				1F262E7E301E39E80081CA9A /* libabsl_log_internal_check_op.a */,
+				1F262E67301E39E80081CA9A /* libabsl_log_internal_conditions.a */,
+				1F262EA6301E39E90081CA9A /* libabsl_log_internal_fnmatch.a */,
+				1F262E4F301E39E80081CA9A /* libabsl_log_internal_format.a */,
+				1F262E86301E39E90081CA9A /* libabsl_log_internal_globals.a */,
+				1F262E77301E39E80081CA9A /* libabsl_log_internal_log_sink_set.a */,
+				1F262E76301E39E80081CA9A /* libabsl_log_internal_message.a */,
+				1F262E88301E39E90081CA9A /* libabsl_log_internal_nullguard.a */,
+				1F262E92301E39E90081CA9A /* libabsl_log_internal_proto.a */,
+				1F262E87301E39E90081CA9A /* libabsl_log_internal_structured_proto.a */,
+				1F262E7A301E39E80081CA9A /* libabsl_log_severity.a */,
+				1F262E57301E39E80081CA9A /* libabsl_log_sink.a */,
+				1F262E50301E39E80081CA9A /* libabsl_low_level_hash.a */,
+				1F262E4D301E39E80081CA9A /* libabsl_malloc_internal.a */,
+				1F262E62301E39E80081CA9A /* libabsl_periodic_sampler.a */,
+				1F262E63301E39E80081CA9A /* libabsl_poison.a */,
+				1F262E96301E39E90081CA9A /* libabsl_random_distributions.a */,
+				1F262E6B301E39E80081CA9A /* libabsl_random_internal_distribution_test_util.a */,
+				1F262E69301E39E80081CA9A /* libabsl_random_internal_entropy_pool.a */,
+				1F262E54301E39E80081CA9A /* libabsl_random_internal_platform.a */,
+				1F262EA9301E39E90081CA9A /* libabsl_random_internal_randen.a */,
+				1F262E65301E39E80081CA9A /* libabsl_random_internal_randen_hwaes.a */,
+				1F262E58301E39E80081CA9A /* libabsl_random_internal_randen_hwaes_impl.a */,
+				1F262E7B301E39E80081CA9A /* libabsl_random_internal_randen_slow.a */,
+				1F262E5C301E39E80081CA9A /* libabsl_random_internal_seed_material.a */,
+				1F262E75301E39E80081CA9A /* libabsl_random_seed_gen_exception.a */,
+				1F262E91301E39E90081CA9A /* libabsl_random_seed_sequences.a */,
+				1F262EA0301E39E90081CA9A /* libabsl_raw_hash_set.a */,
+				1F262E6C301E39E80081CA9A /* libabsl_raw_logging_internal.a */,
+				1F262E6D301E39E80081CA9A /* libabsl_scoped_set_env.a */,
+				1F262E6E301E39E80081CA9A /* libabsl_spinlock_wait.a */,
+				1F262E85301E39E90081CA9A /* libabsl_stacktrace.a */,
+				1F262E72301E39E80081CA9A /* libabsl_status.a */,
+				1F262E9A301E39E90081CA9A /* libabsl_statusor.a */,
+				1F262E95301E39E90081CA9A /* libabsl_str_format_internal.a */,
+				1F262E97301E39E90081CA9A /* libabsl_strerror.a */,
+				1F262E98301E39E90081CA9A /* libabsl_string_view.a */,
+				1F262E8B301E39E90081CA9A /* libabsl_strings.a */,
+				1F262E7F301E39E80081CA9A /* libabsl_strings_internal.a */,
+				1F262E9B301E39E90081CA9A /* libabsl_symbolize.a */,
+				1F262E66301E39E80081CA9A /* libabsl_synchronization.a */,
+				1F262EA1301E39E90081CA9A /* libabsl_throw_delegate.a */,
+				1F262EA8301E39E90081CA9A /* libabsl_time.a */,
+				1F262E82301E39E80081CA9A /* libabsl_time_zone.a */,
+				1F262E73301E39E80081CA9A /* libabsl_tracing_internal.a */,
+				1F262E74301E39E80081CA9A /* libprotobuf.a */,
+				1F262E79301E39E80081CA9A /* libprotobuf-lite.a */,
+				1F262E59301E39E80081CA9A /* libupb.a */,
+				1F262E9E301E39E90081CA9A /* libutf8_range.a */,
+				1F262EA2301E39E90081CA9A /* libutf8_validity.a */,
+				F5FB19D0B30085E9940BA32D /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -167,8 +539,8 @@
 		CE643AFF2DB3B52C00DF98B6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CE643B062DB3B52C00DF98B6 /* libVocaByte.a */,
 				CEC7DE742EAE32B200E8D2F0 /* libloguru.a */,
+				CE643B062DB3B52C00DF98B6 /* libVocaByte.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -180,13 +552,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 97C147051CF9000F007C117D /* Build configuration list for PBXNativeTarget "Runner" */;
 			buildPhases = (
-				F0F941F5D545087361B8B256 /* [CP] Check Pods Manifest.lock */,
+				66DDAC0396922BEC5FB4D85C /* [CP] Check Pods Manifest.lock */,
 				9740EEB61CF901F6004384FC /* Run Script */,
 				97C146EA1CF9000F007C117D /* Sources */,
 				97C146EB1CF9000F007C117D /* Frameworks */,
 				97C146EC1CF9000F007C117D /* Resources */,
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
-				047D57E75799866A59FA51B4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -195,6 +566,9 @@
 				CEC7DE6C2EAE29B400E8D2F0 /* PBXTargetDependency */,
 			);
 			name = Runner;
+			packageProductDependencies = (
+				78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */,
+			);
 			productName = Runner;
 			productReference = 97C146EE1CF9000F007C117D /* Runner.app */;
 			productType = "com.apple.product-type.application";
@@ -224,6 +598,9 @@
 				Base,
 			);
 			mainGroup = 97C146E51CF9000F007C117D;
+			packageReferences = (
+				781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */,
+			);
 			productRefGroup = 97C146EF1CF9000F007C117D /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -271,23 +648,6 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		047D57E75799866A59FA51B4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Runner/Pods-Runner-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		3B06AD1E1E4923F5004D2608 /* Thin Binary */ = {
 			isa = PBXShellScriptBuildPhase;
 			alwaysOutOfDate = 1;
@@ -304,22 +664,7 @@
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin\n";
 		};
-		9740EEB61CF901F6004384FC /* Run Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Run Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
-		};
-		F0F941F5D545087361B8B256 /* [CP] Check Pods Manifest.lock */ = {
+		66DDAC0396922BEC5FB4D85C /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -340,6 +685,21 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9740EEB61CF901F6004384FC /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" build\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -433,7 +793,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -461,17 +821,6 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKImagePickerController/DKImagePickerController.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKPhotoGallery/DKPhotoGallery.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif/SwiftyGif.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/audioplayers_darwin/audioplayers_darwin.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/file_picker/file_picker.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/flutter_tts/flutter_tts.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/package_info_plus/package_info_plus.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/share_plus/share_plus.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/shared_preferences_foundation/shared_preferences_foundation.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/url_launcher_ios/url_launcher_ios.framework/Headers\"",
 					./dart_include,
 					../cpp/api/,
 					../.lib_pack/ios/protobuf/include,
@@ -479,7 +828,7 @@
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VocaByte;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -489,7 +838,7 @@
 					"\"${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)/",
 					"$(SDKROOT)/usr/lib/swift",
-					../.lib_pack/ios/protobuf/ios_universal,
+					../.lib_pack/apple/protobuf/ios_combined/lib,
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -504,35 +853,13 @@
 					"-framework",
 					"\"AVKit\"",
 					"-framework",
-					"\"DKImagePickerController\"",
-					"-framework",
-					"\"DKPhotoGallery\"",
-					"-framework",
 					"\"Foundation\"",
 					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"Photos\"",
 					"-framework",
-					"\"SDWebImage\"",
-					"-framework",
-					"\"SwiftyGif\"",
-					"-framework",
 					"\"UIKit\"",
-					"-framework",
-					"\"audioplayers_darwin\"",
-					"-framework",
-					"\"file_picker\"",
-					"-framework",
-					"\"flutter_tts\"",
-					"-framework",
-					"\"package_info_plus\"",
-					"-framework",
-					"\"share_plus\"",
-					"-framework",
-					"\"shared_preferences_foundation\"",
-					"-framework",
-					"\"url_launcher_ios\"",
 					"-weak_framework",
 					"\"LinkPresentation\"",
 				);
@@ -599,7 +926,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -655,7 +982,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
@@ -684,30 +1011,10 @@
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKImagePickerController\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKPhotoGallery\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/audioplayers_darwin\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/file_picker\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/flutter_tts\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/package_info_plus\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/share_plus\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/shared_preferences_foundation\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/url_launcher_ios\"",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKImagePickerController/DKImagePickerController.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKPhotoGallery/DKPhotoGallery.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif/SwiftyGif.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/ZIPFoundation/ZIPFoundation.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/file_picker/file_picker.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/flutter_archive/flutter_archive.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/package_info_plus/package_info_plus.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/path_provider_ios/path_provider_ios.framework/Headers\"",
 					./dart_include,
 					../cpp/api/,
 					../.lib_pack/ios/protobuf/include,
@@ -715,7 +1022,7 @@
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VocaByte;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -725,7 +1032,7 @@
 					"\"${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)/",
 					"$(SDKROOT)/usr/lib/swift",
-					../.lib_pack/ios/protobuf/ios_universal,
+					../.lib_pack/apple/protobuf/ios_combined/lib,
 				);
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -740,35 +1047,13 @@
 					"-framework",
 					"\"AVKit\"",
 					"-framework",
-					"\"DKImagePickerController\"",
-					"-framework",
-					"\"DKPhotoGallery\"",
-					"-framework",
 					"\"Foundation\"",
 					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"Photos\"",
 					"-framework",
-					"\"SDWebImage\"",
-					"-framework",
-					"\"SwiftyGif\"",
-					"-framework",
 					"\"UIKit\"",
-					"-framework",
-					"\"audioplayers_darwin\"",
-					"-framework",
-					"\"file_picker\"",
-					"-framework",
-					"\"flutter_tts\"",
-					"-framework",
-					"\"package_info_plus\"",
-					"-framework",
-					"\"share_plus\"",
-					"-framework",
-					"\"shared_preferences_foundation\"",
-					"-framework",
-					"\"url_launcher_ios\"",
 					"-weak_framework",
 					"\"LinkPresentation\"",
 				);
@@ -801,17 +1086,6 @@
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKImagePickerController/DKImagePickerController.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/DKPhotoGallery/DKPhotoGallery.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SDWebImage/SDWebImage.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/SwiftyGif/SwiftyGif.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/audioplayers_darwin/audioplayers_darwin.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/file_picker/file_picker.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/flutter_tts/flutter_tts.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/package_info_plus/package_info_plus.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/share_plus/share_plus.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/shared_preferences_foundation/shared_preferences_foundation.framework/Headers\"",
-					"\"${PODS_CONFIGURATION_BUILD_DIR}/url_launcher_ios/url_launcher_ios.framework/Headers\"",
 					./dart_include,
 					../cpp/api/,
 					../.lib_pack/ios/protobuf/include,
@@ -819,7 +1093,7 @@
 				INFOPLIST_FILE = Runner/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = VocaByte;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -829,7 +1103,7 @@
 					"\"${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}\"",
 					"$(TOOLCHAIN_DIR)/usr/lib/swift/$(PLATFORM_NAME)/",
 					"$(SDKROOT)/usr/lib/swift",
-					../.lib_pack/ios/protobuf/ios_universal,
+					../.lib_pack/apple/protobuf/ios_combined/lib,
 				);
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = (
@@ -845,35 +1119,13 @@
 					"-framework",
 					"\"AVKit\"",
 					"-framework",
-					"\"DKImagePickerController\"",
-					"-framework",
-					"\"DKPhotoGallery\"",
-					"-framework",
 					"\"Foundation\"",
 					"-framework",
 					"\"ImageIO\"",
 					"-framework",
 					"\"Photos\"",
 					"-framework",
-					"\"SDWebImage\"",
-					"-framework",
-					"\"SwiftyGif\"",
-					"-framework",
 					"\"UIKit\"",
-					"-framework",
-					"\"audioplayers_darwin\"",
-					"-framework",
-					"\"file_picker\"",
-					"-framework",
-					"\"flutter_tts\"",
-					"-framework",
-					"\"package_info_plus\"",
-					"-framework",
-					"\"share_plus\"",
-					"-framework",
-					"\"shared_preferences_foundation\"",
-					"-framework",
-					"\"url_launcher_ios\"",
 					"-weak_framework",
 					"\"LinkPresentation\"",
 				);
@@ -914,6 +1166,20 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		781AD8BC2B33823900A9FFBB /* XCLocalSwiftPackageReference "Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Flutter/ephemeral/Packages/FlutterGeneratedPluginSwiftPackage;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		78A3181F2AECB46A00862997 /* FlutterGeneratedPluginSwiftPackage */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = FlutterGeneratedPluginSwiftPackage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 97C146E61CF9000F007C117D /* Project object */;
 }
