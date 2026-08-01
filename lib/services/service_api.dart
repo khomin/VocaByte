@@ -455,7 +455,7 @@ class ServiceApi {
       var jsonStr = encoder.convert({'review': list});
       var formatted = jsonStr.codeUnits;
       if (explicitDir == null) {
-        var path = await FilePicker.platform.saveFile(
+        var path = await FilePicker.saveFile(
             fileName: 'profile.json',
             allowedExtensions: ['txt'],
             dialogTitle: 'Export',
@@ -478,10 +478,10 @@ class ServiceApi {
   Future<bool> importProfile({String? explicitDir}) async {
     String? path;
     if (explicitDir == null) {
-      var res = await FilePicker.platform.pickFiles(
-          allowMultiple: false,
-          type: FileType.custom,
-          allowedExtensions: ['json']);
+      var res = await FilePicker.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['json'],
+      );
       if (res == null || res.files.isEmpty) {
         return false;
       }
@@ -521,7 +521,7 @@ class ServiceApi {
       try {
         String? path;
         if (explicitDir == null) {
-          var res = await FilePicker.platform.pickFiles(allowMultiple: false);
+          var res = await FilePicker.pickFiles();
           if (res == null || res.files.isEmpty) {
             return 0;
           }
@@ -576,7 +576,7 @@ class ServiceApi {
     }
     try {
       final List<int> codeUnits = list.join('\n').codeUnits;
-      var path = await FilePicker.platform.saveFile(
+      var path = await FilePicker.saveFile(
           fileName: 'export.txt',
           allowedExtensions: ['txt'],
           dialogTitle: 'Export',

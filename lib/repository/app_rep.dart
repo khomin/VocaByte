@@ -397,7 +397,9 @@ class AppRep {
   }
 
   void shareApp() {
-    Share.shareUri(Uri.parse(AppConfig.shared.storeUrl));
+    SharePlus.instance.share(
+      ShareParams(uri: Uri.parse(AppConfig.shared.storeUrl)),
+    );
   }
 
   void requestWizardData() async {

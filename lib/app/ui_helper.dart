@@ -84,7 +84,7 @@ class UiHelper {
     return false;
   }
 
-  boxShadow(BuildContext context, Offset offset, {Color? color}) {
+  BoxDecoration boxShadow(BuildContext context, Offset offset, {Color? color}) {
     return BoxDecoration(
         color: color ?? Theme.of(context).colorScheme.baseColor2,
         boxShadow: [
