@@ -47,26 +47,19 @@ endif()
 
 add_subdirectory(ThirdParty/loguru)
 
-if (DEFINED ENV{FLUTTER_SDK_PATH})
-    message(STATUS "FLUTTER_SDK_PATH environment variable defined: $ENV{FLUTTER_SDK_PATH}")
-    file(TO_CMAKE_PATH $ENV{FLUTTER_SDK_PATH} FLUTTER_SDK_PATH)
-else ()
-    # find flutter sdk location
-    set(PATH $ENV{PATH})
-    if (NOT WIN32)
-        string(REPLACE ":" "\n " PATH ${PATH})
-    endif ()
-    separate_arguments(PATH)
-    foreach (PATH_ITEM ${PATH})
-        string(REPLACE "\n" "" PATH_ITEM ${PATH_ITEM})
-        if (EXISTS "${PATH_ITEM}/flutter")
-            message("flutter is found: ${PATH_ITEM}")
-            set(FLUTTER_SDK_PATH ${PATH_ITEM})
-        else()
-            message("not flutter: ${PATH_ITEM}")
-        endif ()
-    endforeach ()
-endif ()
+if(NOT DEFINED FLUTTER_SDK_PATH)
+    if(IS_DIRECTORY "$ENV{FLUTTER_ROOT}")
+        set(FLUTTER_SDK_PATH "$ENV{FLUTTER_ROOT}")
+    else()
+        # Fallback to your PATH search, but use CMake's find_program
+        find_program(DART_EXE dart)
+        if(DART_EXE)
+            get_filename_component(FLUTTER_BIN_DIR "${DART_EXE}" DIRECTORY)
+            set(FLUTTER_SDK_PATH "${FLUTTER_BIN_DIR}")
+        endif()
+    endif()
+    message(STATUS "FLUTTER_SDK_PATH is ${FLUTTER_SDK_PATH}")
+endif()
 
 set(SOURCES
     ./api_lib.cpp
@@ -86,19 +79,10 @@ set(INCLUDE_DIRS ${INCLUDE_DIRS}
     ./protobuf/generated/
 )
 
-if (WIN32)
-  # dart engine (wix r\n\)
-  string(REPLACE "\\" "/" DART_SKD_PATH_WIN_FIX ${FLUTTER_SDK_PATH}/cache/dart-sdk/include/dart_api_dl.c)
-  set(SOURCES ${SOURCES}
-    ${DART_SKD_PATH_WIN_FIX}
-  )
-else()
-  set(SOURCES ${SOURCES}
+set(SOURCES ${SOURCES}
     ${FLUTTER_SDK_PATH}/cache/dart-sdk/include/dart_api_dl.c
-  )
-endif()
+)
 
-# libraries
 if(APPLE)
     if(IOS)
         set(INCLUDE_DIRS ${INCLUDE_DIRS}
@@ -127,12 +111,20 @@ elseif (ANDROID OR __ANDROID__)
     message("CMAKE_ANDROID_ARCH_ABI: ${CMAKE_ANDROID_ARCH_ABI}")
     message("CMAKE_ANDROID_FLUTTER_SDK_PATH: ${FLUTTER_SDK_PATH}")
     message("ANDROID_ABI: ${ANDROID_ABI}")
+    file(GLOB PROTO_ABSL_LIBS
+        ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/lib/libabsl_*.a
+    )
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/android/protobuf/${ANDROID_ABI}/include/
+      ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/include/
     )
     set(LIBRARIES ${LIBRARIES}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/android/protobuf/${ANDROID_ABI}/lib/libprotobuf.a
-      loguru::loguru
+        -Wl,--start-group
+        ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/lib/libprotobuf.a
+        ${PROTO_ABSL_LIBS}
+        -Wl,--end-group
+        ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/lib/libutf8_validity.a
+        ${CMAKE_SOURCE_DIR}/../.lib_pack/android/protobuf/${CMAKE_ANDROID_ARCH_ABI}/lib/libutf8_range.a
+        loguru::loguru
     )
 elseif(UNIX AND NOT APPLE)
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
@@ -144,13 +136,7 @@ elseif(UNIX AND NOT APPLE)
         loguru::loguru
     )
 elseif(WIN32)
-    set(INCLUDE_DIRS ${INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/windows/protobuf/platform/windows/include
-    )
-    set(LIBRARIES ${LIBRARIES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/windows/protobuf/platform/windows/lib/libprotobuf.a
-        loguru::loguru
-    )
+    # not supported
 endif()
 
 if(IOS)

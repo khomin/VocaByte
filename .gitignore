@@ -17,6 +17,8 @@ lib_pack/**
 scripts/.protobuf/**
 dist
 
+android/key.properties
+
 # IntelliJ related
 *.iml
 *.ipr
