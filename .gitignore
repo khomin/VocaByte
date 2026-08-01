@@ -14,7 +14,7 @@ migrate_working_dir/
 ios/build/*
 lib_pack/**
 .lib_pack/**
-scripts/.protobuf/**
+/scripts/.protobuf
 dist
 
 android/key.properties
