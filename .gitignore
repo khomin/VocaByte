@@ -12,10 +12,10 @@
 migrate_working_dir/
 /updater/build/*
 ios/build/*
-/lib_pack/**
-/.lib_pack/**
-/scripts/.protobuf/**
-/dist
+lib_pack/**
+.lib_pack/**
+scripts/.protobuf/**
+dist
 
 # IntelliJ related
 *.iml
