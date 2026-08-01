@@ -102,18 +102,18 @@ endif()
 if(APPLE)
     if(IOS)
         set(INCLUDE_DIRS ${INCLUDE_DIRS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/ios/protobuf/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/ios/protobuf/include
         )
         set(LIBRARIES ${LIBRARIES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/ios/protobuf/ios_universal/libprotobuf.a
+            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/ios/protobuf/ios_universal/libprotobuf.a
             loguru::loguru
         )
     else()
         set(INCLUDE_DIRS ${INCLUDE_DIRS}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/macos/protobuf/include
+            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/macos/protobuf/include
         )
         set(LIBRARIES$ ${LIBRARIES}
-            ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/macos/protobuf/macos_universal/libprotobuf.a
+            ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/macos/protobuf/macos_universal/libprotobuf.a
             loguru::loguru
             "-framework Cocoa"
             "-framework Security"
@@ -128,27 +128,27 @@ elseif (ANDROID OR __ANDROID__)
     message("CMAKE_ANDROID_FLUTTER_SDK_PATH: ${FLUTTER_SDK_PATH}")
     message("ANDROID_ABI: ${ANDROID_ABI}")
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ANDROID_ABI}/include/
+      ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/android/protobuf/${ANDROID_ABI}/include/
     )
     set(LIBRARIES ${LIBRARIES}
-      ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/android/protobuf/${ANDROID_ABI}/lib/libprotobuf.a
+      ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/android/protobuf/${ANDROID_ABI}/lib/libprotobuf.a
       loguru::loguru
     )
 elseif(UNIX AND NOT APPLE)
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/linux/protobuf/include
     )
     set(LIBRARIES ${LIBRARIES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/linux/protobuf/lib/libprotobuf.a
+        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/linux/protobuf/lib/libprotobuf.a
         -ldl -lpthread -lxcb -lz
         loguru::loguru
     )
 elseif(WIN32)
     set(INCLUDE_DIRS ${INCLUDE_DIRS}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/windows/protobuf/platform/windows/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/windows/protobuf/platform/windows/include
     )
     set(LIBRARIES ${LIBRARIES}
-        ${CMAKE_CURRENT_SOURCE_DIR}/../lib_pack/windows/protobuf/platform/windows/lib/libprotobuf.a
+        ${CMAKE_CURRENT_SOURCE_DIR}/../.lib_pack/windows/protobuf/platform/windows/lib/libprotobuf.a
         loguru::loguru
     )
 endif()

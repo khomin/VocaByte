@@ -1,9 +1,9 @@
 plugins {
-    id "com.android.application"
-    id "kotlin-android"
-    id "dev.flutter.flutter-gradle-plugin"
+    id("com.android.application")
+    id("com.google.protobuf") version "0.10.0"
+    id("dev.flutter.flutter-gradle-plugin")
 }
-apply plugin: 'kotlin-kapt'
+//apply plugin: 'kotlin-kapt'
 
 def keystoreProperties = new Properties()
 def keystorePropertiesFile = rootProject.file('key.properties')
@@ -31,7 +31,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.vocabyte.app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_11
@@ -52,9 +52,9 @@ android {
         }
     }
     defaultConfig {
-        minSdk 24
         applicationId "com.vocabyte.app"
-        targetSdkVersion 35
+        targetSdk = 37
+        minSdk 24
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -90,13 +90,13 @@ android {
         debug {
             debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
             signingConfig signingConfigs.config
         }
         profile {
             debuggable true
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt')
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt')
             signingConfig signingConfigs.config
             externalNativeBuild {
                 cmake {

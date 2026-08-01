@@ -14,8 +14,20 @@ It's built on Flutter, uses protobuf and c++
 ![1](/sceenshots/1.png)
 
 ### Installation
-- ``git clone https://github.com/khomin/VocaByte.git --recurse-submodules``
+```
+    git clone https://github.com/khomin/VocaByte.git --recurse-submodules
+    cd ./VocaByte
+    chmod +x ./scripts/build_protobuf.sh
+    # for android
+    ./scripts/build_protobuf.sh android
+
+    # use macos if your host is macos
+    ./scripts/build_protobuf.sh macos
+    # or use linux
+    ./scripts/build_protobuf.sh linux
+```
 - Download [vocabyte_database.zip](https://drive.google.com/file/d/1wrj2WB0nyim_vNM6Ui_7sgEldKpbLxdM/view?usp=sharing)
+
 - Add flutter sdk directory in your PATH. There are 2 options:
     1) Set FLUTTER_SDK_PATH explicitly to bin folder<br>
     ``export FLUTTER_SDK_PATH=~/sdk/flutter/bin``<br>
@@ -42,3 +54,11 @@ It's built on Flutter, uses protobuf and c++
         ```
 - ``flutter pub get``
 - ``flutter run``
+
+### In cause you want to rebuild protobuf files
+```
+# for macos
+./scripts/gen-proto-macos.sh
+# for linux
+./scripts/gen-proto-linux.sh
+```

@@ -13,6 +13,7 @@ migrate_working_dir/
 /updater/build/*
 ios/build/*
 /lib_pack/**
+/.lib_pack/**
 /dist
 
 # IntelliJ related
