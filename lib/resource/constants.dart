@@ -1,17 +1,17 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-enum FlavorType { google, rustore }
+enum FlavorType { google }
 
 class AppConfig {
   AppConfig({
     required this.flavor,
     required this.storeUrl,
-    required this.canHavePremium,
+    required this.usePaySDK,
   });
   final FlavorType flavor;
   final String storeUrl;
-  final bool canHavePremium;
+  final bool usePaySDK;
 
   static late AppConfig shared;
 
@@ -22,14 +22,7 @@ class AppConfig {
           flavor: FlavorType.google,
           storeUrl:
               'https://play.google.com/store/apps/details?id=com.vocabyte.app',
-          canHavePremium: false,
-        );
-        break;
-      case FlavorType.rustore:
-        shared = AppConfig(
-          flavor: FlavorType.rustore,
-          storeUrl: 'https://www.rustore.ru/catalog/app/com.vocabyte.app',
-          canHavePremium: true,
+          usePaySDK: false,
         );
         break;
     }

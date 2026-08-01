@@ -7,7 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/models/app_model.dart';
 
-void main() => runMyFlavoredApp(FlavorType.rustore);
+void main() => runMyFlavoredApp(FlavorType.google);
+
+// TODO: feature scan text
 
 class MainApp extends StatelessWidget {
   const MainApp({super.key});

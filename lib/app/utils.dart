@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 
 enum ScreenLayoutType { minimum, medium, large, full }

@@ -94,9 +94,6 @@ class _AppState extends State<App> {
     super.didChangeDependencies();
   }
 
-  // TODO: flavor build - google/rustore sdk
-  // TODO: feature scan text
-
   @override
   Widget build(BuildContext context) {
     var model = context.watch<AppModel>();

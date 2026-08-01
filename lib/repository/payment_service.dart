@@ -1,9 +1,6 @@
 import 'dart:async';
-import 'package:flutter_rustore_pay/api/flutter_rustore_pay_client.dart';
-import 'package:flutter_rustore_pay/model/purchase.dart';
 import 'package:loggy/loggy.dart';
 import 'package:rxdart/subjects.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class PaymentService {
   bool isSupported();
@@ -40,18 +37,12 @@ class GooglePaymentService implements PaymentService {
   Future<String?> getPrice() => throw UnimplementedError();
 }
 
-class RuStorePaymentService implements PaymentService {
+class StorePaymentService implements PaymentService {
   final _stream = BehaviorSubject<bool>.seeded(false);
   final _priceStream = BehaviorSubject<String?>();
-  Timer? _retryPriceTimer;
-  Timer? _retryPremiumStatusTimer;
-  final _products = ['premium_features_unlock'];
-  final _priceKey = 'price';
-  final _premiumKey = 'is_premium';
-  final _lastPremiumCheckKey = 'last_premium_check_timestamp';
-  final tag = 'rustrore';
+  final tag = 'paymentService';
 
-  RuStorePaymentService() {
+  StorePaymentService() {
     getPrice();
     isPremium(cached: false);
   }
@@ -67,114 +58,29 @@ class RuStorePaymentService implements PaymentService {
 
   @override
   Future<String?> getPrice() async {
-    final prefs = await SharedPreferences.getInstance();
-    var cachedPrice = prefs.getString(_priceKey);
-    if (cachedPrice != null) {
-      _priceStream.add(cachedPrice);
-    }
-    try {
-      var price = await getPriceSdk();
-      if (price != null) {
-        await prefs.setString(_priceKey, price);
-        _priceStream.add(price);
-      }
-      return price;
-    } catch (e) {
-      logWarning('$tag: failed to get price [$e]');
-    }
+    logInfo('not implemented');
     return null;
   }
 
   @override
   Future<bool> isPremium({required bool cached}) async {
-    final prefs = await SharedPreferences.getInstance();
-    bool cachedStatus = prefs.getBool(_premiumKey) ?? false;
-    int lastCheck = prefs.getInt(_lastPremiumCheckKey) ?? 0;
-    _stream.add(cachedStatus);
-    if (!cached) {
-      try {
-        var currentStatus = await checkPremiumSdk();
-        var nowMs = DateTime.now().millisecondsSinceEpoch;
-        await prefs.setBool(_premiumKey, currentStatus);
-        await prefs.setInt(_lastPremiumCheckKey, nowMs);
-        _stream.add(currentStatus);
-      } catch (e) {
-        bool isCacheExpired =
-            DateTime.now().millisecondsSinceEpoch - lastCheck > 2592000000;
-        startPremiumStatusRetryTimer();
-        if (isCacheExpired) {
-          return false;
-        }
-      }
-    }
-    return cachedStatus;
+    logInfo('not implemented');
+    return false;
   }
 
   Future<bool> checkPremiumSdk() async {
-    final it = RuStorePayClient.instance.purchaseInteractor;
-    final purchases = await it.getPurchases();
-    bool currentStatus = purchases.any(
-      (p) => p.status == ProductPurchaseStatus.confirmed,
-    );
-    return currentStatus;
+    logInfo('not implemented');
+    return false;
   }
 
   Future<String?> getPriceSdk() async {
-    final it = RuStorePayClient.instance.productInteractor;
-    final products = await it.getProducts(_products);
-    if (products.isNotEmpty) {
-      return products.first.amountLabel;
-    }
+    logInfo('not implemented');
     return null;
   }
 
   @override
   Future<bool> processPremium() async {
-    try {
-      final it = RuStorePayClient.instance.productInteractor;
-      var product = await it.getProducts(_products);
-      logInfo('$tag: purchase, product [$product]');
-      var res = await RuStorePayClient.instance.purchaseInteractor.purchase(
-        product.first.productId,
-      );
-      logInfo('$tag: purchase result [$res] ');
-      isPremium(cached: false);
-      return true;
-    } catch (ex) {
-      logError('$tag: ex $ex');
-    }
+    logInfo('not implemented');
     return false;
-  }
-
-  void startPriceRetryTimer() {
-    _retryPriceTimer?.cancel();
-    _retryPriceTimer =
-        Timer.periodic(const Duration(seconds: 3), (timer) async {
-      try {
-        final price = await getPriceSdk();
-        final prefs = await SharedPreferences.getInstance();
-        if (price != null) {
-          await prefs.setString(_priceKey, price);
-          _priceStream.add(price);
-        }
-        timer.cancel();
-      } catch (_) {}
-    });
-  }
-
-  void startPremiumStatusRetryTimer() {
-    _retryPremiumStatusTimer?.cancel();
-    _retryPremiumStatusTimer =
-        Timer.periodic(const Duration(seconds: 3), (timer) async {
-      try {
-        final currentStatus = await checkPremiumSdk();
-        var nowMs = DateTime.now().millisecondsSinceEpoch;
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setBool(_premiumKey, currentStatus);
-        await prefs.setInt(_lastPremiumCheckKey, nowMs);
-        _stream.add(currentStatus);
-        timer.cancel();
-      } catch (_) {}
-    });
   }
 }

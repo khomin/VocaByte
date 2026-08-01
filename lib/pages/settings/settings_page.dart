@@ -1,19 +1,14 @@
-import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:random_avatar/random_avatar.dart';
-import 'package:vocabyte/components/app_bar2.dart';
-import 'package:vocabyte/components/disposable_stream.dart';
 import 'package:vocabyte/components/item_in_menu_list.dart';
 import 'package:vocabyte/components/page_transition2.dart';
-import 'package:vocabyte/components/round_button.dart';
 import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/app_model.dart';
 import 'package:vocabyte/models/settings_model.dart';
 import 'package:vocabyte/pages/ads/upgrade_full.dart';
 import 'package:vocabyte/pages/ads/upgrade_premium.dart';
 import 'package:vocabyte/pages/numerals/numerals_page.dart';
-import 'package:vocabyte/components/dialogs/confirm_panel.dart';
 import 'package:vocabyte/pages/settings/settings_about.dart';
 import 'package:vocabyte/pages/settings/settings_profile.dart';
 import 'package:vocabyte/repository/app_rep.dart';
@@ -22,7 +17,6 @@ import 'package:vocabyte/repository/settings_rep.dart';
 import 'package:vocabyte/repository/app_theme.dart';
 import 'package:vocabyte/app/ui_helper.dart';
 import 'package:vocabyte/resource/constants.dart';
-import 'package:vocabyte/services/service_api.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
@@ -102,7 +96,7 @@ class _State extends State<SettingsPage> {
                     //
                     SliverToBoxAdapter(child: _profile()),
                     //
-                    if (AppConfig.shared.canHavePremium)
+                    if (AppConfig.shared.usePaySDK)
                       SliverToBoxAdapter(child: _payStatus()),
                     //
                     SliverToBoxAdapter(child: _theme()),
@@ -170,7 +164,7 @@ class _State extends State<SettingsPage> {
                         fontSize: 20,
                       ),
                     ),
-                    if (AppConfig.shared.canHavePremium)
+                    if (AppConfig.shared.usePaySDK)
                       StreamBuilder(
                           stream: getIt<PaymentService>().premiumStatusStream,
                           initialData: false,

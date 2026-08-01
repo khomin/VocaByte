@@ -3,10 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:vocabyte/components/button3.dart';
-import 'package:vocabyte/app_runner.dart';
 import 'package:vocabyte/models/app_model.dart';
-import 'package:vocabyte/repository/app_rep.dart';
-import 'package:vocabyte/repository/nav_rep.dart';
 
 class DevPanel extends StatefulWidget {
   const DevPanel({super.key});
